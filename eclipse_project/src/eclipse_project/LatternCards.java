@@ -14,30 +14,33 @@ public class LatternCards {
 	/**
 	 * Constructor to initialize the Stack of cards.
 	 */
-	public LatternCards(int NumOfPlayers) {
+	public LatternCards() {
+
+	}
+
+	public void initializeLatternCards(int NumOfPlayers) {
 		int cards = 0;
-		
+
 		// Determine how many cards to be push based on the number of players
-		if(NumOfPlayers == 2)
-			cards=5;
-		else if(NumOfPlayers == 3)
-			cards=7;
-		else if(NumOfPlayers == 4)
-			cards=8;
+		if (NumOfPlayers == 2)
+			cards = 5;
+		else if (NumOfPlayers == 3)
+			cards = 7;
+		else if (NumOfPlayers == 4)
+			cards = 8;
 		else
 			System.out.println("The number of players is invalid");
-		
-		//push the specified number of cards in each stack 
-			for(int i =0; i<cards; i++){
-				redStack.push("redCard");
-				blueStack.push("blueCard");
-				greenStack.push("greenCard");
-				whiteStack.push("whiteCard");
-				purpleStack.push("purpleCard");
-				blackStack.push("blackStack");
-				orangeStack.push("orangeCard");
-			}
-		
+
+		// push the specified number of cards in each stack
+		for (int i = 0; i < cards; i++) {
+			redStack.push("redCard");
+			blueStack.push("blueCard");
+			greenStack.push("greenCard");
+			whiteStack.push("whiteCard");
+			purpleStack.push("purpleCard");
+			blackStack.push("blackStack");
+			orangeStack.push("orangeCard");
+		}
 	}
 
 	// Method called when user pick a red card.
