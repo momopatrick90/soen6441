@@ -1,5 +1,0 @@
-fgdfg<<<<<<< HEAD
-hello brice 
-=======
-hello brice how are you..
->>>>>>> origin/master
