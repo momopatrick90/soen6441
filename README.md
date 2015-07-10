@@ -1,3 +1,9 @@
 # soen6441
 Soen6441
-ASasSa
+
+Summer 2015 Project for Advance Programming Practices. 
+
+
+
+
+Team-D
