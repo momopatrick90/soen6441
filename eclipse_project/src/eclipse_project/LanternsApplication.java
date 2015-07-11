@@ -1,9 +1,11 @@
 package eclipse_project;
 
+import com.sun.tools.javac.parser.Scanner;
+
 public class LanternsApplication {
 
 	
-	public static void main(String args[]){
+	public static void main(String[] args){
 		
 
 		int resp = '\0';
