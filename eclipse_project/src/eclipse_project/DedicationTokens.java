@@ -11,6 +11,8 @@ public class DedicationTokens {
 	Stack<Integer> threePair = new Stack();
 	Stack<Integer> sevenUnique = new Stack();
 	Stack<Integer> genericFour = new Stack();
+	
+	//intialize the DedicationTokens Stacks according to number of players
 	public void initializeDedicationTokens(int numberOfPlayers)
 	{
 		switch(numberOfPlayers)
@@ -44,6 +46,8 @@ public class DedicationTokens {
 					
 		}
 	}
+	
+	//method to give one dedicationToken from FourOfKind Stack with its appropriate current value 
 	public int getFourOfKind()
 	{
 		int result=0;
@@ -60,6 +64,8 @@ public class DedicationTokens {
 		}
 		return result;
 	}
+	
+	//method to give one dedicationToken from threePair Stack with its appropriate current value
 	public int getThreePair()
 	{
 		int result=0;
@@ -76,6 +82,8 @@ public class DedicationTokens {
 		}
 		return result;
 	}
+	
+	//method to give one dedicationToken from sevenUnique Stack with its appropriate current value
 	public int getSevenUnique()
 	{
 		int result=0;
