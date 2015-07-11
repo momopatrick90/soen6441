@@ -2,6 +2,11 @@ package eclipse_project;
 
 import java.util.Random;
 
+/**
+ * LakeTiles are created according to number of players.
+ *
+ */
+
 public class LakeTiles {
 	public String left,right,up,down;
 	public boolean platform;
@@ -12,6 +17,10 @@ public class LakeTiles {
 	public LakeTiles() {
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * method to generate lake tiles with according to number of players where some of the tiles will have platform 
+	 * @param numberOfPlayers total number of players 
+	 */
 	public void initializeLakeTiles(int numberOfPlayers)
 	{
 		switch(numberOfPlayers)
@@ -65,6 +74,10 @@ public class LakeTiles {
 				break;					
 		}
 	}
+	/**
+	 * method to generate random values within range 5 to 11 where each number represents particular color for example 5:red 6:green 
+	 *  
+	 */
 	
 	public String randomValues()
 	{
