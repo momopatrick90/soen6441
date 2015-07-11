@@ -118,8 +118,6 @@ public class LakeTiles {
 			return answer;		
 	}
 	
-	public void placeTile(int xIndex, int yIndex, )
-	
 	public static void main(String args[])
 	{
 		LakeTiles lT = new LakeTiles();
