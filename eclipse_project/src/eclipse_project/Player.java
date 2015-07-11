@@ -5,12 +5,8 @@ public class Player {
 	public String name;
 	public LanternCards playerLCStack;
 	public int playerScore;
-<<<<<<< Updated upstream
 	public int favorTokenScore;
 	public FavorTokens playerFTStack;
-=======
-	public int favorTokens;
->>>>>>> Stashed changes
 	public LakeTiles playerLTStack;
 
 	public Player(String name) {
@@ -91,7 +87,7 @@ public class Player {
 	 * The object containing the current stack of favor tokens on the table
 	 */
 	public void pickFavorTokens(FavorTokens favorToken){
-		favorToken.DecrementToken();
+		favorToken.decrementToken();
 		favorTokenScore++;
 	
 	}
