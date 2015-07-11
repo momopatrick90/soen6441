@@ -24,30 +24,30 @@ public class Player {
 	public void pickCard(String card) {
 		if (card.equals("redCard")) {
 
-			playerLCStack.addRedcard();
+			playerLCStack.addRedcard(card);
 
 		} else if (card.equals("blueCard")) {
 
-			playerLCStack.addBluecard();
+			playerLCStack.addBluecard(card);
 
 		} else if (card.equals("greenCard")) {
 
-			playerLCStack.addGreencard();
+			playerLCStack.addGreencard(card);
 
 		} else if (card.equals("whiteCard")) {
 
-			playerLCStack.addWhitecard();
+			playerLCStack.addWhitecard(card);
 
 		} else if (card.equals("purpleCard")) {
 
-			playerLCStack.addPurplecard();
+			playerLCStack.addPurplecard(card);
 
 		} else if (card.equals("blackCard")) {
 
-			playerLCStack.addBlackcard();
+			playerLCStack.addBlackcard(card);
 
 		} else {
-			playerLCStack.addOrangecard();
+			playerLCStack.addOrangecard(card);
 		}
 	}
 
