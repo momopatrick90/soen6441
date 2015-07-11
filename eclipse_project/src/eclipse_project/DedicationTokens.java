@@ -8,18 +8,20 @@ import java.util.Stack;
  */
 public class DedicationTokens {
 
-	private Stack<Integer> fourOfKind = new Stack();
-	private Stack<Integer> threePair = new Stack();
-	private Stack<Integer> sevenUnique = new Stack();
-	private Stack<Integer> genericFour = new Stack();
+	private Stack<Integer> fourOfKind = new Stack<Integer>();
+	private Stack<Integer> threePair = new Stack<Integer>();
+	private Stack<Integer> sevenUnique = new Stack<Integer>();
+	private Stack<Integer> genericFour = new Stack<Integer>();
 	
-	public DedicationTokens(int numberOfPlayers) {
+	private final int FOUR_KIND_MAX = 8;
+	private final int THREE_PAIR_MAX = 9;
+	private final int SEVEN_UNIQUE_MAX = 10;
+	private final int GENERIC_FOUR_MAX = 4;
+	
+	public DedicationTokens(int numberOfPlayers,int fourOfKindCount,int threePairCount,int sevenUniqueCount,int genericFourCount) {
 	
 		switch(numberOfPlayers)
 		{
-			case 1:
-				System.out.println("Right now you can't play with computer.Sorry for the inconveience");
-				break;
 			case 2:
 				System.out.println("Will be implemented in build 2.Right now all the dedicationTokens will be used");
 				break;
@@ -27,21 +29,42 @@ public class DedicationTokens {
 				System.out.println("Will be implemented in build 2.Right now all the dedicationTokens will be used");
 				break;
 			case 4:
-				int fourOfKindValue=8,threePairValue=9,sevenUniqueValue=10,genericFourValue=4;
-				for(int i=0;i<9;i++)
+				
+				if(fourOfKindCount >= 1 && fourOfKindCount <= FOUR_KIND_MAX)
+				{
+					for(int i=1;i<=fourOfKindCount;i++)
+						this.fourOfKind.push(i);
+				}
+				
+				if(threePairCount >= 1 && threePairCount <= THREE_PAIR_MAX)
+				{
+				for(int i=1;i<=threePairCount;i++)
+					this.threePair.push(i);
+				}
+				
+				if(sevenUniqueCount >= 1 && sevenUniqueCount <= SEVEN_UNIQUE_MAX)
+				{
+				for(int i=1;i<=sevenUniqueCount;i++)
+					this.sevenUnique.push(i);
+				}
+				/*for(int i=0; i<9; i++)
 				{
 					fourOfKind.push(fourOfKindValue);
 					threePair.push(threePairValue);
 					sevenUnique.push(sevenUniqueValue);
+					
 					if(i==0)
 						fourOfKindValue++;//We can have 2 8's as we need nine Dedication Tokens
+					
 					fourOfKindValue--;
 					threePairValue--;
 					sevenUniqueValue--;					
-				}
-				for(int i=0;i<3;i++)
+				}*/
+				
+				if(genericFourCount >= 1 && genericFourCount <= GENERIC_FOUR_MAX)
 				{
-					genericFour.push(genericFourValue);
+				for(int i=1; i<=genericFourCount;i++)
+					this.genericFour.push(GENERIC_FOUR_MAX);
 				}
 					
 		}
