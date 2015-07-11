@@ -5,6 +5,7 @@ public class Player {
 	public String name;
 	public LanternCards playerLCStack;
 	public int playerScore;
+	public int favorTokenScore;
 	public FavorTokens playerFTStack;
 	public LakeTiles playerLTStack;
 
@@ -78,4 +79,19 @@ public class Player {
 
 	}
 
+	
+	/**
+	 * This method will be called when the lake tile contains a platform in it  
+	 * 
+	 * @param favorToken 
+	 * The object containing the current stack of favor tokens on the table
+	 */
+	public void pickFavorTokens(FavorTokens favorToken){
+		favorToken.DecrementToken();
+		favorTokenScore++;
+	
+	}
+	
+	
+	
 }
