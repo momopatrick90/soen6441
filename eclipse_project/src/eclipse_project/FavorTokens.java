@@ -1,6 +1,9 @@
 package eclipse_project;
 import java.util.Stack;
 
+/**
+ *
+ */
 public class FavorTokens {
 	/**
 	 * Stack of favor tokens
@@ -18,15 +21,26 @@ public class FavorTokens {
 	{
 		for(int i=0; i<20; i++)
 		{
-			tokens.push("favor_token");
+			putToken();
 		}
 	}
 	
 	/**
+	 * Adds a token to the stack of tokens
 	 */
-	public Stack<String> getTokensStack()
+	public void putToken()
 	{
-		return this.tokens;
+		this.tokens.push("favor_token");
+	}
+	
+	/**
+	 * @return null if there are no available tokens, else returns an instance of FavorTokens
+	 */
+	public String getToken()
+	{
+		if (this.tokens.isEmpty())
+			return null;
+		return this.tokens.pop();
 	}
 
 }

@@ -17,7 +17,18 @@ public class FavorTokensTest {
 		favorTokens.initialiseFavorTokens();
 		
 		//
-		assertTrue(favorTokens.getTokensStack().capacity() == 20);
+		int found=0;
+		String token = null;
+		do
+		{
+			token = favorTokens.getToken();
+			if(token != null)
+			{
+				found++;
+			}
+			
+		}while(token != null);
+		assertTrue(found == 20);
 	}
 
 }
