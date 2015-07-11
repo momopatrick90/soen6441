@@ -2,7 +2,7 @@ package eclipse_project;
 
 import java.util.Stack;
 
-public class LatternCards {
+public class LanternCards {
 	public Stack<String> redStack = new Stack();
 	public Stack<String> blueStack = new Stack();
 	public Stack<String> greenStack = new Stack();
@@ -14,7 +14,7 @@ public class LatternCards {
 	/**
 	 * Constructor to initialize the Stack of cards.
 	 */
-	public LatternCards() {
+	public LanternCards() {
 
 	}
 

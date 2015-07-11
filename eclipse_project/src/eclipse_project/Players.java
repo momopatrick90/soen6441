@@ -3,7 +3,7 @@ package eclipse_project;
 public class Players {
 
 	public String name;
-	public LatternCards playerLCStack;
+	public LanternCards playerLCStack;
 	public int playerScore;
 	public FavorTokens playerFTStack;
 	public LakeTiles playerLTStack;
