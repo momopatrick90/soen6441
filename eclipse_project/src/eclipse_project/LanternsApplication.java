@@ -2,6 +2,10 @@ package eclipse_project;
 
 import com.sun.tools.javac.parser.Scanner;
 
+/**
+ *	Main application loading - loads the new game or existing game based on the user input
+ */
+
 public class LanternsApplication {
 
 	
@@ -9,6 +13,7 @@ public class LanternsApplication {
 		
 
 		int resp = '\0';
+		int numOfPlayers = 0;
 
 		do{
 			
@@ -19,6 +24,9 @@ public class LanternsApplication {
 			int choice = in.nextInt();
 			
 			if (choice == 1) {
+				System.out.println("Enter number of players");
+				in = new Scanner(System.in);
+				numOfPlayers = in.nextInt();
 				loadNewGame();
 			
 			} else if (choice == 2) {
