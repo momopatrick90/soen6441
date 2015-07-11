@@ -5,8 +5,12 @@ public class Player {
 	public String name;
 	public LanternCards playerLCStack;
 	public int playerScore;
+<<<<<<< Updated upstream
 	public int favorTokenScore;
 	public FavorTokens playerFTStack;
+=======
+	public int favorTokens;
+>>>>>>> Stashed changes
 	public LakeTiles playerLTStack;
 
 	public Player(String name) {

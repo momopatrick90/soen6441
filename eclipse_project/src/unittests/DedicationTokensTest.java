@@ -11,9 +11,7 @@ public class DedicationTokensTest {
 	@Test
 	public void testFourOfKindWhenCardsAreAvailable() {
 		
-		DedicationTokens dedicationTokens = new DedicationTokens();
-		
-		dedicationTokens.initializeDedicationTokens(4);
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
 			
 		assertTrue(dedicationTokens.getFourOfKind() > 0);
 	}
@@ -21,9 +19,7 @@ public class DedicationTokensTest {
 	@Test
 	public void testFourOfKindWhenCardsAreNotAvailable() {
 		
-		DedicationTokens dedicationTokens = new DedicationTokens();
-		
-		dedicationTokens.initializeDedicationTokens(4);
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
 			
 		for(int i=0;i<100;i++)
 			dedicationTokens.getFourOfKind();
@@ -34,9 +30,7 @@ public class DedicationTokensTest {
 	@Test
 	public void testThreePairWhenCardsAreNotAvailable() {
 		
-		DedicationTokens dedicationTokens = new DedicationTokens();
-		
-		dedicationTokens.initializeDedicationTokens(4);
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
 		
 		for(int i=0;i<100;i++)
 			dedicationTokens.getThreePair();
@@ -47,9 +41,7 @@ public class DedicationTokensTest {
 	@Test
 	public void testThreePairWhenCardsAreAvailable() {
 		
-		DedicationTokens dedicationTokens = new DedicationTokens();
-		
-		dedicationTokens.initializeDedicationTokens(4);
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
 		
 		assertTrue(dedicationTokens.getThreePair() > 0);
 	}

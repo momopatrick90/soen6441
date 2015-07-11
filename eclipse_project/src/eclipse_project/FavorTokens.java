@@ -15,8 +15,8 @@ public class FavorTokens {
 	 */
 	public FavorTokens(int tokenCount) {
 		
-		if(tokenCount < MAX_TOKENS || tokenCount > MAX_TOKENS)
-			tokenCount = MAX_TOKENS;
+		if(tokenCount < 0 || tokenCount > MAX_TOKENS)
+			tokenCount = 0;
 		
 		for(int i=0; i< tokenCount; i++)
 		{
@@ -35,7 +35,7 @@ public class FavorTokens {
 	/**
 	 * Decrement the favor token
 	 */
-	public void  DecrementToken(){
+	public void  decrementToken(){
 		if(!this.tokens.isEmpty())
 			this.tokens.pop();
 	}
@@ -43,7 +43,7 @@ public class FavorTokens {
 	/**
 	 * Increment the favor token - Not exceeding the MAX Count
 	 */
-	public void  IncrementToken(){
+	public void  incrementToken(){
 		if(this.tokens.size() < MAX_TOKENS)
 			this.tokens.push("favor_token");
 	}

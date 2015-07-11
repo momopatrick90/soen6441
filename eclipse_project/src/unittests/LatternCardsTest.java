@@ -12,9 +12,7 @@ public class LatternCardsTest {
 	@Test
 	public void testBlackColorCardsWhenAvailableForTwoPlayers() {
 		
-		LanternCards lc = new LanternCards();
-		
-		lc.initializeLatternCards(2);
+		LanternCards lc = new LanternCards(2);
 			
 		assertTrue(lc.getBlackCard());
 	}
@@ -22,9 +20,7 @@ public class LatternCardsTest {
 	@Test
 	public void testBlackColorCardsWhenAvailableForThreePlayers() {
 		
-		LanternCards lc = new LanternCards();
-		
-		lc.initializeLatternCards(3);
+		LanternCards lc = new LanternCards(3);
 			
 		assertTrue(lc.getBlackCard());
 	}
@@ -32,9 +28,7 @@ public class LatternCardsTest {
 	@Test
 	public void testBlackColorCardsWhenAvailableForFourPlayers() {
 		
-		LanternCards lc = new LanternCards();
-		
-		lc.initializeLatternCards(4);
+		LanternCards lc = new LanternCards(4);
 			
 		assertTrue(lc.getBlackCard());
 	}
@@ -42,9 +36,7 @@ public class LatternCardsTest {
 	@Test
 	public void testBlackColorCardsWhenNotAvailableForThreePlayers() {
 		
-		LanternCards lc = new LanternCards();
-		
-		lc.initializeLatternCards(3);
+		LanternCards lc = new LanternCards(3);
 			
 		for(int i=0;i<10;i++)
 			lc.getBlackCard();
@@ -55,14 +47,12 @@ public class LatternCardsTest {
 	@Test
 	public void testAddBlackColorCards() {
 		
-		LanternCards lc = new LanternCards();
-		
-		lc.initializeLatternCards(3);
+		LanternCards lc = new LanternCards(3);
 		
 		for(int i=0;i<10;i++)
 			lc.getBlackCard();
 		
-		lc.addBlackcard("Black Card");
+		lc.addBlackcard();
 				
 		assertTrue(lc.getBlackCard());
 	}
