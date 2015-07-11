@@ -1,6 +1,6 @@
 package eclipse_project;
 
-public class Players {
+public class Player {
 
 	public String name;
 	public LanternCards playerLCStack;
@@ -8,7 +8,7 @@ public class Players {
 	public FavorTokens playerFTStack;
 	public LakeTiles playerLTStack;
 
-	public Players(String name) {
+	public Player(String name) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
 
@@ -18,7 +18,7 @@ public class Players {
 	/**
 	 * This method will be called once the user has placed a lake tile
 	 * @param card
-	 *  contains what color of the lattern card the user will be adding to his stack.
+	 *  contains what color of the lantern card the user will be adding to his stack.
 	 */
 	public void pickCard(String card) {
 		if (card.equals("redCard")) {

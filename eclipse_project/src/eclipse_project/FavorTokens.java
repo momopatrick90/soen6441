@@ -2,45 +2,50 @@ package eclipse_project;
 import java.util.Stack;
 
 /**
+ * Favor Tokens - Tokens can be replaced with Lanterns card during the game play.
  *
  */
 public class FavorTokens {
-	/**
-	 * Stack of favor tokens
-	 */
-	Stack<String> tokens = new Stack<String>();
 	
-	public FavorTokens() {
-	
-	}
+	private final int MAX_TOKENS = 20;
+	private Stack<String> tokens = new Stack<String>();
 	
 	/**
-	 * Initialize the favor tokens for the start of the game
+	 * initializing the favor tokens
 	 */
-	public void initialiseFavorTokens()
-	{
-		for(int i=0; i<20; i++)
+	public FavorTokens(int tokenCount) {
+		
+		if(tokenCount < MAX_TOKENS || tokenCount > MAX_TOKENS)
+			tokenCount = MAX_TOKENS;
+		
+		for(int i=0; i< tokenCount; i++)
 		{
-			putToken();
+			tokens.push("favor_token");
 		}
 	}
 	
 	/**
-	 * Adds a token to the stack of tokens
+	 * Number of favor tokens 
+	 * @return number of favor tokens available
 	 */
-	public void putToken()
-	{
-		this.tokens.push("favor_token");
+	public int getTokens() {
+		return tokens.size();
 	}
 	
 	/**
-	 * @return null if there are no available tokens, else returns an instance of FavorTokens
+	 * Decrement the favor token
 	 */
-	public String getToken()
-	{
-		if (this.tokens.isEmpty())
-			return null;
-		return this.tokens.pop();
+	public void  DecrementToken(){
+		if(!this.tokens.isEmpty())
+			this.tokens.pop();
+	}
+	
+	/**
+	 * Increment the favor token - Not exceeding the MAX Count
+	 */
+	public void  IncrementToken(){
+		if(this.tokens.size() < MAX_TOKENS)
+			this.tokens.push("favor_token");
 	}
 
 }

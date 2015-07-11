@@ -3,13 +3,14 @@ package eclipse_project;
 import java.util.Stack;
 
 public class LanternCards {
-	public Stack<String> redStack = new Stack();
-	public Stack<String> blueStack = new Stack();
-	public Stack<String> greenStack = new Stack();
-	public Stack<String> whiteStack = new Stack();
-	public Stack<String> purpleStack = new Stack();
-	public Stack<String> blackStack = new Stack();
-	public Stack<String> orangeStack = new Stack();
+	
+	private Stack<String> redStack = new Stack();
+	private Stack<String> blueStack = new Stack();
+	private Stack<String> greenStack = new Stack();
+	private Stack<String> whiteStack = new Stack();
+	private Stack<String> purpleStack = new Stack();
+	private Stack<String> blackStack = new Stack();
+	private Stack<String> orangeStack = new Stack();
 
 	/**
 	 * Constructor to initialize the Stack of cards.

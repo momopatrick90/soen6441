@@ -3,17 +3,19 @@ package eclipse_project;
 import com.sun.tools.javac.parser.Scanner;
 
 /**
- *	Main application loading - loads the new game or existing game based on the user input
+ *	Main application container - loads the new game or existing game based on the user input
  */
 
 public class LanternsApplication {
 
+	private static GameEngine game;
+	private static int numOfPlayers;
+	private static int playerTurn;
+	private static int tokensCount;
 	
 	public static void main(String[] args){
-		
 
 		int resp = '\0';
-		int numOfPlayers = 0;
 
 		do{
 			
@@ -27,6 +29,8 @@ public class LanternsApplication {
 				System.out.println("Enter number of players");
 				in = new Scanner(System.in);
 				numOfPlayers = in.nextInt();
+				playerTurn = 1;
+				tokensCount = 20;
 				loadNewGame();
 			
 			} else if (choice == 2) {
@@ -45,9 +49,20 @@ public class LanternsApplication {
 	
 	public static void loadNewGame(){
 		
+		game = new GameEngine(numOfPlayers, playerTurn, tokensCount);
+		game.start();
 	}
 	
 	public static void loadExistingGame(){
 		
+		readGameState();
+		game = new GameEngine(numOfPlayers, playerTurn, tokensCount);
+		game.start();
+	}
+	
+	public static void readGameState(){
+		numOfPlayers = 1;
+		playerTurn = 1;
+		tokensCount = 20;
 	}
 }

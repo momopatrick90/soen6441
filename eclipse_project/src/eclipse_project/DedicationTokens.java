@@ -2,19 +2,19 @@ package eclipse_project;
 
 import java.util.Stack;
 
+/**
+ * Dedication Token - Four of kind, Three Pair and Seven unique colors can be replaced with honor value.
+ *
+ */
 public class DedicationTokens {
 
-	public DedicationTokens() {
-		// TODO Auto-generated constructor stub
-	}
-	Stack<Integer> fourOfKind = new Stack();
-	Stack<Integer> threePair = new Stack();
-	Stack<Integer> sevenUnique = new Stack();
-	Stack<Integer> genericFour = new Stack();
+	private Stack<Integer> fourOfKind = new Stack();
+	private Stack<Integer> threePair = new Stack();
+	private Stack<Integer> sevenUnique = new Stack();
+	private Stack<Integer> genericFour = new Stack();
 	
-	//intialize the DedicationTokens Stacks according to number of players
-	public void initializeDedicationTokens(int numberOfPlayers)
-	{
+	public DedicationTokens(int numberOfPlayers) {
+	
 		switch(numberOfPlayers)
 		{
 			case 1:
@@ -47,7 +47,10 @@ public class DedicationTokens {
 		}
 	}
 	
-	//method to give one dedicationToken from FourOfKind Stack with its appropriate current value 
+	/**
+	 * method to give one dedicationToken from FourOfKind Stack with its appropriate current value 
+	 * @return honor value
+	 */
 	public int getFourOfKind()
 	{
 		int result=0;
@@ -65,7 +68,10 @@ public class DedicationTokens {
 		return result;
 	}
 	
-	//method to give one dedicationToken from threePair Stack with its appropriate current value
+	/**
+	 * method to give one dedicationToken from threePair Stack with its appropriate current value
+	 * @return honor value
+	 */
 	public int getThreePair()
 	{
 		int result=0;
@@ -83,7 +89,10 @@ public class DedicationTokens {
 		return result;
 	}
 	
-	//method to give one dedicationToken from sevenUnique Stack with its appropriate current value
+	/**
+	 * method to give one dedicationToken from sevenUnique Stack with its appropriate current value.
+	 * @return honor value
+	 */
 	public int getSevenUnique()
 	{
 		int result=0;
@@ -99,12 +108,6 @@ public class DedicationTokens {
 			result=sevenUnique.pop();
 		}
 		return result;
-	}
-	
-	public static void main(String args[])
-	{
-		DedicationTokens Dt = new DedicationTokens();
-		Dt.initializeDedicationTokens(4);
 	}
 
 }
