@@ -1,6 +1,7 @@
 package eclipse_project;
 
-import com.sun.tools.javac.parser.Scanner;
+import java.util.Scanner;
+
 
 /**
  *	Main application container - loads the new game or existing game based on the user input
