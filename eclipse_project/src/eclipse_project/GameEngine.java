@@ -9,11 +9,21 @@ public class GameEngine {
 	private int playerTurn;
 	private int favorTokensCount;
 	private StartTile startTile;
-	private LanternCards lanternCards;
+	private LanternCards lanternCards ;
 	private Player player;
 	private DedicationTokens dedicationTokens;
 	private FavorTokens favorTokens;
+	private static int redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount;
 	
+	public GameEngine(int numOfPlayers){
+		//create 
+		this.lanternCards = new LanternCards(numOfPlayers);
+		this.dedicationTokens =new DedicationTokens(numOfPlayers);
+		
+		
+		
+	}
+
 	public GameEngine(int numOfPlayers,int playerTurn,int favorTokensCount,int redCount,int blueCount,int greenCount,int whiteCount,int purpleCount,int blackCount,int orangeCount){
 		
 		this.numOfPlayer = numOfPlayers;

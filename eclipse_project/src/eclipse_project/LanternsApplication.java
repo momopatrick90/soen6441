@@ -13,6 +13,7 @@ public class LanternsApplication {
 	private static int numOfPlayers;
 	private static int playerTurn;
 	private static int tokensCount;
+	private static int redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount;
 	
 	public static void main(String[] args){
 
@@ -50,14 +51,14 @@ public class LanternsApplication {
 	
 	public static void loadNewGame(){
 		
-		game = new GameEngine(numOfPlayers, playerTurn, tokensCount);
+		game = new GameEngine(numOfPlayers, playerTurn, tokensCount, redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount);
 		game.start();
 	}
 	
 	public static void loadExistingGame(){
 		
 		readGameState();
-		game = new GameEngine(numOfPlayers, playerTurn, tokensCount);
+		game = new GameEngine(numOfPlayers, playerTurn, tokensCount, redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount);
 		game.start();
 	}
 	
