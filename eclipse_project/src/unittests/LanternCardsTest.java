@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import eclipse_project.LanternCards;;
 
-public class LatternCardsTest {
+public class LanternCardsTest {
 
 	//Black Cards Start
 	@Test
