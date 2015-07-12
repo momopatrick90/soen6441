@@ -18,8 +18,18 @@ public class LanternCards {
 	private int numOfPlayers;
 
 	/**
-	 * Constructor to initialize the number of lanterns cards that depends on the number of players.
-	 * @param numOfPlayers - Number of players playing game.
+	 * Create an empty stack of seven colors.
+	 */
+	public LanternCards() {
+		super();
+	}
+
+	/**
+	 * Constructor to initialize the number of lanterns cards that depends on
+	 * the number of players.
+	 * 
+	 * @param numOfPlayers
+	 *            - Number of players playing game.
 	 */
 	public LanternCards(int numOfPlayers) {
 
@@ -49,22 +59,32 @@ public class LanternCards {
 	}
 
 	/**
-	 * Constructor to initialize the number of lantern cards with some existing values - Existing Game Resume 
-	 * @param numOfPlayers - Number of Players playing the game.
-	 * @param redCount - Number of Red Cards.
-	 * @param blueCount - Number of Blue Cards.
-	 * @param greenCount - Number of Green Cards.
-	 * @param whiteCount - Number of White Cards.
-	 * @param purpleCount - Number of Purple Cards.
-	 * @param blackCount - Number of Black Cards.
-	 * @param orangeCount - Number of Orange Cards.
+	 * Constructor to initialize the number of lantern cards with some existing
+	 * values - Existing Game Resume
+	 * 
+	 * @param numOfPlayers
+	 *            - Number of Players playing the game.
+	 * @param redCount
+	 *            - Number of Red Cards.
+	 * @param blueCount
+	 *            - Number of Blue Cards.
+	 * @param greenCount
+	 *            - Number of Green Cards.
+	 * @param whiteCount
+	 *            - Number of White Cards.
+	 * @param purpleCount
+	 *            - Number of Purple Cards.
+	 * @param blackCount
+	 *            - Number of Black Cards.
+	 * @param orangeCount
+	 *            - Number of Orange Cards.
 	 */
 	public LanternCards(int numOfPlayers, int redCount, int blueCount,
 			int greenCount, int whiteCount, int purpleCount, int blackCount,
 			int orangeCount) {
 
 		this.numOfPlayers = numOfPlayers;
-		
+
 		// push the specified number of cards in each stack
 		for (int i = 0; i < redCount; i++)
 			this.redStack.push(this.Colors[0]);
@@ -90,6 +110,7 @@ public class LanternCards {
 
 	/**
 	 * This method gives the red card to the player
+	 * 
 	 * @return true or false
 	 */
 	public boolean getRedCard() {
@@ -108,14 +129,13 @@ public class LanternCards {
 	 * This method add the red card to the stack
 	 */
 	public void addRedcard() {
-		if ((this.numOfPlayers == 2 && this.redStack.size() < 5)
-				|| (this.numOfPlayers == 3 && this.redStack.size() < 7)
-				|| (this.numOfPlayers == 4 && this.redStack.size() < 8))
-			this.redStack.push(this.Colors[0]);
+
+		this.redStack.push(this.Colors[0]);
 	}
 
 	/**
 	 * This method gives the blue card to the player
+	 * 
 	 * @return true or false
 	 */
 	public boolean getBlueCard() {
@@ -134,14 +154,13 @@ public class LanternCards {
 	 * This method add the blue card to the stack
 	 */
 	public void addBluecard() {
-		if ((this.numOfPlayers == 2 && this.blueStack.size() < 5)
-				|| (this.numOfPlayers == 3 && this.blueStack.size() < 7)
-				|| (this.numOfPlayers == 4 && this.blueStack.size() < 8))
-			this.blueStack.push(this.Colors[1]);
+
+		this.blueStack.push(this.Colors[1]);
 	}
 
 	/**
 	 * This method gives the green card to the player
+	 * 
 	 * @return true or false
 	 */
 	public boolean getGreenCard() {
@@ -160,14 +179,13 @@ public class LanternCards {
 	 * This method add the green card to the stack
 	 */
 	public void addGreencard() {
-		if ((this.numOfPlayers == 2 && this.greenStack.size() < 5)
-				|| (this.numOfPlayers == 3 && this.greenStack.size() < 7)
-				|| (this.numOfPlayers == 4 && this.greenStack.size() < 8))
-			this.greenStack.push(this.Colors[2]);
+
+		this.greenStack.push(this.Colors[2]);
 	}
 
 	/**
 	 * This method gives the white card to the player
+	 * 
 	 * @return true or false
 	 */
 	public boolean getWhiteCard() {
@@ -186,14 +204,13 @@ public class LanternCards {
 	 * This method add the white card to the stack
 	 */
 	public void addWhitecard() {
-		if ((this.numOfPlayers == 2 && this.whiteStack.size() < 5)
-				|| (this.numOfPlayers == 3 && this.whiteStack.size() < 7)
-				|| (this.numOfPlayers == 4 && this.whiteStack.size() < 8))
-			this.whiteStack.push(this.Colors[3]);
+
+		this.whiteStack.push(this.Colors[3]);
 	}
 
 	/**
 	 * This method gives the purple card to the player
+	 * 
 	 * @return true or false
 	 */
 	public boolean getPurpleCard() {
@@ -209,17 +226,16 @@ public class LanternCards {
 	}
 
 	/**
-	* This method add the purple card to the stack
-	*/
+	 * This method add the purple card to the stack
+	 */
 	public void addPurplecard() {
-		if ((this.numOfPlayers == 2 && this.purpleStack.size() < 5)
-				|| (this.numOfPlayers == 3 && this.purpleStack.size() < 7)
-				|| (this.numOfPlayers == 4 && this.purpleStack.size() < 8))
+
 		this.purpleStack.push(this.Colors[4]);
 	}
 
 	/**
 	 * This method gives the black card to the player
+	 * 
 	 * @return true or false
 	 */
 	public boolean getBlackCard() {
@@ -235,17 +251,16 @@ public class LanternCards {
 	}
 
 	/**
-	* This method add the black card to the stack
-	*/
+	 * This method add the black card to the stack
+	 */
 	public void addBlackcard() {
-		if ((this.numOfPlayers == 2 && this.blackStack.size() < 5)
-				|| (this.numOfPlayers == 3 && this.blackStack.size() < 7)
-				|| (this.numOfPlayers == 4 && this.blackStack.size() < 8))
+
 		this.blackStack.push(this.Colors[5]);
 	}
 
 	/**
 	 * This method gives the orange card to the player
+	 * 
 	 * @return true or false
 	 */
 	public boolean getOrangeCard() {
@@ -261,13 +276,10 @@ public class LanternCards {
 	}
 
 	/**
-	* This method add the orange card to the stack
-	*/
+	 * This method add the orange card to the stack
+	 */
 	public void addOrangecard() {
-		
-		if ((this.numOfPlayers == 2 && this.orangeStack.size() < 5)
-				|| (this.numOfPlayers == 3 && this.orangeStack.size() < 7)
-				|| (this.numOfPlayers == 4 && this.orangeStack.size() < 8))
+
 		this.orangeStack.push(this.Colors[6]);
 	}
 

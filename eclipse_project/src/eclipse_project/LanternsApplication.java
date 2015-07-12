@@ -10,6 +10,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.*;
 
 
@@ -25,7 +26,7 @@ public class LanternsApplication {
 	private static int tokensCount;
 	private static int redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount;
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException{
 
 		int resp = '\0';
 
@@ -41,13 +42,14 @@ public class LanternsApplication {
 				System.out.println("Enter number of players");
 				in = new Scanner(System.in);
 				numOfPlayers = in.nextInt();
-				playerTurn = 1;
-				tokensCount = 20;
 				loadNewGame();
 			
 			} else if (choice == 2) {
 				
-				loadExistingGame();
+				System.out.println("Enter number of players");
+				in = new Scanner(System.in);
+				String fileName = in.nextLine();
+				loadExistingGame(fileName);
 
 			}
 
@@ -61,15 +63,8 @@ public class LanternsApplication {
 	
 	public static void loadNewGame(){
 		
-		game = new GameEngine(numOfPlayers, playerTurn, tokensCount, redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount);
-		game.start();
-	}
-	
-	public static void loadExistingGame(){
-		
-		readGameState();
-		game = new GameEngine(numOfPlayers, playerTurn, tokensCount, redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount);
-		game.start();
+		game = new GameEngine(numOfPlayers);
+		game.startNewGame();
 	}
 	
 	/**
@@ -89,7 +84,7 @@ public class LanternsApplication {
 	 * 
 	 * <game_board ... />
 	 */
-	public GameEngine loadExistingGame(String fileName) throws ParserConfigurationException, SAXException, IOException{
+	public static GameEngine loadExistingGame(String fileName) throws ParserConfigurationException, SAXException, IOException{
 		// 
 		File fXmlFile = new File(fileName);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -114,20 +109,8 @@ public class LanternsApplication {
 			//
 			Node node = nodeList.item(i);
 			
-			//
-			if(node.getNodeName().equals("dedication_tokens"))
-			{
-				dedicationTokens = this.loadDedicationTokens((Element) node);
-			}else if(node.getNodeName().equals("available_lake_tiles"))
-			{
-				availableLakeTiles = this.loadLakeTiles((Element) node);
-			}else if(node.getNodeName().equals("available_lantern_cards"))
-			{
-				availableLanternCards = this.loadLanternCards((Element) node);
-			}else if(node.getNodeName().equals("favor_tokens"))
-			{
-				favorTokens = this.loadFavorTokens((Element) node);
-			}else if(node.getNodeName().equals("players"))
+			
+			if(node.getNodeName().equals("players"))
 			{
 				// list of players
 				NodeList playersElementList = ((Element) node).getElementsByTagName("player");
@@ -137,7 +120,7 @@ public class LanternsApplication {
 					// should add to true to this if its the current players turn
 					LinkedList<Boolean> isCurrent = new LinkedList<Boolean>();
 					//
-					Player player = this.loadPlayer((Element) nodeList.item(i), isCurrent);
+					Player player = loadPlayer((Element) nodeList.item(i), isCurrent);
 					//
 					players.add(player);
 					//
@@ -146,18 +129,37 @@ public class LanternsApplication {
 						currentPlayer = player;
 					}
 				}
+			}
+			
+		}
+		
+		//
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			//
+			Node node = nodeList.item(i);
+			
+			//
+			if(node.getNodeName().equals("dedication_tokens"))
+			{
+				dedicationTokens = loadDedicationTokens(players.size(),(Element) node);
+			}else if(node.getNodeName().equals("available_lake_tiles"))
+			{
+				availableLakeTiles = loadLakeTiles((Element) node);
+			}else if(node.getNodeName().equals("available_lantern_cards"))
+			{
+				availableLanternCards = loadLanternCards((Element) node);
+			}else if(node.getNodeName().equals("favor_tokens"))
+			{
+				favorTokens = loadFavorTokens((Element) node);
 			}else if(node.getNodeName().equals("game_board"))
 			{
 				
 			}
 			
-			
 		}
 		
-		
-		
-		//game = new GameEngine(numOfPlayers, playerTurn, tokensCount);
-		//game.start();
+		game = new GameEngine(players.size(), 1, favorTokens, dedicationTokens,availableLanternCards);
+
 		return null;
 	}
 	
@@ -171,19 +173,19 @@ public class LanternsApplication {
 	 * 		<lantern_cards ... />
 	 * 	</player>
 	 * */
-	public Player loadPlayer(Element playerElement, LinkedList<Boolean> isCurrent)
+	public static Player loadPlayer(Element playerElement, LinkedList<Boolean> isCurrent)
 	{
 		//
-		int favorTokens = this.loadFavorTokens((Element) playerElement.getElementsByTagName("favor_tokens").item(0));
+		int favorTokens = loadFavorTokens((Element) playerElement.getElementsByTagName("favor_tokens").item(0));
 	
 		//
 		//DedicationTokens dedicationTokens = this.loadDedicationTokens((Element) playerElement.getElementsByTagName("dedication_tokens"));
 		
 		//
-		LanternCards loadLanternCards = this.loadLanternCards((Element) playerElement.getElementsByTagName("lantern_cards"));
+		LanternCards loadLanternCards = loadLanternCards((Element) playerElement.getElementsByTagName("lantern_cards"));
 		
 		//
-		LakeTiles lakeTiles = this.loadLakeTiles((Element) playerElement.getElementsByTagName("lake_tiles")); 
+		LakeTiles lakeTiles = loadLakeTiles((Element) playerElement.getElementsByTagName("lake_tiles")); 
 		
 		//four
 		int fourKindScore = Integer.parseInt(playerElement.getAttribute("four_kind_score"));
@@ -193,7 +195,7 @@ public class LanternsApplication {
 		isCurrent.add(Boolean.parseBoolean(playerElement.getAttribute("current")));
 		
 		//
-		return null;
+		return new Player("", loadLanternCards, lakeTiles, favorTokens, fourKindScore, threePairScore, sevenUniqueScore);
 	}
 	
 	/**
@@ -201,7 +203,7 @@ public class LanternsApplication {
 	 * @param favorTokensElement
 	 * @return
 	 */
-	public int loadFavorTokens(Element favorTokensElement)
+	public static int loadFavorTokens(Element favorTokensElement)
 	{
 		return Integer.parseInt(favorTokensElement.getAttribute("value"));
 	}
@@ -212,7 +214,7 @@ public class LanternsApplication {
 	 * 		<dedication_tokens four_kind="2" three_pair="1" seven_unique="2" generic_four="4" />
 	 * @return a dedication token
 	 */
-	public DedicationTokens loadDedicationTokens(Element dedicationTokenElement)
+	public static DedicationTokens loadDedicationTokens(int numOfPlayer, Element dedicationTokenElement)
 	{
 		//
 		int fourKind = Integer.parseInt(dedicationTokenElement.getAttribute("four_kind"));;
@@ -222,7 +224,7 @@ public class LanternsApplication {
 		
 
 		//
-		return new DedicationTokens(0, fourKind, threePair, sevenUnique, genericFour);
+		return new DedicationTokens(numOfPlayer, fourKind, threePair, sevenUnique, genericFour);
 	}
 	
 	
@@ -230,7 +232,7 @@ public class LanternsApplication {
 	 * @param lanternCardsElement 
 	 * 		example: <lantern_cards red="1"  blue="2"  green="1" white="3"  purple="2" black="0" "orange"=1 />
 	 */
-	public LanternCards loadLanternCards(Element lanternCardsElement)
+	public static LanternCards loadLanternCards(Element lanternCardsElement)
 	{
 		//
 		int red = Integer.parseInt(lanternCardsElement.getAttribute("red"));
@@ -257,7 +259,7 @@ public class LanternsApplication {
 	 *  />
 	 * 	
 	 */
-	public LakeTiles loadLakeTiles(Element lakeTilesElement)
+	public static LakeTiles loadLakeTiles(Element lakeTilesElement)
 	{
 		//
 		int id = Integer.parseInt(lakeTilesElement.getAttribute("id"));
@@ -283,11 +285,5 @@ public class LanternsApplication {
 		
 		return null;
 	}
-	
-	
-	public static void readGameState(){
-		numOfPlayers = 1;
-		playerTurn = 1;
-		tokensCount = 20;
-	}
+
 }

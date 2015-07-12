@@ -18,7 +18,7 @@ public class LakeTiles {
 	public Stack<LakeTiles> globalLakeTiles = new Stack<LakeTiles>();
 	
 	public LakeTiles() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class LakeTiles {
 	 * @param numberOfPlayers total number of players 
 	 * @return list of lakeTiles
 	 */
-	public ArrayList<LakeTiles>assignLakeTiles(int numberOfPlayers)
+	public ArrayList<LakeTiles> assignLakeTiles(int numberOfPlayers)
 	{
 		ArrayList<LakeTiles> assignedLakeTiles = new ArrayList<LakeTiles>();
 		switch(numberOfPlayers)

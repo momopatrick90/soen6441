@@ -7,6 +7,7 @@ import java.util.Stack;
  *
  */
 public class DedicationTokens {
+
 	private Stack<Integer> fourOfKind = new Stack<Integer>();
 	private Stack<Integer> threePair = new Stack<Integer>();
 	private Stack<Integer> sevenUnique = new Stack<Integer>();
@@ -35,9 +36,9 @@ public class DedicationTokens {
 				int fourOfKindValue=1,threePairValue=1,sevenUniqueValue=2;
 				for(int i=0; i<9; i++)
 				{
-					fourOfKind.push(fourOfKindValue);
-					threePair.push(threePairValue);
-					sevenUnique.push(sevenUniqueValue);
+					this.fourOfKind.push(fourOfKindValue);
+					this.threePair.push(threePairValue);
+					this.sevenUnique.push(sevenUniqueValue);
 					
 					fourOfKindValue++;
 					threePairValue++;
@@ -49,6 +50,9 @@ public class DedicationTokens {
 					}
 										
 				}
+				
+				for(int i=0; i<3;i++)
+					this.genericFour.push(GENERIC_FOUR_MAX);
 		}
 		
 	}
@@ -73,28 +77,31 @@ public class DedicationTokens {
 				break;
 			case 4:
 				
-				if(fourOfKindCount >= 1 && fourOfKindCount <= FOUR_KIND_MAX)
+				if(fourOfKindCount >= 1 && fourOfKindCount <= 9)
 				{
 					for(int i=1;i<=fourOfKindCount;i++)
-						this.fourOfKind.push(i);
+						if(i==9)
+							this.fourOfKind.push(8);
+						else
+							this.fourOfKind.push(i);
 				}
 				
-				if(threePairCount >= 1 && threePairCount <= THREE_PAIR_MAX)
+				if(threePairCount >= 1 && threePairCount <= 9)
 				{
-				for(int i=1;i<=threePairCount;i++)
-					this.threePair.push(i);
+					for(int i=1;i<=threePairCount;i++)
+						this.threePair.push(i);
 				}
 				
-				if(sevenUniqueCount >= 1 && sevenUniqueCount <= SEVEN_UNIQUE_MAX)
+				if(sevenUniqueCount >= 1 && sevenUniqueCount <= 9)
 				{
-				for(int i=1;i<=sevenUniqueCount;i++)
-					this.sevenUnique.push(i);
+					for(int i=1;i<=sevenUniqueCount;i++)
+						this.sevenUnique.push(i);
 				}
 
-				if(genericFourCount >= 1 && genericFourCount <= GENERIC_FOUR_MAX)
+				if(genericFourCount >= 1 && genericFourCount <= 3)
 				{
-				for(int i=1; i<=genericFourCount;i++)
-					this.genericFour.push(GENERIC_FOUR_MAX);
+					for(int i=1; i<=genericFourCount;i++)
+						this.genericFour.push(GENERIC_FOUR_MAX);
 				}
 					
 		}

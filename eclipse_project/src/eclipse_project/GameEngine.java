@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Game Engine - Responsible for loading, updating the state of the game.
  */
 public class GameEngine {
+	
 	private ArrayList<Player> PlayerList = new ArrayList();
 	private int numOfPlayer;
 	private int playerTurn;
@@ -22,132 +23,107 @@ public class GameEngine {
 	private Player player2 = new Player("player2");
 	private Player player3 = new Player("player3");
 	private Player player4 = new Player("player4");
+	
 	/**
 	 * This method is called when the user starts a new game.
 	 * 
 	 * @param numOfPlayers - number of players that will be playing the game
 	 */
-	public GameEngine(int numOfPlayers){
+	public GameEngine(int numOfPlayer){
 
-		
-		this.numOfPlayer = numOfPlayers;
-		
-		//Set the initial variables for the lantern cards and the various tokens
-		// according to the number of players.
-		
-		this.lanternCards = new LanternCards(numOfPlayers);
-		this.dedicationTokens = new DedicationTokens(numOfPlayers);
-		this.favorTokens = new FavorTokens(20);
-		
-		
-		lakeTiles = new LakeTiles();
-		
-		//generate a random lake tile stack
-		lakeTiles.initializeLakeTiles(this.numOfPlayer);
-		
-		//get the lake tiles that each user will have at the start of the game
-		// if 2 players it return 6 lake tiles, else if 3 -> 9  else 4 ->12
-		lTiles = lakeTiles.assignLakeTiles(this.numOfPlayer);
-		
-		//get the starting lake tile
-		startTile = lakeTiles.lakeTiles[0];
-		Board board = new Board();
-		
-		//place the starting lake tile on the board
-		board.intializeGameBoard(startTile);
-		
-		
-		
-		// give each player three lake tiles to start with.
-		if(this.numOfPlayer == 2){
-			
-			player1.setLakeTiles(lTiles.get(0));
-			player1.setLakeTiles(lTiles.get(1));
-			player1.setLakeTiles(lTiles.get(2));
-			PlayerList.add(player1);
-			
-			player2.setLakeTiles(lTiles.get(3));
-			player2.setLakeTiles(lTiles.get(4));
-			player2.setLakeTiles(lTiles.get(5));
-			PlayerList.add(player2);
-			
-		}else if(this.numOfPlayer == 3){
-			
-			player1.setLakeTiles(lTiles.get(0));
-			player1.setLakeTiles(lTiles.get(1));
-			player1.setLakeTiles(lTiles.get(2));
-			PlayerList.add(player1);
-			
-			player2.setLakeTiles(lTiles.get(3));
-			player2.setLakeTiles(lTiles.get(4));
-			player2.setLakeTiles(lTiles.get(5));
-			PlayerList.add(player2);
-			
-			player3.setLakeTiles(lTiles.get(6));
-			player3.setLakeTiles(lTiles.get(7));
-			player3.setLakeTiles(lTiles.get(8));
-			PlayerList.add(player3);
-
-			
-			
-		}else if(this.numOfPlayer == 4){
-			player1.setLakeTiles(lTiles.get(0));
-			player1.setLakeTiles(lTiles.get(1));
-			player1.setLakeTiles(lTiles.get(2));
-			PlayerList.add(player1);
-			
-			player2.setLakeTiles(lTiles.get(3));
-			player2.setLakeTiles(lTiles.get(4));
-			player2.setLakeTiles(lTiles.get(5));
-			PlayerList.add(player2);
-			
-			player3.setLakeTiles(lTiles.get(6));
-			player3.setLakeTiles(lTiles.get(7));
-			player3.setLakeTiles(lTiles.get(8));
-			PlayerList.add(player3);
-			
-			player4.setLakeTiles(lTiles.get(9));
-			player4.setLakeTiles(lTiles.get(10));
-			player4.setLakeTiles(lTiles.get(11));
-			PlayerList.add(player4);
-			
-		}
-		
-		
+		this.numOfPlayer = numOfPlayer;		
 	}
 
-	public GameEngine(int numOfPlayers,int playerTurn,int favorTokensCount,int redCount,int blueCount,int greenCount,int whiteCount,int purpleCount,int blackCount,int orangeCount){
+	public GameEngine(int numOfPlayers, int playerTurn, int favorTokensCount, DedicationTokens dedicationObj, LanternCards lanternCardObj){
 		
 		this.numOfPlayer = numOfPlayers;
-		this.playerTurn = playerTurn;
-		this.favorTokensCount = favorTokensCount;
 		
-		this.lanternCards = new LanternCards(numOfPlayers, redCount, blueCount, greenCount, whiteCount, purpleCount, blackCount, orangeCount);
-		this.dedicationTokens = new DedicationTokens(numOfPlayers,8,9,10,4);
+		this.lanternCards = lanternCardObj;
+		this.dedicationTokens = dedicationObj;
 		this.favorTokens = new FavorTokens(favorTokensCount);
-	}
-	
-	public void start(){
-		this.load();
-	}
-	
-	public void update(){
-		
-	}
-	
-	public void load(){
-		
-	}
-	
-	public void gameloop(){
-		
-	}
-	
-	public void unload(){
-		
-	}
+	}	
+
 	public void startNewGame()
 	{
-		
+		//Set the initial variables for the lantern cards and the various tokens
+				// according to the number of players.
+				
+				this.lanternCards = new LanternCards(this.numOfPlayer);
+				this.dedicationTokens = new DedicationTokens(numOfPlayer);
+				this.favorTokens = new FavorTokens(20);//For new game there will be 20 favor tokens by default
+				
+				
+				lakeTiles = new LakeTiles();
+				
+				//generate a random lake tile stack
+				lakeTiles.initializeLakeTiles(this.numOfPlayer);
+				
+				//get the lake tiles that each user will have at the start of the game
+				// if 2 players it return 6 lake tiles, else if 3 -> 9  else 4 ->12
+				lTiles = lakeTiles.assignLakeTiles(this.numOfPlayer);
+				
+				//get the starting lake tile
+				startTile = lakeTiles.lakeTiles[0];
+				Board board = new Board();
+				
+				//place the starting lake tile on the board
+				board.intializeGameBoard(startTile);
+				
+				
+				
+				// give each player three lake tiles to start with.
+				if(this.numOfPlayer == 2){
+					
+					player1.setLakeTiles(lTiles.get(0));
+					player1.setLakeTiles(lTiles.get(1));
+					player1.setLakeTiles(lTiles.get(2));
+					PlayerList.add(player1);
+					
+					player2.setLakeTiles(lTiles.get(3));
+					player2.setLakeTiles(lTiles.get(4));
+					player2.setLakeTiles(lTiles.get(5));
+					PlayerList.add(player2);
+					
+				}else if(this.numOfPlayer == 3){
+					
+					player1.setLakeTiles(lTiles.get(0));
+					player1.setLakeTiles(lTiles.get(1));
+					player1.setLakeTiles(lTiles.get(2));
+					PlayerList.add(player1);
+					
+					player2.setLakeTiles(lTiles.get(3));
+					player2.setLakeTiles(lTiles.get(4));
+					player2.setLakeTiles(lTiles.get(5));
+					PlayerList.add(player2);
+					
+					player3.setLakeTiles(lTiles.get(6));
+					player3.setLakeTiles(lTiles.get(7));
+					player3.setLakeTiles(lTiles.get(8));
+					PlayerList.add(player3);
+
+					
+					
+				}else if(this.numOfPlayer == 4){
+					player1.setLakeTiles(lTiles.get(0));
+					player1.setLakeTiles(lTiles.get(1));
+					player1.setLakeTiles(lTiles.get(2));
+					PlayerList.add(player1);
+					
+					player2.setLakeTiles(lTiles.get(3));
+					player2.setLakeTiles(lTiles.get(4));
+					player2.setLakeTiles(lTiles.get(5));
+					PlayerList.add(player2);
+					
+					player3.setLakeTiles(lTiles.get(6));
+					player3.setLakeTiles(lTiles.get(7));
+					player3.setLakeTiles(lTiles.get(8));
+					PlayerList.add(player3);
+					
+					player4.setLakeTiles(lTiles.get(9));
+					player4.setLakeTiles(lTiles.get(10));
+					player4.setLakeTiles(lTiles.get(11));
+					PlayerList.add(player4);
+					
+				}
 	}
 }
