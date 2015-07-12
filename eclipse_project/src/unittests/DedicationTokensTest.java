@@ -46,4 +46,16 @@ public class DedicationTokensTest {
 		assertTrue(dedicationTokens.getThreePair() > 0);
 	}
 
+	@Test
+	public void testFourOfKindCount() {
+		
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
+		
+		int tokenExpected=dedicationTokens.fourOfKindCount();
+		assertEquals(9, tokenExpected);
+	
+	}
+	
+	
+	
 }
