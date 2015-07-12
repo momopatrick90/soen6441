@@ -89,7 +89,7 @@ public class LanternsApplication {
 	 * 
 	 * <game_board ... />
 	 */
-	public GameEngine loadNewGame(String fileName) throws ParserConfigurationException, SAXException, IOException{
+	public GameEngine loadExistingGame(String fileName) throws ParserConfigurationException, SAXException, IOException{
 		// 
 		File fXmlFile = new File(fileName);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
