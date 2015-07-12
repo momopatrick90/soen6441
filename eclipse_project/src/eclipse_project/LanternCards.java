@@ -132,6 +132,15 @@ public class LanternCards {
 
 		this.redStack.push(this.Colors[0]);
 	}
+	
+	/**
+	 * 
+	 * @return count of orange cards
+	 */
+	public int redCardCount()
+	{
+		return this.redStack.size();
+	}
 
 	/**
 	 * This method gives the blue card to the player
@@ -156,6 +165,15 @@ public class LanternCards {
 	public void addBluecard() {
 
 		this.blueStack.push(this.Colors[1]);
+	}
+	
+	/**
+	 * 
+	 * @return count of orange cards
+	 */
+	public int blueCardCount()
+	{
+		return this.blueStack.size();
 	}
 
 	/**
@@ -182,6 +200,15 @@ public class LanternCards {
 
 		this.greenStack.push(this.Colors[2]);
 	}
+	
+	/**
+	 * 
+	 * @return count of orange cards
+	 */
+	public int greenCardCount()
+	{
+		return this.greenStack.size();
+	}
 
 	/**
 	 * This method gives the white card to the player
@@ -206,6 +233,15 @@ public class LanternCards {
 	public void addWhitecard() {
 
 		this.whiteStack.push(this.Colors[3]);
+	}
+	
+	/**
+	 * 
+	 * @return count of orange cards
+	 */
+	public int whiteCardCount()
+	{
+		return this.whiteStack.size();
 	}
 
 	/**
@@ -232,6 +268,15 @@ public class LanternCards {
 
 		this.purpleStack.push(this.Colors[4]);
 	}
+	
+	/**
+	 * 
+	 * @return count of orange cards
+	 */
+	public int purpleCardCount()
+	{
+		return this.purpleStack.size();
+	}
 
 	/**
 	 * This method gives the black card to the player
@@ -256,6 +301,16 @@ public class LanternCards {
 	public void addBlackcard() {
 
 		this.blackStack.push(this.Colors[5]);
+	}
+	
+	
+	/**
+	 * 
+	 * @return count of orange cards
+	 */
+	public int blackCardCount()
+	{
+		return this.blackStack.size();
 	}
 
 	/**
@@ -283,4 +338,12 @@ public class LanternCards {
 		this.orangeStack.push(this.Colors[6]);
 	}
 
+	/**
+	 * 
+	 * @return count of orange cards
+	 */
+	public int orangeCardCount()
+	{
+		return this.orangeStack.size();
+	}
 }

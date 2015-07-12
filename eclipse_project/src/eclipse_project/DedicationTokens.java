@@ -128,6 +128,11 @@ public class DedicationTokens {
 		return result;
 	}
 	
+	public int fourOfKindCount()
+	{
+		return this.fourOfKind.size();
+	}
+	
 	/**
 	 * method to give one dedicationToken from threePair Stack with its appropriate current value
 	 * @return honor value
@@ -147,6 +152,11 @@ public class DedicationTokens {
 			result=threePair.pop();
 		}
 		return result;
+	}
+	
+	public int threePairCount()
+	{
+		return this.threePair.size();
 	}
 	
 	/**
@@ -170,4 +180,13 @@ public class DedicationTokens {
 		return result;
 	}
 
+	public int sevenUniqueCount()
+	{
+		return this.sevenUnique.size();
+	}
+	
+	public int genericFourCount()
+	{
+		return this.genericFour.size();
+	}
 }
