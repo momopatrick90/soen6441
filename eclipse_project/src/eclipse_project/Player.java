@@ -115,5 +115,17 @@ public class Player {
 	}
 	
 	
+	/**
+	 * This method will be called when the user spend token to exchange the lantern card  
+	 * 
+	 * @param favorToken 
+	 * The object containing the current stack of favor tokens on the table
+	 */
+	public void spendFavorTokens(FavorTokens favorToken ){
+		favorToken.incrementToken();
+		favorToken.incrementToken();
+		favorTokenScore-=2;
+	
+	}
 	
 }
