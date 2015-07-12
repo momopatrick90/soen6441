@@ -1,13 +1,16 @@
 package eclipse_project;
 
+import java.util.ArrayList;
+
 public class Player {
 
 	public String name;
 	public LanternCards playerLCStack;
-	public int playerScore;
+	public int playerScore=0;
 	public int favorTokenScore;
 	public FavorTokens playerFTStack;
-	public LakeTiles playerLTStack;
+	public ArrayList<LakeTiles> playerLTStack;
+	
 
 	public Player(String name) {
 		// TODO Auto-generated constructor stub
@@ -90,6 +93,25 @@ public class Player {
 		favorToken.decrementToken();
 		favorTokenScore++;
 	
+	}
+	/**
+	 * This method will be called to store lake tiles of the player
+	 * @param playerLT
+	 */
+	
+	public void setLakeTiles(LakeTiles  playerLT){
+		 this.playerLTStack.add(playerLT);
+	}
+	
+	/**
+	 * This method will be called when the player places his/her lake tile on the board
+	 * @param index - identifies which lake tile the user is placing on the board.
+	 * @return return the lake tile the player wants to place on the board.
+	 */
+	public LakeTiles placeLakeTile(int index){
+		LakeTiles placeLakeT =  this.playerLTStack.get(index);
+		this.playerLTStack.remove(index);
+		return placeLakeT;
 	}
 	
 	
