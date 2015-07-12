@@ -8,11 +8,13 @@ import java.util.Random;
  */
 
 public class LakeTiles {
+	public String leftColor,rightColor,upColor,downColor;
 	public String left,right,up,down;
+	public int id;
 	public boolean platform;
-	LakeTiles lakeTiles[]=new LakeTiles[22];
-	LakeTiles lakeTilesThreePlayers[]=new LakeTiles[27];
-	LakeTiles lakeTilesFourPlayers[]=new LakeTiles[32];
+	LakeTiles lakeTiles[]=new LakeTiles[23];
+	LakeTiles lakeTilesThreePlayers[]=new LakeTiles[28];
+	LakeTiles lakeTilesFourPlayers[]=new LakeTiles[33];
 	
 	public LakeTiles() {
 		// TODO Auto-generated constructor stub
@@ -26,49 +28,50 @@ public class LakeTiles {
 		switch(numberOfPlayers)
 		{
 			case 1:
-				System.out.println("Right now you can't play with computer.Sorry for the inconveience");
+				System.out.println("rightColor now you can't play with computer.Sorry for the inconveience");
 				break;
 			case 2:
-				//16 tiles on stack + 6 tiles for players
+				//16 tiles on stack + 6 tiles for players + start Tile
 				for(int i=0;i<lakeTiles.length;i++)
 				{
 					lakeTiles[i]=new LakeTiles();
-					lakeTiles[i].left=lakeTiles[i].randomValues();
-					lakeTiles[i].right=lakeTiles[i].randomValues();
-					lakeTiles[i].up=lakeTiles[i].randomValues();
-					lakeTiles[i].down=lakeTiles[i].randomValues();
-					if(i%2==0)
+					lakeTiles[i].leftColor=lakeTiles[i].randomValues();
+					lakeTiles[i].rightColor=lakeTiles[i].randomValues();
+					lakeTiles[i].upColor=lakeTiles[i].randomValues();
+					lakeTiles[i].downColor=lakeTiles[i].randomValues();
+					lakeTiles[i].id=i+1;
+					if(i%2!=0)
 					lakeTiles[i].platform=true;
 				}	
 				for(int i=0;i<lakeTiles.length;i++)
 				{
-					System.out.println("left"+lakeTiles[i].left+"right"+lakeTiles[i].right+"up"+lakeTiles[i].up+"down"+lakeTiles[i].down+"platform"+lakeTiles[i].platform);
+					System.out.println("id"+lakeTiles[i].id+" "+"leftColor "+" "+lakeTiles[i].leftColor+"rightColor"+" "+lakeTiles[i].rightColor+"upColor"+" "+lakeTiles[i].upColor+"downColorColor"+" "+lakeTiles[i].downColor+"platform"+" "+lakeTiles[i].platform);
 				}
 				break;
 			case 3:
-				//16 tiles on stack + 6 tiles for players
+				//18 tiles on stack + 9 tiles for players + start Tile
 				for(int i=0;i<lakeTilesThreePlayers.length;i++)
 				{
 					lakeTilesThreePlayers[i]=new LakeTiles();
-					lakeTilesThreePlayers[i].left=lakeTilesThreePlayers[i].randomValues();
-					lakeTilesThreePlayers[i].right=lakeTilesThreePlayers[i].randomValues();
-					lakeTilesThreePlayers[i].up=lakeTilesThreePlayers[i].randomValues();
-					lakeTilesThreePlayers[i].down=lakeTilesThreePlayers[i].randomValues();
-					if(i%2==0)
+					lakeTilesThreePlayers[i].leftColor=lakeTilesThreePlayers[i].randomValues();
+					lakeTilesThreePlayers[i].rightColor=lakeTilesThreePlayers[i].randomValues();
+					lakeTilesThreePlayers[i].upColor=lakeTilesThreePlayers[i].randomValues();
+					lakeTilesThreePlayers[i].downColor=lakeTilesThreePlayers[i].randomValues();
+					if(i%2!=0)
 						lakeTilesThreePlayers[i].platform=true;
 				}
 				
 				break;
 			case 4:
-				//16 tiles on stack + 6 tiles for players
+				//20 tiles on stack + 12 tiles for players + start Tile
 				for(int i=0;i<lakeTilesFourPlayers.length;i++)
 				{
 					lakeTilesFourPlayers[i]=new LakeTiles();
-					lakeTilesFourPlayers[i].left=lakeTilesFourPlayers[i].randomValues();
-					lakeTilesFourPlayers[i].right=lakeTilesFourPlayers[i].randomValues();
-					lakeTilesFourPlayers[i].up=lakeTilesFourPlayers[i].randomValues();
-					lakeTilesFourPlayers[i].down=lakeTilesFourPlayers[i].randomValues();
-					if(i%2==0)
+					lakeTilesFourPlayers[i].leftColor=lakeTilesFourPlayers[i].randomValues();
+					lakeTilesFourPlayers[i].rightColor=lakeTilesFourPlayers[i].randomValues();
+					lakeTilesFourPlayers[i].upColor=lakeTilesFourPlayers[i].randomValues();
+					lakeTilesFourPlayers[i].downColor=lakeTilesFourPlayers[i].randomValues();
+					if(i%2!=0)
 						lakeTilesFourPlayers[i].platform=true;
 				}				
 				break;					
@@ -82,7 +85,7 @@ public class LakeTiles {
 	public String randomValues()
 	{
 		String answer=null;
-		//String left,right,up,down;
+		//String leftColor,rightColor,upColor,downColorColor;
 		int x;
 		
 			Random ran = new Random();

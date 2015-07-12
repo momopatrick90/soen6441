@@ -18,6 +18,50 @@ public class DedicationTokens {
 	private final int SEVEN_UNIQUE_MAX = 10;
 	private final int GENERIC_FOUR_MAX = 4;
 	
+	/**
+	 * Constructor to initialize the Dedication Tokens that depends on the number of players at the start of the game.
+	 * @param numberOfPlayers - Number of players playing game.
+	 */
+	public DedicationTokens(int numberOfPlayers)
+	{
+		switch(numberOfPlayers)
+		{
+			case 2:
+				System.out.println("Will be implemented in build 2.Right now all the dedicationTokens will be used");
+				break;
+			case 3:
+				System.out.println("Will be implemented in build 2.Right now all the dedicationTokens will be used");
+				break;
+			case 4:
+				int fourOfKindValue=1,threePairValue=1,sevenUniqueValue=2;
+				for(int i=0; i<9; i++)
+				{
+					fourOfKind.push(fourOfKindValue);
+					threePair.push(threePairValue);
+					sevenUnique.push(sevenUniqueValue);
+					
+					fourOfKindValue++;
+					threePairValue++;
+					sevenUniqueValue++;
+					
+					if(i==7)
+					{
+						fourOfKindValue--;
+					}
+										
+				}
+		}
+		
+	}
+	
+	/**
+	 * Constructor to initialize the Dedication Tokens while loading the saved game.
+	 * @param numberOfPlayers - Number of players playing game.
+	 * @param fourOfKindCount - Number of fourOfKindCount Dedication cards.
+	 * @param threePairCount - Number of threePairCount Dedication cards.
+	 * @param sevenUniqueCount -  Number of sevenUniqueCount Dedication cards.
+	 * @param genericFourCount -  Number of genericFourCount Dedication cards.
+	 */
 	public DedicationTokens(int numberOfPlayers,int fourOfKindCount,int threePairCount,int sevenUniqueCount,int genericFourCount) {
 	
 		switch(numberOfPlayers)
@@ -47,20 +91,7 @@ public class DedicationTokens {
 				for(int i=1;i<=sevenUniqueCount;i++)
 					this.sevenUnique.push(i);
 				}
-				/*for(int i=0; i<9; i++)
-				{
-					fourOfKind.push(fourOfKindValue);
-					threePair.push(threePairValue);
-					sevenUnique.push(sevenUniqueValue);
-					
-					if(i==0)
-						fourOfKindValue++;//We can have 2 8's as we need nine Dedication Tokens
-					
-					fourOfKindValue--;
-					threePairValue--;
-					sevenUniqueValue--;					
-				}*/
-				
+
 				if(genericFourCount >= 1 && genericFourCount <= GENERIC_FOUR_MAX)
 				{
 				for(int i=1; i<=genericFourCount;i++)
