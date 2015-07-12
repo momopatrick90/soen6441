@@ -14,7 +14,7 @@ public class LakeTiles {
 	public int left,right,up,down;
 	public int id;
 	public boolean platform;
-	LakeTiles lakeTiles[];
+	public LakeTiles lakeTiles[];
 	public Stack<LakeTiles> globalLakeTiles = new Stack<LakeTiles>();
 	
 	public LakeTiles() {
@@ -84,14 +84,19 @@ public class LakeTiles {
 		}
 	}
 	
+	/**
+	 * method to assign 3 LakeTiles to each Player 
+	 * @param numberOfPlayers total number of players 
+	 * @return list of lakeTiles
+	 */
 	public ArrayList<LakeTiles>assignLakeTiles(int numberOfPlayers)
 	{
-		ArrayList<LakeTiles> l = new ArrayList<LakeTiles>();
+		ArrayList<LakeTiles> assignedLakeTiles = new ArrayList<LakeTiles>();
 		switch(numberOfPlayers)
 		{
 			case 2:
 				for(int i=1;i<numberOfPlayers*3+1;i++)
-					l.add(lakeTiles[i]);
+					assignedLakeTiles.add(lakeTiles[i]);
 				for(int i=numberOfPlayers*3+1;i<lakeTiles.length;i++)
 				{
 					globalLakeTiles.push(lakeTiles[i]);
@@ -99,7 +104,7 @@ public class LakeTiles {
 					break;
 			case 3:
 				for(int i=1;i<numberOfPlayers*3+1;i++)
-					l.add(lakeTiles[i]);
+					assignedLakeTiles.add(lakeTiles[i]);
 				for(int i=numberOfPlayers*3+1;i<lakeTiles.length;i++)
 				{
 					globalLakeTiles.push(lakeTiles[i]);
@@ -107,67 +112,87 @@ public class LakeTiles {
 					break;
 			case 4:
 				for(int i=1;i<numberOfPlayers*3+1;i++)
-					l.add(lakeTiles[i]);
+					assignedLakeTiles.add(lakeTiles[i]);
 				for(int i=numberOfPlayers*3+1;i<lakeTiles.length;i++)
 				{
 					globalLakeTiles.push(lakeTiles[i]);
 				}
 					break;
 		}
-		return l;		
+		return assignedLakeTiles;		
 	}
 	
-	
+
+	/**
+	 * method to get a single LakeTile from Stack of LakeTiles
+	 * @return LakeTile
+	 */
 	public LakeTiles getLakeTile()
 	{
 		LakeTiles top = globalLakeTiles.pop();
 		return top;
 	}
 	
+	/**
+	 * method to place a new Tile on board
+	 * @param x coordinate of position where user want to place a tile
+	 * @param y coordinate of position where user want to place a tile
+	 * @param Board
+	 * @param LakeTile to be placed on board
+	 * @return true if the tile is placed successfully 
+	 */
 	public boolean placeTile(int x,int y,Board gameBoard,LakeTiles tileToPlace)
 	{
-		gameBoard.board[x][y]=tileToPlace.id;
-		if(gameBoard.board[x+1][y]!=-1)
+		boolean flag=false;
+		if(gameBoard.board[x][y]==-1)
 		{
-			tileToPlace.right=gameBoard.board[x+1][y];
-			for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+			gameBoard.board[x][y]=tileToPlace.id;
+			gameBoard.tilesOnBoard.add(tileToPlace);
+			if(gameBoard.board[x+1][y]!=-1)
 			{
-				if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x+1][y]);
-					gameBoard.tilesOnBoard.get(i).left=tileToPlace.id;
+				tileToPlace.right=gameBoard.board[x+1][y];
+				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+				{
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x+1][y]);
+						gameBoard.tilesOnBoard.get(i).left=tileToPlace.id;
+				}
 			}
-		}
-		if(gameBoard.board[x][y+1]!=-1)
-		{
-			tileToPlace.up=gameBoard.board[x][y+1];
-			for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+			if(gameBoard.board[x][y+1]!=-1)
 			{
-				if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y+1]);
-					gameBoard.tilesOnBoard.get(i).down=tileToPlace.id;
+				tileToPlace.up=gameBoard.board[x][y+1];
+				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+				{
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y+1]);
+						gameBoard.tilesOnBoard.get(i).down=tileToPlace.id;
+				}
 			}
-		}
-		if(gameBoard.board[x-1][y]!=-1)
-		{
-			tileToPlace.left=gameBoard.board[x-1][y];
-			for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+			if(gameBoard.board[x-1][y]!=-1)
 			{
-				if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x-1][y]);
-					gameBoard.tilesOnBoard.get(i).right=tileToPlace.id;
+				tileToPlace.left=gameBoard.board[x-1][y];
+				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+				{
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x-1][y]);
+						gameBoard.tilesOnBoard.get(i).right=tileToPlace.id;
+				}
 			}
-		}
-		if(gameBoard.board[x][y-1]!=-1)
-		{
-			tileToPlace.down=gameBoard.board[x][y-1];
-			for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+			if(gameBoard.board[x][y-1]!=-1)
 			{
-				if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y-1]);
-					gameBoard.tilesOnBoard.get(i).up=tileToPlace.id;
+				tileToPlace.down=gameBoard.board[x][y-1];
+				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
+				{
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y-1]);
+						gameBoard.tilesOnBoard.get(i).up=tileToPlace.id;
+				}
 			}
+			flag=true;
 		}
-		return true;
+		else
+			System.out.println("LakeTile is already present on that location.Please choose another loacation");
+		return flag;
 	}
 	/**
 	 * method to generate random values within range 5 to 11 where each number represents particular color for example 5:red 6:green 
-	 *  
+	 * @return String with one of the given colors
 	 */	
 	public String randomValues()
 	{
@@ -206,10 +231,4 @@ public class LakeTiles {
 	}
 	
 	
-	public static void main(String args[])
-	{
-		LakeTiles lT = new LakeTiles();
-		lT.initializeLakeTiles(2);
-		
-	}
 }
