@@ -7,7 +7,6 @@ import java.util.Stack;
  *
  */
 public class DedicationTokens {
-
 	private Stack<Integer> fourOfKind = new Stack<Integer>();
 	private Stack<Integer> threePair = new Stack<Integer>();
 	private Stack<Integer> sevenUnique = new Stack<Integer>();

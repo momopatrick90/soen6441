@@ -54,4 +54,8 @@ public class GameEngine {
 	public void unload(){
 		
 	}
+	public void startNewGame()
+	{
+		
+	}
 }
