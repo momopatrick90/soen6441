@@ -2,57 +2,60 @@ package eclipse_project;
 
 public class Player {
 
-	public String name;
-	public LanternCards playerLCStack;
-	public int playerScore;
-	public int favorTokenScore;
-	public FavorTokens playerFTStack;
-	public LakeTiles playerLTStack;
+	private String name;
+	private LanternCards playerLCStack;
+	private int playerScore_fourKind;
+	private int playerScore_threePair;
+	private int playerScore_sevenUnique;
+	private int favorTokenScore;
+	private LakeTiles playerLTStack;
 
 	public Player(String name) {
-		// TODO Auto-generated constructor stub
-		this.name = name;
 
-	}
-	
+		this.name = name;
+		this.playerLCStack = new LanternCards();
+		this.playerLTStack = new LakeTiles(); //Don't know why do we need it.
+		
+	}	
 
 	/**
 	 * This method will be called once the user has placed a lake tile
 	 * @param card
 	 *  contains what color of the lantern card the user will be adding to his stack.
 	 */
-	public void pickCard(String card) {
+	public void pickCard(String card,LanternCards lanternCardsAvailable) {
 		if (card.equals("redCard")) {
-
+			lanternCardsAvailable.getRedCard();
 			playerLCStack.addRedcard();
 
 		} else if (card.equals("blueCard")) {
-
+			lanternCardsAvailable.getBlueCard();
 			playerLCStack.addBluecard();
 
 		} else if (card.equals("greenCard")) {
-
+			lanternCardsAvailable.getGreenCard();
 			playerLCStack.addGreencard();
 
 		} else if (card.equals("whiteCard")) {
-
+			lanternCardsAvailable.getWhiteCard();
 			playerLCStack.addWhitecard();
 
 		} else if (card.equals("purpleCard")) {
-
+			lanternCardsAvailable.getPurpleCard();
 			playerLCStack.addPurplecard();
 
 		} else if (card.equals("blackCard")) {
-
+			lanternCardsAvailable.getBlackCard();
 			playerLCStack.addBlackcard();
 
 		} else {
+			lanternCardsAvailable.getOrangeCard();
 			playerLCStack.addOrangecard();
 		}
 	}
 
 	/**
-	 * This method will be called when the user is exchanging lattern cards 
+	 * This method will be called when the user is exchanging lantern cards 
 	 * for a dedication token
 	 * 
 	 * @param move 
@@ -66,20 +69,19 @@ public class Player {
 
 		if (move.equals("threePair")) {
 			
-			playerScore += dedicationToken.getThreePair();
+			playerScore_threePair += dedicationToken.getThreePair();
 			
 		} else if (move.equals("FourOfKind")) {
 			
-			playerScore += dedicationToken.getFourOfKind();
+			playerScore_fourKind += dedicationToken.getFourOfKind();
 			
 		} else if (move.equals("sevenUnique")) {
 			
-			playerScore += dedicationToken.getSevenUnique();
+			playerScore_sevenUnique += dedicationToken.getSevenUnique();
 		}
 
 	}
 
-	
 	/**
 	 * This method will be called when the lake tile contains a platform in it  
 	 * 
@@ -91,7 +93,6 @@ public class Player {
 		favorTokenScore++;
 	
 	}
-	
 	
 	
 }
