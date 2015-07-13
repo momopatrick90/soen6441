@@ -23,6 +23,7 @@ public class GameEngine {
 	private ArrayList<Player> PlayerList = new ArrayList();
 	private int numOfPlayer;
 	private int playerTurn;
+	private final int numberOfCards=3;
 	private int favorTokensCount;
 	private LanternCards lanternCards ;
 	private LakeTiles lakeTiles;
@@ -82,61 +83,51 @@ public class GameEngine {
 				//place the starting lake tile on the board
 				board.intializeGameBoard(startTile);
 				
-				
-				
+					
 				// give each player three lake tiles to start with.
 				if(this.numOfPlayer == 2){
-					
-					player1.setLakeTiles(lTiles.get(0));
-					player1.setLakeTiles(lTiles.get(1));
-					player1.setLakeTiles(lTiles.get(2));
+				
+					for(int i=0;i<numOfPlayer*numberOfCards;i++)
+					{
+						if(i<numOfPlayer+1)
+							player1.setLakeTiles(lTiles.get(i));							
+						else	
+							player2.setLakeTiles(lTiles.get(i));						
+					}
 					PlayerList.add(player1);
-					
-					player2.setLakeTiles(lTiles.get(3));
-					player2.setLakeTiles(lTiles.get(4));
-					player2.setLakeTiles(lTiles.get(5));
 					PlayerList.add(player2);
-					
-				}else if(this.numOfPlayer == 3){
-					
-					player1.setLakeTiles(lTiles.get(0));
-					player1.setLakeTiles(lTiles.get(1));
-					player1.setLakeTiles(lTiles.get(2));
+				}
+				else if(this.numOfPlayer == 3){
+					for(int i=0;i<numOfPlayer*numberOfCards;i++)
+					{
+						if(i<numberOfCards)
+							player1.setLakeTiles(lTiles.get(i));
+						else if(i<numberOfCards*2)
+							player2.setLakeTiles(lTiles.get(i));
+						else if(i<numberOfCards*3)
+							player3.setLakeTiles(lTiles.get(i));							
+					}
 					PlayerList.add(player1);
-					
-					player2.setLakeTiles(lTiles.get(3));
-					player2.setLakeTiles(lTiles.get(4));
-					player2.setLakeTiles(lTiles.get(5));
 					PlayerList.add(player2);
-					
-					player3.setLakeTiles(lTiles.get(6));
-					player3.setLakeTiles(lTiles.get(7));
-					player3.setLakeTiles(lTiles.get(8));
 					PlayerList.add(player3);
 
-					
-					
-				}else if(this.numOfPlayer == 4){
-					player1.setLakeTiles(lTiles.get(0));
-					player1.setLakeTiles(lTiles.get(1));
-					player1.setLakeTiles(lTiles.get(2));
+				}
+				else if(this.numOfPlayer == 4){
+					for(int i=0;i<numOfPlayer*numberOfCards;i++)
+					{
+						if(i<numberOfCards)
+							player1.setLakeTiles(lTiles.get(i));
+						else if(i<numberOfCards*2)
+							player2.setLakeTiles(lTiles.get(i));
+						else if(i<numberOfCards*3)
+							player3.setLakeTiles(lTiles.get(i));
+						else if(i<numberOfCards*4)
+							player4.setLakeTiles(lTiles.get(i));	
+					}
 					PlayerList.add(player1);
-					
-					player2.setLakeTiles(lTiles.get(3));
-					player2.setLakeTiles(lTiles.get(4));
-					player2.setLakeTiles(lTiles.get(5));
 					PlayerList.add(player2);
-					
-					player3.setLakeTiles(lTiles.get(6));
-					player3.setLakeTiles(lTiles.get(7));
-					player3.setLakeTiles(lTiles.get(8));
 					PlayerList.add(player3);
-					
-					player4.setLakeTiles(lTiles.get(9));
-					player4.setLakeTiles(lTiles.get(10));
-					player4.setLakeTiles(lTiles.get(11));
 					PlayerList.add(player4);
-					
 				}
 	}
 	
