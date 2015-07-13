@@ -47,10 +47,7 @@ public class LakeTiles {
 					lakeTiles[i].platform=true;
 				}	
 				
-				for(int i=0;i<lakeTiles.length;i++)
-				{
-					System.out.println("id"+lakeTiles[i].id+" "+"leftColor "+" "+lakeTiles[i].leftColor+"rightColor"+" "+lakeTiles[i].rightColor+"upColor"+" "+lakeTiles[i].upColor+"downColorColor"+" "+lakeTiles[i].downColor+"platform"+" "+lakeTiles[i].platform);
-				}
+				
 				break;
 			case 3:
 				//18 tiles on stack + 9 tiles for players + start Tile
@@ -62,6 +59,7 @@ public class LakeTiles {
 					lakeTiles[i].rightColor=lakeTiles[i].randomValues();
 					lakeTiles[i].upColor=lakeTiles[i].randomValues();
 					lakeTiles[i].downColor=lakeTiles[i].randomValues();
+					lakeTiles[i].id=i+1;
 					if(i%2!=0)
 						lakeTiles[i].platform=true;
 				}
@@ -77,9 +75,14 @@ public class LakeTiles {
 					lakeTiles[i].rightColor=lakeTiles[i].randomValues();
 					lakeTiles[i].upColor=lakeTiles[i].randomValues();
 					lakeTiles[i].downColor=lakeTiles[i].randomValues();
+					lakeTiles[i].id=i+1;
 					if(i%2!=0)
 						lakeTiles[i].platform=true;
-				}				
+				}			
+				/*for(int i=0;i<lakeTiles.length;i++)
+				{
+					System.out.println("id"+lakeTiles[i].id+" "+"leftColor "+" "+lakeTiles[i].leftColor+"rightColor"+" "+lakeTiles[i].rightColor+"upColor"+" "+lakeTiles[i].upColor+"downColorColor"+" "+lakeTiles[i].downColor+"platform"+" "+lakeTiles[i].platform);
+				}*/
 				break;					
 		}
 	}

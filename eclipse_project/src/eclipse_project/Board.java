@@ -38,6 +38,7 @@ public class Board {
 		startTile.upColor="green";
 		startTile.leftColor="orange";
 		startTile.rightColor="black";
+		startTile.platform=false;
 		int x;		
 		Random ran = new Random();
 		x = ran.nextInt(6) + 5;

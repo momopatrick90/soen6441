@@ -122,6 +122,15 @@ public class Player {
 	public void setLakeTiles(LakeTiles playerLT) {
 		this.playerLTStack.add(playerLT);
 	}
+	
+	/**
+	 * This method will be called to store lake tiles of the player
+	 * return PlayerLTStack
+	 */
+	public ArrayList<LakeTiles> getLakeTiles()
+	{
+		return this.playerLTStack;
+	}
 
 	/**
 	 * This method will be called when the player places his/her lake tile on
