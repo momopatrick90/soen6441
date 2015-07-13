@@ -26,6 +26,7 @@ public class GameEngine {
 	private int playerTurn;
 	private final int numberOfCards = 3;
 	private int favorTokensCount;
+	private int favorTokenAtStart =0;
 	private LanternCards lanternCards;
 	private LakeTiles lakeTiles;
 	private LakeTiles startTile;
@@ -108,7 +109,9 @@ public class GameEngine {
 				else
 					player2.setLakeTiles(lTiles.get(i));
 			}
+			player1.setFavorToken(favorTokenAtStart);
 			PlayerList.add(player1);
+			player2.setFavorToken(favorTokenAtStart);
 			PlayerList.add(player2);
 
 			for (int x = 0; x < PlayerList.size(); x++) {
@@ -147,6 +150,9 @@ public class GameEngine {
 				else if (i < numberOfCards * 3)
 					player3.setLakeTiles(lTiles.get(i));
 			}
+			player1.setFavorToken(favorTokenAtStart);
+			player2.setFavorToken(favorTokenAtStart);
+			player3.setFavorToken(favorTokenAtStart);
 			PlayerList.add(player1);
 			PlayerList.add(player2);
 			PlayerList.add(player3);
@@ -189,6 +195,11 @@ public class GameEngine {
 				else if (i < numberOfCards * 4)
 					player4.setLakeTiles(lTiles.get(i));
 			}
+			player1.setFavorToken(favorTokenAtStart);
+			player2.setFavorToken(favorTokenAtStart);
+			player3.setFavorToken(favorTokenAtStart);
+			player4.setFavorToken(favorTokenAtStart);
+			
 			PlayerList.add(player1);
 			PlayerList.add(player2);
 			PlayerList.add(player3);

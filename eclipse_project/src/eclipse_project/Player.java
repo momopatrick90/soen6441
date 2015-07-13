@@ -137,6 +137,7 @@ public class Player {
 
 	public void setLakeTiles(LakeTiles playerLT) {
 		this.playerLTStack.add(playerLT);
+		
 	}
 	
 	/**
@@ -239,5 +240,11 @@ public class Player {
 		}
 		return false;
 	}
-		
+	
+	public void setFavorToken(int favorToken){
+		this.favorTokenScore = favorToken;
+	}
+	public int getFavorToken(){
+		return this.favorTokenScore;
+	}
 	}
