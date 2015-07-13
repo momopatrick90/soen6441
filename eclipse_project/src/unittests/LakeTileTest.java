@@ -56,12 +56,16 @@ public class LakeTileTest {
 	}
 	
 	@Test
-	public void testRandomValuesAreBetweenFiveAndEleven(){
+	public void testRandomValuesAreBetweenDefinedColours(){
 		
-		for(int i=0;i<8;i++){
-			
-		}
+		String rValue=lT.randomValues();
+		assertTrue("red".equals(rValue)||"green".equals(rValue)||"blue".equals(rValue)||"black".equals(rValue)||"orange".equals(rValue)||"purple".equals(rValue)||"white".equals(rValue));
+
 	}
 	
-	
+	@Test
+	public void testRandomValuesAreAlwaysAvailable(){
+		String randValue=lT.randomValues();
+		assertNotNull(randValue);
+	}
 }
