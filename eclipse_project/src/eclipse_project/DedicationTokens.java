@@ -24,16 +24,52 @@ public class DedicationTokens {
 	 */
 	public DedicationTokens(int numberOfPlayers)
 	{
+		int fourOfKindValue=1,threePairValue=1,sevenUniqueValue=2;
 		switch(numberOfPlayers)
 		{
-			case 2:
-				System.out.println("Will be implemented in build 2.Right now all the dedicationTokens will be used");
+			case 2:				
+				for(int i=0; i<9; i++)
+				{
+					this.fourOfKind.push(fourOfKindValue);
+					this.threePair.push(threePairValue);
+					this.sevenUnique.push(sevenUniqueValue);
+					
+					fourOfKindValue++;
+					threePairValue++;
+					sevenUniqueValue++;
+					
+					if(i==7)
+					{
+						fourOfKindValue--;
+					}
+										
+				}
+				
+				for(int i=0; i<3;i++)
+					this.genericFour.push(GENERIC_FOUR_MAX);
 				break;
-			case 3:
-				System.out.println("Will be implemented in build 2.Right now all the dedicationTokens will be used");
+			case 3:				
+				for(int i=0; i<9; i++)
+				{
+					this.fourOfKind.push(fourOfKindValue);
+					this.threePair.push(threePairValue);
+					this.sevenUnique.push(sevenUniqueValue);
+					
+					fourOfKindValue++;
+					threePairValue++;
+					sevenUniqueValue++;
+					
+					if(i==7)
+					{
+						fourOfKindValue--;
+					}
+										
+				}
+				
+				for(int i=0; i<3;i++)
+					this.genericFour.push(GENERIC_FOUR_MAX);
 				break;
 			case 4:
-				int fourOfKindValue=1,threePairValue=1,sevenUniqueValue=2;
 				for(int i=0; i<9; i++)
 				{
 					this.fourOfKind.push(fourOfKindValue);
@@ -188,5 +224,35 @@ public class DedicationTokens {
 	public int genericFourCount()
 	{
 		return this.genericFour.size();
+	}
+	
+	public void getFourOfKindInfo()
+	{
+		System.out.println("Correct Version with 3 dots and 4 dots dedication Tokens will be implemented in build 2.Right now all the dedicationTokens will be used");		
+		for(int i=fourOfKind.size()-1;i>=0;i--)
+		{
+			System.out.print(fourOfKind.get(i)+" ");
+		}
+	}
+	public void getThreePairInfo()
+	{
+		for(int i=threePair.size()-1;i>=0;i--)
+		{
+			System.out.print(threePair.get(i)+" ");
+		}
+	}
+	public void getSevenUniqueInfo()
+	{
+		for(int i=sevenUnique.size()-1;i>=0;i--)
+		{
+			System.out.print(sevenUnique.get(i)+" ");
+		}
+	}
+	public void getGenericFourInfo()
+	{
+		for(int i=genericFour.size()-1;i>=0;i--)
+		{
+			System.out.print(genericFour.get(i)+" ");
+		}
 	}
 }

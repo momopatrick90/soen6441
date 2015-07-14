@@ -223,10 +223,47 @@ public class GameEngine {
 			}
 		}
 		System.out.println();
-
+		for(int i=0;i<lakeTiles.globalLakeTiles.size();i++)
+		{
+			System.out.println("id "+lakeTiles.globalLakeTiles.get(i).id+" "+ "leftColor " + " "
+				+ lakeTiles.globalLakeTiles.get(i).leftColor + " " + "rightColor" + " "
+				+ lakeTiles.globalLakeTiles.get(i).rightColor + " " + "upColor" + " "
+				+ lakeTiles.globalLakeTiles.get(i).upColor + " " + "downColor" + " "
+				+ lakeTiles.globalLakeTiles.get(i).downColor + " " + "platform" + " "
+				+ lakeTiles.globalLakeTiles.get(i).platform);
+		}
+		System.out.println();
+		//System.out.println(dedicationTokens.genericFourCount());
+		System.out.println("Details of the Dedication Tokens:");
+		System.out.println("Four Of Kind Tokens:");
+		dedicationTokens.getFourOfKindInfo();
+		System.out.println();
+		System.out.println("Three Pair Tokens:");
+		dedicationTokens.getThreePairInfo();
+		System.out.println();
+		System.out.println("Seven Unique Tokens:");
+		dedicationTokens.getSevenUniqueInfo();
+		System.out.println();
+		System.out.println("Generic Four Tokens:");
+		dedicationTokens.getGenericFourInfo();
+		System.out.println();
+		System.out.println();
 		
+		System.out.println("Details of FavorTokens:");
+		System.out.println("Number of Favor Tokens present on stack :"+favorTokens.getTokens());
+		System.out.println("Number of Favor Tokens present with players: 0");	
+		System.out.println();
 		
+		System.out.println("Details of LanternCards:");
+		System.out.println("Number of Black lantern cards available on Stack: "+lanternCards.blackCardCount());
+		System.out.println("Number of Red lantern cards available on Stack: "+lanternCards.redCardCount());
+		System.out.println("Number of Green lantern cards available on Stack: "+lanternCards.greenCardCount());
+		System.out.println("Number of White lantern cards available on Stack: "+lanternCards.whiteCardCount());
+		System.out.println("Number of Purple lantern cards available on Stack: "+lanternCards.purpleCardCount());
+		System.out.println("Number of Blue lantern cards available on Stack: "+lanternCards.blueCardCount());
+		System.out.println("Number of Orange lantern cards available on Stack: "+lanternCards.orangeCardCount());
 		
+				
 	}
 
 	/**
