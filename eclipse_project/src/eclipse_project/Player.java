@@ -241,9 +241,15 @@ public class Player {
 		return false;
 	}
 	
+	/*
+	 * set the favor token on start or load
+	 */
 	public void setFavorToken(int favorToken){
 		this.favorTokenScore = favorToken;
 	}
+	/*
+	 * get the favor token 
+	 */
 	public int getFavorToken(){
 		return this.favorTokenScore;
 	}
