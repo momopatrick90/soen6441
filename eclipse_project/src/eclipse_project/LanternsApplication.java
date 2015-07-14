@@ -33,8 +33,9 @@ public class LanternsApplication {
 		do{
 			
 			System.out.println("Choose an option:");
-			System.out.println("1.New Game");
-			System.out.println("2.Existing Game");
+			System.out.println("Press 1 for New Game");
+			System.out.println("Press 2 for Existing Game");
+			System.out.println("Press ZERO to Exit Game");
 			Scanner in = new Scanner(System.in);
 			int choice = in.nextInt();
 			
@@ -49,7 +50,7 @@ public class LanternsApplication {
 				System.out.println("Enter number of players");
 				in = new Scanner(System.in);
 				String fileName = in.nextLine();
-				GameEngine.loadExistingGame(fileName);
+				loadExistingGame(fileName);
 
 			}
 
@@ -67,7 +68,10 @@ public class LanternsApplication {
 		game.startNewGame();
 	}
 	
-	
-	
+	public static void loadExistingGame(String fileName) throws ParserConfigurationException, SAXException, IOException{
+		
+		game = new GameEngine();
+		game.loadExistingGame(fileName);
+	}
 
 }
