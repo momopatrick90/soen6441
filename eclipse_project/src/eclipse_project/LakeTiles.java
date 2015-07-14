@@ -156,17 +156,17 @@ public class LakeTiles {
 				tileToPlace.right=gameBoard.board[x+1][y];
 				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
 				{
-					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x+1][y]);
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x+1][y])
 						gameBoard.tilesOnBoard.get(i).left=tileToPlace.id;
 				}
 			}
 			if(gameBoard.board[x][y+1]!=-1)
 			{
-				tileToPlace.up=gameBoard.board[x][y+1];
+				tileToPlace.down=gameBoard.board[x][y+1];
 				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
 				{
-					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y+1]);
-						gameBoard.tilesOnBoard.get(i).down=tileToPlace.id;
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y+1])
+						gameBoard.tilesOnBoard.get(i).up=tileToPlace.id;
 				}
 			}
 			if(gameBoard.board[x-1][y]!=-1)
@@ -174,17 +174,17 @@ public class LakeTiles {
 				tileToPlace.left=gameBoard.board[x-1][y];
 				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
 				{
-					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x-1][y]);
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x-1][y])
 						gameBoard.tilesOnBoard.get(i).right=tileToPlace.id;
 				}
 			}
 			if(gameBoard.board[x][y-1]!=-1)
 			{
-				tileToPlace.down=gameBoard.board[x][y-1];
+				tileToPlace.up=gameBoard.board[x][y-1];
 				for(int i=0;i<gameBoard.tilesOnBoard.size();i++)
 				{
-					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y-1]);
-						gameBoard.tilesOnBoard.get(i).up=tileToPlace.id;
+					if(gameBoard.tilesOnBoard.get(i).id==gameBoard.board[x][y-1])
+						gameBoard.tilesOnBoard.get(i).down=tileToPlace.id;
 				}
 			}
 			flag=true;

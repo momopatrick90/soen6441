@@ -274,7 +274,14 @@ public class GameEngine {
 		System.out.println("Number of Blue lantern cards available on Stack: "+lanternCards.blueCardCount());
 		System.out.println("Number of Orange lantern cards available on Stack: "+lanternCards.orangeCardCount());
 		
-				
+		System.out.println("One example of laketile being added to GameBoard");
+		lakeTiles.placeTile(36, 37,board,PlayerList.get(0).getLakeTiles().get(0));
+		
+		System.out.println(board.board[36][37]);
+		System.out.println(board.tilesOnBoard.size());
+		System.out.println("left"+board.tilesOnBoard.get(0).left+"right"+board.tilesOnBoard.get(0).right+"down"+board.tilesOnBoard.get(0).down+"up"+board.tilesOnBoard.get(0).up+"id"+board.tilesOnBoard.get(0).id);
+		System.out.println("left"+board.tilesOnBoard.get(1).left+"right"+board.tilesOnBoard.get(1).right+"down"+board.tilesOnBoard.get(1).down+"up"+board.tilesOnBoard.get(1).up+"id"+board.tilesOnBoard.get(1).id);
+		
 	}
 
 	/**
