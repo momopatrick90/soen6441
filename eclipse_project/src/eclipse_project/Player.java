@@ -21,7 +21,7 @@ public class Player {
 
 	}
 
-	public Player(String name, LanternCards lanternCards, LakeTiles lakeTiles,
+	public Player(String name, LanternCards lanternCards, ArrayList<LakeTiles> playerLTStack,
 			int favorTokenScore, int playerScore_fourKind,
 			int playerScore_threePair, int playerScore_sevenUnique) {
 
@@ -31,8 +31,7 @@ public class Player {
 		this.playerScore_threePair = playerScore_threePair;
 		this.playerScore_sevenUnique = playerScore_sevenUnique;
 		this.playerLCStack = lanternCards;
-		this.playerLTStack = null;
-
+		this.playerLTStack = playerLTStack;
 	}
 
 	/**

@@ -368,7 +368,7 @@ public class GameEngine {
 		}
 
 		this.numOfPlayer = players.size();
-
+		
 		this.lanternCards = availableLanternCards;
 		this.dedicationTokens = dedicationTokens;
 		this.favorTokens = new FavorTokens(favorTokens);	
@@ -399,7 +399,7 @@ public class GameEngine {
 	 * @param playerElement
 	 *            example: 
 	 *         	<player current="true" four_kind_score="2"
-	 *            	three_pair_score="2" seven_unique_score="1" total_score="5" name="palyer_name" >
+	 *            	three_pair_score="2" seven_unique_score="1" favor_token_score="5" name="palyer_name" >
 	 *            		<lake_tiles_stack >
 	 *            			<lake_tiles ... /> 
 	 *            		</lake_tiles_stack >
@@ -410,8 +410,8 @@ public class GameEngine {
 	public Player loadPlayer(Element playerElement,
 			LinkedList<Boolean> isCurrent) {
 		//
-		int favorTokens = loadFavorTokens((Element) playerElement
-				.getElementsByTagName("favor_tokens").item(0));
+		//int favorTokens = loadFavorTokens((Element) playerElement
+		//		.getElementsByTagName("favor_tokens").item(0));
 
 		//
 		DedicationTokens dedicationTokens = loadDedicationTokens((Element) playerElement
@@ -422,13 +422,13 @@ public class GameEngine {
 				.getElementsByTagName("lantern_cards"));
 
 		//
-		Stack<LakeTiles> lakeTilesStack = new Stack<LakeTiles>();
+		ArrayList<LakeTiles> lakeTilesStack = new ArrayList<LakeTiles>();
 		//
 		LinkedList<LakeTiles> lakeTilesList = loadMultipleLakeTiles((Element) playerElement.getElementsByTagName("lake_tiles_stack"));
 		//
 		for(int i=0; i<lakeTilesList.size(); i++)
 		{
-			lakeTilesStack.push(lakeTilesList.get(i));
+			lakeTilesStack.add(lakeTilesList.get(i));
 		}
 		
 
@@ -439,8 +439,8 @@ public class GameEngine {
 				.getAttribute("three_pair_score"));
 		int sevenUniqueScore = Integer.parseInt(playerElement
 				.getAttribute("seven_unique_score"));
-		int totalScore = Integer.parseInt(playerElement
-				.getAttribute("total_score"));
+		int favorTokenScore = Integer.parseInt(playerElement
+				.getAttribute("favor_token_score"));
 		
 		//name
 		String name=playerElement
@@ -450,9 +450,8 @@ public class GameEngine {
 		isCurrent.add(Boolean.parseBoolean(playerElement
 				.getAttribute("current")));
 
-		// TODO add a player constructor
-		// TODO favor tokens score pay attention
-		return null;
+		// 
+		return new Player(name, loadLanternCards, lakeTilesStack, favorTokenScore, fourKindScore, threePairScore, sevenUniqueScore);
 	}
 
 	/**
@@ -496,14 +495,16 @@ public class GameEngine {
 			player.setAttribute("four_kind_score", ""+this.PlayerList.get(i).playerScore_fourKind);
 			player.setAttribute("three_pair_score", ""+this.PlayerList.get(i).playerScore_threePair);
 			player.setAttribute("seven_unique_score", ""+this.PlayerList.get(i).playerScore_sevenUnique);
-			player.setAttribute("total_score", ""+this.PlayerList.get(i).favorTokenScore);
+			player.setAttribute("favor_token_score", ""+this.PlayerList.get(i).favorTokenScore);
 			//
 			player.setAttribute("name", ""+this.PlayerList.get(i).name);
 			
-			// TODO
-			// favor token
 			// lattern card
-			// name
+			Element lanternCards = ((Document) player).createElement("lantern_cards");
+			//
+			this.saveLanternCards(lanternCards, this.PlayerList.get(i).playerLCStack);
+			//
+			player.appendChild(lanternCards);
 		}
 
 	}
