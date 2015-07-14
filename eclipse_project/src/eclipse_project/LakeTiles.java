@@ -21,6 +21,26 @@ public class LakeTiles {
 		super();
 	}
 	
+	public LakeTiles(String leftColor, String rightColor, String upColor, String downColor,
+			int left, int right, int up, int down, int id, boolean platform, LakeTiles[] lakeTiles,
+			Stack<LakeTiles> globalLakeTiles)
+	{
+		//
+		this.leftColor = leftColor;
+		this.rightColor = rightColor;
+		this.upColor = upColor;
+		this.downColor = downColor;
+		//
+		this.left = left;
+		this.right = right;
+		this.up = up;
+		this.down = down;
+		//
+		this.lakeTiles = lakeTiles;
+		//
+		this.globalLakeTiles = globalLakeTiles;
+	}
+	
 	/**
 	 * method to generate lake tiles with according to number of players where some of the tiles will have platform 
 	 * @param numberOfPlayers total number of players 
