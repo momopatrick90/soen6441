@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Player {
 
-	private String name;
-	private LanternCards playerLCStack;
-	private int favorTokenScore;
-	private ArrayList<LakeTiles> playerLTStack;
+	public String name;
+	public LanternCards playerLCStack;
+	public int favorTokenScore;
+	public ArrayList<LakeTiles> playerLTStack;
 
-	private int playerScore_fourKind;
-	private int playerScore_threePair;
-	private int playerScore_sevenUnique;
+	public int playerScore_fourKind;
+	public int playerScore_threePair;
+	public int playerScore_sevenUnique;
 
 	public Player(String name) {
 
