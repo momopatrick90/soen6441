@@ -135,8 +135,17 @@ public class Player {
 	 * @param playerLT
 	 */
 
-	public void setLakeTiles(LakeTiles playerL) {
-		this.playerLTStack.add(playerL);
+	public void setLakeTiles(LakeTiles playerLT) {
+		this.playerLTStack.add(playerLT);
+	}
+	
+	/**
+	 * This method will be called to store lake tiles of the player
+	 * return PlayerLTStack
+	 */
+	public ArrayList<LakeTiles> getLakeTiles()
+	{
+		return this.playerLTStack;
 	}
 
 	/**
