@@ -20,8 +20,10 @@ public class Player {
 		this.playerLTStack = new ArrayList<LakeTiles>();
 
 	}
-	
-	public Player(String name, LanternCards lanternCards, LakeTiles lakeTiles, int favorTokenScore, int playerScore_fourKind, int playerScore_threePair, int playerScore_sevenUnique) {
+
+	public Player(String name, LanternCards lanternCards, LakeTiles lakeTiles,
+			int favorTokenScore, int playerScore_fourKind,
+			int playerScore_threePair, int playerScore_sevenUnique) {
 
 		this.name = name;
 		this.favorTokenScore = favorTokenScore;
@@ -40,51 +42,52 @@ public class Player {
 	 *            contains what color of the lantern card the user will be
 	 *            adding to his stack.
 	 */
-	public boolean pickLanternCard(String card, LanternCards lanternCardsAvailable) {
+	public boolean pickLanternCard(String card,
+			LanternCards lanternCardsAvailable) {
 		if (card.equals("redCard")) {
-			if(lanternCardsAvailable.getRedCard()){
+			if (lanternCardsAvailable.getRedCard()) {
 				playerLCStack.addRedcard();
-				return true;				
-			}else
+				return true;
+			} else
 				return false;
 		} else if (card.equals("blueCard")) {
-			if(lanternCardsAvailable.getBlueCard()){
+			if (lanternCardsAvailable.getBlueCard()) {
 				playerLCStack.addBluecard();
 				return true;
-			}else
+			} else
 				return false;
 		} else if (card.equals("greenCard")) {
-			if(lanternCardsAvailable.getGreenCard()){
+			if (lanternCardsAvailable.getGreenCard()) {
 				playerLCStack.addGreencard();
 				return true;
-			}else
+			} else
 				return false;
 		} else if (card.equals("whiteCard")) {
-			if(lanternCardsAvailable.getWhiteCard()){
+			if (lanternCardsAvailable.getWhiteCard()) {
 				playerLCStack.addWhitecard();
 				return true;
-			}else
+			} else
 				return false;
 		} else if (card.equals("purpleCard")) {
-			if(lanternCardsAvailable.getPurpleCard()){
+			if (lanternCardsAvailable.getPurpleCard()) {
 				playerLCStack.addPurplecard();
 				return true;
-			}else
+			} else
 				return false;
 		} else if (card.equals("blackCard")) {
-			if(lanternCardsAvailable.getBlackCard()){
+			if (lanternCardsAvailable.getBlackCard()) {
 				playerLCStack.addBlackcard();
 				return true;
-			}else
+			} else
 				return false;
 		} else {
-			if(lanternCardsAvailable.getOrangeCard()){
+			if (lanternCardsAvailable.getOrangeCard()) {
 				playerLCStack.addOrangecard();
 				return true;
-			}else
+			} else
 				return false;
 		}
-				
+
 	}
 
 	/**
@@ -137,15 +140,14 @@ public class Player {
 
 	public void setLakeTiles(LakeTiles playerLT) {
 		this.playerLTStack.add(playerLT);
-		
+
 	}
-	
+
 	/**
-	 * This method will be called to store lake tiles of the player
-	 * return PlayerLTStack
+	 * This method will be called to store lake tiles of the player return
+	 * PlayerLTStack
 	 */
-	public ArrayList<LakeTiles> getLakeTiles()
-	{
+	public ArrayList<LakeTiles> getLakeTiles() {
 		return this.playerLTStack;
 	}
 
@@ -175,12 +177,14 @@ public class Player {
 	 * @param returnLCard
 	 *            The lantern card return by user
 	 * @param pickLCard
-	 *            The lantern  card pick by user
+	 *            The lantern card pick by user
 	 * 
 	 */
-	public boolean spendFavorTokens(FavorTokens favorToken, LanternCards lanternCards, String returnLCard,String pickLCard) {
-		
-		if (this.favorTokenScore > 1 && returnLanternCards(returnLCard,pickLCard,lanternCards)){			
+	public boolean spendFavorTokens(FavorTokens favorToken,
+			LanternCards lanternCards, String returnLCard, String pickLCard) {
+
+		if (this.favorTokenScore > 1
+				&& returnLanternCards(returnLCard, pickLCard, lanternCards)) {
 			favorToken.incrementToken();
 			favorToken.incrementToken();
 			this.favorTokenScore -= 2;
@@ -188,12 +192,12 @@ public class Player {
 		} else {
 			return false;
 		}
-		
+
 	}
-	
+
 	/**
-	 * This method will be called from spendFavorTokens method to exchange lantern cards 
-	 * between player stack and general stack  
+	 * This method will be called from spendFavorTokens method to exchange
+	 * lantern cards between player stack and general stack
 	 * 
 	 * @param returnLCard
 	 *            The lantern card return by user
@@ -202,55 +206,63 @@ public class Player {
 	 * @param lanternCardsAvailable
 	 *            The object contains the current stack of Lantern Cards
 	 */
-	public boolean returnLanternCards(String returnLCard, String pickLCard, LanternCards lanternCardsAvailable) {
-		if ((returnLCard.equals("redCard")) && (pickLanternCard(pickLCard,lanternCardsAvailable))) {
+	public boolean returnLanternCards(String returnLCard, String pickLCard,
+			LanternCards lanternCardsAvailable) {
+		if ((returnLCard.equals("redCard"))
+				&& (pickLanternCard(pickLCard, lanternCardsAvailable))) {
 			lanternCardsAvailable.addRedcard();
 			playerLCStack.getRedCard();
 			return true;
 
-		} else if ((returnLCard.equals("blueCard")) && (pickLanternCard(pickLCard,lanternCardsAvailable))) {
+		} else if ((returnLCard.equals("blueCard"))
+				&& (pickLanternCard(pickLCard, lanternCardsAvailable))) {
 			lanternCardsAvailable.addBluecard();
 			playerLCStack.getBlueCard();
 			return true;
 
-		} else if ((returnLCard.equals("greenCard")) && (pickLanternCard(pickLCard,lanternCardsAvailable))) {
+		} else if ((returnLCard.equals("greenCard"))
+				&& (pickLanternCard(pickLCard, lanternCardsAvailable))) {
 			lanternCardsAvailable.addGreencard();
 			playerLCStack.getGreenCard();
 			return true;
 
-		} else if ((returnLCard.equals("whiteCard"))&& (pickLanternCard(pickLCard,lanternCardsAvailable))){
+		} else if ((returnLCard.equals("whiteCard"))
+				&& (pickLanternCard(pickLCard, lanternCardsAvailable))) {
 			lanternCardsAvailable.addWhitecard();
 			playerLCStack.getWhiteCard();
 			return true;
 
-		} else if ((returnLCard.equals("purpleCard")) &&(pickLanternCard(pickLCard,lanternCardsAvailable))){
+		} else if ((returnLCard.equals("purpleCard"))
+				&& (pickLanternCard(pickLCard, lanternCardsAvailable))) {
 			lanternCardsAvailable.addPurplecard();
 			playerLCStack.getPurpleCard();
 			return true;
 
-		} else if ((returnLCard.equals("blackCard")) &&(pickLanternCard(pickLCard,lanternCardsAvailable))){
+		} else if ((returnLCard.equals("blackCard"))
+				&& (pickLanternCard(pickLCard, lanternCardsAvailable))) {
 			lanternCardsAvailable.addBlackcard();
 			playerLCStack.getBlackCard();
 			return true;
 
-		} else if(pickLanternCard(pickLCard,lanternCardsAvailable)){
+		} else if (pickLanternCard(pickLCard, lanternCardsAvailable)) {
 			lanternCardsAvailable.addOrangecard();
 			playerLCStack.getOrangeCard();
 			return true;
 		}
 		return false;
 	}
-	
+
 	/*
 	 * set the favor token on start or load
 	 */
-	public void setFavorToken(int favorToken){
+	public void setFavorToken(int favorToken) {
 		this.favorTokenScore = favorToken;
 	}
+
 	/*
-	 * get the favor token 
+	 * get the favor token
 	 */
-	public int getFavorToken(){
+	public int getFavorToken() {
 		return this.favorTokenScore;
 	}
-	}
+}

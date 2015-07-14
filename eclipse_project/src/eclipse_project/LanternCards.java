@@ -132,13 +132,12 @@ public class LanternCards {
 
 		this.redStack.push(this.Colors[0]);
 	}
-	
+
 	/**
 	 * 
 	 * @return count of orange cards
 	 */
-	public int redCardCount()
-	{
+	public int redCardCount() {
 		return this.redStack.size();
 	}
 
@@ -166,13 +165,12 @@ public class LanternCards {
 
 		this.blueStack.push(this.Colors[1]);
 	}
-	
+
 	/**
 	 * 
 	 * @return count of orange cards
 	 */
-	public int blueCardCount()
-	{
+	public int blueCardCount() {
 		return this.blueStack.size();
 	}
 
@@ -200,13 +198,12 @@ public class LanternCards {
 
 		this.greenStack.push(this.Colors[2]);
 	}
-	
+
 	/**
 	 * 
 	 * @return count of orange cards
 	 */
-	public int greenCardCount()
-	{
+	public int greenCardCount() {
 		return this.greenStack.size();
 	}
 
@@ -234,13 +231,12 @@ public class LanternCards {
 
 		this.whiteStack.push(this.Colors[3]);
 	}
-	
+
 	/**
 	 * 
 	 * @return count of orange cards
 	 */
-	public int whiteCardCount()
-	{
+	public int whiteCardCount() {
 		return this.whiteStack.size();
 	}
 
@@ -268,13 +264,12 @@ public class LanternCards {
 
 		this.purpleStack.push(this.Colors[4]);
 	}
-	
+
 	/**
 	 * 
 	 * @return count of orange cards
 	 */
-	public int purpleCardCount()
-	{
+	public int purpleCardCount() {
 		return this.purpleStack.size();
 	}
 
@@ -302,14 +297,12 @@ public class LanternCards {
 
 		this.blackStack.push(this.Colors[5]);
 	}
-	
-	
+
 	/**
 	 * 
 	 * @return count of orange cards
 	 */
-	public int blackCardCount()
-	{
+	public int blackCardCount() {
 		return this.blackStack.size();
 	}
 
@@ -342,8 +335,7 @@ public class LanternCards {
 	 * 
 	 * @return count of orange cards
 	 */
-	public int orangeCardCount()
-	{
+	public int orangeCardCount() {
 		return this.orangeStack.size();
 	}
 }
