@@ -48,8 +48,6 @@ public class DedicationTokens {
 										
 				}
 				
-				for(int i=0; i<3;i++)
-					this.genericFour.push(GENERIC_FOUR_MAX);
 				break;
 			case 3:				
 				for(int i=0; i<9; i++)
@@ -69,8 +67,6 @@ public class DedicationTokens {
 										
 				}
 				
-				for(int i=0; i<3;i++)
-					this.genericFour.push(GENERIC_FOUR_MAX);
 				break;
 			case 4:
 				for(int i=0; i<9; i++)
@@ -90,9 +86,11 @@ public class DedicationTokens {
 										
 				}
 				
-				for(int i=0; i<3;i++)
-					this.genericFour.push(GENERIC_FOUR_MAX);
 		}
+
+
+		for(int i=0; i<3;i++)
+			this.genericFour.push(GENERIC_FOUR_MAX);
 		
 	}
 
