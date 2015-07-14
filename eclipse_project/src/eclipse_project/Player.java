@@ -135,8 +135,8 @@ public class Player {
 	 * @param playerLT
 	 */
 
-	public void setLakeTiles(LakeTiles playerLT) {
-		this.playerLTStack.add(playerLT);
+	public void setLakeTiles(LakeTiles playerL) {
+		this.playerLTStack.add(playerL);
 	}
 
 	/**
