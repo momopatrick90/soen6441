@@ -587,8 +587,8 @@ public class GameEngine {
 
 
 		// 
-		return new LakeTiles(leftColor, rightColor, upColor, downColor, left, right, up, down, id, platform,
-				lakeTiles, globalLakeTiles);
+		return new LakeTiles(leftColor, rightColor, upColor, downColor, left,
+				right, up, down, id, platform, lakeTiles, globalLakeTiles);
 	}
 
 	/**
