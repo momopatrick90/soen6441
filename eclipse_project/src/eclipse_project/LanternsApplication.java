@@ -27,6 +27,8 @@ public class LanternsApplication {
 	private static int redCount, blueCount, greenCount, whiteCount,
 			purpleCount, blackCount, orangeCount;
 
+	private static boolean isLoad = false;
+
 	public static void main(String[] args) throws ParserConfigurationException,
 			SAXException, IOException {
 
@@ -39,29 +41,46 @@ public class LanternsApplication {
 			System.out.println("Press 2 for Existing Game");
 			System.out.println("Press ZERO to Exit Game");
 			Scanner in = new Scanner(System.in);
-			int choice = in.nextInt();
+			resp = in.nextInt();
 
-			if (choice == 1) {
+			if (resp == 1) {
 				System.out.println("Enter number of players");
 				in = new Scanner(System.in);
 				numOfPlayers = in.nextInt();
+				isLoad = true;
 				loadNewGame();
 
-			} else if (choice == 2) {
+			} else if (resp == 2) {
 
-				System.out.println("Enter number of players");
+				System.out.println("Enter name of file");
 				in = new Scanner(System.in);
 				String fileName = in.nextLine();
+				isLoad = true;
 				loadExistingGame(fileName);
 
 			}
 
+			if (resp == 0) {
+				if (isLoad) {
+					System.out
+							.println("Enter the name of file to save the game & quit.");
+					in = new Scanner(System.in);
+					String fileName = in.nextLine();
+					fileName = fileName.trim();
+					saveTheGame(fileName,game);
+					System.out.println("Game saved successfully!");
+				}
+				break;
+			}
+			
 			System.out.println("press 9 to continue and ZERO to quit!");
 			in = new Scanner(System.in);
 			resp = in.nextInt();
 
+
 		} while (resp != 0);
 
+		System.out.println("Game is ended!");
 	}
 
 	public static void loadNewGame() {
@@ -74,7 +93,16 @@ public class LanternsApplication {
 			throws ParserConfigurationException, SAXException, IOException {
 
 		game = new GameEngine();
-		game.loadExistingGame(fileName);
+		
+		File file = new File(fileName);
+		if(!file.exists())
+			System.out.println("file: "+fileName+" doesn't exist.");
+		else
+			game.loadExistingGame(fileName);
+	}
+
+	public static void saveTheGame(String fileName,GameEngine game) throws ParserConfigurationException {
+		game.saveGame(fileName, game);
 	}
 
 }
