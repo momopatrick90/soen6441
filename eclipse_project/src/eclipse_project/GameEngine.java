@@ -36,8 +36,6 @@ public class GameEngine {
 	private Player player;
 	private DedicationTokens dedicationTokens;
 	private FavorTokens favorTokens;
-	private static int redCount, blueCount, greenCount, whiteCount,
-			purpleCount, blackCount, orangeCount;
 	private Player player1 = new Player("player1");
 	private Player player2 = new Player("player2");
 	private Player player3 = new Player("player3");
@@ -61,7 +59,11 @@ public class GameEngine {
 		this.numOfPlayer = numOfPlayer;
 	}
 
+	/**
+	 * method for initializing all the data structures and starting the new game
+	 */
 	public void startNewGame() {
+		
 		// Set the initial variables for the lantern cards and the various
 		// tokens
 		// according to the number of players.
@@ -749,6 +751,9 @@ public class GameEngine {
 		element.setAttribute("value", Integer.toString(favorTokens.getTokens()));
 	}
 	
+	/**
+	 * method for displaying the game in text mode
+	 */
 	public void displayTextMode(){
 		System.out.println("UnImplemented");
 	}

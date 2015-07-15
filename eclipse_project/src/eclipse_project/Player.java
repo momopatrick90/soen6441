@@ -2,6 +2,9 @@ package eclipse_project;
 
 import java.util.ArrayList;
 
+/**
+ * Player class for wrapping the data associated with player entity
+ */
 public class Player {
 
 	public String name;
@@ -13,14 +16,26 @@ public class Player {
 	public int playerScore_threePair;
 	public int playerScore_sevenUnique;
 
+	/**
+	 * Constructor for initializing the new player entity with some unique name
+	 * @param name
+	 */
 	public Player(String name) {
-
 		this.name = name;
 		this.playerLCStack = new LanternCards();
 		this.playerLTStack = new ArrayList<LakeTiles>();
-
 	}
 
+	/**
+	 * Parameterized constructor for loading the existing players form the passed value of the game state from the file
+	 * @param name
+	 * @param lanternCards
+	 * @param playerLTStack
+	 * @param favorTokenScore
+	 * @param playerScore_fourKind
+	 * @param playerScore_threePair
+	 * @param playerScore_sevenUnique
+	 */
 	public Player(String name, LanternCards lanternCards, ArrayList<LakeTiles> playerLTStack,
 			int favorTokenScore, int playerScore_fourKind,
 			int playerScore_threePair, int playerScore_sevenUnique) {

@@ -17,7 +17,6 @@ import javax.xml.parsers.*;
  * Main application container - loads the new game or existing game based on the
  * user input
  */
-
 public class LanternsApplication {
 
 	private static GameEngine game;
@@ -93,12 +92,22 @@ public class LanternsApplication {
 		System.out.println("Game is ended!");
 	}
 
+	/**
+	 * load the new based on the user input
+	 */
 	public static void loadNewGame() {
 
 		game = new GameEngine(numOfPlayers);
 		game.startNewGame();
 	}
 
+	/**
+	 * load the existing game from file name provided by the user
+	 * @param fileName
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	public static void loadExistingGame(String fileName)
 			throws ParserConfigurationException, SAXException, IOException {
 
@@ -113,10 +122,19 @@ public class LanternsApplication {
 			game.loadExistingGame(fileName);
 	}
 
+	/**
+	 * save the state of the game to the file
+	 * @param fileName
+	 * @param game - Current Game Instance
+	 * @throws ParserConfigurationException
+	 */
 	public static void saveTheGame(String fileName,GameEngine game) throws ParserConfigurationException {
 		game.saveGame(fileName, game);
 	}
 	
+	/**
+	 * Display the current state of the game in text mode
+	 */
 	public static void displayTextMode(){
 		game.displayTextMode();
 	}

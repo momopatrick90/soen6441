@@ -8,8 +8,8 @@ import java.util.Stack;
  * LakeTiles are created according to number of players.
  *
  */
-
 public class LakeTiles {
+	
 	public String leftColor, rightColor, upColor, downColor;
 	public int left, right, up, down;
 	public int id;
@@ -17,27 +17,45 @@ public class LakeTiles {
 	public LakeTiles lakeTiles[];
 	public Stack<LakeTiles> globalLakeTiles = new Stack<LakeTiles>();
 
+	/**
+	 * Default constructor
+	 */
 	public LakeTiles() {
 		super();
 	}
 
+	/**
+	 * Parameterized constructor for loading the existing lake tiles form the passed value of the game state from the file
+	 * @param leftColor
+	 * @param rightColor
+	 * @param upColor
+	 * @param downColor
+	 * @param left
+	 * @param right
+	 * @param up
+	 * @param down
+	 * @param id
+	 * @param platform
+	 * @param lakeTiles 
+	 * @param globalLakeTiles
+	 */
 	public LakeTiles(String leftColor, String rightColor, String upColor,
 			String downColor, int left, int right, int up, int down, int id,
 			boolean platform, LakeTiles[] lakeTiles,
 			Stack<LakeTiles> globalLakeTiles) {
-		//
+		
 		this.leftColor = leftColor;
 		this.rightColor = rightColor;
 		this.upColor = upColor;
 		this.downColor = downColor;
-		//
+		
 		this.left = left;
 		this.right = right;
 		this.up = up;
 		this.down = down;
-		//
+		
 		this.lakeTiles = lakeTiles;
-		//
+		
 		this.globalLakeTiles = globalLakeTiles;
 	}
 
@@ -97,16 +115,7 @@ public class LakeTiles {
 				if (i % 2 != 0)
 					lakeTiles[i].platform = true;
 			}
-			/*
-			 * for(int i=0;i<lakeTiles.length;i++) {
-			 * System.out.println("id"+lakeTiles
-			 * [i].id+" "+"leftColor "+" "+lakeTiles
-			 * [i].leftColor+"rightColor"+" "
-			 * +lakeTiles[i].rightColor+"upColor"+" "
-			 * +lakeTiles[i].upColor+"downColorColor"
-			 * +" "+lakeTiles[i].downColor+
-			 * "platform"+" "+lakeTiles[i].platform); }
-			 */
+			
 			break;
 		}
 	}

@@ -60,9 +60,4 @@ public class Board {
 			right = startTile.rightColor;
 		}
 	}
-
-	/**
-	 * method to loads the saved game board
-	 */
-	// public void initializeSavedGameBoard()
 }

@@ -147,10 +147,6 @@ public class DedicationTokens {
 		return result;
 	}
 
-	public int fourOfKindCount() {
-		return this.fourOfKind.size();
-	}
-
 	/**
 	 * method to give one dedicationToken from threePair Stack with its
 	 * appropriate current value
@@ -191,14 +187,33 @@ public class DedicationTokens {
 		return result;
 	}
 
+	/**
+	 * method to give the four of a kind dedication available cards count
+	 * @return four of a kind dedication available cards count 
+	 */
+	public int fourOfKindCount() {
+		return this.fourOfKind.size();
+	}
+	
+	/**
+	 * method to give the seven unique dedication available cards count
+	 * @return seven unique dedication available cards count 
+	 */
 	public int sevenUniqueCount() {
 		return this.sevenUnique.size();
 	}
 
+	/**
+	 * method to give the generic four available cards count
+	 * @return generic four dedication available cards count 
+	 */
 	public int genericFourCount() {
 		return this.genericFour.size();
 	}
 
+	/**
+	 * Prints the state of four of a kind dedication cards
+	 */
 	public void getFourOfKindInfo() {
 		System.out
 				.println("Correct Version with 3 dots and 4 dots dedication Tokens will be implemented in build 2.Right now all the dedicationTokens will be used");
@@ -207,18 +222,27 @@ public class DedicationTokens {
 		}
 	}
 
+	/**
+	 * Prints the state of three pair dedication cards
+	 */
 	public void getThreePairInfo() {
 		for (int i = threePair.size() - 1; i >= 0; i--) {
 			System.out.print(threePair.get(i) + " ");
 		}
 	}
-
+	
+	/**
+	 * Prints the state of seven unique dedication cards
+	 */
 	public void getSevenUniqueInfo() {
 		for (int i = sevenUnique.size() - 1; i >= 0; i--) {
 			System.out.print(sevenUnique.get(i) + " ");
 		}
 	}
 
+	/**
+	 * Prints the state of generic four dedication cards
+	 */
 	public void getGenericFourInfo() {
 		for (int i = genericFour.size() - 1; i >= 0; i--) {
 			System.out.print(genericFour.get(i) + " ");
