@@ -58,17 +58,17 @@ public class PlayerTest {
 	@Test
 	public void testSpendFavorTokens(){
 		FavorTokens favorToken=new FavorTokens(10);
-		LanternCards lanternCardsAvailable=new LanternCards(4, 7, 7, 6, 5, 4, 8, 2);
+		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 5, 6, 5, 4, 5, 2);
+		player.favorTokenScore=10;
 		assertTrue(player.spendFavorTokens(favorToken, lanternCardsAvailable, "redCard", "blackCard"));
-		//System.out.println(lanternCardsAvailable.redCardCount());
-		//System.out.println(lanternCardsAvailable.blackCardCount());
 	}
 
 	@Test
 	public void testReturnLanternCards(){
-		LanternCards lanternCardsAvailable=new LanternCards(4, 8, 7, 6, 5, 4, 3, 2);
+		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 7, 6, 5, 4, 5, 2);
 		assertTrue(player.returnLanternCards("redCard", "blackCard", lanternCardsAvailable));
-		
+		System.out.println(lanternCardsAvailable.redCardCount());
+		System.out.println(lanternCardsAvailable.blackCardCount());
 	}
 
 	@Test
