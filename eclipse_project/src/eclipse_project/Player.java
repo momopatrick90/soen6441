@@ -55,6 +55,8 @@ public class Player {
 	 * @param card
 	 *            contains what color of the lantern card the user will be
 	 *            adding to his stack.
+	 * @return either true or false based on the availability of lantern cards 
+	 * in the common stack
 	 */
 	public boolean pickLanternCard(String card,
 			LanternCards lanternCardsAvailable) {
@@ -192,6 +194,7 @@ public class Player {
 	 *            The lantern card return by user
 	 * @param pickLCard
 	 *            The lantern card pick by user
+	 * @return either true or false based on current favor token score of the player
 	 * 
 	 */
 	public boolean spendFavorTokens(FavorTokens favorToken,
@@ -219,6 +222,8 @@ public class Player {
 	 *            The lantern card pick by user
 	 * @param lanternCardsAvailable
 	 *            The object contains the current stack of Lantern Cards
+	 * @return either true or false based on the availability of chosen lantern cards 
+	 * in the common stack
 	 */
 	public boolean returnLanternCards(String returnLCard, String pickLCard,
 			LanternCards lanternCardsAvailable) {

@@ -334,7 +334,7 @@ public class GameEngine {
 
 				//
 				for (int j = 0; j < playersElementList.getLength(); j++) {
-					// should add to true to this if its the current players
+					// should add true to this if its the current players
 					// turn
 					LinkedList<Boolean> isCurrent = new LinkedList<Boolean>();
 					//
