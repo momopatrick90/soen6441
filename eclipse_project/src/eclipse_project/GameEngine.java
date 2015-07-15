@@ -748,4 +748,8 @@ public class GameEngine {
 	public void saveFavorTokens(Element element, FavorTokens favorTokens) {
 		element.setAttribute("value", Integer.toString(favorTokens.getTokens()));
 	}
+	
+	public void displayTextMode(){
+		System.out.println("UnImplemented");
+	}
 }

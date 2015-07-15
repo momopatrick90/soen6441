@@ -37,6 +37,7 @@ public class LanternsApplication {
 		System.out.println("Choose an option:");
 		System.out.println("Press 1 for New Game");
 		System.out.println("Press 2 for Existing Game");
+		System.out.println("Press 3 for Text Mode of the Game");
 		System.out.println("Press ZERO to Exit Game");
 		Scanner in = new Scanner(System.in);
 		resp = in.nextInt();
@@ -59,7 +60,16 @@ public class LanternsApplication {
 				loadExistingGame(fileName);
 
 			}
-
+			else if (resp == 3) {
+					
+				if (!isLoad) {
+					System.out.println("Kindly load new/existing game before viewing it in text mode.");
+				}
+				else
+				{
+					displayTextMode();
+				}
+			}
 			if (resp == 0) {
 				if (isLoad) {
 					System.out
@@ -73,7 +83,7 @@ public class LanternsApplication {
 				break;
 			}
 			
-			System.out.println("press 9 to continue and ZERO to quit!");
+			System.out.println("Press ZERO to quit!");
 			in = new Scanner(System.in);
 			resp = in.nextInt();
 
@@ -95,14 +105,20 @@ public class LanternsApplication {
 		game = new GameEngine();
 		
 		File file = new File(fileName);
-		if(!file.exists())
+		if(!file.exists()){
+			isLoad = false;
 			System.out.println("file: "+fileName+" doesn't exist.");
+		}
 		else
 			game.loadExistingGame(fileName);
 	}
 
 	public static void saveTheGame(String fileName,GameEngine game) throws ParserConfigurationException {
 		game.saveGame(fileName, game);
+	}
+	
+	public static void displayTextMode(){
+		game.displayTextMode();
 	}
 
 }
