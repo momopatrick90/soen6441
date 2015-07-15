@@ -165,6 +165,12 @@ public class DedicationTokens {
 		return result;
 	}
 
+	
+	/**
+	 * method to return the current size of threePair Stack
+	 * 
+	 * @return stack size
+	 */
 	public int threePairCount() {
 		return this.threePair.size();
 	}
