@@ -34,14 +34,14 @@ public class LanternsApplication {
 
 		int resp = '\0';
 
-		do {
+		System.out.println("Choose an option:");
+		System.out.println("Press 1 for New Game");
+		System.out.println("Press 2 for Existing Game");
+		System.out.println("Press ZERO to Exit Game");
+		Scanner in = new Scanner(System.in);
+		resp = in.nextInt();
 
-			System.out.println("Choose an option:");
-			System.out.println("Press 1 for New Game");
-			System.out.println("Press 2 for Existing Game");
-			System.out.println("Press ZERO to Exit Game");
-			Scanner in = new Scanner(System.in);
-			resp = in.nextInt();
+		do {
 
 			if (resp == 1) {
 				System.out.println("Enter number of players");
@@ -78,7 +78,7 @@ public class LanternsApplication {
 			resp = in.nextInt();
 
 
-		} while (resp != 0);
+		} while (true);
 
 		System.out.println("Game is ended!");
 	}
