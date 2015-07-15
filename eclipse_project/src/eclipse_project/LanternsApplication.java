@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.*;
+import javax.xml.transform.TransformerException;
 
 /**
  * Main application container - loads the new game or existing game based on the
@@ -29,7 +30,7 @@ public class LanternsApplication {
 	private static boolean isLoad = false;
 
 	public static void main(String[] args) throws ParserConfigurationException,
-			SAXException, IOException {
+			SAXException, IOException, TransformerException {
 
 		int resp = '\0';
 
@@ -127,8 +128,9 @@ public class LanternsApplication {
 	 * @param fileName
 	 * @param game - Current Game Instance
 	 * @throws ParserConfigurationException
+	 * @throws TransformerException 
 	 */
-	public static void saveTheGame(String fileName,GameEngine game) throws ParserConfigurationException {
+	public static void saveTheGame(String fileName,GameEngine game) throws ParserConfigurationException, TransformerException {
 		game.saveGame(fileName, game);
 	}
 	

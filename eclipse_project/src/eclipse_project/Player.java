@@ -12,6 +12,7 @@ public class Player {
 	public int favorTokenScore;
 	public ArrayList<LakeTiles> playerLTStack;
 
+	public String boardPosition;
 	public int playerScore_fourKind;
 	public int playerScore_threePair;
 	public int playerScore_sevenUnique;
@@ -284,4 +285,108 @@ public class Player {
 	public int getFavorToken() {
 		return this.favorTokenScore;
 	}
+	
+	/**
+	 * This method will be called to assign location to Players with respect to Game Board
+	 * 
+	 * @param numOfPlayers
+	 *            Number of Players
+	 * @param playersList
+	 *            Arraylist containing all players
+	 * @param startTile
+	 *            Start LakeTile on Board
+	 * @return	Arraylist containing all players
+	 * 		
+	 */
+	public ArrayList<Player> assignBoardPosition(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
+	{	
+		switch(numOfPlayers)
+		{
+			case 2:
+				playersList.get(0).boardPosition="left";
+				playersList.get(1).boardPosition="right";
+				break;
+			
+			case 3:
+				playersList.get(0).boardPosition="left";
+				playersList.get(1).boardPosition="up";
+				playersList.get(2).boardPosition="right";
+				break;
+
+			case 4:
+				playersList.get(0).boardPosition="left";
+				playersList.get(1).boardPosition="up";
+				playersList.get(2).boardPosition="right";
+				playersList.get(3).boardPosition="down";
+				break;
+		}
+		return playersList;
+	}
+	
+	/**
+	 * This method will be called to assign location to Players with respect to Game Board
+	 * 
+	 * @param numOfPlayers
+	 *            Number of Players
+	 * @param playersList
+	 *            Arraylist containing all players
+	 * @param startTile
+	 *            Start LakeTile on Board
+	 * @return	String containing player's name who will start the game
+	 * 		
+	 */
+	public String turnToStartGame(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
+	{
+		String turnToPlay="";
+		if(startTile.downColor=="red")
+			turnToPlay="down";
+		else if(startTile.upColor=="red")
+			turnToPlay="up";
+		else if(startTile.leftColor=="red")
+			turnToPlay="left";
+		else
+			turnToPlay="right";
+		switch(numOfPlayers)
+		{
+		case 4:
+			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player1";
+			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player2";
+			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player3";
+			else
+				turnToPlay="Player4";
+			break;
+		case 3:
+			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player1";
+			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player2";
+			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player3";
+			else
+				turnToPlay="Player1";
+			break;
+		case 2:
+			if(turnToPlay.equalsIgnoreCase("left")||turnToPlay.equalsIgnoreCase("down"))
+				turnToPlay="Player1";
+			else
+				turnToPlay="Player2";
+			/*if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player1";
+			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player2";
+			if(turnToPlay=="up")
+				turnToPlay="Player2";
+			else
+				turnToPlay="Player1";*/
+			break;			
+		}
+		
+		return turnToPlay;
+	}
 }
+
+
+

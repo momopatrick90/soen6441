@@ -1,5 +1,6 @@
 package eclipse_project;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class LanternCards {
@@ -337,5 +338,45 @@ public class LanternCards {
 	 */
 	public int orangeCardCount() {
 		return this.orangeStack.size();
+	}
+	
+	/**
+	 * This method assigns lanternCards to each Player according to LakeTile and players position
+	 * @param numOfPlayers - Number of Players
+	 * @param playerList - Arraylist of Players
+	 * @param startTile - LakeTile
+	 * @param lanternCards - Object of lanternCard class
+	 */
+	public void assignLanternCards(int numOfPlayers,ArrayList<Player> playerList,LakeTiles startTile,LanternCards lanternCards)
+	{
+		String lanternCardtoAdd;
+		switch(numOfPlayers)
+		{		
+		case 2:
+			lanternCardtoAdd =startTile.leftColor+"Card";
+			playerList.get(0).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd =startTile.rightColor+"Card";
+			playerList.get(1).pickLanternCard(lanternCardtoAdd,lanternCards);
+			break;
+		case 3:
+			lanternCardtoAdd =startTile.leftColor+"Card";
+			playerList.get(0).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd =startTile.upColor+"Card";
+			playerList.get(1).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd =startTile.rightColor+"Card";
+			playerList.get(2).pickLanternCard(lanternCardtoAdd,lanternCards);
+			break;
+		case 4:
+			lanternCardtoAdd =startTile.leftColor+"Card";
+			playerList.get(0).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd =startTile.upColor+"Card";
+			playerList.get(1).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd =startTile.rightColor+"Card";
+			playerList.get(2).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd =startTile.downColor+"Card";
+			playerList.get(3).pickLanternCard(lanternCardtoAdd,lanternCards);
+			break;
+
+		}
 	}
 }
