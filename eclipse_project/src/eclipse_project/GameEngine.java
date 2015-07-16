@@ -480,8 +480,7 @@ public class GameEngine {
 			//
 			Element _lakeTilesInner = gameDoc.createElement("lake_tiles");
 			//
-			System.out.println("Check what is being printed here"
-					+ this.lakeTiles.globalLakeTiles.get(j).id);
+			
 
 			// id
 			_lakeTilesInner.setAttribute("id",
@@ -714,9 +713,7 @@ public class GameEngine {
 			for (int j = 0; j < this.PlayerList.get(i).playerLTStack.size(); j++) {
 				//
 				Element lakeTilesInner = gameDoc.createElement("lake_tiles");
-				//
-				System.out.println("Check what is being printed here"
-						+ this.PlayerList.get(i).playerLTStack.get(j).id);
+
 
 				saveLakeTiles(lakeTilesInner,
 						(this.PlayerList.get(i).playerLTStack).get(j), gameDoc);
