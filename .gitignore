@@ -3,3 +3,6 @@
 
 eclipse_project/.classpath
 eclipse_project/~$ftware Architecture_v1.docx
+eclipse_project/src/unittests/GameEngineTest.java
+eclipse_project/src/unittests/LanternApplicationTest.java
+eclipse_project/src/unittests/GameEngineTest.java

@@ -2,9 +2,15 @@ package unittests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
+import javax.xml.crypto.Data;
+
 import org.junit.Test;
 
-import eclipse_project.LanternCards;;
+import eclipse_project.LakeTiles;
+import eclipse_project.LanternCards;
+import eclipse_project.Player;
 
 public class LanternCardsTest {
 
@@ -56,4 +62,19 @@ public class LanternCardsTest {
 				
 		assertTrue(lc.getBlackCard());
 	}
+	
+//	@Test
+//	public void testAssignsLanternCardsToEachPlayerAccordingToLakeTileAndPlayersPosition(){
+//		LanternCards lc=new LanternCards(4,5, 7, 6, 5, 4, 5, 2);
+//		Player p1=new Player("Player1");
+//		Player p2=new Player("Player2");
+//		Player p3=new Player("Player3");
+//		ArrayList<Player> playerList=new ArrayList<>();
+//		playerList.add(p1);
+//		playerList.add(p2);
+//		playerList.add(p3);
+//		LakeTiles startTile=new LakeTiles();
+//		//LanternCards lanternCards=new LanternCards(4, 5, 7, 6, 5, 4, 5, 2);;
+//		lc.assignLanternCards(4, playerList, startTile, lc);
+//	}
 }

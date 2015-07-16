@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -67,8 +68,6 @@ public class PlayerTest {
 	public void testReturnLanternCards(){
 		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 7, 6, 5, 4, 5, 2);
 		assertTrue(player.returnLanternCards("redCard", "blackCard", lanternCardsAvailable));
-		System.out.println(lanternCardsAvailable.redCardCount());
-		System.out.println(lanternCardsAvailable.blackCardCount());
 	}
 
 	@Test
@@ -77,6 +76,39 @@ public class PlayerTest {
 		assertTrue(player.getFavorToken()==20);
 	}
 
-	
+	@Test
+	public void testAssignBoardPosition(){
+		ArrayList<Player> playersList=new ArrayList<>();
+		Player p1=new Player("Player1");
+		p1.boardPosition="left";
+		Player p2=new Player("Player2");
+		p2.boardPosition="up";
+		Player p3=new Player("Player3");
+		p3.boardPosition="right";
+		Player p4=new Player("Player4");
+		p4.boardPosition="down";
+		playersList.add(p1);
+		playersList.add(p2);
+		playersList.add(p3);
+		playersList.add(p4);
+		
+		LakeTiles lTiles=new LakeTiles(); 
+		lTiles.downColor="red";
+		lTiles.leftColor="blue";
+		lTiles.upColor="white";
+		lTiles.rightColor="green";
+		lTiles.left=1;
+		lTiles.right=2;
+		lTiles.down=3;
+		lTiles.up=4;
+		lTiles.id=1;
+		lTiles.platform=false;
+		
+		//lTiles.globalLakeTiles.push(lTiles.lakeTiles[0]);
+		String playersL=player.turnToStartGame(4, playersList, lTiles);
+		assertEquals("Player4", playersL);
+		
+		
+	}
 
 }

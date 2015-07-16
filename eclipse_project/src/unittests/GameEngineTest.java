@@ -66,7 +66,4 @@ public class GameEngineTest {
 		lTiles =l.assignLakeTiles(2);
 		assertEquals(6, lTiles.size());
 	}
-	
-	
-	
 }
