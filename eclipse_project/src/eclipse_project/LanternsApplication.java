@@ -40,7 +40,6 @@ public class LanternsApplication {
 		System.out.println("Choose an option:");
 		System.out.println("Press 1 for New Game");
 		System.out.println("Press 2 for Existing Game");
-		System.out.println("Press 3 for Text Mode of the Game");
 		System.out.println("Press 0 to Exit Game");
 		Scanner in = new Scanner(System.in);
 		String input = in.nextLine();
@@ -92,16 +91,7 @@ public class LanternsApplication {
 				if(isLoad) 
 					loadExistingGame(fileName);
 			
-			} else if (resp == 3) {
-
-				if (!isLoad) {
-					System.out
-							.println("Kindly load new/existing game before viewing it in text mode.");
-				} else {
-					displayTextMode();
-				}
-			}
-			if (resp == 0) {
+			} else if (resp == 0) {
 				if (isLoad) {
 					while (true) {
 						System.out
@@ -124,7 +114,6 @@ public class LanternsApplication {
 			System.out.println("Choose an option");
 			System.out.println("Press 1 for New Game");
 			System.out.println("Press 2 for Existing Game");
-			System.out.println("Press 3 for Text Mode of the Game");
 			System.out.println("Press 0 to Exit Game");
 			in = new Scanner(System.in);
 			input = in.nextLine();
@@ -183,11 +172,5 @@ public class LanternsApplication {
 		game.saveGame(fileName, game);
 	}
 
-	/**
-	 * Display the current state of the game in text mode
-	 */
-	public static void displayTextMode() {
-		game.displayTextMode();
-	}
 
 }

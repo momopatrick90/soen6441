@@ -854,11 +854,12 @@ public class GameEngine {
 		return Integer.parseInt(favorTokensElement.getAttribute("value"));
 	}
 
+	/**
+	 * method save's the favor token  
+	 * @param element
+	 * @param favorTokens 
+	 */
 	public void saveFavorTokens(Element element, FavorTokens favorTokens) {
 		element.setAttribute("value", Integer.toString(favorTokens.getTokens()));
-	}
-
-	public void displayTextMode() {
-		System.out.println("UnImplemented");
 	}
 }
