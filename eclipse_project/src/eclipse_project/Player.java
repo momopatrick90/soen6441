@@ -11,7 +11,7 @@ public class Player {
 	public LanternCards playerLCStack;
 	public int favorTokenScore;
 	public ArrayList<LakeTiles> playerLTStack;
-
+	public boolean current;
 	public String boardPosition;
 	public int playerScore_fourKind;
 	public int playerScore_threePair;
@@ -37,11 +37,12 @@ public class Player {
 	 * @param playerScore_threePair
 	 * @param playerScore_sevenUnique
 	 */
-	public Player(String name, LanternCards lanternCards, ArrayList<LakeTiles> playerLTStack,
+	public Player(String name, String current, LanternCards lanternCards, ArrayList<LakeTiles> playerLTStack,
 			int favorTokenScore, int playerScore_fourKind,
 			int playerScore_threePair, int playerScore_sevenUnique) {
 
 		this.name = name;
+		this.current = Boolean.valueOf(current);
 		this.favorTokenScore = favorTokenScore;
 		this.playerScore_fourKind = playerScore_fourKind;
 		this.playerScore_threePair = playerScore_threePair;

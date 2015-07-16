@@ -41,6 +41,7 @@ public class GameEngine {
 	private LakeTiles startTile;
 	private ArrayList<LakeTiles> lTiles;
 	private Player player;
+	private LinkedList<LakeTiles> lakeTilesList;
 	private DedicationTokens dedicationTokens;
 	private FavorTokens favorTokens;
 	private static int redCount, blueCount, greenCount, whiteCount,
@@ -95,7 +96,7 @@ public class GameEngine {
 
 		// place the starting lake tile on the board
 		board.intializeGameBoard(startTile);
-		
+
 		System.out.println("Starting the game...");
 		System.out.println("StartTile is placed on board");
 		System.out.println();
@@ -121,7 +122,6 @@ public class GameEngine {
 			PlayerList.add(player1);
 			player2.setFavorToken(favorTokenAtStart);
 			PlayerList.add(player2);
-
 
 			for (int x = 0; x < PlayerList.size(); x++) {
 
@@ -208,17 +208,17 @@ public class GameEngine {
 			player2.setFavorToken(favorTokenAtStart);
 			player3.setFavorToken(favorTokenAtStart);
 			player4.setFavorToken(favorTokenAtStart);
-			
+
 			PlayerList.add(player1);
 			PlayerList.add(player2);
 			PlayerList.add(player3);
 			PlayerList.add(player4);
-			
+
 			for (int x = 0; x < PlayerList.size(); x++) {
 
 				System.out
 						.println("Details of the LakeTiles assigned to Player"
-								+ (x + 1));			
+								+ (x + 1));
 				for (int i = 0; i < PlayerList.get(x).getLakeTiles().size(); i++) {
 					System.out
 							.println("id"
@@ -243,17 +243,21 @@ public class GameEngine {
 			}
 		}
 		System.out.println();
-		for(int i=0;i<lakeTiles.globalLakeTiles.size();i++)
-		{
-			System.out.println("id "+lakeTiles.globalLakeTiles.get(i).id+" "+ "leftColor " + " "
-				+ lakeTiles.globalLakeTiles.get(i).leftColor + " " + "rightColor" + " "
-				+ lakeTiles.globalLakeTiles.get(i).rightColor + " " + "upColor" + " "
-				+ lakeTiles.globalLakeTiles.get(i).upColor + " " + "downColor" + " "
-				+ lakeTiles.globalLakeTiles.get(i).downColor + " " + "platform" + " "
-				+ lakeTiles.globalLakeTiles.get(i).platform);
+		for (int i = 0; i < lakeTiles.globalLakeTiles.size(); i++) {
+			System.out.println("id " + lakeTiles.globalLakeTiles.get(i).id
+					+ " " + "leftColor " + " "
+					+ lakeTiles.globalLakeTiles.get(i).leftColor + " "
+					+ "rightColor" + " "
+					+ lakeTiles.globalLakeTiles.get(i).rightColor + " "
+					+ "upColor" + " "
+					+ lakeTiles.globalLakeTiles.get(i).upColor + " "
+					+ "downColor" + " "
+					+ lakeTiles.globalLakeTiles.get(i).downColor + " "
+					+ "platform" + " "
+					+ lakeTiles.globalLakeTiles.get(i).platform);
 		}
 		System.out.println();
-		//System.out.println(dedicationTokens.genericFourCount());
+		// System.out.println(dedicationTokens.genericFourCount());
 		System.out.println("Details of the Dedication Tokens:");
 		System.out.println("Four Of Kind Tokens:");
 		dedicationTokens.getFourOfKindInfo();
@@ -268,29 +272,41 @@ public class GameEngine {
 		dedicationTokens.getGenericFourInfo();
 		System.out.println();
 		System.out.println();
-		
+
 		System.out.println("Details of FavorTokens:");
-		System.out.println("Number of Favor Tokens present on stack :"+favorTokens.getTokens());
-		System.out.println("Number of Favor Tokens present with players: 0");	
+		System.out.println("Number of Favor Tokens present on stack :"
+				+ favorTokens.getTokens());
+		System.out.println("Number of Favor Tokens present with players: 0");
 		System.out.println();
-		
+
 		System.out.println("Details of LanternCards:");
-		System.out.println("Number of Black lantern cards available on Stack: "+lanternCards.blackCardCount());
-		System.out.println("Number of Red lantern cards available on Stack: "+lanternCards.redCardCount());
-		System.out.println("Number of Green lantern cards available on Stack: "+lanternCards.greenCardCount());
-		System.out.println("Number of White lantern cards available on Stack: "+lanternCards.whiteCardCount());
-		System.out.println("Number of Purple lantern cards available on Stack: "+lanternCards.purpleCardCount());
-		System.out.println("Number of Blue lantern cards available on Stack: "+lanternCards.blueCardCount());
-		System.out.println("Number of Orange lantern cards available on Stack: "+lanternCards.orangeCardCount());
-		
+		System.out.println("Number of Black lantern cards available on Stack: "
+				+ lanternCards.blackCardCount());
+		System.out.println("Number of Red lantern cards available on Stack: "
+				+ lanternCards.redCardCount());
+		System.out.println("Number of Green lantern cards available on Stack: "
+				+ lanternCards.greenCardCount());
+		System.out.println("Number of White lantern cards available on Stack: "
+				+ lanternCards.whiteCardCount());
+		System.out
+				.println("Number of Purple lantern cards available on Stack: "
+						+ lanternCards.purpleCardCount());
+		System.out.println("Number of Blue lantern cards available on Stack: "
+				+ lanternCards.blueCardCount());
+		System.out
+				.println("Number of Orange lantern cards available on Stack: "
+						+ lanternCards.orangeCardCount());
+
 		System.out.println();
-		
-		PlayerList=player1.assignBoardPosition(this.numOfPlayer,PlayerList,startTile);
-		
-		for(int i=0;i<PlayerList.size();i++)	
-		System.out.println("Position of Player"+(i+1)+": "+PlayerList.get(i).boardPosition);
+
+		PlayerList = player1.assignBoardPosition(this.numOfPlayer, PlayerList,
+				startTile);
+
+		for (int i = 0; i < PlayerList.size(); i++)
+			System.out.println("Position of Player" + (i + 1) + ": "
+					+ PlayerList.get(i).boardPosition);
 		System.out.println();
-		
+
 		System.out.println("Details of the startTile:");
 		System.out.println("id" + startTile.id + " " + "leftColor " + " "
 				+ startTile.leftColor + " " + "rightColor" + " "
@@ -299,34 +315,53 @@ public class GameEngine {
 				+ startTile.downColor + " " + "platform" + " "
 				+ startTile.platform);
 		System.out.println();
-		
-		playerWhoStartsGame=player1.turnToStartGame(this.numOfPlayer, PlayerList, startTile);
-		System.out.println(playerWhoStartsGame +" will start the game as startTile is pointing to it else we follow clockwise rule");
-		
+
+		playerWhoStartsGame = player1.turnToStartGame(this.numOfPlayer,
+				PlayerList, startTile);
+		System.out
+				.println(playerWhoStartsGame
+						+ " will start the game as startTile is pointing to it else we follow clockwise rule");
+
 		System.out.println();
-		lanternCards.assignLanternCards(this.numOfPlayer,PlayerList,startTile,lanternCards);
+		lanternCards.assignLanternCards(this.numOfPlayer, PlayerList,
+				startTile, lanternCards);
 		System.out.println("Players will get lakeTiles according to startTile");
-		for(int i=0;i<PlayerList.size();i++)
-		{
-			System.out.println("Details of the lanternCards available to Player"+(i+1)+":");
-			System.out.println("Number of Black LanternCards:\t"+PlayerList.get(i).playerLCStack.blackCardCount());
-			System.out.println("Number of Blue LanternCards:\t"+PlayerList.get(i).playerLCStack.blueCardCount());
-			System.out.println("Number of Green LanternCards:\t"+PlayerList.get(i).playerLCStack.greenCardCount());
-			System.out.println("Number of Orange LanternCards:\t"+PlayerList.get(i).playerLCStack.orangeCardCount());
-			System.out.println("Number of Purple LanternCards:\t"+PlayerList.get(i).playerLCStack.purpleCardCount());
-			System.out.println("Number of White LanternCards: \t"+PlayerList.get(i).playerLCStack.whiteCardCount());
-			System.out.println("Number of Red LanternCards:\t"+PlayerList.get(i).playerLCStack.redCardCount());
+		for (int i = 0; i < PlayerList.size(); i++) {
+			System.out
+					.println("Details of the lanternCards available to Player"
+							+ (i + 1) + ":");
+			System.out.println("Number of Black LanternCards:\t"
+					+ PlayerList.get(i).playerLCStack.blackCardCount());
+			System.out.println("Number of Blue LanternCards:\t"
+					+ PlayerList.get(i).playerLCStack.blueCardCount());
+			System.out.println("Number of Green LanternCards:\t"
+					+ PlayerList.get(i).playerLCStack.greenCardCount());
+			System.out.println("Number of Orange LanternCards:\t"
+					+ PlayerList.get(i).playerLCStack.orangeCardCount());
+			System.out.println("Number of Purple LanternCards:\t"
+					+ PlayerList.get(i).playerLCStack.purpleCardCount());
+			System.out.println("Number of White LanternCards: \t"
+					+ PlayerList.get(i).playerLCStack.whiteCardCount());
+			System.out.println("Number of Red LanternCards:\t"
+					+ PlayerList.get(i).playerLCStack.redCardCount());
 			System.out.println();
 		}
-		
-		System.out.println("One example of laketile being added to GameBoard");
-		lakeTiles.placeTile(36, 37,board,PlayerList.get(0).getLakeTiles().get(0));
-		
-		System.out.println("left"+board.tilesOnBoard.get(0).left+"right"+board.tilesOnBoard.get(0).right+"down"+board.tilesOnBoard.get(0).down+"up"+board.tilesOnBoard.get(0).up+"id"+board.tilesOnBoard.get(0).id);
-		System.out.println("left"+board.tilesOnBoard.get(1).left+"right"+board.tilesOnBoard.get(1).right+"down"+board.tilesOnBoard.get(1).down+"up"+board.tilesOnBoard.get(1).up+"id"+board.tilesOnBoard.get(1).id);
-		
 
-	
+		System.out.println("One example of laketile being added to GameBoard");
+		lakeTiles.placeTile(36, 37, board, PlayerList.get(0).getLakeTiles()
+				.get(0));
+
+		System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
+				+ board.tilesOnBoard.get(0).right + "down"
+				+ board.tilesOnBoard.get(0).down + "up"
+				+ board.tilesOnBoard.get(0).up + "id"
+				+ board.tilesOnBoard.get(0).id);
+		System.out.println("left" + board.tilesOnBoard.get(1).left + "right"
+				+ board.tilesOnBoard.get(1).right + "down"
+				+ board.tilesOnBoard.get(1).down + "up"
+				+ board.tilesOnBoard.get(1).up + "id"
+				+ board.tilesOnBoard.get(1).id);
+
 	}
 
 	/**
@@ -356,7 +391,8 @@ public class GameEngine {
 		Document doc = dBuilder.parse(fXmlFile);
 
 		// game node
-		NodeList nodeList = doc.getElementsByTagName("game").item(0).getChildNodes();
+		NodeList nodeList = doc.getElementsByTagName("game").item(0)
+				.getChildNodes();
 
 		//
 		DedicationTokens dedicationTokens = null;
@@ -376,10 +412,10 @@ public class GameEngine {
 				dedicationTokens = this.loadDedicationTokens((Element) node);
 			} else if (node.getNodeName().equals("global_lake_tiles_stack")) {
 				//
-				LinkedList<LakeTiles> lakeTilesList =  loadMultipleLakeTiles((Element) node);
+				 lakeTilesList = loadMultipleLakeTiles((Element) node);
 				//
-				for(int j=0; j<lakeTilesList.size(); j++)
-				{
+				for (int j = 0; j < lakeTilesList.size(); j++) {
+					
 					lakeTiles.globalLakeTiles.push(lakeTilesList.get(j));
 				}
 			} else if (node.getNodeName().equals("lantern_cards")) {
@@ -388,7 +424,7 @@ public class GameEngine {
 				favorTokens = loadFavorTokens((Element) node);
 			} else if (node.getNodeName().equals("game_board")) {
 
-			}else if (node.getNodeName().equals("player")) {
+			} else if (node.getNodeName().equals("player")) {
 				// list of players
 				Element playersElementList = ((Element) node);
 				//
@@ -396,20 +432,22 @@ public class GameEngine {
 				//
 				players.add(player);
 				//
-				
-			}else if (node.getNodeName().equals("board")) {
+
+			} else if (node.getNodeName().equals("board")) {
 				gameBoard = this.loadBoards((Element) node);
 			}
 
 		}
-		
-		
+
 		// populate
 		this.PlayerList = players;
 		this.numOfPlayer = players.size();
 		this.lanternCards = availableLanternCards;
 		this.dedicationTokens = dedicationTokens;
 		this.favorTokens = new FavorTokens(favorTokens);
+		this.lakeTiles = lakeTiles;
+
+		displayTextMode();
 	}
 
 	/**
@@ -486,28 +524,27 @@ public class GameEngine {
 		saveDedicationTokens(_dedicationTokens, dedicationTokens);
 		//
 		game.appendChild(_dedicationTokens);
-		
+
 		// saveFavorTokens
 		Element _favorTokens = gameDoc.createElement("favor_tokens");
 		//
 		saveFavorTokens(_favorTokens, favorTokens);
 		//
 		game.appendChild(_favorTokens);
-		
-		//game board
+
+		// game board
 		Element board = gameDoc.createElement("board");
 		//
 		saveBoard(gameDoc, board);
 		//
 		game.appendChild(board);
-		
 
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
 				.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(gameDoc);
-		StreamResult result = new StreamResult(new File(fileName+".xml"));
+		StreamResult result = new StreamResult(new File(fileName + ".xml"));
 
 		// Output to console for testing
 		// StreamResult result = new StreamResult(System.out);
@@ -515,35 +552,30 @@ public class GameEngine {
 
 		System.out.println("File saved!");
 	}
-	
+
 	/**
-	 * <board>
-	 * 		<board width="2", height="3">
-	 * 			<entry i="0" j="0" id="1" />
-	 * 			<entry i="1" j="2" id="2 "/>
-	 * 			...
-	 * 		</board>
-	 * 		<tiles_on_board>...</tiles_on_board>
+	 * <board> <board width="2", height="3"> <entry i="0" j="0" id="1" /> <entry
+	 * i="1" j="2" id="2 "/> ... </board> <tiles_on_board>...</tiles_on_board>
 	 * </board>
 	 */
-	public Board loadBoards(Element board)
-	{
+	public Board loadBoards(Element board) {
 		//
-		Element innerBoardElement = (Element) board.getElementsByTagName("board").item(0);
-		int board_matrix[][] = new int[Integer.parseInt(innerBoardElement.getAttribute("width"))][Integer.parseInt(innerBoardElement.getAttribute("height"))];
-		for(int i=0; i<board_matrix.length; i++)
-		{
-			for(int j=0; j<board_matrix[i].length; j++)
-			{
+		Element innerBoardElement = (Element) board.getElementsByTagName(
+				"board").item(0);
+		int board_matrix[][] = new int[Integer.parseInt(innerBoardElement
+				.getAttribute("width"))][Integer.parseInt(innerBoardElement
+				.getAttribute("height"))];
+		for (int i = 0; i < board_matrix.length; i++) {
+			for (int j = 0; j < board_matrix[i].length; j++) {
 				board_matrix[i][j] = -1;
 			}
 		}
-		
+
 		//
 		NodeList entries = innerBoardElement.getElementsByTagName("entry");
-		
+
 		//
-		for (int k = 0; k< entries.getLength(); k++) {
+		for (int k = 0; k < entries.getLength(); k++) {
 			//
 			Element entry = (Element) entries.item(k);
 			//
@@ -553,7 +585,7 @@ public class GameEngine {
 			//
 			board_matrix[i][j] = id;
 		}
-		
+
 		//
 		ArrayList<LakeTiles> tilesOnBoard = new ArrayList<LakeTiles>();
 		//
@@ -563,12 +595,11 @@ public class GameEngine {
 		for (int i = 0; i < lakeTilesList.size(); i++) {
 			tilesOnBoard.add(lakeTilesList.get(i));
 		}
-		
+
 		return new Board(board_matrix, tilesOnBoard);
 	}
-	
-	public void saveBoard(Document gameDoc, Element board)
-	{
+
+	public void saveBoard(Document gameDoc, Element board) {
 		// add players tag
 		Element lakeTilesBoard = gameDoc.createElement("tiles_on_board");
 		//
@@ -576,29 +607,29 @@ public class GameEngine {
 			//
 			Element lakeTilesInner = gameDoc.createElement("lake_tiles");
 			//
-			saveLakeTiles(lakeTilesInner, this.board.tilesOnBoard.get(j), gameDoc);
+			saveLakeTiles(lakeTilesInner, this.board.tilesOnBoard.get(j),
+					gameDoc);
 			//
 			lakeTilesBoard.appendChild(lakeTilesInner);
 		}
 		//
 		board.appendChild(lakeTilesBoard);
-		
+
 		// add board matrix
 		Element boardMatrix = gameDoc.createElement("board");
 		//
-		boardMatrix.setAttribute("width", ""+this.board.board.length);
-		boardMatrix.setAttribute("height", ""+this.board.board[0].length);
+		boardMatrix.setAttribute("width", "" + this.board.board.length);
+		boardMatrix.setAttribute("height", "" + this.board.board[0].length);
 		//
 		for (int i = 0; i < this.board.board.length; i++) {
 			for (int j = 0; j < this.board.board[0].length; j++) {
-				if(this.board.board[i][j] != -1)
-				{
+				if (this.board.board[i][j] != -1) {
 					//
 					Element entry = gameDoc.createElement("entry");
 					//
-					entry.setAttribute("i" , ""+i);
-					entry.setAttribute("j" , ""+j);
-					entry.setAttribute("id" , ""+this.board.board[i][j]);
+					entry.setAttribute("i", "" + i);
+					entry.setAttribute("j", "" + j);
+					entry.setAttribute("id", "" + this.board.board[i][j]);
 					//
 					boardMatrix.appendChild(entry);
 				}
@@ -612,10 +643,8 @@ public class GameEngine {
 	 * @param playerElement
 	 *            example: <player current="true" four_kind_score="2"
 	 *            three_pair_score="2" seven_unique_score="1"
-	 *            favor_token_score="5" name="palyer_name" >
-	 *            <lake_tiles_stack> .... </lake_tiles_stack > 
-	 *            <lantern_cards ... /> 
-	 *            </player>
+	 *            favor_token_score="5" name="palyer_name" > <lake_tiles_stack>
+	 *            .... </lake_tiles_stack > <lantern_cards ... /> </player>
 	 * */
 	public Player loadPlayer(Element playerElement) {
 		//
@@ -644,10 +673,10 @@ public class GameEngine {
 
 		// name
 		String name = playerElement.getAttribute("name");
-
+		String current = playerElement.getAttribute("current");
 
 		//
-		return new Player(name, loadLanternCards, lakeTilesStack,
+		return new Player(name,current, loadLanternCards, lakeTilesStack,
 				favorTokenScore, fourKindScore, threePairScore,
 				sevenUniqueScore);
 	}
@@ -666,20 +695,17 @@ public class GameEngine {
 		for (int i = 0; i < this.PlayerList.size(); i++) {
 			//
 			Element player = gameDoc.createElement("player");
-			
+
 			player.setAttribute("current",
 					Boolean.toString(this.PlayerList.get(i) == this.player));
 
-			if(this.PlayerList.get(i).name.equalsIgnoreCase(playerWhoStartsGame)){
-				player.setAttribute("current",
-						Boolean.toString(true));
+			if (this.PlayerList.get(i).name
+					.equalsIgnoreCase(playerWhoStartsGame)) {
+				player.setAttribute("current", Boolean.toString(true));
+			} else {
+				player.setAttribute("current", Boolean.toString(false));
 			}
-			else
-			{
-				player.setAttribute("current",
-						Boolean.toString(false));
-			}
-			
+
 			players.appendChild(player);
 
 			//
@@ -728,8 +754,7 @@ public class GameEngine {
 		//
 		LinkedList<LakeTiles> lakeTiles = new LinkedList<LakeTiles>();
 		//
-		NodeList lakeTilesStackNL = element
-				.getElementsByTagName("lake_tiles");
+		NodeList lakeTilesStackNL = element.getElementsByTagName("lake_tiles");
 		//
 		for (int j = 0; j < lakeTilesStackNL.getLength(); j++) {
 			// should add to true to this if its the current players
@@ -773,14 +798,15 @@ public class GameEngine {
 		int right = Integer.parseInt(lakeTilesElement.getAttribute("right"));
 		int up = Integer.parseInt(lakeTilesElement.getAttribute("up"));
 		int down = Integer.parseInt(lakeTilesElement.getAttribute("down"));
-		
+
 		//
 		boolean platform = Boolean.parseBoolean(lakeTilesElement
 				.getAttribute("platform"));
 
 		//
 		return new LakeTiles(leftColor, rightColor, upColor, downColor, left,
-				right, up, down, id, platform, new LakeTiles[23], new Stack<LakeTiles>());
+				right, up, down, id, platform, new LakeTiles[23],
+				new Stack<LakeTiles>());
 	}
 
 	/**
@@ -791,7 +817,8 @@ public class GameEngine {
 	 * @param j
 	 * @param gameDoc
 	 */
-	public void saveLakeTiles(Element element, LakeTiles lakeTiles, Document gameDoc) {
+	public void saveLakeTiles(Element element, LakeTiles lakeTiles,
+			Document gameDoc) {
 
 		// id
 		element.setAttribute("id", Integer.toString(lakeTiles.id));
@@ -801,15 +828,11 @@ public class GameEngine {
 		element.setAttribute("up_color", lakeTiles.upColor);
 		element.setAttribute("down_color", lakeTiles.downColor);
 		//
-		element.setAttribute("left",
-				Integer.toString(lakeTiles.left));
-		element.setAttribute("right",
-				Integer.toString(lakeTiles.right));
+		element.setAttribute("left", Integer.toString(lakeTiles.left));
+		element.setAttribute("right", Integer.toString(lakeTiles.right));
 		element.setAttribute("up", Integer.toString(lakeTiles.up));
-		element.setAttribute("down",
-				Integer.toString(lakeTiles.down));
-		element.setAttribute("platform",
-				Boolean.toString(lakeTiles.platform));
+		element.setAttribute("down", Integer.toString(lakeTiles.down));
+		element.setAttribute("platform", Boolean.toString(lakeTiles.platform));
 	}
 
 	/**
@@ -918,6 +941,109 @@ public class GameEngine {
 	}
 
 	public void displayTextMode() {
-		System.out.println("UnImplemented");
+
+		for (int x = 0; x < PlayerList.size(); x++) {
+
+			System.out.println("Details of the LakeTiles assigned to Player"
+					+ (x + 1));
+			for (int i = 0; i < PlayerList.get(x).getLakeTiles().size(); i++) {
+				System.out.println("Laketile: "
+						+ "leftColor "
+						+ PlayerList.get(x).getLakeTiles().get(i).leftColor
+						+ " " + "rightColor "
+						+ PlayerList.get(x).getLakeTiles().get(i).rightColor
+						+ " " + "upColor "
+						+ PlayerList.get(x).getLakeTiles().get(i).upColor + " "
+						+ "downColor "
+						+ PlayerList.get(x).getLakeTiles().get(i).downColor
+						+ " " + "platForm "
+						+ PlayerList.get(x).getLakeTiles().get(i).platform);
+			}
+			System.out.println();
+		}
+
+		// System.out.println(dedicationTokens.genericFourCount());
+		System.out.println("Details of the Dedication Tokens:");
+		System.out.println("Four Of Kind Tokens:");
+		dedicationTokens.getFourOfKindInfo();
+		System.out.println();
+		System.out.println("Three Pair Tokens:");
+		dedicationTokens.getThreePairInfo();
+		System.out.println();
+		System.out.println("Seven Unique Tokens:");
+		dedicationTokens.getSevenUniqueInfo();
+		System.out.println();
+		System.out.println("Generic Four Tokens:");
+		dedicationTokens.getGenericFourInfo();
+		System.out.println();
+		System.out.println();
+
+		System.out.println("Details of FavorTokens:");
+		System.out.println("Number of Favor Tokens present on stack :"
+				+ favorTokens.getTokens());
+		System.out.println("Number of Favor Tokens present with players: 0");
+		System.out.println();
+
+		System.out.println("Details of LanternCards:");
+		System.out.println("Number of Black lantern cards available on Stack: "
+				+ lanternCards.blackCardCount());
+		System.out.println("Number of Red lantern cards available on Stack: "
+				+ lanternCards.redCardCount());
+		System.out.println("Number of Green lantern cards available on Stack: "
+				+ lanternCards.greenCardCount());
+		System.out.println("Number of White lantern cards available on Stack: "
+				+ lanternCards.whiteCardCount());
+		System.out
+				.println("Number of Purple lantern cards available on Stack: "
+						+ lanternCards.purpleCardCount());
+		System.out.println("Number of Blue lantern cards available on Stack: "
+				+ lanternCards.blueCardCount());
+		System.out
+				.println("Number of Orange lantern cards available on Stack: "
+						+ lanternCards.orangeCardCount());
+
+		System.out.println();
+
+		// ////
+		System.out.println("Lake tiles on the board.  ");
+
+		for (int i = 0; i <  lakeTilesList.size(); i++) {
+			System.out.println( " " + "leftColor " + " "
+					+ lakeTilesList.get(i).leftColor + " "
+					+ "rightColor" + " "
+					+ lakeTilesList.get(i).rightColor + " "
+					+ "upColor" + " "
+					+ lakeTilesList.get(i).upColor + " "
+					+ "downColor" + " "
+					+ lakeTilesList.get(i).downColor + " "
+					+ "platform" + " "
+					+ lakeTilesList.get(i).platform);
+		}
+		System.out.println();
+		
+		PlayerList = player1.assignBoardPosition(this.numOfPlayer, PlayerList,
+				startTile);
+
+		for (int i = 0; i < PlayerList.size(); i++)
+			System.out.println("Position of Player" + (i + 1) + ": "
+					+ PlayerList.get(i).boardPosition);
+		System.out.println();
+
+		
+
+		for(int x=0; x<PlayerList.size(); x++){
+			if(PlayerList.get(x).current){
+				
+				System.out
+				.println(PlayerList.get(x).name
+						+ "'s turn to play. else we follow clockwise rule");
+			}
+				
+		}
+		
+		System.out.println();
+
+		
+		
 	}
 }
