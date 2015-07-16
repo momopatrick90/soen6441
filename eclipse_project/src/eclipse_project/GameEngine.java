@@ -308,13 +308,13 @@ public class GameEngine {
 		for(int i=0;i<PlayerList.size();i++)
 		{
 			System.out.println("Details of the lanternCards available to Player"+(i+1)+":");
-			System.out.println("Number of Black LanternCards: "+PlayerList.get(i).playerLCStack.blackCardCount());
-			System.out.println("Number of Blue LanternCards: "+PlayerList.get(i).playerLCStack.blueCardCount());
-			System.out.println("Number of Green LanternCards: "+PlayerList.get(i).playerLCStack.greenCardCount());
-			System.out.println("Number of Orange LanternCards: "+PlayerList.get(i).playerLCStack.orangeCardCount());
-			System.out.println("Number of Purple LanternCards: "+PlayerList.get(i).playerLCStack.purpleCardCount());
-			System.out.println("Number of White LanternCards: "+PlayerList.get(i).playerLCStack.whiteCardCount());
-			System.out.println("Number of Red LanternCards: "+PlayerList.get(i).playerLCStack.redCardCount());
+			System.out.println("Number of Black LanternCards:\t"+PlayerList.get(i).playerLCStack.blackCardCount());
+			System.out.println("Number of Blue LanternCards:\t"+PlayerList.get(i).playerLCStack.blueCardCount());
+			System.out.println("Number of Green LanternCards:\t"+PlayerList.get(i).playerLCStack.greenCardCount());
+			System.out.println("Number of Orange LanternCards:\t"+PlayerList.get(i).playerLCStack.orangeCardCount());
+			System.out.println("Number of Purple LanternCards:\t"+PlayerList.get(i).playerLCStack.purpleCardCount());
+			System.out.println("Number of White LanternCards: \t"+PlayerList.get(i).playerLCStack.whiteCardCount());
+			System.out.println("Number of Red LanternCards:\t"+PlayerList.get(i).playerLCStack.redCardCount());
 			System.out.println();
 		}
 		
