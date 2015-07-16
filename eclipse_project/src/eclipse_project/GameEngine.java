@@ -45,6 +45,7 @@ public class GameEngine {
 	private FavorTokens favorTokens;
 	private static int redCount, blueCount, greenCount, whiteCount,
 			purpleCount, blackCount, orangeCount;
+	private String playerWhoStartsGame;
 	private Player player1 = new Player("player1");
 	private Player player2 = new Player("player2");
 	private Player player3 = new Player("player3");
@@ -93,7 +94,7 @@ public class GameEngine {
 
 		// place the starting lake tile on the board
 		board.intializeGameBoard(startTile);
-
+		
 		System.out.println("Starting the game...");
 		System.out.println("StartTile is placed on board");
 		System.out.println();
@@ -120,6 +121,7 @@ public class GameEngine {
 			player2.setFavorToken(favorTokenAtStart);
 			PlayerList.add(player2);
 
+
 			for (int x = 0; x < PlayerList.size(); x++) {
 
 				System.out
@@ -127,22 +129,22 @@ public class GameEngine {
 								+ (x + 1));
 				for (int i = 0; i < PlayerList.get(x).getLakeTiles().size(); i++) {
 					System.out
-							.println("id: "
+							.println("id"
 									+ PlayerList.get(x).getLakeTiles().get(i).id
 									+ " "
-									+ "(leftColor: "
+									+ "leftColor "
 									+ PlayerList.get(x).getLakeTiles().get(i).leftColor
-									+ ") "
-									+ "(rightColor: "
+									+ " "
+									+ "rightColor "
 									+ PlayerList.get(x).getLakeTiles().get(i).rightColor
-									+ ") "
-									+ "(upColor: "
+									+ " "
+									+ "upColor "
 									+ PlayerList.get(x).getLakeTiles().get(i).upColor
-									+ ") "
-									+ "(downColor: "
+									+ " "
+									+ "downColor "
 									+ PlayerList.get(x).getLakeTiles().get(i).downColor
-									+ ") "
-									+ "platForm: "
+									+ " "
+									+ "platForm "
 									+ PlayerList.get(x).getLakeTiles().get(i).platform);
 				}
 				System.out.println();
@@ -205,17 +207,17 @@ public class GameEngine {
 			player2.setFavorToken(favorTokenAtStart);
 			player3.setFavorToken(favorTokenAtStart);
 			player4.setFavorToken(favorTokenAtStart);
-
+			
 			PlayerList.add(player1);
 			PlayerList.add(player2);
 			PlayerList.add(player3);
 			PlayerList.add(player4);
-
+			
 			for (int x = 0; x < PlayerList.size(); x++) {
 
 				System.out
 						.println("Details of the LakeTiles assigned to Player"
-								+ (x + 1));
+								+ (x + 1));			
 				for (int i = 0; i < PlayerList.get(x).getLakeTiles().size(); i++) {
 					System.out
 							.println("id"
@@ -240,21 +242,17 @@ public class GameEngine {
 			}
 		}
 		System.out.println();
-		for (int i = 0; i < lakeTiles.globalLakeTiles.size(); i++) {
-			System.out.println("id " + lakeTiles.globalLakeTiles.get(i).id
-					+ " " + "leftColor " + " "
-					+ lakeTiles.globalLakeTiles.get(i).leftColor + " "
-					+ "rightColor" + " "
-					+ lakeTiles.globalLakeTiles.get(i).rightColor + " "
-					+ "upColor" + " "
-					+ lakeTiles.globalLakeTiles.get(i).upColor + " "
-					+ "downColor" + " "
-					+ lakeTiles.globalLakeTiles.get(i).downColor + " "
-					+ "platform" + " "
-					+ lakeTiles.globalLakeTiles.get(i).platform);
+		for(int i=0;i<lakeTiles.globalLakeTiles.size();i++)
+		{
+			System.out.println("id "+lakeTiles.globalLakeTiles.get(i).id+" "+ "leftColor " + " "
+				+ lakeTiles.globalLakeTiles.get(i).leftColor + " " + "rightColor" + " "
+				+ lakeTiles.globalLakeTiles.get(i).rightColor + " " + "upColor" + " "
+				+ lakeTiles.globalLakeTiles.get(i).upColor + " " + "downColor" + " "
+				+ lakeTiles.globalLakeTiles.get(i).downColor + " " + "platform" + " "
+				+ lakeTiles.globalLakeTiles.get(i).platform);
 		}
 		System.out.println();
-		// System.out.println(dedicationTokens.genericFourCount());
+		//System.out.println(dedicationTokens.genericFourCount());
 		System.out.println("Details of the Dedication Tokens:");
 		System.out.println("Four Of Kind Tokens:");
 		dedicationTokens.getFourOfKindInfo();
@@ -269,47 +267,65 @@ public class GameEngine {
 		dedicationTokens.getGenericFourInfo();
 		System.out.println();
 		System.out.println();
-
+		
 		System.out.println("Details of FavorTokens:");
-		System.out.println("Number of Favor Tokens present on stack :"
-				+ favorTokens.getTokens());
-		System.out.println("Number of Favor Tokens present with players: 0");
+		System.out.println("Number of Favor Tokens present on stack :"+favorTokens.getTokens());
+		System.out.println("Number of Favor Tokens present with players: 0");	
 		System.out.println();
-
+		
 		System.out.println("Details of LanternCards:");
-		System.out.println("Number of Black lantern cards available on Stack: "
-				+ lanternCards.blackCardCount());
-		System.out.println("Number of Red lantern cards available on Stack: "
-				+ lanternCards.redCardCount());
-		System.out.println("Number of Green lantern cards available on Stack: "
-				+ lanternCards.greenCardCount());
-		System.out.println("Number of White lantern cards available on Stack: "
-				+ lanternCards.whiteCardCount());
-		System.out
-				.println("Number of Purple lantern cards available on Stack: "
-						+ lanternCards.purpleCardCount());
-		System.out.println("Number of Blue lantern cards available on Stack: "
-				+ lanternCards.blueCardCount());
-		System.out
-				.println("Number of Orange lantern cards available on Stack: "
-						+ lanternCards.orangeCardCount());
-
+		System.out.println("Number of Black lantern cards available on Stack: "+lanternCards.blackCardCount());
+		System.out.println("Number of Red lantern cards available on Stack: "+lanternCards.redCardCount());
+		System.out.println("Number of Green lantern cards available on Stack: "+lanternCards.greenCardCount());
+		System.out.println("Number of White lantern cards available on Stack: "+lanternCards.whiteCardCount());
+		System.out.println("Number of Purple lantern cards available on Stack: "+lanternCards.purpleCardCount());
+		System.out.println("Number of Blue lantern cards available on Stack: "+lanternCards.blueCardCount());
+		System.out.println("Number of Orange lantern cards available on Stack: "+lanternCards.orangeCardCount());
+		
 		System.out.println();
+		
+		PlayerList=player1.assignBoardPosition(this.numOfPlayer,PlayerList,startTile);
+		
+		for(int i=0;i<PlayerList.size();i++)	
+		System.out.println("Position of Player"+(i+1)+": "+PlayerList.get(i).boardPosition);
+		System.out.println();
+		
+		System.out.println("Details of the startTile:");
+		System.out.println("id" + startTile.id + " " + "leftColor " + " "
+				+ startTile.leftColor + " " + "rightColor" + " "
+				+ startTile.rightColor + " " + "upColor" + " "
+				+ startTile.upColor + " " + "downColor" + " "
+				+ startTile.downColor + " " + "platform" + " "
+				+ startTile.platform);
+		System.out.println();
+		
+		playerWhoStartsGame=player1.turnToStartGame(this.numOfPlayer, PlayerList, startTile);
+		System.out.println(playerWhoStartsGame +" will start the game as startTile is pointing to it else we follow clockwise rule");
+		
+		System.out.println();
+		lanternCards.assignLanternCards(this.numOfPlayer,PlayerList,startTile,lanternCards);
+		System.out.println("Players will get lakeTiles according to startTile");
+		for(int i=0;i<PlayerList.size();i++)
+		{
+			System.out.println("Details of the lanternCards available to Player"+(i+1)+":");
+			System.out.println("Number of Black LanternCards: "+PlayerList.get(i).playerLCStack.blackCardCount());
+			System.out.println("Number of Blue LanternCards: "+PlayerList.get(i).playerLCStack.blueCardCount());
+			System.out.println("Number of Green LanternCards: "+PlayerList.get(i).playerLCStack.greenCardCount());
+			System.out.println("Number of Orange LanternCards: "+PlayerList.get(i).playerLCStack.orangeCardCount());
+			System.out.println("Number of Purple LanternCards: "+PlayerList.get(i).playerLCStack.purpleCardCount());
+			System.out.println("Number of White LanternCards: "+PlayerList.get(i).playerLCStack.whiteCardCount());
+			System.out.println("Number of Red LanternCards: "+PlayerList.get(i).playerLCStack.redCardCount());
+			System.out.println();
+		}
+		
 		System.out.println("One example of laketile being added to GameBoard");
-		lakeTiles.placeTile(36, 37, board, PlayerList.get(0).getLakeTiles()
-				.get(0));
+		lakeTiles.placeTile(36, 37,board,PlayerList.get(0).getLakeTiles().get(0));
+		
+		System.out.println("left"+board.tilesOnBoard.get(0).left+"right"+board.tilesOnBoard.get(0).right+"down"+board.tilesOnBoard.get(0).down+"up"+board.tilesOnBoard.get(0).up+"id"+board.tilesOnBoard.get(0).id);
+		System.out.println("left"+board.tilesOnBoard.get(1).left+"right"+board.tilesOnBoard.get(1).right+"down"+board.tilesOnBoard.get(1).down+"up"+board.tilesOnBoard.get(1).up+"id"+board.tilesOnBoard.get(1).id);
+		
 
-		System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
-				+ board.tilesOnBoard.get(0).right + "down"
-				+ board.tilesOnBoard.get(0).down + "up"
-				+ board.tilesOnBoard.get(0).up + "id"
-				+ board.tilesOnBoard.get(0).id);
-		System.out.println("left" + board.tilesOnBoard.get(1).left + "right"
-				+ board.tilesOnBoard.get(1).right + "down"
-				+ board.tilesOnBoard.get(1).down + "up"
-				+ board.tilesOnBoard.get(1).up + "id"
-				+ board.tilesOnBoard.get(1).id);
-
+	
 	}
 
 	/**
