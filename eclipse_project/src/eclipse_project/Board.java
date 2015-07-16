@@ -11,6 +11,18 @@ public class Board {
 	int board[][] = new int[73][73];
 	ArrayList<LakeTiles> tilesOnBoard = new ArrayList<LakeTiles>();
 
+	public Board(int board[][], ArrayList<LakeTiles> tilesOnBoard)
+	{
+		this.board = board;
+		this.tilesOnBoard = tilesOnBoard;
+	}
+	
+	public Board()
+	{
+		
+	}
+	
+	
 	/**
 	 * method to initialize the game board
 	 * 

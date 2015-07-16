@@ -50,6 +50,7 @@ public class GameEngine {
 	private Player player2 = new Player("player2");
 	private Player player3 = new Player("player3");
 	private Player player4 = new Player("player4");
+	private Board board = null;
 
 	/**
 	 * Default Constructor
@@ -90,7 +91,7 @@ public class GameEngine {
 
 		// get the starting lake tile
 		startTile = lakeTiles.lakeTiles[0];
-		Board board = new Board();
+		board = new Board();
 
 		// place the starting lake tile on the board
 		board.intializeGameBoard(startTile);
@@ -354,44 +355,16 @@ public class GameEngine {
 		//
 		Document doc = dBuilder.parse(fXmlFile);
 
-		//
-		NodeList nodeList = doc.getChildNodes();
+		// game node
+		NodeList nodeList = doc.getElementsByTagName("game").item(0).getChildNodes();
 
 		//
 		DedicationTokens dedicationTokens = null;
-		LakeTiles availableLakeTiles = null;
+		LakeTiles lakeTiles = new LakeTiles();
 		LanternCards availableLanternCards = null;
 		int favorTokens = 0;
-		LinkedList<Player> players = new LinkedList<Player>();
-		Player currentPlayer = null;
-
-		//
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			//
-			Node node = nodeList.item(i);
-
-			if (node.getNodeName().equals("players")) {
-				// list of players
-				NodeList playersElementList = ((Element) node)
-						.getElementsByTagName("player");
-
-				//
-				for (int j = 0; j < playersElementList.getLength(); j++) {
-					// should add to true to this if its the current players
-					// turn
-					LinkedList<Boolean> isCurrent = new LinkedList<Boolean>();
-					//
-					Player player = loadPlayer((Element) nodeList.item(i),
-							isCurrent);
-					//
-					players.add(player);
-					//
-					if (isCurrent.contains(true)) {
-						currentPlayer = player;
-					}
-				}
-			}
-		}
+		ArrayList<Player> players = new ArrayList<Player>();
+		Board gameBoard = null;
 
 		//
 		for (int i = 0; i < nodeList.getLength(); i++) {
@@ -400,20 +373,40 @@ public class GameEngine {
 
 			//
 			if (node.getNodeName().equals("dedication_tokens")) {
-			} else if (node.getNodeName().equals("available_lake_tiles")) {
-				availableLakeTiles = loadLakeTiles((Element) node);
-			} else if (node.getNodeName().equals("available_lantern_cards")) {
+				dedicationTokens = this.loadDedicationTokens((Element) node);
+			} else if (node.getNodeName().equals("global_lake_tiles_stack")) {
+				//
+				LinkedList<LakeTiles> lakeTilesList =  loadMultipleLakeTiles((Element) node);
+				//
+				for(int j=0; j<lakeTilesList.size(); j++)
+				{
+					lakeTiles.globalLakeTiles.push(lakeTilesList.get(j));
+				}
+			} else if (node.getNodeName().equals("lantern_cards")) {
 				availableLanternCards = loadLanternCards((Element) node);
 			} else if (node.getNodeName().equals("favor_tokens")) {
 				favorTokens = loadFavorTokens((Element) node);
 			} else if (node.getNodeName().equals("game_board")) {
 
+			}else if (node.getNodeName().equals("player")) {
+				// list of players
+				Element playersElementList = ((Element) node);
+				//
+				Player player = loadPlayer(playersElementList);
+				//
+				players.add(player);
+				//
+				
+			}else if (node.getNodeName().equals("board")) {
+				gameBoard = this.loadBoards((Element) node);
 			}
 
 		}
-
+		
+		
+		// populate
+		this.PlayerList = players;
 		this.numOfPlayer = players.size();
-
 		this.lanternCards = availableLanternCards;
 		this.dedicationTokens = dedicationTokens;
 		this.favorTokens = new FavorTokens(favorTokens);
@@ -442,7 +435,7 @@ public class GameEngine {
 		saveGamePlayers(gameDoc, game);
 
 		// add Lake tiles tag
-		Element _lakeTiles = gameDoc.createElement("gloabol_lake_tiles_stack");
+		Element _lakeTiles = gameDoc.createElement("global_lake_tiles_stack");
 
 		//
 		for (int j = 0; j < this.lakeTiles.globalLakeTiles.size(); j++) {
@@ -501,6 +494,13 @@ public class GameEngine {
 		//
 		game.appendChild(_favorTokens);
 		
+		//game board
+		Element board = gameDoc.createElement("board");
+		//
+		saveBoard(gameDoc, board);
+		//
+		game.appendChild(board);
+		
 
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory
@@ -511,41 +511,122 @@ public class GameEngine {
 
 		// Output to console for testing
 		// StreamResult result = new StreamResult(System.out);
-
 		transformer.transform(source, result);
 
 		System.out.println("File saved!");
-
-		// TODO continue, save players, cards, board etc..
+	}
+	
+	/**
+	 * <board>
+	 * 		<board width="2", height="3">
+	 * 			<entry i="0" j="0" id="1" />
+	 * 			<entry i="1" j="2" id="2 "/>
+	 * 			...
+	 * 		</board>
+	 * 		<tiles_on_board>...</tiles_on_board>
+	 * </board>
+	 */
+	public Board loadBoards(Element board)
+	{
+		//
+		Element innerBoardElement = (Element) board.getElementsByTagName("board").item(0);
+		int board_matrix[][] = new int[Integer.parseInt(innerBoardElement.getAttribute("width"))][Integer.parseInt(innerBoardElement.getAttribute("height"))];
+		for(int i=0; i<board_matrix.length; i++)
+		{
+			for(int j=0; j<board_matrix[i].length; j++)
+			{
+				board_matrix[i][j] = -1;
+			}
+		}
+		
+		//
+		NodeList entries = innerBoardElement.getElementsByTagName("entry");
+		
+		//
+		for (int k = 0; k< entries.getLength(); k++) {
+			//
+			Element entry = (Element) entries.item(k);
+			//
+			int i = Integer.parseInt(entry.getAttribute("i"));
+			int j = Integer.parseInt(entry.getAttribute("j"));
+			int id = Integer.parseInt(entry.getAttribute("id"));
+			//
+			board_matrix[i][j] = id;
+		}
+		
+		//
+		ArrayList<LakeTiles> tilesOnBoard = new ArrayList<LakeTiles>();
+		//
+		LinkedList<LakeTiles> lakeTilesList = loadMultipleLakeTiles((Element) board
+				.getElementsByTagName("tiles_on_board").item(0));
+		//
+		for (int i = 0; i < lakeTilesList.size(); i++) {
+			tilesOnBoard.add(lakeTilesList.get(i));
+		}
+		
+		return new Board(board_matrix, tilesOnBoard);
+	}
+	
+	public void saveBoard(Document gameDoc, Element board)
+	{
+		// add players tag
+		Element lakeTilesBoard = gameDoc.createElement("tiles_on_board");
+		//
+		for (int j = 0; j < this.board.tilesOnBoard.size(); j++) {
+			//
+			Element lakeTilesInner = gameDoc.createElement("lake_tiles");
+			//
+			saveLakeTiles(lakeTilesInner, this.board.tilesOnBoard.get(j), gameDoc);
+			//
+			lakeTilesBoard.appendChild(lakeTilesInner);
+		}
+		//
+		board.appendChild(lakeTilesBoard);
+		
+		// add board matrix
+		Element boardMatrix = gameDoc.createElement("board");
+		//
+		boardMatrix.setAttribute("width", ""+this.board.board.length);
+		boardMatrix.setAttribute("height", ""+this.board.board[0].length);
+		//
+		for (int i = 0; i < this.board.board.length; i++) {
+			for (int j = 0; j < this.board.board[0].length; j++) {
+				if(this.board.board[i][j] != -1)
+				{
+					//
+					Element entry = gameDoc.createElement("entry");
+					//
+					entry.setAttribute("i" , ""+i);
+					entry.setAttribute("j" , ""+j);
+					entry.setAttribute("id" , ""+this.board.board[i][j]);
+					//
+					boardMatrix.appendChild(entry);
+				}
+			}
+		}
+		//
+		board.appendChild(boardMatrix);
 	}
 
 	/**
 	 * @param playerElement
 	 *            example: <player current="true" four_kind_score="2"
 	 *            three_pair_score="2" seven_unique_score="1"
-	 *            favor_token_score="5" name="palyer_name" > <lake_tiles_stack >
-	 *            <lake_tiles ... /> </lake_tiles_stack > <favor_tokens ... />
-	 *            <lantern_cards ... /> </player>
+	 *            favor_token_score="5" name="palyer_name" >
+	 *            <lake_tiles_stack> .... </lake_tiles_stack > 
+	 *            <lantern_cards ... /> 
+	 *            </player>
 	 * */
-	public Player loadPlayer(Element playerElement,
-			LinkedList<Boolean> isCurrent) {
-		//
-		// int favorTokens = loadFavorTokens((Element) playerElement
-		// .getElementsByTagName("favor_tokens").item(0));
-
-		//
-		DedicationTokens dedicationTokens = loadDedicationTokens((Element) playerElement
-				.getElementsByTagName("dedication_tokens"));
-
+	public Player loadPlayer(Element playerElement) {
 		//
 		LanternCards loadLanternCards = loadLanternCards((Element) playerElement
-				.getElementsByTagName("lantern_cards"));
+				.getElementsByTagName("lantern_cards").item(0));
 
 		//
 		ArrayList<LakeTiles> lakeTilesStack = new ArrayList<LakeTiles>();
 		//
 		LinkedList<LakeTiles> lakeTilesList = loadMultipleLakeTiles((Element) playerElement
-				.getElementsByTagName("lake_tiles_stack"));
+				.getElementsByTagName("lake_tiles_stack").item(0));
 		//
 		for (int i = 0; i < lakeTilesList.size(); i++) {
 			lakeTilesStack.add(lakeTilesList.get(i));
@@ -564,9 +645,6 @@ public class GameEngine {
 		// name
 		String name = playerElement.getAttribute("name");
 
-		//
-		isCurrent.add(Boolean.parseBoolean(playerElement
-				.getAttribute("current")));
 
 		//
 		return new Player(name, loadLanternCards, lakeTilesStack,
@@ -588,7 +666,10 @@ public class GameEngine {
 		for (int i = 0; i < this.PlayerList.size(); i++) {
 			//
 			Element player = gameDoc.createElement("player");
-			// Am I the current?
+			
+			player.setAttribute("current",
+					Boolean.toString(this.PlayerList.get(i) == this.player));
+
 			if(this.PlayerList.get(i).name.equalsIgnoreCase(playerWhoStartsGame)){
 				player.setAttribute("current",
 						Boolean.toString(true));
@@ -599,7 +680,6 @@ public class GameEngine {
 						Boolean.toString(false));
 			}
 			
-			// TODO player attributes
 			players.appendChild(player);
 
 			//
@@ -613,7 +693,7 @@ public class GameEngine {
 						+ this.PlayerList.get(i).playerLTStack.get(j).id);
 
 				saveLakeTiles(lakeTilesInner,
-						this.PlayerList.get(i).playerLTStack, j, gameDoc);
+						(this.PlayerList.get(i).playerLTStack).get(j), gameDoc);
 				//
 				lakeTiles.appendChild(lakeTilesInner);
 			}
@@ -649,7 +729,7 @@ public class GameEngine {
 		LinkedList<LakeTiles> lakeTiles = new LinkedList<LakeTiles>();
 		//
 		NodeList lakeTilesStackNL = element
-				.getElementsByTagName("lake_tiles_stack");
+				.getElementsByTagName("lake_tiles");
 		//
 		for (int j = 0; j < lakeTilesStackNL.getLength(); j++) {
 			// should add to true to this if its the current players
@@ -693,33 +773,14 @@ public class GameEngine {
 		int right = Integer.parseInt(lakeTilesElement.getAttribute("right"));
 		int up = Integer.parseInt(lakeTilesElement.getAttribute("up"));
 		int down = Integer.parseInt(lakeTilesElement.getAttribute("down"));
-
-		//
-		LinkedList<LakeTiles> lakeTilesList = loadMultipleLakeTiles((Element) lakeTilesElement
-				.getElementsByTagName("lake_tiles"));
-		//
-		LakeTiles[] lakeTiles = new LakeTiles[lakeTilesList.size()];
-		//
-		for (int i = 0; i < lakeTilesList.size(); i++) {
-			lakeTiles[i] = lakeTilesList.get(i);
-		}
-
-		//
-		lakeTilesList = loadMultipleLakeTiles((Element) lakeTilesElement
-				.getElementsByTagName("lake_tiles_global"));
-		//
-		Stack<LakeTiles> globalLakeTiles = new Stack<LakeTiles>();
-		//
-		for (int i = 0; i < lakeTilesList.size(); i++) {
-			globalLakeTiles.push(lakeTilesList.get(i));
-		}
+		
 		//
 		boolean platform = Boolean.parseBoolean(lakeTilesElement
 				.getAttribute("platform"));
 
 		//
 		return new LakeTiles(leftColor, rightColor, upColor, downColor, left,
-				right, up, down, id, platform, lakeTiles, globalLakeTiles);
+				right, up, down, id, platform, new LakeTiles[23], new Stack<LakeTiles>());
 	}
 
 	/**
@@ -730,27 +791,25 @@ public class GameEngine {
 	 * @param j
 	 * @param gameDoc
 	 */
-	public void saveLakeTiles(Element element,
-			ArrayList<LakeTiles> playerLTStack, int i, Document gameDoc) {
+	public void saveLakeTiles(Element element, LakeTiles lakeTiles, Document gameDoc) {
 
 		// id
-		element.setAttribute("id", Integer.toString(playerLTStack.get(i).id));
+		element.setAttribute("id", Integer.toString(lakeTiles.id));
 		//
-		element.setAttribute("left_color", playerLTStack.get(i).leftColor);
-		element.setAttribute("right_color", playerLTStack.get(i).rightColor);
-		element.setAttribute("up_color", playerLTStack.get(i).upColor);
-		element.setAttribute("down_color", playerLTStack.get(i).downColor);
+		element.setAttribute("left_color", lakeTiles.leftColor);
+		element.setAttribute("right_color", lakeTiles.rightColor);
+		element.setAttribute("up_color", lakeTiles.upColor);
+		element.setAttribute("down_color", lakeTiles.downColor);
 		//
 		element.setAttribute("left",
-				Integer.toString(playerLTStack.get(i).left));
+				Integer.toString(lakeTiles.left));
 		element.setAttribute("right",
-				Integer.toString(playerLTStack.get(i).right));
-		element.setAttribute("up", Integer.toString(playerLTStack.get(i).up));
+				Integer.toString(lakeTiles.right));
+		element.setAttribute("up", Integer.toString(lakeTiles.up));
 		element.setAttribute("down",
-				Integer.toString(playerLTStack.get(i).down));
+				Integer.toString(lakeTiles.down));
 		element.setAttribute("platform",
-				Boolean.toString(playerLTStack.get(i).platform));
-
+				Boolean.toString(lakeTiles.platform));
 	}
 
 	/**
@@ -854,12 +913,11 @@ public class GameEngine {
 		return Integer.parseInt(favorTokensElement.getAttribute("value"));
 	}
 
-	/**
-	 * method save's the favor token  
-	 * @param element
-	 * @param favorTokens 
-	 */
 	public void saveFavorTokens(Element element, FavorTokens favorTokens) {
 		element.setAttribute("value", Integer.toString(favorTokens.getTokens()));
+	}
+
+	public void displayTextMode() {
+		System.out.println("UnImplemented");
 	}
 }
