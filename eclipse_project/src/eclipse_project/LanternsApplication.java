@@ -30,63 +30,109 @@ public class LanternsApplication {
 	private static boolean isLoad = false;
 
 	public static void main(String[] args) throws ParserConfigurationException,
-			SAXException, IOException, TransformerException {
+			SAXException, IOException, TransformerException, Exception {
 
-		int resp = '\0';
+		int resp = 10;// sentinel value
+		String regex = "\\d+";
+		String validFileRegEx = "^[^*&%\\s]+$";
+		String fileName = "";
 
 		System.out.println("Choose an option:");
 		System.out.println("Press 1 for New Game");
 		System.out.println("Press 2 for Existing Game");
 		System.out.println("Press 3 for Text Mode of the Game");
-		System.out.println("Press ZERO to Exit Game");
+		System.out.println("Press 0 to Exit Game");
 		Scanner in = new Scanner(System.in);
-		resp = in.nextInt();
+		String input = in.nextLine();
+		if (!input.matches(regex))
+			System.out.println("Input is invalid");
+		else
+			resp = Integer.parseInt(input, 10);
 
 		do {
 
 			if (resp == 1) {
-				System.out.println("Enter number of players");
-				in = new Scanner(System.in);
-				numOfPlayers = in.nextInt();
-				isLoad = true;
-				loadNewGame();
 
+				boolean check = true;
+				while (check) {
+					System.out.println("Enter number of players");
+					in = new Scanner(System.in);
+					input = in.nextLine();
+					if (!input.matches(regex)) {
+						System.out.println("Number of players invalid input");
+						check = true;
+					} else {
+						numOfPlayers = Integer.parseInt(input, 10);
+						if (numOfPlayers < 2 || numOfPlayers > 4) {
+							System.out
+									.println("Number of players invalid input");
+						} else {
+							check = false;
+							isLoad = true;
+							loadNewGame();
+						}
+					}
+
+				}
 			} else if (resp == 2) {
 
-				System.out.println("Enter name of file");
-				in = new Scanner(System.in);
-				String fileName = in.nextLine();
-				isLoad = true;
-				loadExistingGame(fileName);
-
-			}
-			else if (resp == 3) {
-					
-				if (!isLoad) {
-					System.out.println("Kindly load new/existing game before viewing it in text mode.");
+				while (true) {
+					System.out.println("Enter name of file");
+					in = new Scanner(System.in);
+					fileName = in.nextLine();
+					fileName = fileName.trim();
+					if (!fileName.matches(validFileRegEx)) {
+						System.out.println("invalid file name");
+						isLoad = false;
+					} else {
+						isLoad = true;
+						break;
+					}
 				}
-				else
-				{
+				if(isLoad) 
+					loadExistingGame(fileName);
+			
+			} else if (resp == 3) {
+
+				if (!isLoad) {
+					System.out
+							.println("Kindly load new/existing game before viewing it in text mode.");
+				} else {
 					displayTextMode();
 				}
 			}
 			if (resp == 0) {
 				if (isLoad) {
-					System.out
-							.println("Enter the name of file to save the game & quit.");
-					in = new Scanner(System.in);
-					String fileName = in.nextLine();
-					fileName = fileName.trim();
-					saveTheGame(fileName,game);
-					System.out.println("Game saved successfully!");
+					while (true) {
+						System.out
+								.println("Enter the name of file to save the game & quit.");
+						in = new Scanner(System.in);
+						fileName = in.nextLine();
+						fileName = fileName.trim();
+						if (!fileName.matches(validFileRegEx)) {
+							System.out.println("invalid file name");
+						} else {
+							saveTheGame(fileName, game);
+							System.out.println("Game saved successfully!");
+							break;
+						}
+					}
 				}
 				break;
 			}
-			
-			System.out.println("Press ZERO to quit!");
+			System.out.println('\n');
+			System.out.println("Choose an option");
+			System.out.println("Press 1 for New Game");
+			System.out.println("Press 2 for Existing Game");
+			System.out.println("Press 3 for Text Mode of the Game");
+			System.out.println("Press 0 to Exit Game");
 			in = new Scanner(System.in);
-			resp = in.nextInt();
-
+			input = in.nextLine();
+			if (!input.matches(regex)) {
+				System.out.println("Input is invalid");
+				resp = 10;
+			} else
+				resp = Integer.parseInt(input, 10);
 
 		} while (true);
 
@@ -104,6 +150,7 @@ public class LanternsApplication {
 
 	/**
 	 * load the existing game from file name provided by the user
+	 * 
 	 * @param fileName
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
@@ -113,31 +160,33 @@ public class LanternsApplication {
 			throws ParserConfigurationException, SAXException, IOException {
 
 		game = new GameEngine();
-		
+
 		File file = new File(fileName);
-		if(!file.exists()){
+		if (!file.exists()) {
 			isLoad = false;
-			System.out.println("file: "+fileName+" doesn't exist.");
-		}
-		else
+			System.out.println("file: " + fileName + " doesn't exist.");
+		} else
 			game.loadExistingGame(fileName);
 	}
 
 	/**
 	 * save the state of the game to the file
+	 * 
 	 * @param fileName
-	 * @param game - Current Game Instance
+	 * @param game
+	 *            - Current Game Instance
 	 * @throws ParserConfigurationException
-	 * @throws TransformerException 
+	 * @throws TransformerException
 	 */
-	public static void saveTheGame(String fileName,GameEngine game) throws ParserConfigurationException, TransformerException {
+	public static void saveTheGame(String fileName, GameEngine game)
+			throws ParserConfigurationException, TransformerException {
 		game.saveGame(fileName, game);
 	}
-	
+
 	/**
 	 * Display the current state of the game in text mode
 	 */
-	public static void displayTextMode(){
+	public static void displayTextMode() {
 		game.displayTextMode();
 	}
 

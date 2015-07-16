@@ -589,9 +589,16 @@ public class GameEngine {
 			//
 			Element player = gameDoc.createElement("player");
 			// Am I the current?
-			player.setAttribute("current",
-					Boolean.toString(this.PlayerList.get(i) == this.player));
-
+			if(this.PlayerList.get(i).name.equalsIgnoreCase(playerWhoStartsGame)){
+				player.setAttribute("current",
+						Boolean.toString(true));
+			}
+			else
+			{
+				player.setAttribute("current",
+						Boolean.toString(false));
+			}
+			
 			// TODO player attributes
 			players.appendChild(player);
 
