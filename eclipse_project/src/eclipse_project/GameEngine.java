@@ -446,6 +446,7 @@ public class GameEngine {
 		this.dedicationTokens = dedicationTokens;
 		this.favorTokens = new FavorTokens(favorTokens);
 		this.lakeTiles = lakeTiles;
+		this.board = gameBoard;
 
 		displayTextMode();
 	}
