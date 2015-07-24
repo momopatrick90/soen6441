@@ -1,7 +1,9 @@
 package eclipse_project;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -71,7 +73,7 @@ public class GameEngine {
 		this.numOfPlayer = numOfPlayer;
 	}
 
-	public void startNewGame() {
+	public void startNewGame() throws Exception, IOException {
 		// Set the initial variables for the lantern cards and the various
 		// tokens
 		// according to the number of players.
@@ -350,6 +352,19 @@ public class GameEngine {
 		System.out.println("One example of laketile being added to GameBoard");
 		lakeTiles.placeTile(36, 37, board, PlayerList.get(0).getLakeTiles()
 				.get(0));
+		
+		//new changes
+		PlayerList.get(0).pickLakeTileFromStack(lakeTiles.getLakeTile());
+		board.displayBoard(board.board, board.tilesOnBoard);
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter the index of laketiles you want to put on board");
+		LakeTiles currentTileToPlace=PlayerList.get(0).placeLakeTile(Integer.parseInt(br.readLine()));
+		System.out.println("Enter the x co-ordinate of position where you want to place Tile");
+		int xcoordinate=Integer.parseInt(br.readLine());
+		System.out.println("Enter the y co-ordinate of position where you want to place Tile");
+		int ycoordinate=Integer.parseInt(br.readLine());
+		lakeTiles.placeTile(xcoordinate,ycoordinate,board,currentTileToPlace);
 
 		System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
 				+ board.tilesOnBoard.get(0).right + "down"

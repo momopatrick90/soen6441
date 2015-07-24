@@ -402,6 +402,15 @@ public class Player {
 		
 		return turnToPlay;
 	}
+	
+	/**
+	 * This method picks the top Laketile from LakeTiles Stack and gives to current player
+	 * @param top Top lakeTile on stack 		
+	 */
+	public void pickLakeTileFromStack(LakeTiles top)
+	{
+		playerLTStack.add(top);
+	}
 }
 
 
