@@ -49,5 +49,13 @@ public class FavorTokens {
 		if (this.tokens.size() < MAX_TOKENS)
 			this.tokens.push("favor_token");
 	}
+	
+	/**
+	 * @return a count of all the tokens
+	 * */
+	public int tokensCount()
+	{
+		return this.tokens.size();
+	}
 
 }

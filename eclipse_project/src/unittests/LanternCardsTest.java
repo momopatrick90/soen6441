@@ -63,18 +63,84 @@ public class LanternCardsTest {
 		assertTrue(lc.getBlackCard());
 	}
 	
-//	@Test
-//	public void testAssignsLanternCardsToEachPlayerAccordingToLakeTileAndPlayersPosition(){
-//		LanternCards lc=new LanternCards(4,5, 7, 6, 5, 4, 5, 2);
-//		Player p1=new Player("Player1");
-//		Player p2=new Player("Player2");
-//		Player p3=new Player("Player3");
-//		ArrayList<Player> playerList=new ArrayList<>();
-//		playerList.add(p1);
-//		playerList.add(p2);
-//		playerList.add(p3);
-//		LakeTiles startTile=new LakeTiles();
-//		//LanternCards lanternCards=new LanternCards(4, 5, 7, 6, 5, 4, 5, 2);;
-//		lc.assignLanternCards(4, playerList, startTile, lc);
-//	}
+	@Test
+	public void testHasCards() {
+		//
+		LanternCards lc = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		
+		// 
+		assertTrue(lc.hasCard("redCard"));
+		assertTrue(lc.hasCard("greenCard"));
+		assertTrue(lc.hasCard("blueCard"));
+		assertTrue(lc.hasCard("whiteCard"));
+		assertTrue(lc.hasCard("orangeCard"));
+		assertTrue(lc.hasCard("purpleCard"));
+		assertTrue(lc.hasCard("blackCard"));
+		assertFalse(lc.hasCard("unknownCard"));
+	}
+	
+	@Test
+	public void testHasCardsFalse() {
+		//
+		LanternCards lc = new LanternCards(0, 0, 0, 0, 0, 0, 0, 0);
+		
+		// 
+		assertFalse(lc.hasCard("redCard"));
+		assertFalse(lc.hasCard("greenCard"));
+		assertFalse(lc.hasCard("blueCard"));
+		assertFalse(lc.hasCard("whiteCard"));
+		assertFalse(lc.hasCard("orangeCard"));
+		assertFalse(lc.hasCard("purpleCard"));
+		assertFalse(lc.hasCard("blackCard"));
+	}
+	
+	@Test
+	public void testAddCard() {
+		//
+		LanternCards lc = new LanternCards(0, 0, 0, 0, 0, 0, 0, 0);
+		
+		// 
+		lc.addCard("redCard");
+		lc.addCard("greenCard");
+		lc.addCard("blueCard");
+		lc.addCard("whiteCard");
+		lc.addCard("orangeCard");
+		lc.addCard("purpleCard");
+		lc.addCard("blackCard");
+		
+		//
+		assertTrue(lc.getCard("redCard"));
+		assertTrue(lc.getCard("greenCard"));
+		assertTrue(lc.getCard("blueCard"));
+		assertTrue(lc.getCard("whiteCard"));
+		assertTrue(lc.getCard("orangeCard"));
+		assertTrue(lc.getCard("purpleCard"));
+		assertTrue(lc.getCard("blackCard"));
+	}
+	
+	@Test
+	public void testGetCard() {
+		//
+		LanternCards lc = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		
+		// 
+		assertTrue(lc.getCard("redCard"));
+		assertTrue(lc.getCard("greenCard"));
+		assertTrue(lc.getCard("blueCard"));
+		assertTrue(lc.getCard("whiteCard"));
+		assertTrue(lc.getCard("orangeCard"));
+		assertTrue(lc.getCard("purpleCard"));
+		assertTrue(lc.getCard("blackCard"));
+		assertFalse(lc.hasCard("unknownCard"));
+		
+		//
+		assertFalse(lc.getCard("redCard"));
+		assertFalse(lc.getCard("greenCard"));
+		assertFalse(lc.getCard("blueCard"));
+		assertFalse(lc.getCard("whiteCard"));
+		assertFalse(lc.getCard("orangeCard"));
+		assertFalse(lc.getCard("purpleCard"));
+		assertFalse(lc.getCard("blackCard"));
+	}
+	
 }

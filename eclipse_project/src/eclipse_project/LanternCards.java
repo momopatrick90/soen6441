@@ -341,6 +341,96 @@ public class LanternCards {
 	}
 	
 	/**
+	 * @param card the color of the card to check
+	 * @return true if this object contains the cards, else false.
+	 */
+	public boolean hasCard(String card) {
+		if (card.equals("redCard"))
+		{
+			 return this.redStack.size() > 0;
+		}else if (card.equals("blueCard"))
+		{
+			 return this.blueStack.size() > 0;
+		}else if (card.equals("greenCard"))
+		{
+			 return this.greenStack.size() > 0;
+		}else if (card.equals("whiteCard"))
+		{
+			 return this.whiteStack.size() > 0;
+		}else if (card.equals("purpleCard"))
+		{
+			 return this.purpleStack.size() > 0;
+		}else if (card.equals("blackCard"))
+		{
+			 return this.blackStack.size() > 0;
+		}else if (card.equals("orangeCard"))
+		{
+			 return this.orangeStack.size() > 0;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param card the color of the card to check
+	 * @return true if this object contains the cards, else false.
+	 */
+	public void addCard(String card) {
+		if (card.equals("redCard"))
+		{
+			 this.addRedcard();
+		}else if (card.equals("blueCard"))
+		{
+			this.addBluecard();
+		}else if (card.equals("greenCard"))
+		{
+			this.addGreencard();
+		}else if (card.equals("whiteCard"))
+		{
+			this.addWhitecard();
+		}else if (card.equals("purpleCard"))
+		{
+			this.addPurplecard();
+		}else if (card.equals("blackCard"))
+		{
+			this.addBlackcard();
+		}else if (card.equals("orangeCard"))
+		{
+			this.addOrangecard();
+		}
+	}
+	
+	/**
+	 * @param card the color of the card to with draw
+	 * @return true if the card was Succesfully withdrawn
+	 */
+	public boolean getCard(String card) {
+		if (card.equals("redCard"))
+		{
+			return this.getRedCard();
+		}else if (card.equals("blueCard"))
+		{
+			return this.getBlueCard();
+		}else if (card.equals("greenCard"))
+		{
+			return this.getGreenCard();
+		}else if (card.equals("whiteCard"))
+		{
+			return this.getWhiteCard();
+		}else if (card.equals("purpleCard"))
+		{
+			return this.getPurpleCard();
+		}else if (card.equals("blackCard"))
+		{
+			return this.getBlackCard();
+		}else if (card.equals("orangeCard"))
+		{
+			return this.getOrangeCard();
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * This method assigns lanternCards to each Player according to LakeTile and players position
 	 * @param numOfPlayers - Number of Players
 	 * @param playerList - Arraylist of Players

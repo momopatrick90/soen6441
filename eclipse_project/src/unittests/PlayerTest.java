@@ -58,16 +58,56 @@ public class PlayerTest {
 
 	@Test
 	public void testSpendFavorTokens(){
-		FavorTokens favorToken=new FavorTokens(10);
-		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 5, 6, 5, 4, 5, 2);
+		// 
+		FavorTokens favorToken=new FavorTokens(5);
+		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 5, 6, 5, 4, 5, 1);
+		//
 		player.favorTokenScore=10;
-		assertTrue(player.spendFavorTokens(favorToken, lanternCardsAvailable, "redCard", "blackCard"));
+		player.playerLCStack = new LanternCards(4, 1, 5, 6, 5, 4, 5, 2); 
+
+		
+		// 
+		boolean result = player.spendFavorTokens(favorToken, lanternCardsAvailable, "redCard", "orangeCard");
+		
+		
+		//
+		assertTrue(result);
+		// 
+		assertEquals(player.favorTokenScore, 8);
+		assertEquals(player.playerLCStack.redCardCount(), 0);
+		assertEquals(player.playerLCStack.orangeCardCount(), 3);
+		//
+		assertEquals(favorToken.tokensCount(), 7);
+		assertEquals(lanternCardsAvailable.redCardCount(), 6);
+		assertEquals(lanternCardsAvailable.orangeCardCount(), 0);
+	}
+	
+	@Test
+	public void testSpendFavorTokensNotEnoughCards(){
+		// 
+		FavorTokens favorToken=new FavorTokens(5);
+		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 5, 6, 5, 4, 0, 1);
+		//
+		player.favorTokenScore=10;
+		player.playerLCStack = new LanternCards(4, 0, 5, 6, 5, 4, 5, 2); 
+
+		//  not enough red cards
+		assertFalse(player.spendFavorTokens(favorToken, lanternCardsAvailable, "redCard", "orangeCard"));
+		//  not enough black cards
+		assertFalse(player.spendFavorTokens(favorToken, lanternCardsAvailable, "blueCard", "blackCard"));
 	}
 
 	@Test
-	public void testReturnLanternCards(){
-		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 7, 6, 5, 4, 5, 2);
-		assertTrue(player.returnLanternCards("redCard", "blackCard", lanternCardsAvailable));
+	public void testSpendFavorTokensNotEnoughToken(){
+		// 
+		FavorTokens favorToken=new FavorTokens(5);
+		LanternCards lanternCardsAvailable=new LanternCards(4, 5, 5, 6, 5, 4, 2, 1);
+		//
+		player.favorTokenScore=1;
+		player.playerLCStack = new LanternCards(4, 2, 5, 6, 5, 4, 5, 2); 
+
+		//  not enough tokens
+		assertFalse(player.spendFavorTokens(favorToken, lanternCardsAvailable, "redCard", "orangeCard"));
 	}
 
 	@Test

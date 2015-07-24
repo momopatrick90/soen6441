@@ -51,62 +51,6 @@ public class Player {
 		this.playerLTStack = playerLTStack;
 	}
 
-	/**
-	 * This method will be called once the user has placed a lake tile
-	 * 
-	 * @param card
-	 *            contains what color of the lantern card the user will be
-	 *            adding to his stack.
-	 * @return either true or false based on the availability of lantern cards 
-	 * in the common stack
-	 */
-	public boolean pickLanternCard(String card,
-			LanternCards lanternCardsAvailable) {
-		if (card.equals("redCard")) {
-			if (lanternCardsAvailable.getRedCard()) {
-				playerLCStack.addRedcard();
-				return true;
-			} else
-				return false;
-		} else if (card.equals("blueCard")) {
-			if (lanternCardsAvailable.getBlueCard()) {
-				playerLCStack.addBluecard();
-				return true;
-			} else
-				return false;
-		} else if (card.equals("greenCard")) {
-			if (lanternCardsAvailable.getGreenCard()) {
-				playerLCStack.addGreencard();
-				return true;
-			} else
-				return false;
-		} else if (card.equals("whiteCard")) {
-			if (lanternCardsAvailable.getWhiteCard()) {
-				playerLCStack.addWhitecard();
-				return true;
-			} else
-				return false;
-		} else if (card.equals("purpleCard")) {
-			if (lanternCardsAvailable.getPurpleCard()) {
-				playerLCStack.addPurplecard();
-				return true;
-			} else
-				return false;
-		} else if (card.equals("blackCard")) {
-			if (lanternCardsAvailable.getBlackCard()) {
-				playerLCStack.addBlackcard();
-				return true;
-			} else
-				return false;
-		} else {
-			if (lanternCardsAvailable.getOrangeCard()) {
-				playerLCStack.addOrangecard();
-				return true;
-			} else
-				return false;
-		}
-
-	}
 
 	/**
 	 * This method will be called when the user is exchanging lantern cards for
@@ -134,7 +78,6 @@ public class Player {
 
 			playerScore_sevenUnique += dedicationToken.getSevenUnique();
 		}
-
 	}
 
 	/**
@@ -201,17 +144,32 @@ public class Player {
 	 */
 	public boolean spendFavorTokens(FavorTokens favorToken,
 			LanternCards lanternCards, String returnLCard, String pickLCard) {
-
-		if (this.favorTokenScore > 1
-				&& returnLanternCards(returnLCard, pickLCard, lanternCards)) {
-			favorToken.incrementToken();
-			favorToken.incrementToken();
-			this.favorTokenScore -= 2;
-			return true;
-		} else {
+		
+		if(!lanternCards.hasCard(pickLCard))
+		{
+			return false;
+		}
+		
+		if(!playerLCStack.hasCard(returnLCard))
+		{
 			return false;
 		}
 
+		if(this.favorTokenScore < 2)
+		{
+			return false;
+		}
+		
+		//
+		this.favorTokenScore -= 2;
+		this.playerLCStack.getCard(returnLCard);
+		this.playerLCStack.addCard(pickLCard);
+		//
+		favorToken.incrementToken();favorToken.incrementToken();
+		lanternCards.getCard(pickLCard);
+		lanternCards.addCard(returnLCard);
+		
+		return true;
 	}
 
 	/**
@@ -272,6 +230,63 @@ public class Player {
 		}
 		return false;
 	}
+	
+	/**
+	 * This method will be called once the user has placed a lake tile
+	 * 
+	 * @param card
+	 *            contains what color of the lantern card the user will be
+	 *            adding to his stack.
+	 * @return either true or false based on the availability of lantern cards 
+	 * in the common stack
+	 */
+	public boolean pickLanternCard(String card,
+			LanternCards lanternCardsAvailable) {
+		if (card.equals("redCard")) {
+			if (lanternCardsAvailable.getRedCard()) {
+				playerLCStack.addRedcard();
+				return true;
+			} else
+				return false;
+		} else if (card.equals("blueCard")) {
+			if (lanternCardsAvailable.getBlueCard()) {
+				playerLCStack.addBluecard();
+				return true;
+			} else
+				return false;
+		} else if (card.equals("greenCard")) {
+			if (lanternCardsAvailable.getGreenCard()) {
+				playerLCStack.addGreencard();
+				return true;
+			} else
+				return false;
+		} else if (card.equals("whiteCard")) {
+			if (lanternCardsAvailable.getWhiteCard()) {
+				playerLCStack.addWhitecard();
+				return true;
+			} else
+				return false;
+		} else if (card.equals("purpleCard")) {
+			if (lanternCardsAvailable.getPurpleCard()) {
+				playerLCStack.addPurplecard();
+				return true;
+			} else
+				return false;
+		} else if (card.equals("blackCard")) {
+			if (lanternCardsAvailable.getBlackCard()) {
+				playerLCStack.addBlackcard();
+				return true;
+			} else
+				return false;
+		} else {
+			if (lanternCardsAvailable.getOrangeCard()) {
+				playerLCStack.addOrangecard();
+				return true;
+			} else
+				return false;
+		}
+	}
+
 
 	/*
 	 * set the favor token on start or load
