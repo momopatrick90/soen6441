@@ -26,7 +26,7 @@ public class GameEngineTest {
 	LakeTiles l;
 	
 	@Test
-	public void testGameIsProperlyStarted() {
+	public void testGameIsProperlyStarted() throws IOException, Exception {
 		gEngine = new GameEngine(4);
 		gEngine.startNewGame();
 		l=new LakeTiles();
@@ -37,7 +37,7 @@ public class GameEngineTest {
 	}
 	
 	@Test 
-	public void lakeTilesShouldBeTwelveForFourPlayers(){
+	public void lakeTilesShouldBeTwelveForFourPlayers() throws IOException, Exception{
 		gEngine = new GameEngine(4);
 		gEngine.startNewGame();
 		l=new LakeTiles();
@@ -48,7 +48,7 @@ public class GameEngineTest {
 	}
 	
 	@Test 
-	public void lakeTilesShouldBeNineForThreePlayers(){
+	public void lakeTilesShouldBeNineForThreePlayers() throws IOException, Exception{
 		gEngine = new GameEngine(3);
 		gEngine.startNewGame();
 		l=new LakeTiles();
@@ -58,7 +58,7 @@ public class GameEngineTest {
 	}
 	
 	@Test 
-	public void lakeTilesShouldBeSixForTwoPlayers(){
+	public void lakeTilesShouldBeSixForTwoPlayers() throws IOException, Exception{
 		gEngine = new GameEngine(2);
 		gEngine.startNewGame();
 		l=new LakeTiles();
