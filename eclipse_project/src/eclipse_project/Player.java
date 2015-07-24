@@ -351,7 +351,7 @@ public class Player {
 	 * @return	String containing player's name who will start the game
 	 * 		
 	 */
-	public String turnToStartGame(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
+	public ArrayList<Player> turnToStartGame(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
 	{
 		String turnToPlay="";
 		if(startTile.downColor=="red")
@@ -366,41 +366,42 @@ public class Player {
 		{
 		case 4:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player3";
+				turnToPlay="player3";
 			else
-				turnToPlay="Player4";
+				turnToPlay="player4";
 			break;
 		case 3:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player3";
+				turnToPlay="player3";
 			else
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			break;
 		case 2:
 			if(turnToPlay.equalsIgnoreCase("left")||turnToPlay.equalsIgnoreCase("down"))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else
-				turnToPlay="Player2";
-			/*if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
-			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
-			if(turnToPlay=="up")
-				turnToPlay="Player2";
-			else
-				turnToPlay="Player1";*/
+				turnToPlay="player2";
+			
 			break;			
 		}
-		
-		return turnToPlay;
+		for(int x=0; x<playersList.size(); x++){
+			if(turnToPlay.equals(playersList.get(x).name)){
+				playersList.get(x).setCurrent(true);
+			}
+		}
+		return playersList;
+	}
+
+	void setCurrent(boolean state) {
+		current= state;
 	}
 	
 	/**

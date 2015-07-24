@@ -144,10 +144,10 @@ public class PlayerTest {
 		lTiles.id=1;
 		lTiles.platform=false;
 		
-		//lTiles.globalLakeTiles.push(lTiles.lakeTiles[0]);
+		/*//lTiles.globalLakeTiles.push(lTiles.lakeTiles[0]);
 		String playersL=player.turnToStartGame(4, playersList, lTiles);
 		assertEquals("Player4", playersL);
-		
+		*/
 		
 	}
 

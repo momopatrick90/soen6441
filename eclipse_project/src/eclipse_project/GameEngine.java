@@ -318,8 +318,8 @@ public class GameEngine {
 				+ startTile.platform);
 		System.out.println();
 
-		playerWhoStartsGame = player1.turnToStartGame(this.numOfPlayer,
-				PlayerList, startTile);
+		PlayerList = player1.turnToStartGame(this.numOfPlayer, PlayerList,
+				startTile);
 		System.out
 				.println(playerWhoStartsGame
 						+ " will start the game as startTile is pointing to it else we follow clockwise rule");
@@ -347,6 +347,21 @@ public class GameEngine {
 			System.out.println("Number of Red LanternCards:\t"
 					+ PlayerList.get(i).playerLCStack.redCardCount());
 			System.out.println();
+		}
+		int round = 5;
+		while (round > 0) {
+			for (int count = 0; count < PlayerList.size(); count++) {
+				if (PlayerList.get(count).current) {
+					System.out.println(PlayerList.get(count).name
+							+ "'s turn to play.");
+					PlayerList.get(count).setCurrent(false);
+					if (count == PlayerList.size()-1) {
+						PlayerList.get(0).setCurrent(true);
+					} else
+						PlayerList.get(++count).setCurrent(true);
+				}
+			}
+			round--;
 		}
 
 		System.out.println("One example of laketile being added to GameBoard");
@@ -427,10 +442,10 @@ public class GameEngine {
 				dedicationTokens = this.loadDedicationTokens((Element) node);
 			} else if (node.getNodeName().equals("global_lake_tiles_stack")) {
 				//
-				 lakeTilesList = loadMultipleLakeTiles((Element) node);
+				lakeTilesList = loadMultipleLakeTiles((Element) node);
 				//
 				for (int j = 0; j < lakeTilesList.size(); j++) {
-					
+
 					lakeTiles.globalLakeTiles.push(lakeTilesList.get(j));
 				}
 			} else if (node.getNodeName().equals("lantern_cards")) {
@@ -496,7 +511,6 @@ public class GameEngine {
 			//
 			Element _lakeTilesInner = gameDoc.createElement("lake_tiles");
 			//
-			
 
 			// id
 			_lakeTilesInner.setAttribute("id",
@@ -691,7 +705,7 @@ public class GameEngine {
 		String current = playerElement.getAttribute("current");
 
 		//
-		return new Player(name,current, loadLanternCards, lakeTilesStack,
+		return new Player(name, current, loadLanternCards, lakeTilesStack,
 				favorTokenScore, fourKindScore, threePairScore,
 				sevenUniqueScore);
 	}
@@ -729,7 +743,6 @@ public class GameEngine {
 			for (int j = 0; j < this.PlayerList.get(i).playerLTStack.size(); j++) {
 				//
 				Element lakeTilesInner = gameDoc.createElement("lake_tiles");
-
 
 				saveLakeTiles(lakeTilesInner,
 						(this.PlayerList.get(i).playerLTStack).get(j), gameDoc);
@@ -960,8 +973,7 @@ public class GameEngine {
 			System.out.println("Details of the LakeTiles assigned to Player"
 					+ (x + 1));
 			for (int i = 0; i < PlayerList.get(x).getLakeTiles().size(); i++) {
-				System.out.println("Laketile: "
-						+ "leftColor "
+				System.out.println("Laketile: " + "leftColor "
 						+ PlayerList.get(x).getLakeTiles().get(i).leftColor
 						+ " " + "rightColor "
 						+ PlayerList.get(x).getLakeTiles().get(i).rightColor
@@ -1020,20 +1032,16 @@ public class GameEngine {
 		// ////
 		System.out.println("Lake tiles on the board.  ");
 
-		for (int i = 0; i <  lakeTilesList.size(); i++) {
-			System.out.println( " " + "leftColor " + " "
-					+ lakeTilesList.get(i).leftColor + " "
-					+ "rightColor" + " "
-					+ lakeTilesList.get(i).rightColor + " "
-					+ "upColor" + " "
-					+ lakeTilesList.get(i).upColor + " "
-					+ "downColor" + " "
-					+ lakeTilesList.get(i).downColor + " "
-					+ "platform" + " "
+		for (int i = 0; i < lakeTilesList.size(); i++) {
+			System.out.println(" " + "leftColor " + " "
+					+ lakeTilesList.get(i).leftColor + " " + "rightColor" + " "
+					+ lakeTilesList.get(i).rightColor + " " + "upColor" + " "
+					+ lakeTilesList.get(i).upColor + " " + "downColor" + " "
+					+ lakeTilesList.get(i).downColor + " " + "platform" + " "
 					+ lakeTilesList.get(i).platform);
 		}
 		System.out.println();
-		
+
 		PlayerList = player1.assignBoardPosition(this.numOfPlayer, PlayerList,
 				startTile);
 
@@ -1042,21 +1050,16 @@ public class GameEngine {
 					+ PlayerList.get(i).boardPosition);
 		System.out.println();
 
-		
+		for (int x = 0; x < PlayerList.size(); x++) {
+			if (PlayerList.get(x).current) {
 
-		for(int x=0; x<PlayerList.size(); x++){
-			if(PlayerList.get(x).current){
-				
-				System.out
-				.println(PlayerList.get(x).name
+				System.out.println(PlayerList.get(x).name
 						+ "'s turn to play. else we follow clockwise rule");
 			}
-				
+
 		}
-		
+
 		System.out.println();
 
-		
-		
 	}
 }
