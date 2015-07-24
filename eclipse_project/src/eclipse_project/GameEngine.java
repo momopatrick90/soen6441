@@ -359,12 +359,12 @@ public class GameEngine {
 	
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Enter the index of laketiles you want to put on board");
-		LakeTiles current=PlayerList.get(0).placeLakeTile(Integer.parseInt(br.readLine()));
+		LakeTiles currentTileToPlace=PlayerList.get(0).placeLakeTile(Integer.parseInt(br.readLine()));
 		System.out.println("Enter the x co-ordinate of position where you want to place Tile");
 		int xcoordinate=Integer.parseInt(br.readLine());
 		System.out.println("Enter the y co-ordinate of position where you want to place Tile");
 		int ycoordinate=Integer.parseInt(br.readLine());
-		lakeTiles.placeTile(xcoordinate,ycoordinate,board,current);
+		lakeTiles.placeTile(xcoordinate,ycoordinate,board,currentTileToPlace);
 
 		System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
 				+ board.tilesOnBoard.get(0).right + "down"
