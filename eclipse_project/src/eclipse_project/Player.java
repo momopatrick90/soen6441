@@ -366,29 +366,29 @@ public class Player {
 		{
 		case 4:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player3";
+				turnToPlay="player3";
 			else
-				turnToPlay="Player4";
+				turnToPlay="player4";
 			break;
 		case 3:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player3";
+				turnToPlay="player3";
 			else
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			break;
 		case 2:
 			if(turnToPlay.equalsIgnoreCase("left")||turnToPlay.equalsIgnoreCase("down"))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			/*if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
 				turnToPlay="Player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
