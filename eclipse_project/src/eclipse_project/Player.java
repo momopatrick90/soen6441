@@ -426,6 +426,11 @@ void setCurrent(boolean state) {
 	{
 		
 	}
+
+	public LanternCards getLanternCards() {
+		// TODO Auto-generated method stub
+		return playerLCStack;
+	}
 }
 
 
