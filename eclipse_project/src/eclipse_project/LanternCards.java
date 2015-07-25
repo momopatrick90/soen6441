@@ -6,19 +6,8 @@ import java.util.Map;
 import java.util.Stack;
 
 public class LanternCards {
-
-	private String[] Colors = { "Red", "Blue", "Green", "White", "Purple",
-			"Black", "Orange" };
 	// stacks  index by color
 	private HashMap<String, Integer> stacks = new HashMap<String, Integer>();
-
-	private Stack<String> redStack = new Stack<String>();
-	private Stack<String> blueStack = new Stack<String>();
-	private Stack<String> greenStack = new Stack<String>();;
-	private Stack<String> whiteStack = new Stack<String>();
-	private Stack<String> purpleStack = new Stack<String>();
-	private Stack<String> blackStack = new Stack<String>();
-	private Stack<String> orangeStack = new Stack<String>();
 
 	private int numOfPlayers;
 
@@ -26,7 +15,14 @@ public class LanternCards {
 	 * Create an empty stack of seven colors.
 	 */
 	public LanternCards() {
-		super();
+		// push the specified number of cards in each stack
+		this.stacks.put("redCard", 0);
+		this.stacks.put("blueCard", 0);
+		this.stacks.put("greenCard", 0);
+		this.stacks.put("whiteCard", 0);
+		this.stacks.put("purpleCard", 0);
+		this.stacks.put("blackCard", 0);
+		this.stacks.put("orangeCard", 0);
 	}
 
 	/**
@@ -37,6 +33,7 @@ public class LanternCards {
 	 *            - Number of players playing game.
 	 */
 	public LanternCards(int numOfPlayers) {
+		this();
 
 		this.numOfPlayers = numOfPlayers;
 
@@ -51,30 +48,6 @@ public class LanternCards {
 			cards = 8;
 		else
 			System.out.println("The number of players is invalid");
-		
-		//
-
-
-		// TODO useless
-		for (int i = 0; i < cards; i++) {
-			
-			this.redStack.push(this.Colors[0]);
-			this.blueStack.push(this.Colors[1]);
-			this.greenStack.push(this.Colors[2]);
-			this.whiteStack.push(this.Colors[3]);
-			this.purpleStack.push(this.Colors[4]);
-			this.blackStack.push(this.Colors[5]);
-			this.orangeStack.push(this.Colors[6]);
-		}
-		
-		// push the specified number of cards in each stack
-		this.stacks.put("redCard", 0);
-		this.stacks.put("blueCard", 0);
-		this.stacks.put("greenCard", 0);
-		this.stacks.put("whiteCard", 0);
-		this.stacks.put("purpleCard", 0);
-		this.stacks.put("blackCard", 0);
-		this.stacks.put("orangeCard", 0);
 		
 		//
 		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
@@ -110,42 +83,18 @@ public class LanternCards {
 
 		this.numOfPlayers = numOfPlayers;
 
-		// push the specified number of cards in each stack
-		for (int i = 0; i < redCount; i++)
-			this.redStack.push(this.Colors[0]);
 		//
 		this.stacks.put("redCard", redCount);
-
-		
-		for (int i = 0; i < blueCount; i++)
-			this.blueStack.push(this.Colors[1]);
 		//
 		this.stacks.put("blueCard", blueCount);
-
-		
-		for (int i = 0; i < greenCount; i++)
-			this.greenStack.push(this.Colors[2]);
 		//
 		this.stacks.put("greenCard", greenCount);
-		
-		
-		for (int i = 0; i < whiteCount; i++)
-			this.whiteStack.push(this.Colors[3]);
 		//
 		this.stacks.put("whiteCard", whiteCount);
-
-		for (int i = 0; i < purpleCount; i++)
-			this.purpleStack.push(this.Colors[4]);
 		//
 		this.stacks.put("purpleCard", purpleCount);
-
-		for (int i = 0; i < blackCount; i++)
-			this.blackStack.push(this.Colors[5]);
 		//
 		this.stacks.put("blackCard", blackCount);
-
-		for (int i = 0; i < orangeCount; i++)
-			this.orangeStack.push(this.Colors[6]);
 		//
 		this.stacks.put("orangeCard", orangeCount);
 	}
@@ -180,14 +129,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getBlueCard() {
-		return this.getCard("redCard");
+		return this.getCard("blueCard");
 	}
 
 	/**
 	 * This method add the blue card to the stack
 	 */
 	public void addBluecard() {
-		this.addCard("blackCard");
+		this.addCard("blueCard");
 	}
 
 	/**
@@ -204,7 +153,7 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getGreenCard() {
-		return this.getGreenCard();
+		return this.getCard("greenCard");
 	}
 
 	/**
@@ -228,7 +177,7 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getWhiteCard() {
-		return this.getWhiteCard();
+		return this.getCard("whiteCard");
 	}
 
 	/**
@@ -323,7 +272,7 @@ public class LanternCards {
 	 * @return true if this object contains the cards, else false.
 	 */
 	public boolean hasCard(String card) {
-		return this.stacks.containsKey(card) && this.stacks.get(card) > 1;
+		return this.stacks.containsKey(card) && this.stacks.get(card) >= 1;
 	}
 	
 	/**
@@ -341,6 +290,7 @@ public class LanternCards {
 	public boolean getCard(String card) {
 		if(!this.stacks.containsKey(card) || this.stacks.get(card) == 0)
 		{
+			
 			return false;
 		}
 		
@@ -356,20 +306,14 @@ public class LanternCards {
 	public int numberOfColorsOfWithQuantity(int quantity) {
 		int result = 0;
 	
-		if(this.blackStack.size() != quantity)
-			result++;
-		if(this.blueStack.size() != quantity)
-			result++;
-		if(this.greenStack.size() != quantity)
-			result++;
-		if(this.whiteStack.size() != quantity)
-			result++;
-		if(this.purpleStack.size() != quantity)
-			result++;
-		if(this.blackStack.size() != quantity)
-			result++;
-		if(this.orangeStack.size() != quantity)
-			result++;
+		//
+		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
+		{
+			if(entry.getValue() == quantity)
+			{
+				result += 1;
+			}
+		}
 		
 		return result;
 	}
