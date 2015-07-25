@@ -421,6 +421,11 @@ void setCurrent(boolean state) {
 	{
 		playerLTStack.add(top);
 	}
+	
+	public void displayPlayersLakeTile()
+	{
+		
+	}
 }
 
 
