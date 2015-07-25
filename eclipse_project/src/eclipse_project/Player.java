@@ -354,7 +354,7 @@ public class Player {
 	 * @return	String containing player's name who will start the game
 	 * 		
 	 */
-	public String turnToStartGame(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
+	public ArrayList<Player> turnToStartGame(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
 	{
 		String turnToPlay="";
 		if(startTile.downColor=="red")
@@ -369,29 +369,29 @@ public class Player {
 		{
 		case 4:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player3";
+				turnToPlay="player3";
 			else
-				turnToPlay="Player4";
+				turnToPlay="player4";
 			break;
 		case 3:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player3";
+				turnToPlay="player3";
 			else
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			break;
 		case 2:
 			if(turnToPlay.equalsIgnoreCase("left")||turnToPlay.equalsIgnoreCase("down"))
-				turnToPlay="Player1";
+				turnToPlay="player1";
 			else
-				turnToPlay="Player2";
+				turnToPlay="player2";
 			/*if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
 				turnToPlay="Player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
@@ -403,9 +403,19 @@ public class Player {
 			break;			
 		}
 		
-		return turnToPlay;
+		for(int x=0; x<playersList.size(); x++){
+			if(turnToPlay.equals(playersList.get(x).name)){
+				playersList.get(x).setCurrent(true);
+			}
+		}
+		return playersList;
 	}
 	
+
+
+void setCurrent(boolean state) {
+	current= state;
+}
 	/**
 	 * This method picks the top Laketile from LakeTiles Stack and gives to current player
 	 * @param top Top lakeTile on stack 		
@@ -413,6 +423,35 @@ public class Player {
 	public void pickLakeTileFromStack(LakeTiles top)
 	{
 		playerLTStack.add(top);
+	}
+	
+	/**
+	 * This method displays the LakeTiles of the player
+	 * @param currentPlayer		
+	 */
+	public void displayPlayersLakeTile(Player currentPlayer)
+	{
+		System.out.println("LakeTiles at your hand:");
+		for(int i=0;i<currentPlayer.playerLTStack.size();i++)
+		{
+			
+			System.out.println("id " + currentPlayer.playerLTStack.get(i).id
+					+ " " + "leftColor " + " "
+					+ currentPlayer.playerLTStack.get(i).leftColor + " "
+					+ "rightColor" + " "
+					+ currentPlayer.playerLTStack.get(i).rightColor + " "
+					+ "upColor" + " "
+					+ currentPlayer.playerLTStack.get(i).upColor + " "
+					+ "downColor" + " "
+					+ currentPlayer.playerLTStack.get(i).downColor + " "
+					+ "platform" + " "
+					+ currentPlayer.playerLTStack.get(i).platform);
+		}
+	}
+
+	public LanternCards getLanternCards() {
+		// TODO Auto-generated method stub
+		return playerLCStack;
 	}
 }
 

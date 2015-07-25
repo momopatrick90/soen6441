@@ -257,5 +257,36 @@ public class LakeTiles {
 		}
 		return answer;
 	}
+	
+	public LakeTiles rotateLakeTile(LakeTiles lakeTile,int degreeOfRotation)
+	{
+		String left=lakeTile.leftColor;
+		String right=lakeTile.rightColor;
+		String up=lakeTile.upColor;
+		String down=lakeTile.downColor;
+		switch(degreeOfRotation)
+		{
+		case 90:
+			lakeTile.leftColor=down;
+			lakeTile.upColor=left;
+			lakeTile.rightColor=up;
+			lakeTile.downColor=right;
+			break;
+		case 180:
+			lakeTile.leftColor=right;
+			lakeTile.upColor=down;
+			lakeTile.rightColor=left;
+			lakeTile.downColor=up;
+			break;
+		case 270:
+			lakeTile.leftColor=down;
+			lakeTile.upColor=left;
+			lakeTile.rightColor=up;
+			lakeTile.downColor=right;
+			break;
+			default:System.out.println();
+		}
+		return lakeTile;
+	}
 
 }

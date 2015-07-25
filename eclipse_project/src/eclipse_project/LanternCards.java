@@ -413,4 +413,101 @@ public class LanternCards {
 
 		}
 	}
+	
+	/**
+	 * This method assigns lanternCards to each Player according to LakeTile and players position
+	 * @param numOfPlayers - Number of Players
+	 * @param board - GameBoard
+	 * @param x - X coordinate of lakeTile
+	 * @param y - Y coordinate of lakeTile
+	 * @param lakeTile - LakeTile
+	 * @param playerList - Arraylist of Players
+	 * @param lanternCard - Available Lantern Cards
+	 */
+	public void assignLanternCardsToPlayers(int numOfPlayers ,Board board,int x,int y,LakeTiles lakeTile,ArrayList<Player> playerList,LanternCards lanternCard)
+	{
+		String card;
+		switch(numOfPlayers)
+		{
+		case 2:
+			card=lakeTile.leftColor+"Card";
+			playerList.get(0).pickLanternCard(card,lanternCard);
+			card=lakeTile.rightColor+"Card";
+			playerList.get(1).pickLanternCard(card,lanternCard);
+			break;
+		case 3:
+			card=lakeTile.leftColor+"Card";
+			playerList.get(0).pickLanternCard(card,lanternCard);
+			card=lakeTile.upColor+"Card";
+			playerList.get(1).pickLanternCard(card,lanternCard);
+			card=lakeTile.rightColor+"Card";
+			playerList.get(2).pickLanternCard(card,lanternCard);
+			break;
+		case 4:
+			card=lakeTile.leftColor+"Card";
+			playerList.get(0).pickLanternCard(card,lanternCard);
+			card=lakeTile.upColor+"Card";
+			playerList.get(1).pickLanternCard(card,lanternCard);
+			card=lakeTile.rightColor+"Card";
+			playerList.get(2).pickLanternCard(card,lanternCard);
+			card=lakeTile.downColor+"Card";
+			playerList.get(3).pickLanternCard(card,lanternCard);
+			break;
+		}
+		for(int currentPlayer=0;currentPlayer<playerList.size();currentPlayer++)
+		{
+			String cardColor="";
+			if(playerList.get(currentPlayer).current)
+			{
+				if(board.board[x-1][y]!=-1)
+				{
+					for(int i=0;i<board.tilesOnBoard.size();i++)
+					{
+						if(board.tilesOnBoard.get(i).id==board.board[x-1][y] && board.tilesOnBoard.get(i).rightColor.equalsIgnoreCase(lakeTile.leftColor))
+						{
+							card=board.tilesOnBoard.get(i).rightColor+"Card";
+							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+						}
+					}
+				}
+				
+				if(board.board[x+1][y]!=-1)
+				{
+					for(int i=0;i<board.tilesOnBoard.size();i++)
+					{
+						if(board.tilesOnBoard.get(i).id==board.board[x+1][y] && board.tilesOnBoard.get(i).leftColor.equalsIgnoreCase(lakeTile.rightColor))
+						{
+							card=board.tilesOnBoard.get(i).leftColor+"Card";
+							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+						}
+					}
+				}
+				
+				if(board.board[x][y+1]!=-1)
+				{
+					for(int i=0;i<board.tilesOnBoard.size();i++)
+					{
+						if(board.tilesOnBoard.get(i).id==board.board[x][y+1] && board.tilesOnBoard.get(i).downColor.equalsIgnoreCase(lakeTile.upColor))
+						{
+							card=board.tilesOnBoard.get(i).downColor+"Card";
+							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+						}
+					}
+				}
+				
+				if(board.board[x][y-1]!=-1)
+				{
+					for(int i=0;i<board.tilesOnBoard.size();i++)
+					{
+						if(board.tilesOnBoard.get(i).id==board.board[x][y-1] && board.tilesOnBoard.get(i).upColor.equalsIgnoreCase(lakeTile.downColor))
+						{
+							card=board.tilesOnBoard.get(i).upColor+"Card";
+							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+						}
+					}
+				}
+				
+			}
+		}
+	}
 }
