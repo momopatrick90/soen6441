@@ -130,8 +130,10 @@ public class LanternsApplication {
 
 	/**
 	 * load the new based on the user input
+	 * @throws Exception 
+	 * @throws IOException 
 	 */
-	public static void loadNewGame() {
+	public static void loadNewGame() throws IOException, Exception {
 
 		game = new GameEngine(numOfPlayers);
 		game.startNewGame();

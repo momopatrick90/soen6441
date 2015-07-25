@@ -366,32 +366,40 @@ public class Player {
 		{
 		case 4:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player1";
+				turnToPlay="Player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player2";
+				turnToPlay="Player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player3";
+				turnToPlay="Player3";
 			else
-				turnToPlay="player4";
+				turnToPlay="Player4";
 			break;
 		case 3:
 			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player1";
+				turnToPlay="Player1";
 			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player2";
+				turnToPlay="Player2";
 			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player3";
+				turnToPlay="Player3";
 			else
-				turnToPlay="player1";
+				turnToPlay="Player1";
 			break;
 		case 2:
 			if(turnToPlay.equalsIgnoreCase("left")||turnToPlay.equalsIgnoreCase("down"))
-				turnToPlay="player1";
+				turnToPlay="Player1";
 			else
-				turnToPlay="player2";
-			
+				turnToPlay="Player2";
+			/*if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player1";
+			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay="Player2";
+			if(turnToPlay=="up")
+				turnToPlay="Player2";
+			else
+				turnToPlay="Player1";*/
 			break;			
 		}
+		
 		for(int x=0; x<playersList.size(); x++){
 			if(turnToPlay.equals(playersList.get(x).name)){
 				playersList.get(x).setCurrent(true);
@@ -399,11 +407,12 @@ public class Player {
 		}
 		return playersList;
 	}
-
-	void setCurrent(boolean state) {
-		current= state;
-	}
 	
+
+
+void setCurrent(boolean state) {
+	current= state;
+}
 	/**
 	 * This method picks the top Laketile from LakeTiles Stack and gives to current player
 	 * @param top Top lakeTile on stack 		

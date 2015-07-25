@@ -350,15 +350,29 @@ public class GameEngine {
 		}
 		int round = 5;
 		while (round > 0) {
-			for (int count = 0; count < PlayerList.size(); count++) {
-				if (PlayerList.get(count).current) {
-					System.out.println(PlayerList.get(count).name
+			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
+				if (PlayerList.get(playerIndex).current) {
+					System.out.println(PlayerList.get(playerIndex).name
 							+ "'s turn to play.");
-					PlayerList.get(count).setCurrent(false);
-					if (count == PlayerList.size()-1) {
+					
+					PlayerList.get(playerIndex).pickLakeTileFromStack(lakeTiles.getLakeTile());
+					board.displayBoard(board.board, board.tilesOnBoard);
+				
+					BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+					System.out.println("Enter the index of laketiles you want to put on board");
+					LakeTiles currentTileToPlace=PlayerList.get(playerIndex).placeLakeTile(Integer.parseInt(br.readLine()));
+					System.out.println("Enter the x co-ordinate of position where you want to place Tile");
+					int xcoordinate=Integer.parseInt(br.readLine());
+					System.out.println("Enter the y co-ordinate of position where you want to place Tile");
+					int ycoordinate=Integer.parseInt(br.readLine());
+					lakeTiles.placeTile(xcoordinate,ycoordinate,board,currentTileToPlace);
+					
+					
+					PlayerList.get(playerIndex).setCurrent(false);
+					if (playerIndex == PlayerList.size()-1) {
 						PlayerList.get(0).setCurrent(true);
 					} else
-						PlayerList.get(++count).setCurrent(true);
+						PlayerList.get(++playerIndex).setCurrent(true);
 				}
 			}
 			round--;
@@ -369,17 +383,7 @@ public class GameEngine {
 				.get(0));
 		
 		//new changes
-		PlayerList.get(0).pickLakeTileFromStack(lakeTiles.getLakeTile());
-		board.displayBoard(board.board, board.tilesOnBoard);
-	
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Enter the index of laketiles you want to put on board");
-		LakeTiles currentTileToPlace=PlayerList.get(0).placeLakeTile(Integer.parseInt(br.readLine()));
-		System.out.println("Enter the x co-ordinate of position where you want to place Tile");
-		int xcoordinate=Integer.parseInt(br.readLine());
-		System.out.println("Enter the y co-ordinate of position where you want to place Tile");
-		int ycoordinate=Integer.parseInt(br.readLine());
-		lakeTiles.placeTile(xcoordinate,ycoordinate,board,currentTileToPlace);
+		
 
 		System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
 				+ board.tilesOnBoard.get(0).right + "down"
