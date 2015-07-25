@@ -62,10 +62,11 @@ public class Player {
 	 * @param dedicationToken
 	 *            The object containing the current stack of dedication tokens
 	 *            on the table
+	 * @param lanternCards
+	 * 			  The lantern cards to return
 	 */
-	public void pickDedicationToken(String move,
-			DedicationTokens dedicationToken) {
-
+	public boolean pickDedicationToken(String move, LanternCards returnedLanternCards, LanternCards globalLanternCards, DedicationTokens dedicationToken) {
+		
 		if (move.equals("threePair")) {
 
 			playerScore_threePair += dedicationToken.getThreePair();
@@ -78,6 +79,8 @@ public class Player {
 
 			playerScore_sevenUnique += dedicationToken.getSevenUnique();
 		}
+		
+		return true;
 	}
 
 	/**

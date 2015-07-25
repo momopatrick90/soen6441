@@ -1,12 +1,16 @@
 package eclipse_project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class LanternCards {
 
 	private String[] Colors = { "Red", "Blue", "Green", "White", "Purple",
 			"Black", "Orange" };
+	// stacks  index by color
+	private HashMap<String, Integer> stacks = new HashMap<String, Integer>();
 
 	private Stack<String> redStack = new Stack<String>();
 	private Stack<String> blueStack = new Stack<String>();
@@ -47,8 +51,13 @@ public class LanternCards {
 			cards = 8;
 		else
 			System.out.println("The number of players is invalid");
+		
+		//
 
+
+		// TODO useless
 		for (int i = 0; i < cards; i++) {
+			
 			this.redStack.push(this.Colors[0]);
 			this.blueStack.push(this.Colors[1]);
 			this.greenStack.push(this.Colors[2]);
@@ -56,6 +65,21 @@ public class LanternCards {
 			this.purpleStack.push(this.Colors[4]);
 			this.blackStack.push(this.Colors[5]);
 			this.orangeStack.push(this.Colors[6]);
+		}
+		
+		// push the specified number of cards in each stack
+		this.stacks.put("redCard", 0);
+		this.stacks.put("blueCard", 0);
+		this.stacks.put("greenCard", 0);
+		this.stacks.put("whiteCard", 0);
+		this.stacks.put("purpleCard", 0);
+		this.stacks.put("blackCard", 0);
+		this.stacks.put("orangeCard", 0);
+		
+		//
+		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
+		{
+			entry.setValue(cards);
 		}
 	}
 
@@ -89,24 +113,41 @@ public class LanternCards {
 		// push the specified number of cards in each stack
 		for (int i = 0; i < redCount; i++)
 			this.redStack.push(this.Colors[0]);
+		//
+		this.stacks.put("redCard", redCount);
 
+		
 		for (int i = 0; i < blueCount; i++)
 			this.blueStack.push(this.Colors[1]);
+		//
+		this.stacks.put("blueCard", blueCount);
 
+		
 		for (int i = 0; i < greenCount; i++)
 			this.greenStack.push(this.Colors[2]);
-
+		//
+		this.stacks.put("greenCard", greenCount);
+		
+		
 		for (int i = 0; i < whiteCount; i++)
 			this.whiteStack.push(this.Colors[3]);
+		//
+		this.stacks.put("whiteCard", whiteCount);
 
 		for (int i = 0; i < purpleCount; i++)
 			this.purpleStack.push(this.Colors[4]);
+		//
+		this.stacks.put("purpleCard", purpleCount);
 
 		for (int i = 0; i < blackCount; i++)
 			this.blackStack.push(this.Colors[5]);
+		//
+		this.stacks.put("blackCard", blackCount);
 
 		for (int i = 0; i < orangeCount; i++)
 			this.orangeStack.push(this.Colors[6]);
+		//
+		this.stacks.put("orangeCard", orangeCount);
 	}
 
 	/**
@@ -115,23 +156,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getRedCard() {
-
-		boolean state = false;
-
-		if (!this.redStack.isEmpty()) {
-			state = true;
-			this.redStack.pop();
-		}
-
-		return state;
+		return this.getCard("redCard");
 	}
 
 	/**
 	 * This method add the red card to the stack
 	 */
 	public void addRedcard() {
-
-		this.redStack.push(this.Colors[0]);
+		this.addCard("redCard");
 	}
 
 	/**
@@ -139,7 +171,7 @@ public class LanternCards {
 	 * @return count of orange cards
 	 */
 	public int redCardCount() {
-		return this.redStack.size();
+		return this.stacks.get("redCard");
 	}
 
 	/**
@@ -148,23 +180,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getBlueCard() {
-
-		boolean state = false;
-
-		if (!this.blueStack.isEmpty()) {
-			state = true;
-			this.blueStack.pop();
-		}
-
-		return state;
+		return this.getCard("redCard");
 	}
 
 	/**
 	 * This method add the blue card to the stack
 	 */
 	public void addBluecard() {
-
-		this.blueStack.push(this.Colors[1]);
+		this.addCard("blackCard");
 	}
 
 	/**
@@ -172,7 +195,7 @@ public class LanternCards {
 	 * @return count of orange cards
 	 */
 	public int blueCardCount() {
-		return this.blueStack.size();
+		return this.stacks.get("blueCard");
 	}
 
 	/**
@@ -181,23 +204,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getGreenCard() {
-
-		boolean state = false;
-
-		if (!this.greenStack.isEmpty()) {
-			state = true;
-			this.greenStack.pop();
-		}
-
-		return state;
+		return this.getGreenCard();
 	}
 
 	/**
 	 * This method add the green card to the stack
 	 */
 	public void addGreencard() {
-
-		this.greenStack.push(this.Colors[2]);
+		this.addCard("greenCard");
 	}
 
 	/**
@@ -205,7 +219,7 @@ public class LanternCards {
 	 * @return count of orange cards
 	 */
 	public int greenCardCount() {
-		return this.greenStack.size();
+		return this.stacks.get("greenCard");
 	}
 
 	/**
@@ -214,23 +228,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getWhiteCard() {
-
-		boolean state = false;
-
-		if (!this.whiteStack.isEmpty()) {
-			state = true;
-			this.whiteStack.pop();
-		}
-
-		return state;
+		return this.getWhiteCard();
 	}
 
 	/**
 	 * This method add the white card to the stack
 	 */
 	public void addWhitecard() {
-
-		this.whiteStack.push(this.Colors[3]);
+		this.addCard("whiteCard");
 	}
 
 	/**
@@ -238,7 +243,7 @@ public class LanternCards {
 	 * @return count of orange cards
 	 */
 	public int whiteCardCount() {
-		return this.whiteStack.size();
+		return this.stacks.get("whiteCard");
 	}
 
 	/**
@@ -247,23 +252,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getPurpleCard() {
-
-		boolean state = false;
-
-		if (!this.purpleStack.isEmpty()) {
-			state = true;
-			this.purpleStack.pop();
-		}
-
-		return state;
+		return this.getCard("purpleCard");
 	}
 
 	/**
 	 * This method add the purple card to the stack
 	 */
 	public void addPurplecard() {
-
-		this.purpleStack.push(this.Colors[4]);
+		this.addCard("purpleCard");
 	}
 
 	/**
@@ -271,7 +267,7 @@ public class LanternCards {
 	 * @return count of orange cards
 	 */
 	public int purpleCardCount() {
-		return this.purpleStack.size();
+		return this.stacks.get("purpleCard");
 	}
 
 	/**
@@ -280,23 +276,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getBlackCard() {
-
-		boolean state = false;
-
-		if (!this.blackStack.isEmpty()) {
-			state = true;
-			this.blackStack.pop();
-		}
-
-		return state;
+		return this.getCard("blackCard");
 	}
 
 	/**
 	 * This method add the black card to the stack
 	 */
 	public void addBlackcard() {
-
-		this.blackStack.push(this.Colors[5]);
+		this.addCard("blackCard");
 	}
 
 	/**
@@ -304,7 +291,7 @@ public class LanternCards {
 	 * @return count of orange cards
 	 */
 	public int blackCardCount() {
-		return this.blackStack.size();
+		return this.stacks.get("blackCard");
 	}
 
 	/**
@@ -313,23 +300,14 @@ public class LanternCards {
 	 * @return true or false
 	 */
 	public boolean getOrangeCard() {
-
-		boolean state = false;
-
-		if (!this.orangeStack.isEmpty()) {
-			state = true;
-			this.orangeStack.pop();
-		}
-
-		return state;
+		return this.getCard("orangeCard");
 	}
 
 	/**
 	 * This method add the orange card to the stack
 	 */
 	public void addOrangecard() {
-
-		this.orangeStack.push(this.Colors[6]);
+		this.addCard("orangeCard");
 	}
 
 	/**
@@ -337,7 +315,7 @@ public class LanternCards {
 	 * @return count of orange cards
 	 */
 	public int orangeCardCount() {
-		return this.orangeStack.size();
+		return this.stacks.get("orangeCard");
 	}
 	
 	/**
@@ -345,29 +323,7 @@ public class LanternCards {
 	 * @return true if this object contains the cards, else false.
 	 */
 	public boolean hasCard(String card) {
-		if (card.equals("redCard"))
-		{
-			 return this.redStack.size() > 0;
-		}else if (card.equals("blueCard"))
-		{
-			 return this.blueStack.size() > 0;
-		}else if (card.equals("greenCard"))
-		{
-			 return this.greenStack.size() > 0;
-		}else if (card.equals("whiteCard"))
-		{
-			 return this.whiteStack.size() > 0;
-		}else if (card.equals("purpleCard"))
-		{
-			 return this.purpleStack.size() > 0;
-		}else if (card.equals("blackCard"))
-		{
-			 return this.blackStack.size() > 0;
-		}else if (card.equals("orangeCard"))
-		{
-			 return this.orangeStack.size() > 0;
-		}
-		return false;
+		return this.stacks.containsKey(card) && this.stacks.get(card) > 1;
 	}
 	
 	/**
@@ -375,28 +331,7 @@ public class LanternCards {
 	 * @return true if this object contains the cards, else false.
 	 */
 	public void addCard(String card) {
-		if (card.equals("redCard"))
-		{
-			 this.addRedcard();
-		}else if (card.equals("blueCard"))
-		{
-			this.addBluecard();
-		}else if (card.equals("greenCard"))
-		{
-			this.addGreencard();
-		}else if (card.equals("whiteCard"))
-		{
-			this.addWhitecard();
-		}else if (card.equals("purpleCard"))
-		{
-			this.addPurplecard();
-		}else if (card.equals("blackCard"))
-		{
-			this.addBlackcard();
-		}else if (card.equals("orangeCard"))
-		{
-			this.addOrangecard();
-		}
+		this.stacks.put(card, this.stacks.get(card)+1);
 	}
 	
 	/**
@@ -404,30 +339,39 @@ public class LanternCards {
 	 * @return true if the card was Succesfully withdrawn
 	 */
 	public boolean getCard(String card) {
-		if (card.equals("redCard"))
+		if(!this.stacks.containsKey(card) || this.stacks.get(card) == 0)
 		{
-			return this.getRedCard();
-		}else if (card.equals("blueCard"))
-		{
-			return this.getBlueCard();
-		}else if (card.equals("greenCard"))
-		{
-			return this.getGreenCard();
-		}else if (card.equals("whiteCard"))
-		{
-			return this.getWhiteCard();
-		}else if (card.equals("purpleCard"))
-		{
-			return this.getPurpleCard();
-		}else if (card.equals("blackCard"))
-		{
-			return this.getBlackCard();
-		}else if (card.equals("orangeCard"))
-		{
-			return this.getOrangeCard();
+			return false;
 		}
 		
-		return false;
+		//
+		this.stacks.put(card, this.stacks.get(card)-1);
+		//
+		return true;
+	}
+	
+	/**
+	 * this lantern cards has either 0 or quantity of each kind.
+	 */
+	public int numberOfColorsOfWithQuantity(int quantity) {
+		int result = 0;
+	
+		if(this.blackStack.size() != quantity)
+			result++;
+		if(this.blueStack.size() != quantity)
+			result++;
+		if(this.greenStack.size() != quantity)
+			result++;
+		if(this.whiteStack.size() != quantity)
+			result++;
+		if(this.purpleStack.size() != quantity)
+			result++;
+		if(this.blackStack.size() != quantity)
+			result++;
+		if(this.orangeStack.size() != quantity)
+			result++;
+		
+		return result;
 	}
 	
 	/**
