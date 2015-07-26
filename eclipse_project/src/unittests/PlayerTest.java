@@ -149,4 +149,34 @@ public class PlayerTest {
 		assertTrue(playersList.get(3).boardPosition=="down");
 		
 	}
+	
+	public void testPickDedicationTokenThreePair()
+	{
+		
+	}
+	
+	public void testPickDedicationTokenThreePairFail()
+	{
+		
+	}
+	
+	public void testPickDedicationTokenFourOfKind()
+	{
+		
+	}
+	
+	public void testPickDedicationTokenFourOfKindFail()
+	{
+		
+	}
+	
+	public void testPickDedicationTokenSevenUnique()
+	{
+		
+	}
+	
+	public void testPickDedicationTokenSevenUniqueFail()
+	{
+		
+	}
 }

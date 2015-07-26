@@ -143,4 +143,40 @@ public class LanternCardsTest {
 		assertFalse(lc.getCard("blackCard"));
 	}
 	
+	@Test
+	public void testNonZeroColors() {
+		//
+		LanternCards lc = new LanternCards(0, 1, 1, 0, 1, 0, 1, 1);
+		
+		// 
+		assertTrue(lc.nonZeroColors() == 5);
+	}
+	
+	@Test
+	public void testColorsWithQuantity() {
+		//
+		LanternCards lc = new LanternCards(0, 3, 1, 0, 1, 0, 3, 1);
+		
+		// 
+		assertTrue(lc.colorsWithQuantity(3) == 2);
+	}
+	
+	@Test
+	public void testGetAll() {
+		//
+		LanternCards lc = new 		 LanternCards(0, 3, 1, 0, 1, 0, 3, 1);
+		LanternCards target_lc = new LanternCards(0, 1, 2, 3, 4, 1, 1, 3);
+		
+		// 
+		lc.getAll(target_lc);
+		
+		//
+		assertTrue(lc.redCardCount() == 4);
+		assertTrue(lc.greenCardCount() == 3);
+		assertTrue(lc.blackCardCount() == 4);
+		assertTrue(lc.whiteCardCount() == 5);
+		assertTrue(lc.orangeCardCount() == 4);
+		assertTrue(lc.purpleCardCount() == 1);
+		assertTrue(lc.blackCardCount() == 4);
+	}
 }

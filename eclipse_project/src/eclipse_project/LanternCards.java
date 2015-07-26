@@ -296,14 +296,14 @@ public class LanternCards {
 		
 		//
 		this.stacks.put(card, this.stacks.get(card)-1);
-		//
 		return true;
 	}
 	
 	/**
-	 * this lantern cards has either 0 or quantity of each kind.
+	 * @param quantity
+	 * @return returns the number of stacks of a specific color, that have quantiy amount of cards
 	 */
-	public int numberOfColorsOfWithQuantity(int quantity) {
+	public int colorsWithQuantity(int quantity) {
 		int result = 0;
 	
 		//
@@ -313,6 +313,52 @@ public class LanternCards {
 			{
 				result += 1;
 			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * @return total number of stacks of a specific color that are not empty
+	 */
+	public int nonZeroColors() {
+		int result = 0;
+	
+		//
+		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
+		{
+			if(entry.getValue() != 0)
+			{
+				result += 1;
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * @param lanternCards
+	 * 			move all the latterns cards in to this objects lantern cards
+	 */
+	public void getAll(LanternCards lanternCards)
+	{
+		//
+		for(Map.Entry<String, Integer> entry : lanternCards.stacks.entrySet())
+		{
+			//
+			this.stacks.put(entry.getKey(), this.stacks.get(entry.getKey()) + entry.getValue());
+			//
+			entry.setValue(0);
+		}
+	}
+	
+	public String toString()
+	{
+		String result = "LanternCards: ";
+		//
+		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
+		{
+			result += "\n - "+ entry.getKey() + ":  "+entry.getValue();
 		}
 		
 		return result;
@@ -357,6 +403,8 @@ public class LanternCards {
 
 		}
 	}
+	
+	
 	
 	/**
 	 * This method assigns lanternCards to each Player according to LakeTile and players position
