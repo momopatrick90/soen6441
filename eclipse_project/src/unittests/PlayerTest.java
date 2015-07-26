@@ -49,13 +49,6 @@ public class PlayerTest {
 		
 	}
 	
-
-	@Test
-	public void testPlaceLakeTile(){
-		//Q: What is index value
-		//assertNotNull(player.placeLakeTile(37));
-	}
-
 	@Test
 	public void testSpendFavorTokens(){
 		// 
@@ -119,20 +112,24 @@ public class PlayerTest {
 	@Test
 	public void testAssignBoardPosition(){
 		ArrayList<Player> playersList=new ArrayList<>();
-		Player p1=new Player("Player1");
+		
+		Player p1=new Player("player1");
+		Player p2=new Player("player2");
+		Player p3=new Player("player3");
+		Player p4=new Player("player4");
+		
 		p1.boardPosition="left";
-		Player p2=new Player("Player2");
 		p2.boardPosition="up";
-		Player p3=new Player("Player3");
 		p3.boardPosition="right";
-		Player p4=new Player("Player4");
 		p4.boardPosition="down";
+		
 		playersList.add(p1);
 		playersList.add(p2);
 		playersList.add(p3);
 		playersList.add(p4);
 		
 		LakeTiles lTiles=new LakeTiles(); 
+		
 		lTiles.downColor="red";
 		lTiles.leftColor="blue";
 		lTiles.upColor="white";
@@ -143,12 +140,13 @@ public class PlayerTest {
 		lTiles.up=4;
 		lTiles.id=1;
 		lTiles.platform=false;
-		
-		/*//lTiles.globalLakeTiles.push(lTiles.lakeTiles[0]);
-		String playersL=player.turnToStartGame(4, playersList, lTiles);
-		assertEquals("Player4", playersL);
-		*/
+		//For four players
+		playersList=player.assignBoardPosition(4, playersList, lTiles);
+		assertNotNull(playersList);
+		assertTrue(playersList.get(0).boardPosition=="left");
+		assertTrue(playersList.get(1).boardPosition=="up");
+		assertTrue(playersList.get(2).boardPosition=="right");
+		assertTrue(playersList.get(3).boardPosition=="down");
 		
 	}
-
 }
