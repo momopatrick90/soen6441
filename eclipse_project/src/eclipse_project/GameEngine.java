@@ -384,14 +384,19 @@ public class GameEngine {
 							lanternCards.assignLanternCardsToPlayers(this.numOfPlayer,board,xcoordinate,ycoordinate,currentTileToPlace,PlayerList,lanternCards);
 							board.displayBoard(board.board, board.tilesOnBoard);
 							PlayerList.get(playerIndex).displayPlayersLakeTile(PlayerList.get(playerIndex));
-							System.out.println("Details of the LanternCards Assigned to Player After Placing the LakeTile");
-							System.out.println("Number of Black Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.blackCardCount());
-							System.out.println("Number of Blue Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.blueCardCount());
-							System.out.println("Number of Green Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.greenCardCount());
-							System.out.println("Number of Orange Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.orangeCardCount());
-							System.out.println("Number of Purple Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.purpleCardCount());
-							System.out.println("Number of Red Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.redCardCount());
-							System.out.println("Number of White Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.whiteCardCount());
+							System.out.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
+							for(int i=0;i<PlayerList.size();i++)
+							{
+								System.out.println("Player"+(i+1)+":");
+								System.out.println("Number of Black Lantern Cards"+PlayerList.get(i).playerLCStack.blackCardCount());
+								System.out.println("Number of Blue Lantern Cards"+PlayerList.get(i).playerLCStack.blueCardCount());
+								System.out.println("Number of Green Lantern Cards"+PlayerList.get(i).playerLCStack.greenCardCount());
+								System.out.println("Number of Orange Lantern Cards"+PlayerList.get(i).playerLCStack.orangeCardCount());
+								System.out.println("Number of Purple Lantern Cards"+PlayerList.get(i).playerLCStack.purpleCardCount());
+								System.out.println("Number of Red Lantern Cards"+PlayerList.get(i).playerLCStack.redCardCount());
+								System.out.println("Number of White Lantern Cards"+PlayerList.get(i).playerLCStack.whiteCardCount());
+								System.out.println();
+							}
 							
 							break;
 						case 2:

@@ -100,7 +100,7 @@ public class Board {
 				}
 			}
 		}
-		for(int i=0;i<board.length;i++)
+		/*for(int i=0;i<board.length;i++)
 		{
 			for(int j=0;j<board.length;j++)
 			{
@@ -110,6 +110,6 @@ public class Board {
 				System.out.print("("+board[i][j]+")");
 			}
 			System.out.println();
-		}
+		}*/
 	}
 }

@@ -423,16 +423,21 @@ public class LanternCards {
 		{
 		case 2:
 			card=lakeTile.leftColor+"Card";
+			System.out.println("InitialCard"+card);
 			playerList.get(0).pickLanternCard(card,lanternCard);
 			card=lakeTile.rightColor+"Card";
+			System.out.println("InitialCard"+card);
 			playerList.get(1).pickLanternCard(card,lanternCard);
 			break;
 		case 3:
 			card=lakeTile.leftColor+"Card";
+			System.out.println("InitialCard"+card);
 			playerList.get(0).pickLanternCard(card,lanternCard);
 			card=lakeTile.upColor+"Card";
+			System.out.println("InitialCard"+card);
 			playerList.get(1).pickLanternCard(card,lanternCard);
 			card=lakeTile.rightColor+"Card";
+			System.out.println("InitialCard"+card);
 			playerList.get(2).pickLanternCard(card,lanternCard);
 			break;
 		case 4:
@@ -458,6 +463,7 @@ public class LanternCards {
 						if(board.tilesOnBoard.get(i).id==board.board[x-1][y] && board.tilesOnBoard.get(i).rightColor.equalsIgnoreCase(lakeTile.leftColor))
 						{
 							card=board.tilesOnBoard.get(i).rightColor+"Card";
+							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}
@@ -470,6 +476,7 @@ public class LanternCards {
 						if(board.tilesOnBoard.get(i).id==board.board[x+1][y] && board.tilesOnBoard.get(i).leftColor.equalsIgnoreCase(lakeTile.rightColor))
 						{
 							card=board.tilesOnBoard.get(i).leftColor+"Card";
+							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}
@@ -479,9 +486,10 @@ public class LanternCards {
 				{
 					for(int i=0;i<board.tilesOnBoard.size();i++)
 					{
-						if(board.tilesOnBoard.get(i).id==board.board[x][y+1] && board.tilesOnBoard.get(i).downColor.equalsIgnoreCase(lakeTile.upColor))
+						if(board.tilesOnBoard.get(i).id==board.board[x][y+1] && board.tilesOnBoard.get(i).upColor.equalsIgnoreCase(lakeTile.downColor))
 						{
-							card=board.tilesOnBoard.get(i).downColor+"Card";
+							card=board.tilesOnBoard.get(i).upColor+"Card";
+							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}
@@ -491,9 +499,11 @@ public class LanternCards {
 				{
 					for(int i=0;i<board.tilesOnBoard.size();i++)
 					{
-						if(board.tilesOnBoard.get(i).id==board.board[x][y-1] && board.tilesOnBoard.get(i).upColor.equalsIgnoreCase(lakeTile.downColor))
+						
+						if(board.tilesOnBoard.get(i).id==board.board[x][y-1] && board.tilesOnBoard.get(i).downColor.equalsIgnoreCase(lakeTile.upColor))
 						{
-							card=board.tilesOnBoard.get(i).upColor+"Card";
+							card=board.tilesOnBoard.get(i).downColor+"Card";
+							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}
