@@ -150,33 +150,134 @@ public class PlayerTest {
 		
 	}
 	
+	@Test
 	public void testPickDedicationTokenThreePair()
 	{
+		//
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
+		LanternCards returnedLanternCards = new LanternCards(0, 2, 0, 2, 0, 2, 0, 0);
+		LanternCards globalLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		Player p1=new Player("player1");
 		
+		//
+		boolean result = p1.pickDedicationToken("threePair", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertTrue(result);
+		assertNotEquals(p1.playerScore_threePair, 0);
+		assertTrue(globalLanternCards.redCardCount() == 3);
+		assertTrue(globalLanternCards.greenCardCount() == 3);
+		assertTrue(globalLanternCards.purpleCardCount() == 3);
 	}
 	
+	@Test
 	public void testPickDedicationTokenThreePairFail()
 	{
+		//
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
+		// not enough lanterns
+		LanternCards returnedLanternCards = new LanternCards(0, 1, 0, 2, 0, 2, 0, 0);
+		LanternCards globalLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		Player p1=new Player("player1");
 		
+		// 
+		boolean result = p1.pickDedicationToken("threePair", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertFalse(result);
+		
+		//to many latterns
+		returnedLanternCards = new LanternCards(0, 2, 0, 2, 0, 2, 0, 1);
+		
+		//
+		result = p1.pickDedicationToken("threePair", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertFalse(result);
 	}
 	
+	@Test
 	public void testPickDedicationTokenFourOfKind()
 	{
+		//
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
+		LanternCards returnedLanternCards = new LanternCards(0, 4, 0, 0, 0, 0, 0, 0);
+		LanternCards globalLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		Player p1=new Player("player1");
 		
+		//
+		boolean result = p1.pickDedicationToken("FourOfKind", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertTrue(result);
+		assertNotEquals(p1.playerScore_fourKind, 0);
+		assertTrue(globalLanternCards.redCardCount() == 5);
 	}
 	
+	@Test
 	public void testPickDedicationTokenFourOfKindFail()
 	{
+		//
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
+		// not enough lantern
+		LanternCards returnedLanternCards = new LanternCards(0, 0, 3, 0, 0, 0, 0, 0);
+		LanternCards globalLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		Player p1=new Player("player1");
 		
+		// 
+		boolean result = p1.pickDedicationToken("FourOfKind", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertFalse(result);
+		
+		//to many latterns
+		returnedLanternCards = new LanternCards(0, 4, 0, 0, 0, 0, 0, 1);
+		
+		//
+		result = p1.pickDedicationToken("FourOfKind", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertFalse(result);
 	}
 	
+	@Test
 	public void testPickDedicationTokenSevenUnique()
 	{
+		//
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
+		LanternCards returnedLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		LanternCards globalLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		Player p1=new Player("player1");
 		
+		//
+		boolean result = p1.pickDedicationToken("sevenUnique", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertTrue(result);
+		assertNotEquals(p1.playerScore_sevenUnique, 0);
+		assertTrue(globalLanternCards.redCardCount() == 2);
+		assertTrue(globalLanternCards.greenCardCount() == 2);
+		assertTrue(globalLanternCards.blackCardCount() == 2);
+		assertTrue(globalLanternCards.orangeCardCount() == 2);
+		assertTrue(globalLanternCards.blueCardCount() == 2);
+		assertTrue(globalLanternCards.purpleCardCount() == 2);
+		assertTrue(globalLanternCards.whiteCardCount() == 2);
 	}
 	
+	@Test
 	public void testPickDedicationTokenSevenUniqueFail()
 	{
+		//
+		DedicationTokens dedicationTokens = new DedicationTokens(4);
+		// not enough lantern
+		LanternCards returnedLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		LanternCards globalLanternCards = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		Player p1=new Player("player1");
 		
+		// 
+		boolean result = p1.pickDedicationToken("FourOfKind", returnedLanternCards, globalLanternCards, dedicationTokens);
+		
+		//
+		assertFalse(result);
 	}
 }
