@@ -350,37 +350,51 @@ public class GameEngine {
 		}
 		int round = 5;
 		while (round > 0) {
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					System.in));
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 				if (PlayerList.get(playerIndex).current) {
 					System.out.println(PlayerList.get(playerIndex).name
 							+ "'s turn to play.");
-					System.out
-							.println("Press 1 to pick up LakeTile from deck of LakeTiles");
+					System.out.println("Press 1 to pick up LakeTile from deck of LakeTiles");
 					System.out.println("Press 2 to Exchange Lantern Card");
 					System.out.println("Press 3 to Make Dedication");
-					int choice = Integer.parseInt(br.readLine());
-					switch (choice) {
-					case 1:
-						PlayerList.get(playerIndex).pickLakeTileFromStack(
-								lakeTiles.getLakeTile());
-						board.displayBoard(board.board, board.tilesOnBoard);
-						System.out
-								.println("Enter the index of laketiles you want to put on board");
-						LakeTiles currentTileToPlace = PlayerList.get(
-								playerIndex).placeLakeTile(
-								Integer.parseInt(br.readLine()));
-						System.out
-								.println("Enter the x co-ordinate of position where you want to place Tile");
-						int xcoordinate = Integer.parseInt(br.readLine());
-						System.out
-								.println("Enter the y co-ordinate of position where you want to place Tile");
-						int ycoordinate = Integer.parseInt(br.readLine());
-						lakeTiles.placeTile(xcoordinate, ycoordinate, board,
-								currentTileToPlace);
-						break;
-					case 2:
+					int choice=Integer.parseInt(br.readLine());
+					switch(choice)
+					{
+						case 1:
+							PlayerList.get(playerIndex).pickLakeTileFromStack(lakeTiles.getLakeTile());
+							board.displayBoard(board.board, board.tilesOnBoard);
+							System.out.println();
+							
+							PlayerList.get(playerIndex).displayPlayersLakeTile(PlayerList.get(playerIndex));
+							System.out.println("Enter the index of laketiles you want to put on board");
+							LakeTiles currentTileToPlace=PlayerList.get(playerIndex).placeLakeTile(Integer.parseInt(br.readLine()));
+							
+							System.out.println("Enter the x co-ordinate of position where you want to place Tile");
+							int xcoordinate=Integer.parseInt(br.readLine());
+							
+							System.out.println("Enter the y co-ordinate of position where you want to place Tile");
+							int ycoordinate=Integer.parseInt(br.readLine());
+							
+							System.out.println("Enter the degree of roatation for the tile you want to place on board");
+							int degreeOfRotation=Integer.parseInt(br.readLine());
+							currentTileToPlace=lakeTiles.rotateLakeTile(currentTileToPlace, degreeOfRotation);
+							
+							lakeTiles.placeTile(xcoordinate,ycoordinate,board,currentTileToPlace);
+							lanternCards.assignLanternCardsToPlayers(this.numOfPlayer,board,xcoordinate,ycoordinate,currentTileToPlace,PlayerList,lanternCards);
+							board.displayBoard(board.board, board.tilesOnBoard);
+							PlayerList.get(playerIndex).displayPlayersLakeTile(PlayerList.get(playerIndex));
+							System.out.println("Details of the LanternCards Assigned to Player After Placing the LakeTile");
+							System.out.println("Number of Black Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.blackCardCount());
+							System.out.println("Number of Blue Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.blueCardCount());
+							System.out.println("Number of Green Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.greenCardCount());
+							System.out.println("Number of Orange Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.orangeCardCount());
+							System.out.println("Number of Purple Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.purpleCardCount());
+							System.out.println("Number of Red Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.redCardCount());
+							System.out.println("Number of White Lantern Cards"+PlayerList.get(playerIndex).playerLCStack.whiteCardCount());
+							
+							break;
+						case 2:
 						// Prints the tokens the player currently has.
 						System.out
 								.println("This is the amount of tokens you have: "
@@ -442,13 +456,13 @@ public class GameEngine {
 							System.out
 									.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
 						break;
-					case 3:
-						break;
+						case 3:
+							break;
 					}
 					System.out.println(PlayerList.get(playerIndex).name
 							+ "'s turn is over");
 					PlayerList.get(playerIndex).setCurrent(false);
-					if (playerIndex == PlayerList.size() - 1) {
+					if (playerIndex == PlayerList.size()-1) {
 						PlayerList.get(0).setCurrent(true);
 					} else
 						PlayerList.get(++playerIndex).setCurrent(true);
@@ -460,8 +474,9 @@ public class GameEngine {
 		System.out.println("One example of laketile being added to GameBoard");
 		lakeTiles.placeTile(36, 37, board, PlayerList.get(0).getLakeTiles()
 				.get(0));
-
-		// new changes
+		
+		//new changes
+		
 
 		System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
 				+ board.tilesOnBoard.get(0).right + "down"
