@@ -416,7 +416,7 @@ public class LanternCards {
 	 * @param playerList - Arraylist of Players
 	 * @param lanternCard - Available Lantern Cards
 	 */
-	public void assignLanternCardsToPlayers(int numOfPlayers ,Board board,int x,int y,LakeTiles lakeTile,ArrayList<Player> playerList,LanternCards lanternCard)
+	public void assignLanternCardsToPlayers(int numOfPlayers ,Board board,int x,int y,LakeTiles lakeTile,ArrayList<Player> playerList,LanternCards lanternCard,FavorTokens favorTokens)
 	{
 		String card;
 		switch(numOfPlayers)
@@ -456,14 +456,25 @@ public class LanternCards {
 			String cardColor="";
 			if(playerList.get(currentPlayer).current)
 			{
+				//If lakeTile has platform on it assign favorToken to currentUser
+				if(lakeTile.platform)
+				{
+					favorTokens.decrementToken();
+					playerList.get(currentPlayer).favorTokenScore++;
+				}
 				if(board.board[x-1][y]!=-1)
 				{
 					for(int i=0;i<board.tilesOnBoard.size();i++)
 					{
 						if(board.tilesOnBoard.get(i).id==board.board[x-1][y] && board.tilesOnBoard.get(i).rightColor.equalsIgnoreCase(lakeTile.leftColor))
 						{
+							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
+							if(board.tilesOnBoard.get(i).platform)
+							{
+								favorTokens.decrementToken();
+								playerList.get(currentPlayer).favorTokenScore++;
+							}
 							card=board.tilesOnBoard.get(i).rightColor+"Card";
-							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}
@@ -475,8 +486,13 @@ public class LanternCards {
 					{
 						if(board.tilesOnBoard.get(i).id==board.board[x+1][y] && board.tilesOnBoard.get(i).leftColor.equalsIgnoreCase(lakeTile.rightColor))
 						{
+							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
+							if(board.tilesOnBoard.get(i).platform)
+							{
+								favorTokens.decrementToken();
+								playerList.get(currentPlayer).favorTokenScore++;
+							}
 							card=board.tilesOnBoard.get(i).leftColor+"Card";
-							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}
@@ -488,8 +504,13 @@ public class LanternCards {
 					{
 						if(board.tilesOnBoard.get(i).id==board.board[x][y+1] && board.tilesOnBoard.get(i).upColor.equalsIgnoreCase(lakeTile.downColor))
 						{
+							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
+							if(board.tilesOnBoard.get(i).platform)
+							{
+								favorTokens.decrementToken();
+								playerList.get(currentPlayer).favorTokenScore++;
+							}
 							card=board.tilesOnBoard.get(i).upColor+"Card";
-							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}
@@ -502,8 +523,13 @@ public class LanternCards {
 						
 						if(board.tilesOnBoard.get(i).id==board.board[x][y-1] && board.tilesOnBoard.get(i).downColor.equalsIgnoreCase(lakeTile.upColor))
 						{
+							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
+							if(board.tilesOnBoard.get(i).platform)
+							{
+								favorTokens.decrementToken();
+								playerList.get(currentPlayer).favorTokenScore++;
+							}
 							card=board.tilesOnBoard.get(i).downColor+"Card";
-							System.out.println("Card"+card);
 							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
 						}
 					}

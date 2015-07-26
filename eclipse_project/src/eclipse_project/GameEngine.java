@@ -381,9 +381,10 @@ public class GameEngine {
 							currentTileToPlace=lakeTiles.rotateLakeTile(currentTileToPlace, degreeOfRotation);
 							
 							lakeTiles.placeTile(xcoordinate,ycoordinate,board,currentTileToPlace);
-							lanternCards.assignLanternCardsToPlayers(this.numOfPlayer,board,xcoordinate,ycoordinate,currentTileToPlace,PlayerList,lanternCards);
+							lanternCards.assignLanternCardsToPlayers(this.numOfPlayer,board,xcoordinate,ycoordinate,currentTileToPlace,PlayerList,lanternCards,favorTokens);
 							board.displayBoard(board.board, board.tilesOnBoard);
 							PlayerList.get(playerIndex).displayPlayersLakeTile(PlayerList.get(playerIndex));
+							System.out.println("Number of FavorTokens:"+PlayerList.get(playerIndex).favorTokenScore);
 							System.out.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
 							for(int i=0;i<PlayerList.size();i++)
 							{
