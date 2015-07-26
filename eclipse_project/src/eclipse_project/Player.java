@@ -422,9 +422,28 @@ void setCurrent(boolean state) {
 		playerLTStack.add(top);
 	}
 	
-	public void displayPlayersLakeTile()
+	/**
+	 * This method displays the LakeTiles of the player
+	 * @param currentPlayer		
+	 */
+	public void displayPlayersLakeTile(Player currentPlayer)
 	{
-		
+		System.out.println("LakeTiles at your hand:");
+		for(int i=0;i<currentPlayer.playerLTStack.size();i++)
+		{
+			
+			System.out.println("id " + currentPlayer.playerLTStack.get(i).id
+					+ " " + "leftColor " + " "
+					+ currentPlayer.playerLTStack.get(i).leftColor + " "
+					+ "rightColor" + " "
+					+ currentPlayer.playerLTStack.get(i).rightColor + " "
+					+ "upColor" + " "
+					+ currentPlayer.playerLTStack.get(i).upColor + " "
+					+ "downColor" + " "
+					+ currentPlayer.playerLTStack.get(i).downColor + " "
+					+ "platform" + " "
+					+ currentPlayer.playerLTStack.get(i).platform);
+		}
 	}
 
 	public LanternCards getLanternCards() {
