@@ -49,6 +49,7 @@ public class GameEngine {
 	private static int redCount, blueCount, greenCount, whiteCount,
 			purpleCount, blackCount, orangeCount;
 	private String playerWhoStartsGame;
+	private int round;
 	private Player player1 = new Player("player1");
 	private Player player2 = new Player("player2");
 	private Player player3 = new Player("player3");
@@ -348,8 +349,8 @@ public class GameEngine {
 					+ PlayerList.get(i).playerLCStack.redCardCount());
 			System.out.println();
 		}
-		int round = this.numOfPlayer*3+lakeTiles.globalLakeTiles.size()+this.numOfPlayer;
-		System.out.println("Number of times game will run");
+		round = this.numOfPlayer*3+lakeTiles.globalLakeTiles.size()+this.numOfPlayer;
+		//System.out.println("Number of times game will run"+round);
 		boolean placeLakeTile=false;
 		while (round > 0) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
