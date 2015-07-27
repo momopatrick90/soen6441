@@ -470,7 +470,8 @@ public class LanternCards {
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
 							card=board.tilesOnBoard.get(i).rightColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
+
 						}
 					}
 				}
@@ -487,8 +488,8 @@ public class LanternCards {
 								favorTokens.decrementToken();
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
-							card=board.tilesOnBoard.get(i).leftColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+							card=lakeTile.rightColor+"Card";
+							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
 						}
 					}
 				}
@@ -506,7 +507,7 @@ public class LanternCards {
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
 							card=board.tilesOnBoard.get(i).upColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
 						}
 					}
 				}
@@ -525,7 +526,7 @@ public class LanternCards {
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
 							card=board.tilesOnBoard.get(i).downColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(cardColor, lanternCard);
+							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
 						}
 					}
 				}

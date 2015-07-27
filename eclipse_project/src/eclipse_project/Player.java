@@ -299,13 +299,15 @@ public class Player {
 				return true;
 			} else
 				return false;
-		} else {
+		} else if (card.equals("orangeCard")) {
 			if (lanternCardsAvailable.getOrangeCard()) {
 				playerLCStack.addOrangecard();
 				return true;
 			} else
 				return false;
 		}
+		
+		return false;
 	}
 
 
