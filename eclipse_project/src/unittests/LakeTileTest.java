@@ -38,21 +38,17 @@ public class LakeTileTest {
 		ArrayList<LakeTiles> listTiles =lT.assignLakeTiles(3);
 		LakeTiles tile = new LakeTiles();
 		assertNotNull(listTiles);
-		
 		for(int i = 0; i<3 ; i++){
 			tile = listTiles.get(i);
 			assertNotNull(tile);
 			
 		}
-		
-		//System.out.println(lT.globalLakeTiles.size());
+		assertEquals(9, listTiles.size());
 	}
 	
 	@Test
 	public void testPlaceTile(){
 		lT.initializeLakeTiles(4);
-		//lT.placeTile();
-		//assertFalse(lT.placeTile(26, 30, gameBoard, tileToPlace));
 	}
 	
 	@Test
