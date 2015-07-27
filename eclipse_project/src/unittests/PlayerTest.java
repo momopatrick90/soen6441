@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import eclipse_project.DedicationTokens;
@@ -19,7 +20,8 @@ import eclipse_project.Player;
 public class PlayerTest {
 
 	Player player;
-	
+	ArrayList<Player> playersList;
+	LakeTiles lTiles;
 	@Before 
 	public void testPlayer(){
 		player=new Player("DemoPlayer");
@@ -42,8 +44,8 @@ public class PlayerTest {
 	@Test 
 	public void testSetAndGetLakeTiles(){
 		ArrayList<LakeTiles> playerLTStack;
-		LakeTiles l=new LakeTiles();
-		player.setLakeTiles(l);
+		lTiles=new LakeTiles();
+		player.setLakeTiles(lTiles);
 		playerLTStack=player.getLakeTiles();
 		assertEquals(1,playerLTStack.size());
 		
@@ -109,9 +111,9 @@ public class PlayerTest {
 		assertTrue(player.getFavorToken()==20);
 	}
 
-	@Test
-	public void testAssignBoardPosition(){
-		ArrayList<Player> playersList=new ArrayList<>();
+	@Before
+	public void testAssignBoardPositionInitialization(){
+		playersList=new ArrayList<>();
 		
 		Player p1=new Player("player1");
 		Player p2=new Player("player2");
@@ -128,7 +130,7 @@ public class PlayerTest {
 		playersList.add(p3);
 		playersList.add(p4);
 		
-		LakeTiles lTiles=new LakeTiles(); 
+		lTiles=new LakeTiles(); 
 		
 		lTiles.downColor="red";
 		lTiles.leftColor="blue";
@@ -140,6 +142,11 @@ public class PlayerTest {
 		lTiles.up=4;
 		lTiles.id=1;
 		lTiles.platform=false;
+
+	}
+	@Test
+	public void testAssignBoardPosition(){
+
 		//For four players
 		playersList=player.assignBoardPosition(4, playersList, lTiles);
 		assertNotNull(playersList);
@@ -164,7 +171,7 @@ public class PlayerTest {
 		
 		//
 		assertTrue(result);
-		assertNotEquals(p1.playerScore_threePair, 0);
+		assertFalse(p1.playerScore_threePair == 0);
 		assertTrue(globalLanternCards.redCardCount() == 3);
 		assertTrue(globalLanternCards.greenCardCount() == 3);
 		assertTrue(globalLanternCards.purpleCardCount() == 3);
@@ -210,7 +217,7 @@ public class PlayerTest {
 		
 		//
 		assertTrue(result);
-		assertNotEquals(p1.playerScore_fourKind, 0);
+		assertFalse(p1.playerScore_fourKind == 0);
 		assertTrue(globalLanternCards.redCardCount() == 5);
 	}
 	
@@ -254,7 +261,7 @@ public class PlayerTest {
 		
 		//
 		assertTrue(result);
-		assertNotEquals(p1.playerScore_sevenUnique, 0);
+		assertFalse(p1.playerScore_sevenUnique == 0);
 		assertTrue(globalLanternCards.redCardCount() == 2);
 		assertTrue(globalLanternCards.greenCardCount() == 2);
 		assertTrue(globalLanternCards.blackCardCount() == 2);
