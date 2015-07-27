@@ -29,8 +29,10 @@ public class PlayerTest {
 	
 	@Test
 	public void testPickLanternCard() {
-		LanternCards lanternCardsAvailable=new LanternCards(4, 8, 7, 6, 5, 4, 3, 2);
-		assertTrue(player.pickLanternCard("redCard", lanternCardsAvailable));
+		LanternCards lanternCardsAvailable=new LanternCards(4, 3, 7, 6, 5, 4, 3, 2);
+		boolean result=player.pickLanternCard("redCard", lanternCardsAvailable);
+		assertTrue(result);
+		assertEquals(lanternCardsAvailable.redCardCount(), 2);
 	}
 
 		
@@ -145,7 +147,7 @@ public class PlayerTest {
 
 	}
 	@Test
-	public void testAssignBoardPosition(){
+	public void testForFourPlayersAssignBoardPosition(){
 
 		//For four players
 		playersList=player.assignBoardPosition(4, playersList, lTiles);
@@ -156,7 +158,27 @@ public class PlayerTest {
 		assertTrue(playersList.get(3).boardPosition=="down");
 		
 	}
+
+	@Test
+	public void testForTwoPlayersAssignBoardPosition(){
+
+		//For four players
+		playersList=player.assignBoardPosition(2, playersList, lTiles);
+		assertNotNull(playersList);
+		assertTrue(playersList.get(0).boardPosition=="left");
+		assertTrue(playersList.get(1).boardPosition=="right");
+		
+	}
 	
+	@Test
+	public void testReturnLanternCards(){
+		LanternCards lanternCardsAvailable=new LanternCards(4, 1, 7, 6, 5, 4, 3, 2);
+		boolean result=player.returnLanternCards("redCard" , "orangeCard", lanternCardsAvailable);
+		assertTrue(result);
+		assertEquals(lanternCardsAvailable.redCardCount(),2);
+		assertEquals(lanternCardsAvailable.orangeCardCount(),1);
+	}
+
 	@Test
 	public void testPickDedicationTokenThreePair()
 	{
