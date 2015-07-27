@@ -211,6 +211,8 @@ public class LakeTiles {
 						gameBoard.tilesOnBoard.get(i).down = tileToPlace.id;
 				}
 			}
+			
+			
 			flag = true;
 		} else
 			System.out

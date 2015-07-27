@@ -48,7 +48,6 @@ public class GameEngine {
 	private FavorTokens favorTokens;
 	private static int redCount, blueCount, greenCount, whiteCount,
 			purpleCount, blackCount, orangeCount;
-	private String playerWhoStartsGame;
 	private int round;
 	private Player player1 = new Player("player1");
 	private Player player2 = new Player("player2");
@@ -321,9 +320,6 @@ public class GameEngine {
 
 		PlayerList = player1.turnToStartGame(this.numOfPlayer, PlayerList,
 				startTile);
-		System.out
-				.println(playerWhoStartsGame
-						+ " will start the game as startTile is pointing to it else we follow clockwise rule");
 
 		System.out.println();
 		lanternCards.assignLanternCards(this.numOfPlayer, PlayerList,
@@ -349,10 +345,22 @@ public class GameEngine {
 					+ PlayerList.get(i).playerLCStack.redCardCount());
 			System.out.println();
 		}
+	
+		//
 		round = this.numOfPlayer*3+lakeTiles.globalLakeTiles.size()+this.numOfPlayer;
+		
+		//
+		run();
+	} 
+	
+	protected void run() throws NumberFormatException, IOException
+	{
 		//System.out.println("Number of times game will run"+round);
 		boolean placeLakeTile=false;
-		while (round > 0) {
+		// is the game running
+		boolean running = true;
+		
+		while (round > 0 && running) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 				if (PlayerList.get(playerIndex).current) {
@@ -361,8 +369,10 @@ public class GameEngine {
 					System.out.println("Press 1 to pick up LakeTile from deck of LakeTiles");
 					System.out.println("Press 2 to Exchange Lantern Card");
 					System.out.println("Press 3 to Make Dedication");
+					System.out.println("Press 4 to Exit");
 					int choice=Integer.parseInt(br.readLine());
 					boolean flag=true;
+					
 					switch(choice)
 					{
 						case 1:
@@ -413,90 +423,95 @@ public class GameEngine {
 							}
 							break;
 						case 2:
-						// Prints the tokens the player currently has.
-						System.out
-								.println("This is the amount of tokens you have: "
-										+ PlayerList.get(playerIndex).favorTokenScore);
-						System.out.println("----------------------------");
-
-						System.out
-								.println("--Lantern cards you currently have:--");
-
-						// Prints the number of black Cards the player has.
-						System.out.println("Black Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.blackCardCount());
-
-						// Prints the number of blue Cards the player has.
-						System.out.println("Blue Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.blueCardCount());
-
-						// Prints the number of green Cards the player has.
-						System.out.println("Green Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.greenCardCount());
-
-						// Prints the number of orange Cards the player has.
-						System.out.println("Orange Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.orangeCardCount());
-
-						// Prints the number of white Cards the player has.
-						System.out.println("White Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.whiteCardCount());
-
-						// Prints the number of red Cards the player has.
-						System.out.println("Red Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.redCardCount());
-
-						// Prints the number of purple Cards the player has.
-						System.out.println("Purple Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.purpleCardCount());
-						System.out.println("----------------------------");
-
-						System.out
-								.println("Enter the lantern card you want to return");
-						String returnLCard = br.readLine();
-						System.out
-								.println("Enter the lantern card you want to pick");
-						String pickLCard = br.readLine();
-
-						boolean state = PlayerList.get(playerIndex)
-								.spendFavorTokens(favorTokens, lanternCards,
-										returnLCard, pickLCard);
-						if (state)
-							System.out.print("Successful Exchange");
-						else
+							// Prints the tokens the player currently has.
 							System.out
-									.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
-						break;
+									.println("This is the amount of tokens you have: "
+											+ PlayerList.get(playerIndex).favorTokenScore);
+							System.out.println("----------------------------");
+	
+							System.out
+									.println("--Lantern cards you currently have:--");
+	
+							// Prints the number of black Cards the player has.
+							System.out.println("Black Cards: "
+									+ PlayerList.get(playerIndex).getLanternCards()
+											.blackCardCount());
+	
+							// Prints the number of blue Cards the player has.
+							System.out.println("Blue Cards: "
+									+ PlayerList.get(playerIndex).getLanternCards()
+											.blueCardCount());
+	
+							// Prints the number of green Cards the player has.
+							System.out.println("Green Cards: "
+									+ PlayerList.get(playerIndex).getLanternCards()
+											.greenCardCount());
+	
+							// Prints the number of orange Cards the player has.
+							System.out.println("Orange Cards: "
+									+ PlayerList.get(playerIndex).getLanternCards()
+											.orangeCardCount());
+	
+							// Prints the number of white Cards the player has.
+							System.out.println("White Cards: "
+									+ PlayerList.get(playerIndex).getLanternCards()
+											.whiteCardCount());
+	
+							// Prints the number of red Cards the player has.
+							System.out.println("Red Cards: "
+									+ PlayerList.get(playerIndex).getLanternCards()
+											.redCardCount());
+	
+							// Prints the number of purple Cards the player has.
+							System.out.println("Purple Cards: "
+									+ PlayerList.get(playerIndex).getLanternCards()
+											.purpleCardCount());
+							System.out.println("----------------------------");
+	
+							System.out
+									.println("Enter the lantern card you want to return");
+							String returnLCard = br.readLine();
+							System.out
+									.println("Enter the lantern card you want to pick");
+							String pickLCard = br.readLine();
+	
+							boolean state = PlayerList.get(playerIndex)
+									.spendFavorTokens(favorTokens, lanternCards,
+											returnLCard, pickLCard);
+							if (state)
+								System.out.print("Successful Exchange");
+							else
+								System.out
+										.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
+							break;
 						case 3:
 							break;
+						case 4:
+							running = false;
+							continue; 
 					}
+					
+					
 					System.out.println(PlayerList.get(playerIndex).name
-							+ "'s turn is over");
+								+ "'s turn is over");
 					PlayerList.get(playerIndex).setCurrent(false);
 					if (playerIndex == PlayerList.size()-1) {
-						PlayerList.get(0).setCurrent(true);
+							PlayerList.get(0).setCurrent(true);
 					} else
 						PlayerList.get(++playerIndex).setCurrent(true);
+					
 				}
 			}
-			round--;
 		}
 
-		System.out.println("One example of laketile being added to GameBoard");
-		lakeTiles.placeTile(36, 37, board, PlayerList.get(0).getLakeTiles()
-				.get(0));
+		//System.out.println("One example of laketile being added to GameBoard");
+		//lakeTiles.placeTile(36, 37, board, PlayerList.get(0).getLakeTiles()
+		//		.get(0));
 		
 		//new changes
 		
 
-		System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
+		/*System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
 				+ board.tilesOnBoard.get(0).right + "down"
 				+ board.tilesOnBoard.get(0).down + "up"
 				+ board.tilesOnBoard.get(0).up + "id"
@@ -505,7 +520,7 @@ public class GameEngine {
 				+ board.tilesOnBoard.get(1).right + "down"
 				+ board.tilesOnBoard.get(1).down + "up"
 				+ board.tilesOnBoard.get(1).up + "id"
-				+ board.tilesOnBoard.get(1).id);
+				+ board.tilesOnBoard.get(1).id);*/
 
 	}
 
@@ -546,6 +561,7 @@ public class GameEngine {
 		int favorTokens = 0;
 		ArrayList<Player> players = new ArrayList<Player>();
 		Board gameBoard = null;
+		int _round = 0;
 
 		//
 		for (int i = 0; i < nodeList.getLength(); i++) {
@@ -580,6 +596,8 @@ public class GameEngine {
 
 			} else if (node.getNodeName().equals("board")) {
 				gameBoard = this.loadBoards((Element) node);
+			} else if (node.getNodeName().equals("round")) {
+				_round = this.loadRound((Element) node);
 			}
 
 		}
@@ -592,8 +610,13 @@ public class GameEngine {
 		this.favorTokens = new FavorTokens(favorTokens);
 		this.lakeTiles = lakeTiles;
 		this.board = gameBoard;
+		this.round = _round;
 
+		//
 		displayTextMode();
+		
+		//
+		run();
 	}
 
 	/**
@@ -675,6 +698,13 @@ public class GameEngine {
 		saveFavorTokens(_favorTokens, favorTokens);
 		//
 		game.appendChild(_favorTokens);
+		
+		// save round
+		Element _round = gameDoc.createElement("round");
+		//
+		saveRound(_round, this.round);
+		//
+		game.appendChild(_round);
 
 		// game board
 		Element board = gameDoc.createElement("board");
@@ -839,16 +869,9 @@ public class GameEngine {
 		for (int i = 0; i < this.PlayerList.size(); i++) {
 			//
 			Element player = gameDoc.createElement("player");
-
+			//
 			player.setAttribute("current",
-					Boolean.toString(this.PlayerList.get(i) == this.player));
-
-			if (this.PlayerList.get(i).name
-					.equalsIgnoreCase(playerWhoStartsGame)) {
-				player.setAttribute("current", Boolean.toString(true));
-			} else {
-				player.setAttribute("current", Boolean.toString(false));
-			}
+					Boolean.toString(this.PlayerList.get(i).current));
 
 			players.appendChild(player);
 
@@ -1080,8 +1103,23 @@ public class GameEngine {
 	public void saveFavorTokens(Element element, FavorTokens favorTokens) {
 		element.setAttribute("value", Integer.toString(favorTokens.getTokens()));
 	}
+	
+	/**
+	 * 
+	 * @param roundElement
+	 *            example: <round value="2" />
+	 * @return
+	 */
+	public int loadRound(Element roundElement) {
+		return Integer.parseInt(roundElement.getAttribute("value"));
+	}
+
+	public void saveRound(Element element, int round) {
+		element.setAttribute("value", Integer.toString(round));
+	}
 
 	public void displayTextMode() {
+		System.out.println("Round: "+this.round);
 
 		for (int x = 0; x < PlayerList.size(); x++) {
 

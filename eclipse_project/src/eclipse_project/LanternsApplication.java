@@ -110,6 +110,8 @@ public class LanternsApplication {
 				}
 				break;
 			}
+			
+			//
 			System.out.println('\n');
 			System.out.println("Choose an option");
 			System.out.println("Press 1 for New Game");
