@@ -244,7 +244,8 @@ public class Player {
 			playerLCStack.getBlackCard();
 			return true;
 
-		} else if (pickLanternCard(pickLCard, lanternCardsAvailable)) {
+		} else if ((returnLCard.equals("orangeCard"))
+				&& (pickLanternCard(pickLCard, lanternCardsAvailable))) {
 			lanternCardsAvailable.addOrangecard();
 			playerLCStack.getOrangeCard();
 			return true;
