@@ -423,21 +423,16 @@ public class LanternCards {
 		{
 		case 2:
 			card=lakeTile.leftColor+"Card";
-			System.out.println("InitialCard"+card);
 			playerList.get(0).pickLanternCard(card,lanternCard);
 			card=lakeTile.rightColor+"Card";
-			System.out.println("InitialCard"+card);
 			playerList.get(1).pickLanternCard(card,lanternCard);
 			break;
 		case 3:
 			card=lakeTile.leftColor+"Card";
-			System.out.println("InitialCard"+card);
 			playerList.get(0).pickLanternCard(card,lanternCard);
 			card=lakeTile.upColor+"Card";
-			System.out.println("InitialCard"+card);
 			playerList.get(1).pickLanternCard(card,lanternCard);
 			card=lakeTile.rightColor+"Card";
-			System.out.println("InitialCard"+card);
 			playerList.get(2).pickLanternCard(card,lanternCard);
 			break;
 		case 4:
