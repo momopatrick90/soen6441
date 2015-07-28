@@ -345,182 +345,344 @@ public class GameEngine {
 					+ PlayerList.get(i).playerLCStack.redCardCount());
 			System.out.println();
 		}
-	
+
 		//
-		round = this.numOfPlayer*3+lakeTiles.globalLakeTiles.size()+this.numOfPlayer;
-		
+		round = this.numOfPlayer * 3 + lakeTiles.globalLakeTiles.size()
+				+ this.numOfPlayer;
+
 		//
 		run();
-	} 
-	
-	protected void run() throws NumberFormatException, IOException
-	{
-		//System.out.println("Number of times game will run"+round);
-		boolean placeLakeTile=false;
+	}
+
+	protected void run() throws NumberFormatException, IOException {
+		// System.out.println("Number of times game will run"+round);
+		boolean placeLakeTile = false;
 		// is the game running
 		boolean running = true;
-		
+
 		while (round > 0 && running) {
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					System.in));
 			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 				if (PlayerList.get(playerIndex).current) {
 					System.out.println(PlayerList.get(playerIndex).name
 							+ "'s turn to play.");
-					System.out.println("Press 1 to pick up LakeTile from deck of LakeTiles");
+					System.out
+							.println("Press 1 to pick up LakeTile from deck of LakeTiles");
 					System.out.println("Press 2 to Exchange Lantern Card");
 					System.out.println("Press 3 to Make Dedication");
 					System.out.println("Press 4 to Exit");
-					int choice=Integer.parseInt(br.readLine());
-					boolean flag=true;
-					
-					switch(choice)
-					{
-						case 1:
-							PlayerList.get(playerIndex).pickLakeTileFromStack(lakeTiles.getLakeTile());
-							while(flag)
-							{			
-								board.displayBoard(board.board, board.tilesOnBoard);
-								System.out.println();
-								
-								PlayerList.get(playerIndex).displayPlayersLakeTile(PlayerList.get(playerIndex));
-								System.out.println("Enter the index of laketiles you want to put on board");
-								LakeTiles currentTileToPlace=PlayerList.get(playerIndex).placeLakeTile(Integer.parseInt(br.readLine()));
-								
-								System.out.println("Enter the x co-ordinate of position where you want to place Tile");
-								int xcoordinate=Integer.parseInt(br.readLine());
-								
-								System.out.println("Enter the y co-ordinate of position where you want to place Tile");
-								int ycoordinate=Integer.parseInt(br.readLine());
-								
-								System.out.println("Enter the degree of roatation for the tile you want to place on board");
-								int degreeOfRotation=Integer.parseInt(br.readLine());
-								currentTileToPlace=lakeTiles.rotateLakeTile(currentTileToPlace, degreeOfRotation);
-								
-								placeLakeTile=lakeTiles.placeTile(xcoordinate,ycoordinate,board,currentTileToPlace);
-								if(placeLakeTile)
-								{
-									lanternCards.assignLanternCardsToPlayers(this.numOfPlayer,board,xcoordinate,ycoordinate,currentTileToPlace,PlayerList,lanternCards,favorTokens);
-									board.displayBoard(board.board, board.tilesOnBoard);
-									PlayerList.get(playerIndex).displayPlayersLakeTile(PlayerList.get(playerIndex));
-									System.out.println("Number of FavorTokens:"+PlayerList.get(playerIndex).favorTokenScore);
-									System.out.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
-									for(int i=0;i<PlayerList.size();i++)
-									{
-										System.out.println("Player"+(i+1)+":");
-										System.out.println("Number of Black Lantern Cards"+PlayerList.get(i).playerLCStack.blackCardCount());
-										System.out.println("Number of Blue Lantern Cards"+PlayerList.get(i).playerLCStack.blueCardCount());
-										System.out.println("Number of Green Lantern Cards"+PlayerList.get(i).playerLCStack.greenCardCount());
-										System.out.println("Number of Orange Lantern Cards"+PlayerList.get(i).playerLCStack.orangeCardCount());
-										System.out.println("Number of Purple Lantern Cards"+PlayerList.get(i).playerLCStack.purpleCardCount());
-										System.out.println("Number of Red Lantern Cards"+PlayerList.get(i).playerLCStack.redCardCount());
-										System.out.println("Number of White Lantern Cards"+PlayerList.get(i).playerLCStack.whiteCardCount());
-										System.out.println();
-									}
-									flag=false;
-								}
-								else
-									PlayerList.get(playerIndex).pickLakeTileFromStack(currentTileToPlace);
-							}
-							break;
-						case 2:
-							// Prints the tokens the player currently has.
+					int choice = Integer.parseInt(br.readLine());
+					boolean flag = true;
+
+					switch (choice) {
+					case 1:
+						PlayerList.get(playerIndex).pickLakeTileFromStack(
+								lakeTiles.getLakeTile());
+						while (flag) {
+							board.displayBoard(board.board, board.tilesOnBoard);
+							System.out.println();
+
+							PlayerList.get(playerIndex).displayPlayersLakeTile(
+									PlayerList.get(playerIndex));
 							System.out
-									.println("This is the amount of tokens you have: "
-											+ PlayerList.get(playerIndex).favorTokenScore);
-							System.out.println("----------------------------");
-	
+									.println("Enter the index of laketiles you want to put on board");
+							LakeTiles currentTileToPlace = PlayerList.get(
+									playerIndex).placeLakeTile(
+									Integer.parseInt(br.readLine()));
+
 							System.out
-									.println("--Lantern cards you currently have:--");
-	
-							// Prints the number of black Cards the player has.
-							System.out.println("Black Cards: "
-									+ PlayerList.get(playerIndex).getLanternCards()
-											.blackCardCount());
-	
-							// Prints the number of blue Cards the player has.
-							System.out.println("Blue Cards: "
-									+ PlayerList.get(playerIndex).getLanternCards()
-											.blueCardCount());
-	
-							// Prints the number of green Cards the player has.
-							System.out.println("Green Cards: "
-									+ PlayerList.get(playerIndex).getLanternCards()
-											.greenCardCount());
-	
-							// Prints the number of orange Cards the player has.
-							System.out.println("Orange Cards: "
-									+ PlayerList.get(playerIndex).getLanternCards()
-											.orangeCardCount());
-	
-							// Prints the number of white Cards the player has.
-							System.out.println("White Cards: "
-									+ PlayerList.get(playerIndex).getLanternCards()
-											.whiteCardCount());
-	
-							// Prints the number of red Cards the player has.
-							System.out.println("Red Cards: "
-									+ PlayerList.get(playerIndex).getLanternCards()
-											.redCardCount());
-	
-							// Prints the number of purple Cards the player has.
-							System.out.println("Purple Cards: "
-									+ PlayerList.get(playerIndex).getLanternCards()
-											.purpleCardCount());
-							System.out.println("----------------------------");
-	
+									.println("Enter the x co-ordinate of position where you want to place Tile");
+							int xcoordinate = Integer.parseInt(br.readLine());
+
 							System.out
-									.println("Enter the lantern card you want to return");
-							String returnLCard = br.readLine();
+									.println("Enter the y co-ordinate of position where you want to place Tile");
+							int ycoordinate = Integer.parseInt(br.readLine());
+
 							System.out
-									.println("Enter the lantern card you want to pick");
-							String pickLCard = br.readLine();
-	
-							boolean state = PlayerList.get(playerIndex)
-									.spendFavorTokens(favorTokens, lanternCards,
-											returnLCard, pickLCard);
-							if (state)
-								System.out.print("Successful Exchange");
-							else
+									.println("Enter the degree of roatation for the tile you want to place on board");
+							int degreeOfRotation = Integer.parseInt(br
+									.readLine());
+							currentTileToPlace = lakeTiles.rotateLakeTile(
+									currentTileToPlace, degreeOfRotation);
+
+							placeLakeTile = lakeTiles.placeTile(xcoordinate,
+									ycoordinate, board, currentTileToPlace);
+							if (placeLakeTile) {
+								lanternCards.assignLanternCardsToPlayers(
+										this.numOfPlayer, board, xcoordinate,
+										ycoordinate, currentTileToPlace,
+										PlayerList, lanternCards, favorTokens);
+								board.displayBoard(board.board,
+										board.tilesOnBoard);
+								PlayerList.get(playerIndex)
+										.displayPlayersLakeTile(
+												PlayerList.get(playerIndex));
 								System.out
-										.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
-							break;
-						case 3:
-							break;
-						case 4:
-							running = false;
-							continue; 
+										.println("Number of FavorTokens:"
+												+ PlayerList.get(playerIndex).favorTokenScore);
+								System.out
+										.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
+								for (int i = 0; i < PlayerList.size(); i++) {
+									System.out
+											.println("Player" + (i + 1) + ":");
+									System.out
+											.println("Number of Black Lantern Cards"
+													+ PlayerList.get(i).playerLCStack
+															.blackCardCount());
+									System.out
+											.println("Number of Blue Lantern Cards"
+													+ PlayerList.get(i).playerLCStack
+															.blueCardCount());
+									System.out
+											.println("Number of Green Lantern Cards"
+													+ PlayerList.get(i).playerLCStack
+															.greenCardCount());
+									System.out
+											.println("Number of Orange Lantern Cards"
+													+ PlayerList.get(i).playerLCStack
+															.orangeCardCount());
+									System.out
+											.println("Number of Purple Lantern Cards"
+													+ PlayerList.get(i).playerLCStack
+															.purpleCardCount());
+									System.out
+											.println("Number of Red Lantern Cards"
+													+ PlayerList.get(i).playerLCStack
+															.redCardCount());
+									System.out
+											.println("Number of White Lantern Cards"
+													+ PlayerList.get(i).playerLCStack
+															.whiteCardCount());
+									System.out.println();
+								}
+								flag = false;
+							} else
+								PlayerList.get(playerIndex)
+										.pickLakeTileFromStack(
+												currentTileToPlace);
+						}
+						break;
+					case 2:
+						// Prints the tokens the player currently has.
+						System.out
+								.println("This is the amount of tokens you have: "
+										+ PlayerList.get(playerIndex).favorTokenScore);
+						System.out.println("----------------------------");
+
+						System.out
+								.println("--Lantern cards you currently have:--");
+
+						// Prints the number of black Cards the player has.
+						System.out.println("Black Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.blackCardCount());
+
+						// Prints the number of blue Cards the player has.
+						System.out.println("Blue Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.blueCardCount());
+
+						// Prints the number of green Cards the player has.
+						System.out.println("Green Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.greenCardCount());
+
+						// Prints the number of orange Cards the player has.
+						System.out.println("Orange Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.orangeCardCount());
+
+						// Prints the number of white Cards the player has.
+						System.out.println("White Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.whiteCardCount());
+
+						// Prints the number of red Cards the player has.
+						System.out.println("Red Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.redCardCount());
+
+						// Prints the number of purple Cards the player has.
+						System.out.println("Purple Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.purpleCardCount());
+						System.out.println("----------------------------");
+
+						System.out
+								.println("Enter the lantern card you want to return");
+						String returnLCard = br.readLine();
+						System.out
+								.println("Enter the lantern card you want to pick");
+						String pickLCard = br.readLine();
+
+						boolean moveState = PlayerList.get(playerIndex)
+								.spendFavorTokens(favorTokens, lanternCards,
+										returnLCard, pickLCard);
+						if (moveState)
+							System.out.print("Successful Exchange");
+						else
+							System.out
+									.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
+						break;
+						
+					case 3:
+						// Prints the tokens the player currently has.
+						System.out
+								.println("This is the amount of tokens you have: "
+										+ PlayerList.get(playerIndex).favorTokenScore);
+						System.out.println("----------------------------");
+
+						System.out
+								.println("--Lantern cards you currently have:--");
+
+						// Prints the number of black Cards the player has.
+						System.out.println("Black Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.blackCardCount());
+
+						// Prints the number of blue Cards the player has.
+						System.out.println("Blue Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.blueCardCount());
+
+						// Prints the number of green Cards the player has.
+						System.out.println("Green Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.greenCardCount());
+
+						// Prints the number of orange Cards the player has.
+						System.out.println("Orange Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.orangeCardCount());
+
+						// Prints the number of white Cards the player has.
+						System.out.println("White Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.whiteCardCount());
+
+						// Prints the number of red Cards the player has.
+						System.out.println("Red Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.redCardCount());
+
+						// Prints the number of purple Cards the player has.
+						System.out.println("Purple Cards: "
+								+ PlayerList.get(playerIndex).getLanternCards()
+										.purpleCardCount());
+						System.out.println("----------------------------");
+
+						// TODO needs validation to be done before submitting
+						// the code
+
+						System.out
+								.println("What Move do you want to make? Enter its corresponding integer");
+
+						System.out
+								.println("1:Three Pair 2:Four of a kind 3: Seven Unique");
+						int move = Integer.valueOf(br.readLine());
+						String moveString = null;
+						LanternCards returnedLanternCards = null;
+						boolean state = false;
+						if (move == 1) {
+							// moveString = "threePair";
+							System.out
+									.println("What Lantern cards do you want to return? Enter "
+											+ "the three cards.");
+							System.out
+							.println("1: redCard 2: blueCard 3: greenCard 4: "
+									+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+							
+							int card = Integer.valueOf(br.readLine());
+							int card2 = Integer.valueOf(br.readLine());
+							int card3 = Integer.valueOf(br.readLine());
+							
+							CardToReturn cardToReturn = new CardToReturn(card,
+									card2, card3);
+							returnedLanternCards = cardToReturn
+									.returnStackThreeOfKind();
+
+							state = PlayerList.get(playerIndex)
+									.pickDedicationToken(moveString,
+											returnedLanternCards, lanternCards,
+											dedicationTokens);
+							if (state) {
+								// remove the card from player list.
+							}
+
+						} else if (move == 2) {
+							// moveString = "FourOfKind";
+							System.out
+									.println("What Lantern cards do you want to return?"
+											+ " Enter the card");
+							System.out
+							.println("1: redCard 2: blueCard 3: greenCard 4: "
+									+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+							
+							int card = Integer.valueOf(br.readLine());
+							CardToReturn cardToReturn = new CardToReturn(card);
+							returnedLanternCards = cardToReturn
+									.returnStackFourOfKind();
+							
+							state = PlayerList.get(playerIndex)
+									.pickDedicationToken(moveString,
+											returnedLanternCards, lanternCards,
+											dedicationTokens);
+							if (state) {
+								// remove the card from player list.
+							}
+
+						} else if (move == 3) {
+							// moveString = "sevenUnique";
+
+							CardToReturn cardToReturn = new CardToReturn();
+							returnedLanternCards = cardToReturn
+									.returnSeveUnique();
+							
+							state = PlayerList.get(playerIndex)
+									.pickDedicationToken(moveString,
+											returnedLanternCards, lanternCards,
+											dedicationTokens);
+							if (state) {
+								// remove the card from player list.
+							}
+
+						}
+
+						if (state) {
+							System.out.println("Picked!");
+							System.out
+									.println("Score: four of a kind "
+											+ PlayerList.get(playerIndex).playerScore_fourKind);
+							System.out
+									.println("Score: three of a kind "
+											+ PlayerList.get(playerIndex).playerScore_threePair);
+							System.out
+									.println("Score: Seven unique "
+											+ PlayerList.get(playerIndex).playerScore_sevenUnique);
+						} else
+							System.out
+									.println("You do not meet the requirements to carry out this move"
+											+ " Please revisit the game rules!");
+
+						break;
+					
+					case 4:
+						running = false;
+						continue;
 					}
-					
-					
+
 					System.out.println(PlayerList.get(playerIndex).name
-								+ "'s turn is over");
+							+ "'s turn is over");
 					PlayerList.get(playerIndex).setCurrent(false);
-					if (playerIndex == PlayerList.size()-1) {
-							PlayerList.get(0).setCurrent(true);
+					if (playerIndex == PlayerList.size() - 1) {
+						PlayerList.get(0).setCurrent(true);
 					} else
 						PlayerList.get(++playerIndex).setCurrent(true);
-					
+
 				}
 			}
 		}
-
-		//System.out.println("One example of laketile being added to GameBoard");
-		//lakeTiles.placeTile(36, 37, board, PlayerList.get(0).getLakeTiles()
-		//		.get(0));
-		
-		//new changes
-		
-
-		/*System.out.println("left" + board.tilesOnBoard.get(0).left + "right"
-				+ board.tilesOnBoard.get(0).right + "down"
-				+ board.tilesOnBoard.get(0).down + "up"
-				+ board.tilesOnBoard.get(0).up + "id"
-				+ board.tilesOnBoard.get(0).id);
-		System.out.println("left" + board.tilesOnBoard.get(1).left + "right"
-				+ board.tilesOnBoard.get(1).right + "down"
-				+ board.tilesOnBoard.get(1).down + "up"
-				+ board.tilesOnBoard.get(1).up + "id"
-				+ board.tilesOnBoard.get(1).id);*/
 
 	}
 
@@ -614,7 +776,7 @@ public class GameEngine {
 
 		//
 		displayTextMode();
-		
+
 		//
 		run();
 	}
@@ -698,7 +860,7 @@ public class GameEngine {
 		saveFavorTokens(_favorTokens, favorTokens);
 		//
 		game.appendChild(_favorTokens);
-		
+
 		// save round
 		Element _round = gameDoc.createElement("round");
 		//
@@ -1103,7 +1265,7 @@ public class GameEngine {
 	public void saveFavorTokens(Element element, FavorTokens favorTokens) {
 		element.setAttribute("value", Integer.toString(favorTokens.getTokens()));
 	}
-	
+
 	/**
 	 * 
 	 * @param roundElement
@@ -1119,7 +1281,7 @@ public class GameEngine {
 	}
 
 	public void displayTextMode() {
-		System.out.println("Round: "+this.round);
+		System.out.println("Round: " + this.round);
 
 		for (int x = 0; x < PlayerList.size(); x++) {
 
