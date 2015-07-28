@@ -28,7 +28,28 @@ public class DedicationTokens {
 	 */
 	public DedicationTokens(int numberOfPlayers) {
 		int fourOfKindValue = 1, threePairValue = 1, sevenUniqueValue = 2;
-		switch (numberOfPlayers) {
+		
+		if(numberOfPlayers == 2 || numberOfPlayers == 3 || numberOfPlayers == 4){
+			for (int i = 0; i < 9; i++) {
+				this.fourOfKind.push(fourOfKindValue);
+				this.threePair.push(threePairValue);
+				this.sevenUnique.push(sevenUniqueValue);
+
+				fourOfKindValue++;
+				threePairValue++;
+				sevenUniqueValue++;
+
+				if (i == 7) {
+					fourOfKindValue--;
+				}
+
+			}
+			for (int i = 0; i < 3; i++)
+				this.genericFour.push(GENERIC_FOUR_MAX);
+			
+		}
+		
+		/*switch (numberOfPlayers) {
 		case 2:
 			for (int i = 0; i < 9; i++) {
 				this.fourOfKind.push(fourOfKindValue);
@@ -82,7 +103,7 @@ public class DedicationTokens {
 		}
 
 		for (int i = 0; i < 3; i++)
-			this.genericFour.push(GENERIC_FOUR_MAX);
+			this.genericFour.push(GENERIC_FOUR_MAX); */
 
 	}
 
