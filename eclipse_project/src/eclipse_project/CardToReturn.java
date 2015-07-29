@@ -111,5 +111,14 @@ public class CardToReturn {
 		return returnCards;
 
 	}
+	public String getColor(){
+		return this.color;
+	}
+	public String getColor2(){
+		return this.color;
+	}
+	public String getColor3(){
+		return this.color;
+	}
 
 }

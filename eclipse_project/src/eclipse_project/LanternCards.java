@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Stack;
 
 public class LanternCards {
-	// stacks  index by color
+	// stacks index by color
 	private HashMap<String, Integer> stacks = new HashMap<String, Integer>();
 
 	private int numOfPlayers;
@@ -48,10 +48,9 @@ public class LanternCards {
 			cards = 8;
 		else
 			System.out.println("The number of players is invalid");
-		
+
 		//
-		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
-		{
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
 			entry.setValue(cards);
 		}
 	}
@@ -266,272 +265,320 @@ public class LanternCards {
 	public int orangeCardCount() {
 		return this.stacks.get("orangeCard");
 	}
-	
+
+	public int CardCount(int card) {
+		String color = "redCard";
+
+		if (card == 1) {
+			color = "redCard";
+		} else if (card == 2) {
+			color = "blueCard";
+		} else if (card == 3) {
+			color = "greenCard";
+		} else if (card == 4) {
+			color = "whiteCard";
+		} else if (card == 5) {
+			color = "purpleCard";
+		} else if (card == 6) {
+			color = "blackCard";
+		} else if (card == 7) {
+			color = "orangeCard";
+		}
+		return this.stacks.get(color);
+	}
+
 	/**
-	 * @param card the color of the card to check
+	 * @param card
+	 *            the color of the card to check
 	 * @return true if this object contains the cards, else false.
 	 */
 	public boolean hasCard(String card) {
 		return this.stacks.containsKey(card) && this.stacks.get(card) >= 1;
 	}
-	
+
 	/**
-	 * @param card the color of the card to check
+	 * @param card
+	 *            the color of the card to check
 	 * @return true if this object contains the cards, else false.
 	 */
 	public void addCard(String card) {
-		this.stacks.put(card, this.stacks.get(card)+1);
+		this.stacks.put(card, this.stacks.get(card) + 1);
 	}
-	
+
 	/**
-	 * @param card the color of the card to with draw
+	 * @param card
+	 *            the color of the card to with draw
 	 * @return true if the card was Succesfully withdrawn
 	 */
 	public boolean getCard(String card) {
-		if(!this.stacks.containsKey(card) || this.stacks.get(card) == 0)
-		{
-			
+		if (!this.stacks.containsKey(card) || this.stacks.get(card) == 0) {
+
 			return false;
 		}
-		
+
 		//
-		this.stacks.put(card, this.stacks.get(card)-1);
+		this.stacks.put(card, this.stacks.get(card) - 1);
 		return true;
 	}
-	
+
 	/**
 	 * @param quantity
-	 * @return returns the number of stacks of a specific color, that have quantiy amount of cards
+	 * @return returns the number of stacks of a specific color, that have
+	 *         quantiy amount of cards
 	 */
 	public int colorsWithQuantity(int quantity) {
 		int result = 0;
-	
+
 		//
-		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
-		{
-			if(entry.getValue() == quantity)
-			{
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+			if (entry.getValue() == quantity) {
 				result += 1;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * @return total number of stacks of a specific color that are not empty
 	 */
 	public int nonZeroColors() {
 		int result = 0;
-	
+
 		//
-		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
-		{
-			if(entry.getValue() != 0)
-			{
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+			if (entry.getValue() != 0) {
 				result += 1;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * @param lanternCards
-	 * 			move all the latterns cards in to this objects lantern cards
+	 *            move all the latterns cards in to this objects lantern cards
 	 */
-	public void getAll(LanternCards lanternCards)
-	{
+	public void getAll(LanternCards lanternCards) {
 		//
-		for(Map.Entry<String, Integer> entry : lanternCards.stacks.entrySet())
-		{
+		for (Map.Entry<String, Integer> entry : lanternCards.stacks.entrySet()) {
 			//
-			this.stacks.put(entry.getKey(), this.stacks.get(entry.getKey()) + entry.getValue());
+			this.stacks.put(entry.getKey(), this.stacks.get(entry.getKey())
+					+ entry.getValue());
 			//
 			entry.setValue(0);
 		}
 	}
-	
-	public String toString()
-	{
+
+	public String toString() {
 		String result = "LanternCards: ";
 		//
-		for(Map.Entry<String, Integer> entry : this.stacks.entrySet())
-		{
-			result += "\n - "+ entry.getKey() + ":  "+entry.getValue();
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+			result += "\n - " + entry.getKey() + ":  " + entry.getValue();
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
-	 * This method assigns lanternCards to each Player according to LakeTile and players position
-	 * @param numOfPlayers - Number of Players
-	 * @param playerList - Arraylist of Players
-	 * @param startTile - LakeTile
-	 * @param lanternCards - Object of lanternCard class
+	 * This method assigns lanternCards to each Player according to LakeTile and
+	 * players position
+	 * 
+	 * @param numOfPlayers
+	 *            - Number of Players
+	 * @param playerList
+	 *            - Arraylist of Players
+	 * @param startTile
+	 *            - LakeTile
+	 * @param lanternCards
+	 *            - Object of lanternCard class
 	 */
-	public void assignLanternCards(int numOfPlayers,ArrayList<Player> playerList,LakeTiles startTile,LanternCards lanternCards)
-	{
+	public void assignLanternCards(int numOfPlayers,
+			ArrayList<Player> playerList, LakeTiles startTile,
+			LanternCards lanternCards) {
 		String lanternCardtoAdd;
-		switch(numOfPlayers)
-		{		
+		switch (numOfPlayers) {
 		case 2:
-			lanternCardtoAdd =startTile.leftColor+"Card";
-			playerList.get(0).pickLanternCard(lanternCardtoAdd,lanternCards);
-			lanternCardtoAdd =startTile.rightColor+"Card";
-			playerList.get(1).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd = startTile.leftColor + "Card";
+			playerList.get(0).pickLanternCard(lanternCardtoAdd, lanternCards);
+			lanternCardtoAdd = startTile.rightColor + "Card";
+			playerList.get(1).pickLanternCard(lanternCardtoAdd, lanternCards);
 			break;
 		case 3:
-			lanternCardtoAdd =startTile.leftColor+"Card";
-			playerList.get(0).pickLanternCard(lanternCardtoAdd,lanternCards);
-			lanternCardtoAdd =startTile.upColor+"Card";
-			playerList.get(1).pickLanternCard(lanternCardtoAdd,lanternCards);
-			lanternCardtoAdd =startTile.rightColor+"Card";
-			playerList.get(2).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd = startTile.leftColor + "Card";
+			playerList.get(0).pickLanternCard(lanternCardtoAdd, lanternCards);
+			lanternCardtoAdd = startTile.upColor + "Card";
+			playerList.get(1).pickLanternCard(lanternCardtoAdd, lanternCards);
+			lanternCardtoAdd = startTile.rightColor + "Card";
+			playerList.get(2).pickLanternCard(lanternCardtoAdd, lanternCards);
 			break;
 		case 4:
-			lanternCardtoAdd =startTile.leftColor+"Card";
-			playerList.get(0).pickLanternCard(lanternCardtoAdd,lanternCards);
-			lanternCardtoAdd =startTile.upColor+"Card";
-			playerList.get(1).pickLanternCard(lanternCardtoAdd,lanternCards);
-			lanternCardtoAdd =startTile.rightColor+"Card";
-			playerList.get(2).pickLanternCard(lanternCardtoAdd,lanternCards);
-			lanternCardtoAdd =startTile.downColor+"Card";
-			playerList.get(3).pickLanternCard(lanternCardtoAdd,lanternCards);
+			lanternCardtoAdd = startTile.leftColor + "Card";
+			playerList.get(0).pickLanternCard(lanternCardtoAdd, lanternCards);
+			lanternCardtoAdd = startTile.upColor + "Card";
+			playerList.get(1).pickLanternCard(lanternCardtoAdd, lanternCards);
+			lanternCardtoAdd = startTile.rightColor + "Card";
+			playerList.get(2).pickLanternCard(lanternCardtoAdd, lanternCards);
+			lanternCardtoAdd = startTile.downColor + "Card";
+			playerList.get(3).pickLanternCard(lanternCardtoAdd, lanternCards);
 			break;
 
 		}
 	}
-	
-	
-	
+
 	/**
-	 * This method assigns lanternCards to each Player according to LakeTile and players position
-	 * @param numOfPlayers - Number of Players
-	 * @param board - GameBoard
-	 * @param x - X coordinate of lakeTile
-	 * @param y - Y coordinate of lakeTile
-	 * @param lakeTile - LakeTile
-	 * @param playerList - Arraylist of Players
-	 * @param lanternCard - Available Lantern Cards
+	 * This method assigns lanternCards to each Player according to LakeTile and
+	 * players position
+	 * 
+	 * @param numOfPlayers
+	 *            - Number of Players
+	 * @param board
+	 *            - GameBoard
+	 * @param x
+	 *            - X coordinate of lakeTile
+	 * @param y
+	 *            - Y coordinate of lakeTile
+	 * @param lakeTile
+	 *            - LakeTile
+	 * @param playerList
+	 *            - Arraylist of Players
+	 * @param lanternCard
+	 *            - Available Lantern Cards
 	 */
-	public void assignLanternCardsToPlayers(int numOfPlayers ,Board board,int x,int y,LakeTiles lakeTile,ArrayList<Player> playerList,LanternCards lanternCard,FavorTokens favorTokens)
-	{
+	public void assignLanternCardsToPlayers(int numOfPlayers, Board board,
+			int x, int y, LakeTiles lakeTile, ArrayList<Player> playerList,
+			LanternCards lanternCard, FavorTokens favorTokens) {
 		String card;
-		switch(numOfPlayers)
-		{
+		switch (numOfPlayers) {
 		case 2:
-			card=lakeTile.leftColor+"Card";
-			playerList.get(0).pickLanternCard(card,lanternCard);
-			card=lakeTile.rightColor+"Card";
-			playerList.get(1).pickLanternCard(card,lanternCard);
+			card = lakeTile.leftColor + "Card";
+			playerList.get(0).pickLanternCard(card, lanternCard);
+			card = lakeTile.rightColor + "Card";
+			playerList.get(1).pickLanternCard(card, lanternCard);
 			break;
 		case 3:
-			card=lakeTile.leftColor+"Card";
-			playerList.get(0).pickLanternCard(card,lanternCard);
-			card=lakeTile.upColor+"Card";
-			playerList.get(1).pickLanternCard(card,lanternCard);
-			card=lakeTile.rightColor+"Card";
-			playerList.get(2).pickLanternCard(card,lanternCard);
+			card = lakeTile.leftColor + "Card";
+			playerList.get(0).pickLanternCard(card, lanternCard);
+			card = lakeTile.upColor + "Card";
+			playerList.get(1).pickLanternCard(card, lanternCard);
+			card = lakeTile.rightColor + "Card";
+			playerList.get(2).pickLanternCard(card, lanternCard);
 			break;
 		case 4:
-			card=lakeTile.leftColor+"Card";
-			playerList.get(0).pickLanternCard(card,lanternCard);
-			card=lakeTile.upColor+"Card";
-			playerList.get(1).pickLanternCard(card,lanternCard);
-			card=lakeTile.rightColor+"Card";
-			playerList.get(2).pickLanternCard(card,lanternCard);
-			card=lakeTile.downColor+"Card";
-			playerList.get(3).pickLanternCard(card,lanternCard);
+			card = lakeTile.leftColor + "Card";
+			playerList.get(0).pickLanternCard(card, lanternCard);
+			card = lakeTile.upColor + "Card";
+			playerList.get(1).pickLanternCard(card, lanternCard);
+			card = lakeTile.rightColor + "Card";
+			playerList.get(2).pickLanternCard(card, lanternCard);
+			card = lakeTile.downColor + "Card";
+			playerList.get(3).pickLanternCard(card, lanternCard);
 			break;
 		}
-		for(int currentPlayer=0;currentPlayer<playerList.size();currentPlayer++)
-		{
-			String cardColor="";
-			if(playerList.get(currentPlayer).current)
-			{
-				//If lakeTile has platform on it assign favorToken to currentUser
-				if(lakeTile.platform)
-				{
+		for (int currentPlayer = 0; currentPlayer < playerList.size(); currentPlayer++) {
+			String cardColor = "";
+			if (playerList.get(currentPlayer).current) {
+				// If lakeTile has platform on it assign favorToken to
+				// currentUser
+				if (lakeTile.platform) {
 					favorTokens.decrementToken();
 					playerList.get(currentPlayer).favorTokenScore++;
 				}
-				if(board.board[x-1][y]!=-1)
-				{
-					for(int i=0;i<board.tilesOnBoard.size();i++)
-					{
-						if(board.tilesOnBoard.get(i).id==board.board[x-1][y] && board.tilesOnBoard.get(i).rightColor.equalsIgnoreCase(lakeTile.leftColor))
-						{
-							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
-							if(board.tilesOnBoard.get(i).platform)
-							{
+				if (board.board[x - 1][y] != -1) {
+					for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+						if (board.tilesOnBoard.get(i).id == board.board[x - 1][y]
+								&& board.tilesOnBoard.get(i).rightColor
+										.equalsIgnoreCase(lakeTile.leftColor)) {
+							// assign favorToken to Player as it matched with
+							// lakeTile and given LakeTile has platform on it
+							if (board.tilesOnBoard.get(i).platform) {
 								favorTokens.decrementToken();
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
-							card=board.tilesOnBoard.get(i).rightColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
+							card = board.tilesOnBoard.get(i).rightColor
+									+ "Card";
+							playerList.get(currentPlayer).pickLanternCard(card,
+									lanternCard);
 
 						}
 					}
 				}
-				
-				if(board.board[x+1][y]!=-1)
-				{
-					for(int i=0;i<board.tilesOnBoard.size();i++)
-					{
-						if(board.tilesOnBoard.get(i).id==board.board[x+1][y] && board.tilesOnBoard.get(i).leftColor.equalsIgnoreCase(lakeTile.rightColor))
-						{
-							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
-							if(board.tilesOnBoard.get(i).platform)
-							{
+
+				if (board.board[x + 1][y] != -1) {
+					for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+						if (board.tilesOnBoard.get(i).id == board.board[x + 1][y]
+								&& board.tilesOnBoard.get(i).leftColor
+										.equalsIgnoreCase(lakeTile.rightColor)) {
+							// assign favorToken to Player as it matched with
+							// lakeTile and given LakeTile has platform on it
+							if (board.tilesOnBoard.get(i).platform) {
 								favorTokens.decrementToken();
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
-							card=lakeTile.rightColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
+							card = lakeTile.rightColor + "Card";
+							playerList.get(currentPlayer).pickLanternCard(card,
+									lanternCard);
 						}
 					}
 				}
-				
-				if(board.board[x][y+1]!=-1)
-				{
-					for(int i=0;i<board.tilesOnBoard.size();i++)
-					{
-						if(board.tilesOnBoard.get(i).id==board.board[x][y+1] && board.tilesOnBoard.get(i).upColor.equalsIgnoreCase(lakeTile.downColor))
-						{
-							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
-							if(board.tilesOnBoard.get(i).platform)
-							{
+
+				if (board.board[x][y + 1] != -1) {
+					for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+						if (board.tilesOnBoard.get(i).id == board.board[x][y + 1]
+								&& board.tilesOnBoard.get(i).upColor
+										.equalsIgnoreCase(lakeTile.downColor)) {
+							// assign favorToken to Player as it matched with
+							// lakeTile and given LakeTile has platform on it
+							if (board.tilesOnBoard.get(i).platform) {
 								favorTokens.decrementToken();
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
-							card=board.tilesOnBoard.get(i).upColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
+							card = board.tilesOnBoard.get(i).upColor + "Card";
+							playerList.get(currentPlayer).pickLanternCard(card,
+									lanternCard);
 						}
 					}
 				}
-				
-				if(board.board[x][y-1]!=-1)
-				{
-					for(int i=0;i<board.tilesOnBoard.size();i++)
-					{
-						
-						if(board.tilesOnBoard.get(i).id==board.board[x][y-1] && board.tilesOnBoard.get(i).downColor.equalsIgnoreCase(lakeTile.upColor))
-						{
-							//assign favorToken to Player as it matched with lakeTile and given LakeTile has platform on it
-							if(board.tilesOnBoard.get(i).platform)
-							{
+
+				if (board.board[x][y - 1] != -1) {
+					for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+
+						if (board.tilesOnBoard.get(i).id == board.board[x][y - 1]
+								&& board.tilesOnBoard.get(i).downColor
+										.equalsIgnoreCase(lakeTile.upColor)) {
+							// assign favorToken to Player as it matched with
+							// lakeTile and given LakeTile has platform on it
+							if (board.tilesOnBoard.get(i).platform) {
 								favorTokens.decrementToken();
 								playerList.get(currentPlayer).favorTokenScore++;
 							}
-							card=board.tilesOnBoard.get(i).downColor+"Card";
-							playerList.get(currentPlayer).pickLanternCard(card, lanternCard);
+							card = board.tilesOnBoard.get(i).downColor + "Card";
+							playerList.get(currentPlayer).pickLanternCard(card,
+									lanternCard);
 						}
 					}
 				}
-				
+
 			}
+		}
+	}
+
+	public void popThreePair(int card) {
+		String color = null;
+		if (card == 1) {
+			color = "redCard";
+		} else if (card == 2) {
+			color = "blueCard";
+		} else if (card == 3) {
+			color = "greenCard";
+		} else if (card == 4) {
+			color = "whiteCard";
+		} else if (card == 5) {
+			color = "purpleCard";
+		} else if (card == 6) {
+			color = "blackCard";
+		} else if (card == 7) {
+			color = "orangeCard";
 		}
 	}
 }

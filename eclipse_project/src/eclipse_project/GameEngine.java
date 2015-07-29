@@ -310,11 +310,10 @@ public class GameEngine {
 		System.out.println();
 
 		System.out.println("Details of the startTile:");
-		System.out.println("id"+ startTile.id+" "+"leftColor "+ " "
+		System.out.println("id" + startTile.id + " " + "leftColor " + " "
 				+ startTile.leftColor + " " + "rightColor"
-				+ startTile.rightColor + " " + "upColor" 
-				+ startTile.upColor + " " + "downColor" 
-				+ startTile.downColor + " " + "platform"
+				+ startTile.rightColor + " " + "upColor" + startTile.upColor
+				+ " " + "downColor" + startTile.downColor + " " + "platform"
 				+ startTile.platform);
 		System.out.println();
 
@@ -323,7 +322,8 @@ public class GameEngine {
 
 		lanternCards.assignLanternCards(this.numOfPlayer, PlayerList,
 				startTile, lanternCards);
-		System.out.println("Players will get lanternCards according to startTile");
+		System.out
+				.println("Players will get lanternCards according to startTile");
 		System.out.println();
 		for (int i = 0; i < PlayerList.size(); i++) {
 			System.out
@@ -528,7 +528,7 @@ public class GameEngine {
 							System.out
 									.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
 						break;
-						
+
 					case 3:
 						// Prints the tokens the player currently has.
 						System.out
@@ -593,24 +593,48 @@ public class GameEngine {
 									.println("What Lantern cards do you want to return? Enter "
 											+ "the three cards.");
 							System.out
-							.println("1: redCard 2: blueCard 3: greenCard 4: "
-									+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
-							
+									.println("1: redCard 2: blueCard 3: greenCard 4: "
+											+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+
 							int card = Integer.valueOf(br.readLine());
 							int card2 = Integer.valueOf(br.readLine());
 							int card3 = Integer.valueOf(br.readLine());
-							
-							CardToReturn cardToReturn = new CardToReturn(card,
-									card2, card3);
-							returnedLanternCards = cardToReturn
-									.returnStackThreeOfKind();
 
-							state = PlayerList.get(playerIndex)
-									.pickDedicationToken(moveString,
-											returnedLanternCards, lanternCards,
-											dedicationTokens);
-							if (state) {
-								// remove the card from player list.
+							if (PlayerList.get(playerIndex).getLanternCards()
+									.CardCount(card) >= 2
+									&& PlayerList.get(playerIndex)
+											.getLanternCards().CardCount(card2) >= 2
+									&& PlayerList.get(playerIndex)
+											.getLanternCards().CardCount(card3) >= 2) {
+
+								CardToReturn cardToReturn = new CardToReturn(
+										card, card2, card3);
+
+								returnedLanternCards = cardToReturn
+										.returnStackThreeOfKind();
+
+								// take 2 cards with the first color inserted
+								// from player
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor());
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor());
+
+								// take 2 cards with the second color inserted
+								// from player
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor2());
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor2());
+
+								// take 2 cards with the third color inserted
+								// from player
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor3());
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor3());
+							}else{
+								System.out.println("You do not have enough cards to make 'Three pair' move");
 							}
 
 						} else if (move == 2) {
@@ -619,38 +643,43 @@ public class GameEngine {
 									.println("What Lantern cards do you want to return?"
 											+ " Enter the card");
 							System.out
-							.println("1: redCard 2: blueCard 3: greenCard 4: "
-									+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
-							
+									.println("1: redCard 2: blueCard 3: greenCard 4: "
+											+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+
 							int card = Integer.valueOf(br.readLine());
-							CardToReturn cardToReturn = new CardToReturn(card);
-							returnedLanternCards = cardToReturn
-									.returnStackFourOfKind();
-							
-							state = PlayerList.get(playerIndex)
-									.pickDedicationToken(moveString,
-											returnedLanternCards, lanternCards,
-											dedicationTokens);
-							if (state) {
-								// remove the card from player list.
+							if (PlayerList.get(playerIndex).getLanternCards()
+									.CardCount(card) >= 4) {
+
+								CardToReturn cardToReturn = new CardToReturn(
+										card);
+								returnedLanternCards = cardToReturn
+										.returnStackFourOfKind();
+
+								// take 4 cards with the third color inserted
+								// from player
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor());
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor());
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor());
+								PlayerList.get(playerIndex).getLanternCards()
+										.getCard(cardToReturn.getColor());
+							}else{
+								System.out.println("You do not have enough cards to make 'Four of a kind' move");
 							}
 
 						} else if (move == 3) {
 							// moveString = "sevenUnique";
-
+							
 							CardToReturn cardToReturn = new CardToReturn();
 							returnedLanternCards = cardToReturn
 									.returnSeveUnique();
-							
-							state = PlayerList.get(playerIndex)
-									.pickDedicationToken(moveString,
-											returnedLanternCards, lanternCards,
-											dedicationTokens);
-							if (state) {
-								// remove the card from player list.
-							}
-
 						}
+						state = PlayerList.get(playerIndex)
+								.pickDedicationToken(moveString,
+										returnedLanternCards, lanternCards,
+										dedicationTokens);
 
 						if (state) {
 							System.out.println("Picked!");
@@ -665,11 +694,10 @@ public class GameEngine {
 											+ PlayerList.get(playerIndex).playerScore_sevenUnique);
 						} else
 							System.out
-									.println("You do not meet the requirements to carry out this move"
-											+ " Please revisit the game rules!");
+									.println(" Please revisit the game rules!");
 
 						break;
-					
+
 					case 4:
 						running = false;
 						continue;
