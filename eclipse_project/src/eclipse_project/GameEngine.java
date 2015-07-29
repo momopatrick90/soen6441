@@ -310,21 +310,21 @@ public class GameEngine {
 		System.out.println();
 
 		System.out.println("Details of the startTile:");
-		System.out.println("id" + startTile.id + " " + "leftColor " + " "
-				+ startTile.leftColor + " " + "rightColor" + " "
-				+ startTile.rightColor + " " + "upColor" + " "
-				+ startTile.upColor + " " + "downColor" + " "
-				+ startTile.downColor + " " + "platform" + " "
+		System.out.println("id"+ startTile.id+" "+"leftColor "+ " "
+				+ startTile.leftColor + " " + "rightColor"
+				+ startTile.rightColor + " " + "upColor" 
+				+ startTile.upColor + " " + "downColor" 
+				+ startTile.downColor + " " + "platform"
 				+ startTile.platform);
 		System.out.println();
 
 		PlayerList = player1.turnToStartGame(this.numOfPlayer, PlayerList,
 				startTile);
 
-		System.out.println();
 		lanternCards.assignLanternCards(this.numOfPlayer, PlayerList,
 				startTile, lanternCards);
-		System.out.println("Players will get lakeTiles according to startTile");
+		System.out.println("Players will get lanternCards according to startTile");
+		System.out.println();
 		for (int i = 0; i < PlayerList.size(); i++) {
 			System.out
 					.println("Details of the lanternCards available to Player"
@@ -385,6 +385,7 @@ public class GameEngine {
 
 							PlayerList.get(playerIndex).displayPlayersLakeTile(
 									PlayerList.get(playerIndex));
+							System.out.println();
 							System.out
 									.println("Enter the index of laketiles you want to put on board");
 							LakeTiles currentTileToPlace = PlayerList.get(
@@ -418,9 +419,11 @@ public class GameEngine {
 								PlayerList.get(playerIndex)
 										.displayPlayersLakeTile(
 												PlayerList.get(playerIndex));
+								System.out.println();
 								System.out
 										.println("Number of FavorTokens:"
 												+ PlayerList.get(playerIndex).favorTokenScore);
+								System.out.println();
 								System.out
 										.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
 								for (int i = 0; i < PlayerList.size(); i++) {
