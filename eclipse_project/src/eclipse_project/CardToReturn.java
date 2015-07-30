@@ -85,13 +85,22 @@ public class CardToReturn {
 		returnCards.addCard(color);
 		returnCards.addCard(color2);
 		returnCards.addCard(color3);
-
+		returnCards.addCard(color);
+		returnCards.addCard(color2);
+		returnCards.addCard(color3);
+		returnCards.addCard(color);
+		returnCards.addCard(color2);
+		returnCards.addCard(color3);
+		
 		return returnCards;
 
 	}
 
 	public LanternCards returnStackFourOfKind() {
 		LanternCards returnCards = new LanternCards();
+		returnCards.addCard(color);
+		returnCards.addCard(color);
+		returnCards.addCard(color);
 		returnCards.addCard(color);
 		return returnCards;
 
