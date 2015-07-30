@@ -363,7 +363,8 @@ public class GameEngine {
 		while (round > 0 && running) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
-			for (int playerIndex = 0; playerIndex < PlayerList.size() && running; playerIndex++) {
+			for (int playerIndex = 0; playerIndex < PlayerList.size()
+					&& running; playerIndex++) {
 				if (PlayerList.get(playerIndex).current) {
 					System.out.println(PlayerList.get(playerIndex).name
 							+ "'s turn to play.");
@@ -429,7 +430,8 @@ public class GameEngine {
 								for (int i = 0; i < PlayerList.size(); i++) {
 									System.out
 											.println("Player" + (i + 1) + ":");
-									System.out.println(PlayerList.get(i).playerLCStack);
+									System.out
+											.println(PlayerList.get(i).playerLCStack);
 									System.out.println();
 								}
 								flag = false;
@@ -441,19 +443,23 @@ public class GameEngine {
 						break;
 					case 2:
 						// Prints the tokens the player currently has.
-						System.out.println("This is the amount of tokens you have: "
+						System.out
+								.println("This is the amount of tokens you have: "
 										+ PlayerList.get(playerIndex).favorTokenScore);
 						System.out.println("----------------------------");
 
 						// Print lanterns
-						System.out.println("--Lantern cards you currently have:--");
-						
-						System.out.println(PlayerList.get(playerIndex).getLanternCards());
+						System.out
+								.println("--Lantern cards you currently have:--");
+
+						System.out.println(PlayerList.get(playerIndex)
+								.getLanternCards());
 						//
 						System.out.println("----------------------------");
 
-						System.out.println("Enter the lantern card you want to return");
-						
+						System.out
+								.println("Enter the lantern card you want to return");
+
 						String returnLCard = br.readLine();
 						System.out
 								.println("Enter the lantern card you want to pick");
@@ -480,8 +486,9 @@ public class GameEngine {
 								.println("--Lantern cards you currently have:--");
 
 						// Prints the number of black Cards the player has.
-						System.out.println(PlayerList.get(playerIndex).getLanternCards());
-						
+						System.out.println(PlayerList.get(playerIndex)
+								.getLanternCards());
+
 						System.out.println("----------------------------");
 
 						// TODO needs validation to be done before submitting
@@ -497,7 +504,7 @@ public class GameEngine {
 						LanternCards returnedLanternCards = null;
 						boolean state = false;
 						if (move == 1) {
-							// moveString = "threePair";
+							moveString = "threePair";
 							System.out
 									.println("What Lantern cards do you want to return? Enter "
 											+ "the three cards.");
@@ -515,12 +522,28 @@ public class GameEngine {
 											.getLanternCards().CardCount(card2) >= 2
 									&& PlayerList.get(playerIndex)
 											.getLanternCards().CardCount(card3) >= 2) {
+								System.out
+										.println("This means that you succeded to "
+												+ "get through the card check point");
 
 								CardToReturn cardToReturn = new CardToReturn(
 										card, card2, card3);
 
 								returnedLanternCards = cardToReturn
 										.returnStackThreeOfKind();
+								System.out
+										.println("these are the cards to be returned 3:"
+												+ returnedLanternCards
+														.CardCount(card3));
+								System.out
+										.println("these are the cards to be returned 2:"
+												+ returnedLanternCards
+														.CardCount(card2));
+
+								System.out
+										.println("these are the cards to be returned 1:"
+												+ returnedLanternCards
+														.CardCount(card));
 
 								// take 2 cards with the first color inserted
 								// from player
@@ -542,12 +565,13 @@ public class GameEngine {
 										.getCard(cardToReturn.getColor3());
 								PlayerList.get(playerIndex).getLanternCards()
 										.getCard(cardToReturn.getColor3());
-							}else{
-								System.out.println("You do not have enough cards to make 'Three pair' move");
+							} else {
+								System.out
+										.println("You do not have enough cards to make 'Three pair' move");
 							}
 
 						} else if (move == 2) {
-							// moveString = "FourOfKind";
+							moveString = "FourOfKind";
 							System.out
 									.println("What Lantern cards do you want to return?"
 											+ " Enter the card");
@@ -574,22 +598,31 @@ public class GameEngine {
 										.getCard(cardToReturn.getColor());
 								PlayerList.get(playerIndex).getLanternCards()
 										.getCard(cardToReturn.getColor());
-							}else{
-								System.out.println("You do not have enough cards to make 'Four of a kind' move");
+							} else {
+								System.out
+										.println("You do not have enough cards to make 'Four of a kind' move");
 							}
 
 						} else if (move == 3) {
-							// moveString = "sevenUnique";
-							
-							CardToReturn cardToReturn = new CardToReturn();
-							returnedLanternCards = cardToReturn
-									.returnSeveUnique();
-						}
-						state = PlayerList.get(playerIndex)
-								.pickDedicationToken(moveString,
-										returnedLanternCards, lanternCards,
-										dedicationTokens);
+							moveString = "sevenUnique";
 
+							CardToReturn cardToReturn = new CardToReturn();
+							if (cardToReturn.SevenUniqueState(PlayerList
+									.get(playerIndex))) {
+								returnedLanternCards = cardToReturn
+										.returnSeveUnique();
+
+							} else {
+								System.out
+										.println("You do not have enough cards to make 'Seven Unique' move");
+							}
+						}
+						if (returnedLanternCards != null) {
+							state = PlayerList.get(playerIndex)
+									.pickDedicationToken(moveString,
+											returnedLanternCards, lanternCards,
+											dedicationTokens);
+						}
 						if (state) {
 							System.out.println("Picked!");
 							System.out
@@ -932,7 +965,7 @@ public class GameEngine {
 		//
 		LinkedList<LakeTiles> lakeTilesList = loadMultipleLakeTiles((Element) playerElement
 				.getElementsByTagName("lake_tiles_stack").item(0));
-	
+
 		//
 		for (int i = 0; i < lakeTilesList.size(); i++) {
 			lakeTilesStack.add(lakeTilesList.get(i));

@@ -456,7 +456,7 @@ void setCurrent(boolean state) {
 		for(int i=0;i<currentPlayer.playerLTStack.size();i++)
 		{
 			
-			System.out.println("id " + currentPlayer.playerLTStack.get(i).id
+			System.out.println("Index: "+i+"  id: " + currentPlayer.playerLTStack.get(i).id
 					+ " " + "leftColor " + " "
 					+ currentPlayer.playerLTStack.get(i).leftColor + " "
 					+ "rightColor" + " "

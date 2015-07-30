@@ -267,7 +267,7 @@ public class LanternCards {
 	}
 
 	public int CardCount(int card) {
-		String color = "redCard";
+		String color = null;
 
 		if (card == 1) {
 			color = "redCard";

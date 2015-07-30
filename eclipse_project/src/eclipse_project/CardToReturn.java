@@ -77,7 +77,7 @@ public class CardToReturn {
 	}
 
 	public CardToReturn() {
-		
+
 	}
 
 	public LanternCards returnStackThreeOfKind() {
@@ -88,10 +88,8 @@ public class CardToReturn {
 		returnCards.addCard(color);
 		returnCards.addCard(color2);
 		returnCards.addCard(color3);
-		returnCards.addCard(color);
-		returnCards.addCard(color2);
-		returnCards.addCard(color3);
 		
+
 		return returnCards;
 
 	}
@@ -105,7 +103,7 @@ public class CardToReturn {
 		return returnCards;
 
 	}
-	
+
 	public LanternCards returnSeveUnique() {
 		LanternCards returnCards = new LanternCards();
 		returnCards.addBlackcard();
@@ -115,19 +113,34 @@ public class CardToReturn {
 		returnCards.addRedcard();
 		returnCards.addPurplecard();
 		returnCards.addWhitecard();
-	
 
 		return returnCards;
 
 	}
-	public String getColor(){
+
+	public String getColor() {
 		return this.color;
 	}
-	public String getColor2(){
+
+	public String getColor2() {
 		return this.color;
 	}
-	public String getColor3(){
+
+	public String getColor3() {
 		return this.color;
+	}
+
+	public boolean SevenUniqueState(Player player) {
+		if (player.getLanternCards().blackCardCount() > 1
+				&& player.getLanternCards().blueCardCount() > 1
+				&& player.getLanternCards().greenCardCount() > 1
+				&& player.getLanternCards().orangeCardCount() > 1
+				&& player.getLanternCards().redCardCount() > 1
+				&& player.getLanternCards().purpleCardCount() > 1
+				&& player.getLanternCards().whiteCardCount() > 1)
+			return true;
+		else
+			return false;
 	}
 
 }
