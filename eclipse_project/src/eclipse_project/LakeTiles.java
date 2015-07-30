@@ -54,6 +54,10 @@ public class LakeTiles {
 		this.up = up;
 		this.down = down;
 		
+		//
+		this.id = id;
+		this.platform = platform;
+		
 		this.lakeTiles = lakeTiles;
 		
 		this.globalLakeTiles = globalLakeTiles;
@@ -297,6 +301,13 @@ public class LakeTiles {
 			break;
 		}
 		return answer;
+	}
+	
+	public String toString()
+	{
+		return ("id: " + this.id + " " + "leftColor: " + this.leftColor + " "
+				+ "rightColor: " + this.rightColor + " " + "upColor: " + this.upColor + " "+ 
+				"downColor: " + this.downColor + " " + "platForm: "+ this.platform);
 	}
 	
 	public LakeTiles rotateLakeTile(LakeTiles lakeTile,int degreeOfRotation)

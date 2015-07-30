@@ -363,7 +363,7 @@ public class GameEngine {
 		while (round > 0 && running) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
-			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
+			for (int playerIndex = 0; playerIndex < PlayerList.size() && running; playerIndex++) {
 				if (PlayerList.get(playerIndex).current) {
 					System.out.println(PlayerList.get(playerIndex).name
 							+ "'s turn to play.");
@@ -429,34 +429,7 @@ public class GameEngine {
 								for (int i = 0; i < PlayerList.size(); i++) {
 									System.out
 											.println("Player" + (i + 1) + ":");
-									System.out
-											.println("Number of Black Lantern Cards"
-													+ PlayerList.get(i).playerLCStack
-															.blackCardCount());
-									System.out
-											.println("Number of Blue Lantern Cards"
-													+ PlayerList.get(i).playerLCStack
-															.blueCardCount());
-									System.out
-											.println("Number of Green Lantern Cards"
-													+ PlayerList.get(i).playerLCStack
-															.greenCardCount());
-									System.out
-											.println("Number of Orange Lantern Cards"
-													+ PlayerList.get(i).playerLCStack
-															.orangeCardCount());
-									System.out
-											.println("Number of Purple Lantern Cards"
-													+ PlayerList.get(i).playerLCStack
-															.purpleCardCount());
-									System.out
-											.println("Number of Red Lantern Cards"
-													+ PlayerList.get(i).playerLCStack
-															.redCardCount());
-									System.out
-											.println("Number of White Lantern Cards"
-													+ PlayerList.get(i).playerLCStack
-															.whiteCardCount());
+									System.out.println(PlayerList.get(i).playerLCStack);
 									System.out.println();
 								}
 								flag = false;
@@ -468,52 +441,19 @@ public class GameEngine {
 						break;
 					case 2:
 						// Prints the tokens the player currently has.
-						System.out
-								.println("This is the amount of tokens you have: "
+						System.out.println("This is the amount of tokens you have: "
 										+ PlayerList.get(playerIndex).favorTokenScore);
 						System.out.println("----------------------------");
 
-						System.out
-								.println("--Lantern cards you currently have:--");
-
-						// Prints the number of black Cards the player has.
-						System.out.println("Black Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.blackCardCount());
-
-						// Prints the number of blue Cards the player has.
-						System.out.println("Blue Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.blueCardCount());
-
-						// Prints the number of green Cards the player has.
-						System.out.println("Green Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.greenCardCount());
-
-						// Prints the number of orange Cards the player has.
-						System.out.println("Orange Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.orangeCardCount());
-
-						// Prints the number of white Cards the player has.
-						System.out.println("White Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.whiteCardCount());
-
-						// Prints the number of red Cards the player has.
-						System.out.println("Red Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.redCardCount());
-
-						// Prints the number of purple Cards the player has.
-						System.out.println("Purple Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.purpleCardCount());
+						// Print lanterns
+						System.out.println("--Lantern cards you currently have:--");
+						
+						System.out.println(PlayerList.get(playerIndex).getLanternCards());
+						//
 						System.out.println("----------------------------");
 
-						System.out
-								.println("Enter the lantern card you want to return");
+						System.out.println("Enter the lantern card you want to return");
+						
 						String returnLCard = br.readLine();
 						System.out
 								.println("Enter the lantern card you want to pick");
@@ -540,39 +480,8 @@ public class GameEngine {
 								.println("--Lantern cards you currently have:--");
 
 						// Prints the number of black Cards the player has.
-						System.out.println("Black Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.blackCardCount());
-
-						// Prints the number of blue Cards the player has.
-						System.out.println("Blue Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.blueCardCount());
-
-						// Prints the number of green Cards the player has.
-						System.out.println("Green Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.greenCardCount());
-
-						// Prints the number of orange Cards the player has.
-						System.out.println("Orange Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.orangeCardCount());
-
-						// Prints the number of white Cards the player has.
-						System.out.println("White Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.whiteCardCount());
-
-						// Prints the number of red Cards the player has.
-						System.out.println("Red Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.redCardCount());
-
-						// Prints the number of purple Cards the player has.
-						System.out.println("Purple Cards: "
-								+ PlayerList.get(playerIndex).getLanternCards()
-										.purpleCardCount());
+						System.out.println(PlayerList.get(playerIndex).getLanternCards());
+						
 						System.out.println("----------------------------");
 
 						// TODO needs validation to be done before submitting
@@ -1023,6 +932,7 @@ public class GameEngine {
 		//
 		LinkedList<LakeTiles> lakeTilesList = loadMultipleLakeTiles((Element) playerElement
 				.getElementsByTagName("lake_tiles_stack").item(0));
+	
 		//
 		for (int i = 0; i < lakeTilesList.size(); i++) {
 			lakeTilesStack.add(lakeTilesList.get(i));
@@ -1319,16 +1229,7 @@ public class GameEngine {
 			System.out.println("Details of the LakeTiles assigned to Player"
 					+ (x + 1));
 			for (int i = 0; i < PlayerList.get(x).getLakeTiles().size(); i++) {
-				System.out.println("Laketile: " + "leftColor "
-						+ PlayerList.get(x).getLakeTiles().get(i).leftColor
-						+ " " + "rightColor "
-						+ PlayerList.get(x).getLakeTiles().get(i).rightColor
-						+ " " + "upColor "
-						+ PlayerList.get(x).getLakeTiles().get(i).upColor + " "
-						+ "downColor "
-						+ PlayerList.get(x).getLakeTiles().get(i).downColor
-						+ " " + "platForm "
-						+ PlayerList.get(x).getLakeTiles().get(i).platform);
+				System.out.println(PlayerList.get(x).getLakeTiles().get(i));
 			}
 			System.out.println();
 		}
@@ -1355,36 +1256,15 @@ public class GameEngine {
 		System.out.println("Number of Favor Tokens present with players: 0");
 		System.out.println();
 
-		System.out.println("Details of LanternCards:");
-		System.out.println("Number of Black lantern cards available on Stack: "
-				+ lanternCards.blackCardCount());
-		System.out.println("Number of Red lantern cards available on Stack: "
-				+ lanternCards.redCardCount());
-		System.out.println("Number of Green lantern cards available on Stack: "
-				+ lanternCards.greenCardCount());
-		System.out.println("Number of White lantern cards available on Stack: "
-				+ lanternCards.whiteCardCount());
-		System.out
-				.println("Number of Purple lantern cards available on Stack: "
-						+ lanternCards.purpleCardCount());
-		System.out.println("Number of Blue lantern cards available on Stack: "
-				+ lanternCards.blueCardCount());
-		System.out
-				.println("Number of Orange lantern cards available on Stack: "
-						+ lanternCards.orangeCardCount());
+		System.out.println("Details of LanternCards On Board:");
+		System.out.println(lanternCards);
 
 		System.out.println();
 
 		// ////
 		System.out.println("Lake tiles on the board.  ");
-
 		for (int i = 0; i < lakeTilesList.size(); i++) {
-			System.out.println(" " + "leftColor " + " "
-					+ lakeTilesList.get(i).leftColor + " " + "rightColor" + " "
-					+ lakeTilesList.get(i).rightColor + " " + "upColor" + " "
-					+ lakeTilesList.get(i).upColor + " " + "downColor" + " "
-					+ lakeTilesList.get(i).downColor + " " + "platform" + " "
-					+ lakeTilesList.get(i).platform);
+			System.out.println(lakeTilesList.get(i));
 		}
 		System.out.println();
 
