@@ -75,7 +75,9 @@ public class LakeTiles {
 		case 2:
 			lakeTiles = new LakeTiles[23];
 			// 16 tiles on stack + 6 tiles for players + start Tile
-			for (int i = 0; i < lakeTiles.length; i++) {
+			numberOfLakeTiles(lakeTiles);
+			
+			/*for (int i = 0; i < lakeTiles.length; i++) {
 				lakeTiles[i] = new LakeTiles();
 				lakeTiles[i].leftColor = lakeTiles[i].randomValues();
 				lakeTiles[i].rightColor = lakeTiles[i].randomValues();
@@ -84,13 +86,15 @@ public class LakeTiles {
 				lakeTiles[i].id = i + 1;
 				if (i % 2 != 0)
 					lakeTiles[i].platform = true;
-			}
+			}*/
 
 			break;
 		case 3:
 			// 18 tiles on stack + 9 tiles for players + start Tile
 			lakeTiles = new LakeTiles[28];
-			for (int i = 0; i < lakeTiles.length; i++) {
+			numberOfLakeTiles(lakeTiles);
+			
+			/*for (int i = 0; i < lakeTiles.length; i++) {
 				lakeTiles[i] = new LakeTiles();
 				lakeTiles[i].leftColor = lakeTiles[i].randomValues();
 				lakeTiles[i].rightColor = lakeTiles[i].randomValues();
@@ -99,13 +103,15 @@ public class LakeTiles {
 				lakeTiles[i].id = i + 1;
 				if (i % 2 != 0)
 					lakeTiles[i].platform = true;
-			}
+			}*/
 
 			break;
 		case 4:
 			// 20 tiles on stack + 12 tiles for players + start Tile
 			lakeTiles = new LakeTiles[33];
-			for (int i = 0; i < lakeTiles.length; i++) {
+			numberOfLakeTiles(lakeTiles);
+			
+			/*for (int i = 0; i < lakeTiles.length; i++) {
 				lakeTiles[i] = new LakeTiles();
 				lakeTiles[i].leftColor = lakeTiles[i].randomValues();
 				lakeTiles[i].rightColor = lakeTiles[i].randomValues();
@@ -114,10 +120,33 @@ public class LakeTiles {
 				lakeTiles[i].id = i + 1;
 				if (i % 2 != 0)
 					lakeTiles[i].platform = true;
-			}
+			}*/
 			
 			break;
 		}
+	}
+
+	/**
+	 * method to create lake tile object and set values to the attributes of a lake tile   
+	 * 
+	 * 
+	 * @param lakeTiles
+	 *            Array of Lake Tile object
+	 */
+	
+	public void numberOfLakeTiles(LakeTiles lakeTiles[]){
+		
+		for (int i = 0; i < lakeTiles.length; i++) {
+			lakeTiles[i] = new LakeTiles();
+			lakeTiles[i].leftColor = lakeTiles[i].randomValues();
+			lakeTiles[i].rightColor = lakeTiles[i].randomValues();
+			lakeTiles[i].upColor = lakeTiles[i].randomValues();
+			lakeTiles[i].downColor = lakeTiles[i].randomValues();
+			lakeTiles[i].id = i + 1;
+			if (i % 2 != 0)
+				lakeTiles[i].platform = true;
+		}
+		
 	}
 
 	/**
@@ -129,7 +158,16 @@ public class LakeTiles {
 	 */
 	public ArrayList<LakeTiles> assignLakeTiles(int numberOfPlayers) {
 		ArrayList<LakeTiles> assignedLakeTiles = new ArrayList<LakeTiles>();
-		switch (numberOfPlayers) {
+		
+		if(numberOfPlayers==2 || numberOfPlayers==3 || numberOfPlayers==4){
+			for (int i = 1; i < numberOfPlayers * 3 + 1; i++)
+				assignedLakeTiles.add(lakeTiles[i]);
+			for (int i = numberOfPlayers * 3 + 1; i < lakeTiles.length; i++) {
+				globalLakeTiles.push(lakeTiles[i]);
+			}
+		}
+		
+		/*switch (numberOfPlayers) {
 		case 2:
 			for (int i = 1; i < numberOfPlayers * 3 + 1; i++)
 				assignedLakeTiles.add(lakeTiles[i]);
@@ -151,7 +189,8 @@ public class LakeTiles {
 				globalLakeTiles.push(lakeTiles[i]);
 			}
 			break;
-		}
+		}*/
+		
 		return assignedLakeTiles;
 	}
 
