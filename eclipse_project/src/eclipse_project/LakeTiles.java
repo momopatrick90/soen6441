@@ -220,7 +220,7 @@ public class LakeTiles {
 			LakeTiles tileToPlace) {
 		boolean flag = false;
 		if (gameBoard.board[x][y] == -1) {
-			gameBoard.board[x][y] = tileToPlace.id;
+			gameBoard.board[y][x] = tileToPlace.id;
 			gameBoard.tilesOnBoard.add(tileToPlace);
 			if (gameBoard.board[x + 1][y] != -1) {
 				tileToPlace.right = gameBoard.board[x + 1][y];

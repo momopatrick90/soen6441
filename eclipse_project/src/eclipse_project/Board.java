@@ -115,16 +115,28 @@ public class Board {
 				}
 			}
 		}
-		/*for(int i=0;i<board.length;i++)
+		boolean lineEmpty=true;
+		for(int i=0;i<board.length;i++)
 		{
 			for(int j=0;j<board.length;j++)
 			{
-				if(board[i][j]==-1)
-					System.out.print("X ");
-				else
-				System.out.print("("+board[i][j]+")");
+				for(int k=0;k<board.length;k++)
+				{
+						if(board[i][k]!=-1)
+							lineEmpty=false;
+				}
+				if(!lineEmpty)
+				{
+					if(board[i][j]==-1)
+						System.out.print(" ");
+					else
+						System.out.print(board[i][j]);
+					//System.out.print("("+board[i][j]+")");
+				}
 			}
+			if(!lineEmpty)
 			System.out.println();
-		}*/
+			lineEmpty=true;
+		}
 	}
 }
