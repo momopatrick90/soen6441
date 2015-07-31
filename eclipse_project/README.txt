@@ -15,6 +15,7 @@
 	ii) Code and test java files	
 	    a)eclipse_project -> src -> eclipse_project
 		Board.java
+		CardToReturn.java
 		DedicationTokens.java
 		FavorTokens.java
 		GameEngine.java
@@ -25,6 +26,7 @@
 	    b)eclipse_project -> src -> unittests
 		AllTests.java
 		BoardTest.java
+		CardToReturnTest.java
 		DedicationTokensTest.java
 		FavorTokensTest.java
 		GameEngineTest.java
@@ -32,7 +34,7 @@
 		LanternApplicationTest.java
 		LanternCardsTest.java		
 		PlayerTest.java
-	iii) JavaDoc_TeamD
+	iii) JavadocBuild2
 	iv)  README.txt		
 	   
 	
