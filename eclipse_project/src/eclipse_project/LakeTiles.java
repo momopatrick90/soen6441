@@ -223,7 +223,7 @@ public class LakeTiles {
 	public boolean placeTile(int x, int y, Board gameBoard,
 			LakeTiles tileToPlace) {
 		boolean flag = false;
-		if (gameBoard.board[x][y] == -1) {
+		if (gameBoard.board[y][x] == -1) {
 			gameBoard.board[y][x] = tileToPlace.id;
 			gameBoard.tilesOnBoard.add(tileToPlace);
 			if (gameBoard.board[x + 1][y] != -1) {

@@ -11,18 +11,15 @@ public class Board {
 	int board[][] = new int[73][73];
 	ArrayList<LakeTiles> tilesOnBoard = new ArrayList<LakeTiles>();
 
-	public Board(int board[][], ArrayList<LakeTiles> tilesOnBoard)
-	{
+	public Board(int board[][], ArrayList<LakeTiles> tilesOnBoard) {
 		this.board = board;
 		this.tilesOnBoard = tilesOnBoard;
 	}
-	
-	public Board()
-	{
-		
+
+	public Board() {
+
 	}
-	
-	
+
 	/**
 	 * method to initialize the game board
 	 * 
@@ -72,29 +69,27 @@ public class Board {
 			right = startTile.rightColor;
 		}
 	}
-	
+
 	/**
 	 * method to display the current state of boardGame
 	 * 
-	 * @param board gameBoard
-	 * @param tilesOnBoard LakeTiles placed on board
+	 * @param board
+	 *            gameBoard
+	 * @param tilesOnBoard
+	 *            LakeTiles placed on board
 	 */
-	public void displayBoard(int board[][], ArrayList<LakeTiles> tilesOnBoard)
-	{
+	public void displayBoard(int board[][], ArrayList<LakeTiles> tilesOnBoard) {
 		System.out.println("Current state of boardGame: ");
 		System.out.println();
-		for(int i=0;i<board.length;i++)
-		{
-			for(int j=0;j<board.length;j++)
-			{
-				if(board[i][j]!=-1)
-				{
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				if (board[i][j] != -1) {
 					for (int k = 0; k < tilesOnBoard.size(); k++)
 						if (board[i][j] == tilesOnBoard.get(k).id) {
 							System.out.println("LakeTile id :"
 									+ tilesOnBoard.get(k).id
-									+ " X-coordinate of lakeTile: " + i+" "
-									+ "Y-coordinate of lakeTile: " + j+" "
+									+ " X-coordinate of lakeTile: " + i + " "
+									+ "Y-coordinate of lakeTile: " + j + " "
 									+ "leftColor:"
 									+ tilesOnBoard.get(k).leftColor
 									+ " rightColor:"
@@ -108,35 +103,39 @@ public class Board {
 									+ tilesOnBoard.get(k).right
 									+ " downNeighbour "
 									+ tilesOnBoard.get(k).down
-									+ " upNeighbour " + tilesOnBoard.get(k).up
-									);
+									+ " upNeighbour " + tilesOnBoard.get(k).up);
 						}
 					System.out.println();
 				}
 			}
 		}
-		boolean lineEmpty=true;
-		for(int i=0;i<board.length;i++)
-		{
-			for(int j=0;j<board.length;j++)
-			{
-				for(int k=0;k<board.length;k++)
-				{
-						if(board[i][k]!=-1)
-							lineEmpty=false;
+		boolean lineEmpty = true;
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				for (int k = 0; k < board.length; k++) {
+					if (board[i][k] != -1)
+						lineEmpty = false;
 				}
-				if(!lineEmpty)
-				{
-					if(board[i][j]==-1)
+				if (!lineEmpty) {
+					if (board[i][j] == -1)
 						System.out.print(" ");
-					else
-						System.out.print(board[i][j]);
-					//System.out.print("("+board[i][j]+")");
+					else {
+						if (board[i][j] > 10)
+							System.out.print(board[i][j] + " ");
+						else
+							System.out.print(board[i][j] + "  ");
+					}
+					// System.out.print("("+board[i][j]+")");
 				}
 			}
-			if(!lineEmpty)
-			System.out.println();
-			lineEmpty=true;
+			if (!lineEmpty)
+				System.out.println();
+			lineEmpty = true;
 		}
+		/*
+		 * for(int i=0;i<board.length;i++) { for(int j=0;j<board.length;j++) {
+		 * if(board[i][j]==-1) System.out.print(" "); else
+		 * System.out.print(board[i][j]); } System.out.println(); }
+		 */
 	}
 }

@@ -394,11 +394,11 @@ public class GameEngine {
 									Integer.parseInt(br.readLine()));
 
 							System.out
-									.println("Enter the x co-ordinate of position where you want to place Tile");
+									.println("Enter the column x co-ordinate of position where you want to place Tile");
 							int xcoordinate = Integer.parseInt(br.readLine());
 
 							System.out
-									.println("Enter the y co-ordinate of position where you want to place Tile");
+									.println("Enter the row y co-ordinate of position where you want to place Tile");
 							int ycoordinate = Integer.parseInt(br.readLine());
 
 							System.out
