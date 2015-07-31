@@ -667,9 +667,10 @@ public class GameEngine {
 			return;
 		}
 		
-		int degreeOfRotation = 0;
+		int degreeOfRotation = 0,indexOption =0;
 		String option = "";
 		String regex = "\\d+";
+		boolean check = true;
 		
 		Scanner in = new Scanner(System.in);
 		
@@ -683,7 +684,27 @@ public class GameEngine {
 		
 		//
 		System.out.println("Enter the index of laketiles you want to put on board:");
-		LakeTiles currentTileToPlace = player.placeLakeTile(Integer.parseInt(br.readLine()));
+		
+		check = true;
+		while (check) {
+			in = new Scanner(System.in);
+			option = in.nextLine();
+			option.trim();
+			if (!option.matches(regex)) {
+				System.out.println("Invalid index. Enter again!");
+				check = true;
+			} else {
+				indexOption = Integer.valueOf(option);
+				if (indexOption < 0 || indexOption > 2) {
+					System.out.println("Invalid index. Enter again!");
+				} else {
+					check = false;
+				}
+			}
+
+		}
+		
+		LakeTiles currentTileToPlace = player.placeLakeTile(indexOption);
 
 		//
 		boolean flag = true;
@@ -706,7 +727,7 @@ public class GameEngine {
 					.println("Enter the degree of roatation for the tile you want to place on board");
 			System.out.println("Available options 0 90 180 270");
 			
-			boolean check = true;
+			check = true;
 			while (check) {
 				in = new Scanner(System.in);
 				option = in.nextLine();
@@ -716,7 +737,7 @@ public class GameEngine {
 					check = true;
 				} else {
 					degreeOfRotation = Integer.valueOf(option);
-					if (degreeOfRotation != 0 || degreeOfRotation!=90 || degreeOfRotation!=180|| degreeOfRotation!=270 ) {
+					if (degreeOfRotation != 0 && degreeOfRotation!=90 && degreeOfRotation!=180 && degreeOfRotation!=270 ) {
 						System.out.println("Invalid degree. Enter again!");
 					} else {
 						check = false;
