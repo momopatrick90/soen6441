@@ -660,20 +660,18 @@ public class GameEngine {
 	
 	public void placeLakeTile(Player player, BufferedReader br) throws NumberFormatException, IOException
 	{
-<<<<<<< Updated upstream
 		//
 		if(player.playerLTStack.size() == 0)
 		{
 			System.out.println("No lake tile available to play");
 			return;
 		}
-=======
+		
 		int degreeOfRotation = 0;
 		String option = "";
 		String regex = "\\d+";
 		
 		Scanner in = new Scanner(System.in);
->>>>>>> Stashed changes
 		
 		// board
 		board.displayBoard(board.board, board.tilesOnBoard);
