@@ -626,8 +626,10 @@ public class GameEngine {
 	}
 	
 
+	//
 	protected void run() throws NumberFormatException, IOException {
-		//System.out.println("Number of times game will run"+round);
+		// was the game exited
+		boolean exited = false;
 		
 		while (round > 0) {
 			//
@@ -639,17 +641,17 @@ public class GameEngine {
 			System.out.println(currentPlayer.name+ "'s turn to play.");
 			
 			// Exchange lantern cards
-			System.out.print("Type 1 if you want to exit the game loop, any number to continue: ");
+			System.out.print("Type 1 if you want to exit the game loop, any other number to continue: ");
 			int choice = Integer.parseInt(br.readLine());
 			//
 			if(choice == 1)
 			{
+				exited = true;
 				break;
 			}
 						
-			
 			// Exchange lantern cards
-			System.out.print("Type 1 if you want to exchange lantern cards, any number to skip: ");
+			System.out.print("Type 1 if you want to exchange lantern cards, any other number to skip: ");
 			choice = Integer.parseInt(br.readLine());
 			//
 			if(choice == 1)
@@ -658,26 +660,41 @@ public class GameEngine {
 			}
 			
 			// Make dedication
-			System.out.print("Type 1 if you want to make a dedication, any number else to skip: ");
+			System.out.print("Type 1 if you want to make a dedication, any other number else to skip: ");
 			choice = Integer.parseInt(br.readLine());
 			if(choice == 1)
 			{
 				this.makeDedication(currentPlayer, br);
 			}
 			
+
 			//place lake tile 
 			this.placeLakeTile(currentPlayer, br);
 			
-			// Composury pick lake tile
-			System.out.println();
-			currentPlayer.pickLakeTileFromStack(lakeTiles.getLakeTile());
-			currentPlayer.displayPlayersLakeTile(currentPlayer);
+			if(lakeTiles.hasLakeTile())
+			{// Composury pick lake tile
+				currentPlayer.pickLakeTileFromStack(lakeTiles.getLakeTile());
+				System.out.println();
+				currentPlayer.displayPlayersLakeTile(currentPlayer);
+			}else
+			{
+				System.out.println("No lake tiles left on board to pick");
+			}
 			
 			//
 			System.out.println(currentPlayer.name+ "'s turn is over");
 			
 			// move to next player
 			moveToNextPlayer();
+			
+			//
+			round--;
+		}
+		
+		// Game finished
+		if(!exited)
+		{
+			
 		}
 	}
 

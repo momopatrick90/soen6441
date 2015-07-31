@@ -209,6 +209,15 @@ public class LakeTiles {
 	}
 
 	/**
+	 * return true of if not empty
+	 * 
+	 * @return boolean
+	 */
+	public boolean hasLakeTile() {
+		return !globalLakeTiles.isEmpty();
+	}
+	
+	/**
 	 * method to place a new Tile on board
 	 * 
 	 * @param x
