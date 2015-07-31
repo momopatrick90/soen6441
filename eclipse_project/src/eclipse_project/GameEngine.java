@@ -538,8 +538,7 @@ public class GameEngine {
 			}
 			if (state) {
 				System.out.println("Picked!");
-				System.out
-						.println("Score: four of a kind "
+				System.out.println("Score: four of a kind "
 								+ player.playerScore_fourKind);
 				System.out
 						.println("Score: three of a kind "
@@ -580,11 +579,11 @@ public class GameEngine {
 		//
 		while (flag) {
 			System.out
-			.println("Enter the id of the adjacent tile where you want to put your LakeTile");
+			.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
 			int id = Integer.parseInt(br.readLine());
 			
 			System.out
-			.println("Enter the adjacent position");
+			.println("Enter the adjacent position (right, left, up, down)");
 			String AdjacentPosition = br.readLine();
 			int GetColumn=lakeTiles.getColumn(board,id,AdjacentPosition);
 			int GetRow=lakeTiles.getRow(board,id,AdjacentPosition);
