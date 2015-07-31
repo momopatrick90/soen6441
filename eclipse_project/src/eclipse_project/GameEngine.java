@@ -660,7 +660,7 @@ public class GameEngine {
 			}
 			
 			// Make dedication
-			System.out.print("Type 1 if you want to make a dedication, any other number else to skip: ");
+			System.out.print("Type 1 if you want to make a dedication, any other number to skip: ");
 			choice = Integer.parseInt(br.readLine());
 			if(choice == 1)
 			{
@@ -691,10 +691,21 @@ public class GameEngine {
 			round--;
 		}
 		
-		// Game finished
+		
 		if(!exited)
 		{
-			
+			System.out.println("Game finished, player scores: ");
+			//
+			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
+				///
+				Player player = PlayerList.get(playerIndex);
+				System.out.println("name: "+player.name
+						+", fourKindScore: "+player.playerScore_fourKind
+						+", threePairScore "+player.playerScore_threePair
+						+", sevenUniqueScore "+player.playerScore_sevenUnique
+						+", total: "+(player.playerScore_fourKind+player.playerScore_threePair+player.playerScore_sevenUnique));
+				
+			}
 		}
 	}
 
