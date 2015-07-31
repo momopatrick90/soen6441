@@ -11,10 +11,11 @@
 2)Information about the files in the archive:
   ******************************************
 	
-	i)  Software architecture document
+	i)  Software architecture document (Software Architecture_Build_2.docx)
 	ii) Code and test java files	
 	    a)eclipse_project -> src -> eclipse_project
 		Board.java
+		CardToReturn.java
 		DedicationTokens.java
 		FavorTokens.java
 		GameEngine.java
@@ -25,15 +26,15 @@
 	    b)eclipse_project -> src -> unittests
 		AllTests.java
 		BoardTest.java
+		CardToReturnTest.java
 		DedicationTokensTest.java
 		FavorTokensTest.java
-		GameEngineTest.java
 		LakeTileTest.java
-		LanternApplicationTest.java
 		LanternCardsTest.java		
 		PlayerTest.java
-	iii) JavaDoc_TeamD
-	iv)  README.txt		
+	iii) JavadocBuild2
+	iv)  README.txt	
+	V)   SOEN6441_LanterApplication_ClassDiagram.pdf
 	   
 	
 
