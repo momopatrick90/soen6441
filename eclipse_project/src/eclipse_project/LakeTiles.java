@@ -220,38 +220,40 @@ public class LakeTiles {
 	 *            to be placed on board
 	 * @return true if the tile is placed successfully
 	 */
-	public boolean placeTile(int x, int y, Board gameBoard,
+	public boolean placeTile(int col, int row, Board gameBoard,
 			LakeTiles tileToPlace) {
 		boolean flag = false;
-		if (gameBoard.board[y][x] == -1) {
-			gameBoard.board[y][x] = tileToPlace.id;
+		//System.out.println("col i m getting"+col);
+		//System.out.println("y i m getting"+row);
+		if (gameBoard.board[row][col] == -1) {
+			gameBoard.board[row][col] = tileToPlace.id;
 			gameBoard.tilesOnBoard.add(tileToPlace);
-			if (gameBoard.board[x + 1][y] != -1) {
-				tileToPlace.right = gameBoard.board[x + 1][y];
+			if (gameBoard.board[row+ 1][col] != -1) {
+				tileToPlace.down = gameBoard.board[row + 1][col];
 				for (int i = 0; i < gameBoard.tilesOnBoard.size(); i++) {
-					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[x + 1][y])
-						gameBoard.tilesOnBoard.get(i).left = tileToPlace.id;
-				}
-			}
-			if (gameBoard.board[x][y + 1] != -1) {
-				tileToPlace.down = gameBoard.board[x][y + 1];
-				for (int i = 0; i < gameBoard.tilesOnBoard.size(); i++) {
-					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[x][y + 1])
+					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[row + 1][col])
 						gameBoard.tilesOnBoard.get(i).up = tileToPlace.id;
 				}
 			}
-			if (gameBoard.board[x - 1][y] != -1) {
-				tileToPlace.left = gameBoard.board[x - 1][y];
+			if (gameBoard.board[row][col + 1] != -1) {
+				tileToPlace.right = gameBoard.board[row][col + 1];
 				for (int i = 0; i < gameBoard.tilesOnBoard.size(); i++) {
-					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[x - 1][y])
-						gameBoard.tilesOnBoard.get(i).right = tileToPlace.id;
+					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[row][col + 1])
+						gameBoard.tilesOnBoard.get(i).left = tileToPlace.id;
 				}
 			}
-			if (gameBoard.board[x][y - 1] != -1) {
-				tileToPlace.up = gameBoard.board[x][y - 1];
+			if (gameBoard.board[row - 1][col] != -1) {
+				tileToPlace.up = gameBoard.board[row - 1][col];
 				for (int i = 0; i < gameBoard.tilesOnBoard.size(); i++) {
-					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[x][y - 1])
+					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[row - 1][col])
 						gameBoard.tilesOnBoard.get(i).down = tileToPlace.id;
+				}
+			}
+			if (gameBoard.board[row][col - 1] != -1) {
+				tileToPlace.left = gameBoard.board[row][col - 1];
+				for (int i = 0; i < gameBoard.tilesOnBoard.size(); i++) {
+					if (gameBoard.tilesOnBoard.get(i).id == gameBoard.board[row][col - 1])
+						gameBoard.tilesOnBoard.get(i).right = tileToPlace.id;
 				}
 			}
 			
@@ -310,6 +312,12 @@ public class LakeTiles {
 				"downColor: " + this.downColor + " " + "platForm: "+ this.platform);
 	}
 	
+	/**
+	 * This method rotates the lakeTile
+	 * @param lakeTile LakeTile to be rotated
+	 * @param degreeOfRotation Degree of rotation
+	 * @return lakeTile Rotated lakeTile
+	 */
 	public LakeTiles rotateLakeTile(LakeTiles lakeTile,int degreeOfRotation)
 	{
 		String left=lakeTile.leftColor;
@@ -339,6 +347,75 @@ public class LakeTiles {
 			default:System.out.println();
 		}
 		return lakeTile;
+	}
+
+	/**
+	 * Method to get Column of the board where player wants to place a LakeTile
+	 * @param board GameBoard
+	 * @param id2 Id of the adjacent LakeTile
+	 * @param adjacentPosition Position can be left,right,down,up
+	 * @return Column 
+	 */
+	public int getColumn(Board board, int id2, String adjacentPosition) {
+		// TODO Auto-generated method stub
+		int Column=-2;
+		/*for(int i=0;i<board.tilesOnBoard.size();i++)
+		{
+			if(board.tilesOnBoard.get(i).id==id2)
+			{
+				
+			}
+		}*/
+		for(int i=0;i<board.board.length;i++)
+		{
+			for(int j=0;j<board.board.length;j++)
+			{
+				if(board.board[i][j]==id2)
+				{
+					Column=j;
+					//System.out.println(board.board[i][j]==id2);
+					//System.out.println("INLoop"+Column);
+				}
+					
+			}
+		}
+		if(adjacentPosition.equalsIgnoreCase("left"))
+			Column--;
+		if(adjacentPosition.equalsIgnoreCase("right"))
+			Column++;
+		return Column;
+	}
+	
+	/**
+	 * Method to get Row of the board where player wants to place a LakeTile
+	 * @param board GameBoard
+	 * @param id2 Id of the adjacent LakeTile
+	 * @param adjacentPosition Position can be left,right,down,up
+	 * @return Row
+	 */
+	public int getRow(Board board, int id2, String adjacentPosition) {
+		// TODO Auto-generated method stub
+		int Row=-2;
+		/*for(int i=0;i<board.tilesOnBoard.size();i++)
+		{
+			if(board.tilesOnBoard.get(i).id==id2)
+			{
+				
+			}
+		}*/
+		for(int i=0;i<board.board.length;i++)
+		{
+			for(int j=0;j<board.board.length;j++)
+			{
+				if(board.board[i][j]==id2)
+					Row=i;
+			}
+		}
+		if(adjacentPosition.equalsIgnoreCase("down"))
+			Row++;
+		if(adjacentPosition.equalsIgnoreCase("up"))
+			Row--;
+		return Row;
 	}
 
 }

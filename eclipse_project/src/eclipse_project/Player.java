@@ -453,6 +453,7 @@ void setCurrent(boolean state) {
 	public void displayPlayersLakeTile(Player currentPlayer)
 	{
 		System.out.println("LakeTiles at your hand:");
+		System.out.println();
 		for(int i=0;i<currentPlayer.playerLTStack.size();i++)
 		{
 			
