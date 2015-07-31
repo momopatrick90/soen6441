@@ -35,6 +35,9 @@
 	iii) JavadocBuild2
 	iv)  README.txt	
 	V)   SOEN6441_LanterApplication_ClassDiagram.pdf
+	Vi)  GameFilePDF - PDF file hihlighted with changes which not shown during the demo
+	vii) GameOnRoll - xml file of existing game
+	
 	   
 	
 
