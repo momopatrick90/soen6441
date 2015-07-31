@@ -554,6 +554,13 @@ public class GameEngine {
 	
 	public void placeLakeTile(Player player, BufferedReader br) throws NumberFormatException, IOException
 	{
+		//
+		if(player.playerLTStack.size() == 0)
+		{
+			System.out.println("No lake tile available to play");
+			return;
+		}
+		
 		// board
 		board.displayBoard(board.board, board.tilesOnBoard);
 		System.out.println();
