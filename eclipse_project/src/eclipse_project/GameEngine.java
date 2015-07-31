@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
 import java.util.Stack;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -381,6 +382,11 @@ public class GameEngine {
 	
 	protected void exchangeLanternCards(Player player, BufferedReader br) throws IOException
 	{
+		int lanternCard = 0;
+		String returnLCard = "";
+		String pickLCard = "";
+		String regex = "\\d+";
+		Scanner in = new Scanner(System.in);
 		//
 		System.out.println("This is the amount of tokens you have: "+ player.favorTokenScore);
 		System.out.println("----------------------------");
@@ -391,12 +397,85 @@ public class GameEngine {
 		System.out.println("----------------------------");
 		
 		//
-		System.out.println("Enter the lantern card you want to return");
-		String returnLCard = br.readLine();
+		System.out.println("Select the lantern card you want to return.\n"
+				+ "1.Red Card\n"
+				+ "2.Green Card\n"
+				+ "3.Purple Card\n"
+				+ "4.Orange Card\n"
+				+ "5.White Card\n"
+				+ "6.Black Card\n"
+				+ "7.Blue Card\n");
 		
+		boolean check = true;
+		while (check) {
+			in = new Scanner(System.in);
+			returnLCard = in.nextLine();
+			returnLCard.trim();
+			if (!returnLCard.matches(regex)) {
+				System.out.println("Invalid lantern card option");
+				check = true;
+			} else {
+				lanternCard = Integer.valueOf(returnLCard);
+				if (lanternCard < 1 || lanternCard > 7) {
+					System.out.println("Invalid lantern card option");
+				} else {
+					check = false;
+				}
+			}
+
+		}
+		switch(lanternCard)
+		{
+			case 1: returnLCard = "redCard";break;
+			case 2: returnLCard = "greenCard";break;
+			case 3: returnLCard = "purpleCard";break;
+			case 4: returnLCard = "orangeCard";break;
+			case 5: returnLCard = "whiteCard";break;
+			case 6: returnLCard = "blackCard";break;
+			case 7: returnLCard = "blueCard";break;
+			default: System.out.println("Invalid option");break;
+		}
+		
+		lanternCard = 0;
+		System.out.println("Select the lantern card you want to pick.\n"
+				+ "1.Red Card\n"
+				+ "2.Green Card\n"
+				+ "3.Purple Card\n"
+				+ "4.Orange Card\n"
+				+ "5.White Card\n"
+				+ "6.Black Card\n"
+				+ "7.Blue Card\n");
+		
+		check = true;
+		while (check) {
+			in = new Scanner(System.in);
+			pickLCard = in.nextLine();
+			pickLCard.trim();
+			if (!pickLCard.matches(regex)) {
+				System.out.println("Invalid option. Enter again!");
+				check = true;
+			} else {
+				lanternCard = Integer.valueOf(pickLCard);
+				if (lanternCard < 1 || lanternCard > 7) {
+					System.out.println("Invalid option. Enter again!");
+				} else {
+					check = false;
+				}
+			}
+
+		}
 		//
-		System.out.println("Enter the lantern card you want to pick");
-		String pickLCard = br.readLine();
+		switch(lanternCard)
+		{
+			case 1: pickLCard = "redCard";break;
+			case 2: pickLCard = "greenCard";break;
+			case 3: pickLCard = "purpleCard";break;
+			case 4: pickLCard = "orangeCard";break;
+			case 5: pickLCard = "whiteCard";break;
+			case 6: pickLCard = "blackCard";break;
+			case 7: pickLCard = "blueCard";break;
+			default: System.out.println("Invalid option");break;
+		}
 		
 		boolean moveState = player.spendFavorTokens(favorTokens, lanternCards,
 						returnLCard, pickLCard);
@@ -408,6 +487,10 @@ public class GameEngine {
 	
 	protected void makeDedication(Player player, BufferedReader br) throws NumberFormatException, IOException
 	{
+		int move = 0;
+		String regex = "\\d+";
+		String option = "";
+		Scanner in = new Scanner(System.in);	
 		//
 		System.out.println("This is the amount of tokens you have: "+ player.favorTokenScore);
 		System.out.println("----------------------------");
@@ -422,7 +505,27 @@ public class GameEngine {
 		System.out.println("What Move do you want to make? Enter its corresponding integer");
 
 		System.out.println("1:Three Pair 2:Four of a kind 3: Seven Unique");
-		int move = Integer.valueOf(br.readLine());
+	
+		boolean check = true;
+	
+		while (check) {
+			in = new Scanner(System.in);
+			option = in.nextLine();
+			option.trim();
+			if (!option.matches(regex)) {
+				System.out.println("Invalid option. Enter again!");
+				check = true;
+			} else {
+				move = Integer.valueOf(option);
+				if (move < 1 || move > 3) {
+					System.out.println("Invalid option. Enter again!");
+				} else {
+					check = false;
+				}
+			}
+
+		}
+		
 		String moveString = null;
 		LanternCards returnedLanternCards = null;
 		boolean state = false;
@@ -531,6 +634,10 @@ public class GameEngine {
 							.println("You do not have enough cards to make 'Seven Unique' move");
 				}
 			}
+			else if(move >= 4)
+			{
+				System.out.println("Invalid option");
+			}
 			if (returnedLanternCards != null) {
 				state = player.pickDedicationToken(moveString,
 								returnedLanternCards, lanternCards,
@@ -553,12 +660,20 @@ public class GameEngine {
 	
 	public void placeLakeTile(Player player, BufferedReader br) throws NumberFormatException, IOException
 	{
+<<<<<<< Updated upstream
 		//
 		if(player.playerLTStack.size() == 0)
 		{
 			System.out.println("No lake tile available to play");
 			return;
 		}
+=======
+		int degreeOfRotation = 0;
+		String option = "";
+		String regex = "\\d+";
+		
+		Scanner in = new Scanner(System.in);
+>>>>>>> Stashed changes
 		
 		// board
 		board.displayBoard(board.board, board.tilesOnBoard);
@@ -592,7 +707,26 @@ public class GameEngine {
 			System.out
 					.println("Enter the degree of roatation for the tile you want to place on board");
 			System.out.println("Available options 0 90 180 270");
-			int degreeOfRotation = Integer.parseInt(br.readLine());
+			
+			boolean check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				option = in.nextLine();
+				option.trim();
+				if (!option.matches(regex)) {
+					System.out.println("Invalid degree. Enter again!");
+					check = true;
+				} else {
+					degreeOfRotation = Integer.valueOf(option);
+					if (degreeOfRotation != 0 || degreeOfRotation!=90 || degreeOfRotation!=180|| degreeOfRotation!=270 ) {
+						System.out.println("Invalid degree. Enter again!");
+					} else {
+						check = false;
+					}
+				}
+
+			}
+			
 			currentTileToPlace = lakeTiles.rotateLakeTile(
 					currentTileToPlace, degreeOfRotation);
 
@@ -662,7 +796,7 @@ public class GameEngine {
 			//
 			if(choice == 1)
 			{
-				exchangeLanternCards(player, br);
+				exchangeLanternCards(currentPlayer, br);
 			}
 			
 			// Make dedication

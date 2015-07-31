@@ -115,7 +115,7 @@ public class PlayerTest {
 
 	@Before
 	public void testAssignBoardPositionInitialization(){
-		playersList=new ArrayList<>();
+		playersList=new ArrayList<Player>();
 		
 		Player p1=new Player("player1");
 		Player p2=new Player("player2");
