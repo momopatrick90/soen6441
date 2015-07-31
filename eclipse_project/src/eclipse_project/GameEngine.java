@@ -353,340 +353,333 @@ public class GameEngine {
 		//
 		run();
 	}
-
-	protected void run() throws NumberFormatException, IOException {
-		// System.out.println("Number of times game will run"+round);
-		boolean placeLakeTile = false;
-		// is the game running
-		boolean running = true;
-		boolean currentPlayerFlag=true;
-		while (round > 0 && running) {
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					System.in));
-			for (int playerIndex = 0; playerIndex < PlayerList.size()
-					&& running; playerIndex++) {
-				if (PlayerList.get(playerIndex).current) {
-					//while(currentPlayerFlag)
-					//{
-						System.out.println(PlayerList.get(playerIndex).name
-								+ "'s turn to play.");
-						System.out
-								.println("Press 1 to pick up LakeTile from deck of LakeTiles");
-						System.out.println("Press 2 to Exchange Lantern Card");
-						System.out.println("Press 3 to Make Dedication");
-						System.out.println("Press 4 to Exit");
-						int choice = Integer.parseInt(br.readLine());
-						boolean flag = true;
-						boolean hasPlacedTile=false;
 	
-						switch (choice) {
-						case 1:
-							while (flag) {
-								board.displayBoard(board.board, board.tilesOnBoard);
-								System.out.println();
-	
-								PlayerList.get(playerIndex).displayPlayersLakeTile(
-										PlayerList.get(playerIndex));
-								System.out.println();
-								System.out
-										.println("Enter the index of laketiles you want to put on board");
-								LakeTiles currentTileToPlace = PlayerList.get(
-										playerIndex).placeLakeTile(
-										Integer.parseInt(br.readLine()));
-	
-								//System.out
-										//.println("Enter the column  where you want to place Tile");
-								//int column = Integer.parseInt(br.readLine());
-	
-								//System.out
-									//	.println("Enter the row  where you want to place Tile");
-								//int row = Integer.parseInt(br.readLine());
-								
-								System.out
-								.println("Enter the id of the adjacent tile where you want to put your LakeTile");
-								int id = Integer.parseInt(br.readLine());
-								
-								System.out
-								.println("Enter the adjacent position");
-								String AdjacentPosition = br.readLine();
-								int GetColumn=lakeTiles.getColumn(board,id,AdjacentPosition);
-								int GetRow=lakeTiles.getRow(board,id,AdjacentPosition);
-								//System.out.println("MyColumn "+GetColumn+" row "+GetRow);
-						
-								System.out
-										.println("Enter the degree of roatation for the tile you want to place on board");
-								System.out.println("Available options 0 90 180 270");
-								int degreeOfRotation = Integer.parseInt(br
-										.readLine());
-								currentTileToPlace = lakeTiles.rotateLakeTile(
-										currentTileToPlace, degreeOfRotation);
-	
-								placeLakeTile = lakeTiles.placeTile(GetColumn,
-										GetRow, board, currentTileToPlace);
-								if (placeLakeTile) {
-									lanternCards.assignLanternCardsToPlayers(
-											this.numOfPlayer, board,
-											GetColumn,GetRow, currentTileToPlace,
-											PlayerList, lanternCards, favorTokens);
-									board.displayBoard(board.board,
-											board.tilesOnBoard);
-									PlayerList.get(playerIndex)
-											.displayPlayersLakeTile(
-													PlayerList.get(playerIndex));
-									System.out.println();
-									System.out
-											.println("Number of FavorTokens:"
-													+ PlayerList.get(playerIndex).favorTokenScore);
-									System.out.println();
-									System.out
-											.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
-									for (int i = 0; i < PlayerList.size(); i++) {
-										System.out
-												.println("Player" + (i + 1) + ":");
-										System.out
-												.println(PlayerList.get(i).playerLCStack);
-										System.out.println();
-									}
-									flag = false;
-									hasPlacedTile=true;
-									//currentPlayerFlag=false;
-								} else
-									PlayerList.get(playerIndex)
-											.pickLakeTileFromStack(
-													currentTileToPlace);
-								System.out.println();
-								System.out.println("Player Pick up the new LakeTile from the Stack after placing one");
-							}
-							System.out.println();
-							PlayerList.get(playerIndex).pickLakeTileFromStack(
-									lakeTiles.getLakeTile());
-							PlayerList.get(playerIndex)
-							.displayPlayersLakeTile(
-									PlayerList.get(playerIndex));
-							break;
-						case 2:
-							// Prints the tokens the player currently has.
-							if(!hasPlacedTile)
-							{
-								System.out
-										.println("This is the amount of tokens you have: "
-												+ PlayerList.get(playerIndex).favorTokenScore);
-								System.out.println("----------------------------");
-		
-								// Print lanterns
-								System.out
-										.println("--Lantern cards you currently have:--");
-		
-								System.out.println(PlayerList.get(playerIndex)
-										.getLanternCards());
-								//
-								System.out.println("----------------------------");
-		
-								System.out
-										.println("Enter the lantern card you want to return");
-		
-								String returnLCard = br.readLine();
-								System.out
-										.println("Enter the lantern card you want to pick");
-								String pickLCard = br.readLine();
-		
-								boolean moveState = PlayerList.get(playerIndex)
-										.spendFavorTokens(favorTokens, lanternCards,
-												returnLCard, pickLCard);
-								if (moveState)
-									System.out.print("Successful Exchange");
-								else
-									System.out
-											.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
-							}
-								break;
-	
-						case 3:
-							// Prints the tokens the player currently has.
-							if(!hasPlacedTile)
-							{
-								System.out
-										.println("This is the amount of tokens you have: "
-												+ PlayerList.get(playerIndex).favorTokenScore);
-								System.out.println("----------------------------");
-		
-								System.out
-										.println("--Lantern cards you currently have:--");
-		
-								// Prints the number of black Cards the player has.
-								System.out.println(PlayerList.get(playerIndex)
-										.getLanternCards());
-		
-								System.out.println("----------------------------");
-		
-								// TODO needs validation to be done before submitting
-								// the code
-		
-								System.out
-										.println("What Move do you want to make? Enter its corresponding integer");
-		
-								System.out
-										.println("1:Three Pair 2:Four of a kind 3: Seven Unique");
-								int move = Integer.valueOf(br.readLine());
-								String moveString = null;
-								LanternCards returnedLanternCards = null;
-								boolean state = false;
-								if (move == 1) {
-									moveString = "threePair";
-									System.out
-											.println("What Lantern cards do you want to return? Enter "
-													+ "the three cards.");
-									System.out
-											.println("1: redCard 2: blueCard 3: greenCard 4: "
-													+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
-		
-									int card = Integer.valueOf(br.readLine());
-									int card2 = Integer.valueOf(br.readLine());
-									int card3 = Integer.valueOf(br.readLine());
-		
-									if (PlayerList.get(playerIndex).getLanternCards()
-											.CardCount(card) >= 2
-											&& PlayerList.get(playerIndex)
-													.getLanternCards().CardCount(card2) >= 2
-											&& PlayerList.get(playerIndex)
-													.getLanternCards().CardCount(card3) >= 2) {
-										System.out
-												.println("This means that you succeded to "
-														+ "get through the card check point");
-		
-										CardToReturn cardToReturn = new CardToReturn(
-												card, card2, card3);
-		
-										returnedLanternCards = cardToReturn
-												.returnStackThreeOfKind();
-										System.out
-												.println("these are the cards to be returned 3:"
-														+ returnedLanternCards
-																.CardCount(card3));
-										System.out
-												.println("these are the cards to be returned 2:"
-														+ returnedLanternCards
-																.CardCount(card2));
-		
-										System.out
-												.println("these are the cards to be returned 1:"
-														+ returnedLanternCards
-																.CardCount(card));
-		
-										// take 2 cards with the first color inserted
-										// from player
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor());
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor());
-		
-										// take 2 cards with the second color inserted
-										// from player
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor2());
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor2());
-		
-										// take 2 cards with the third color inserted
-										// from player
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor3());
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor3());
-									} else {
-										System.out
-												.println("You do not have enough cards to make 'Three pair' move");
-									}
-		
-								} else if (move == 2) {
-									moveString = "FourOfKind";
-									System.out
-											.println("What Lantern cards do you want to return?"
-													+ " Enter the card");
-									System.out
-											.println("1: redCard 2: blueCard 3: greenCard 4: "
-													+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
-		
-									int card = Integer.valueOf(br.readLine());
-									if (PlayerList.get(playerIndex).getLanternCards()
-											.CardCount(card) >= 4) {
-		
-										CardToReturn cardToReturn = new CardToReturn(
-												card);
-										returnedLanternCards = cardToReturn
-												.returnStackFourOfKind();
-		
-										// take 4 cards with the third color inserted
-										// from player
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor());
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor());
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor());
-										PlayerList.get(playerIndex).getLanternCards()
-												.getCard(cardToReturn.getColor());
-									} else {
-										System.out
-												.println("You do not have enough cards to make 'Four of a kind' move");
-									}
-		
-								} else if (move == 3) {
-									moveString = "sevenUnique";
-		
-									CardToReturn cardToReturn = new CardToReturn();
-									if (cardToReturn.SevenUniqueState(PlayerList
-											.get(playerIndex))) {
-										returnedLanternCards = cardToReturn
-												.returnSeveUnique();
-		
-									} else {
-										System.out
-												.println("You do not have enough cards to make 'Seven Unique' move");
-									}
-								}
-								if (returnedLanternCards != null) {
-									state = PlayerList.get(playerIndex)
-											.pickDedicationToken(moveString,
-													returnedLanternCards, lanternCards,
-													dedicationTokens);
-								}
-								if (state) {
-									System.out.println("Picked!");
-									System.out
-											.println("Score: four of a kind "
-													+ PlayerList.get(playerIndex).playerScore_fourKind);
-									System.out
-											.println("Score: three of a kind "
-													+ PlayerList.get(playerIndex).playerScore_threePair);
-									System.out
-											.println("Score: Seven unique "
-													+ PlayerList.get(playerIndex).playerScore_sevenUnique);
-								} else
-									System.out
-											.println(" Please revisit the game rules!");
-							}
-								break;
-	
-						case 4:
-							running = false;
-							continue;
-						}
-						System.out.println();
-						System.out.println(PlayerList.get(playerIndex).name
-								+ "'s turn is over");
-						PlayerList.get(playerIndex).setCurrent(false);
-						if (playerIndex == PlayerList.size() - 1) {
-							PlayerList.get(0).setCurrent(true);
-						} else
-							PlayerList.get(++playerIndex).setCurrent(true);
-	
-					}
-				}
+	protected Player getCurrentPlayer()
+	{
+		for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
+			if (PlayerList.get(playerIndex).current) {
+				return PlayerList.get(playerIndex);
 			}
 		}
+		return null;
+	}
+	
+	protected void moveToNextPlayer()
+	{
+		for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
+			if (PlayerList.get(playerIndex).current) {
+				//
+				PlayerList.get(playerIndex).setCurrent(false);
+				//
+				if (playerIndex == PlayerList.size() - 1) {
+					PlayerList.get(0).setCurrent(true);
+				} else
+					PlayerList.get(++playerIndex).setCurrent(true);
+				}
+		}
+	}
+	
+	protected void exchangeLanternCards(Player player, BufferedReader br) throws IOException
+	{
+		//
+		System.out.println("This is the amount of tokens you have: "+ player.favorTokenScore);
+		System.out.println("----------------------------");
+		
+		// Print lanterns
+		System.out.println("--Lantern cards you currently have:--");
+		System.out.println(player.getLanternCards());
+		System.out.println("----------------------------");
+		
+		//
+		System.out.println("Enter the lantern card you want to return");
+		String returnLCard = br.readLine();
+		
+		//
+		System.out.println("Enter the lantern card you want to pick");
+		String pickLCard = br.readLine();
+		
+		boolean moveState = player.spendFavorTokens(favorTokens, lanternCards,
+						returnLCard, pickLCard);
+		if (moveState)
+			System.out.print("Successful Exchange");
+		else
+			System.out.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
+	}
+	
+	protected void makeDedication(Player player, BufferedReader br) throws NumberFormatException, IOException
+	{
+		//
+		System.out.println("This is the amount of tokens you have: "+ player.favorTokenScore);
+		System.out.println("----------------------------");
+		System.out.println("--Lantern cards you currently have:--");
 
-	//}
+		// Prints the number of black Cards the player has.
+		System.out.println(player.getLanternCards());
+
+		System.out.println("----------------------------");
+		// TODO needs validation to be done before submitting
+		// the code
+		System.out.println("What Move do you want to make? Enter its corresponding integer");
+
+		System.out.println("1:Three Pair 2:Four of a kind 3: Seven Unique");
+		int move = Integer.valueOf(br.readLine());
+		String moveString = null;
+		LanternCards returnedLanternCards = null;
+		boolean state = false;
+		if (move == 1) {
+			moveString = "threePair";
+			System.out.println("What Lantern cards do you want to return? Enter "+ "the three cards.");
+			System.out.println("1: redCard 2: blueCard 3: greenCard 4: "+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+
+			int card = Integer.valueOf(br.readLine());
+			int card2 = Integer.valueOf(br.readLine());
+			int card3 = Integer.valueOf(br.readLine());
+
+			if (player.getLanternCards().CardCount(card) >= 2
+						&& player.getLanternCards().CardCount(card2) >= 2
+						&& player.getLanternCards().CardCount(card3) >= 2) {
+					
+				System.out.println("This means that you succeded to "+ "get through the card check point");
+
+					CardToReturn cardToReturn = new CardToReturn(
+							card, card2, card3);
+
+					returnedLanternCards = cardToReturn
+							.returnStackThreeOfKind();
+					System.out
+							.println("these are the cards to be returned 3:"
+									+ returnedLanternCards
+											.CardCount(card3));
+					System.out
+							.println("these are the cards to be returned 2:"
+									+ returnedLanternCards
+											.CardCount(card2));
+
+					System.out
+							.println("these are the cards to be returned 1:"
+									+ returnedLanternCards
+											.CardCount(card));
+
+					// take 2 cards with the first color inserted
+					// from player
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+
+					// take 2 cards with the second color inserted
+					// from player
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor2());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor2());
+
+					// take 2 cards with the third color inserted
+					// from player
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor3());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor3());
+				} else {
+					System.out
+							.println("You do not have enough cards to make 'Three pair' move");
+				}
+
+			} else if (move == 2) {
+				moveString = "FourOfKind";
+				System.out
+						.println("What Lantern cards do you want to return?"
+								+ " Enter the card");
+				System.out
+						.println("1: redCard 2: blueCard 3: greenCard 4: "
+								+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+
+				int card = Integer.valueOf(br.readLine());
+				if (player.getLanternCards()
+						.CardCount(card) >= 4) {
+
+					CardToReturn cardToReturn = new CardToReturn(
+							card);
+					returnedLanternCards = cardToReturn
+							.returnStackFourOfKind();
+
+					// take 4 cards with the third color inserted
+					// from player
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+				} else {
+					System.out
+							.println("You do not have enough cards to make 'Four of a kind' move");
+				}
+
+			} else if (move == 3) {
+				moveString = "sevenUnique";
+
+				CardToReturn cardToReturn = new CardToReturn();
+				if (cardToReturn.SevenUniqueState(player)) {
+					returnedLanternCards = cardToReturn
+							.returnSeveUnique();
+
+				} else {
+					System.out
+							.println("You do not have enough cards to make 'Seven Unique' move");
+				}
+			}
+			if (returnedLanternCards != null) {
+				state = player.pickDedicationToken(moveString,
+								returnedLanternCards, lanternCards,
+								dedicationTokens);
+			}
+			if (state) {
+				System.out.println("Picked!");
+				System.out
+						.println("Score: four of a kind "
+								+ player.playerScore_fourKind);
+				System.out
+						.println("Score: three of a kind "
+								+ player.playerScore_threePair);
+				System.out
+						.println("Score: Seven unique "
+								+ player.playerScore_sevenUnique);
+			} else
+				System.out
+						.println(" Please revisit the game rules!");
+	}
+	
+	public void placeLakeTile(Player player, BufferedReader br) throws NumberFormatException, IOException
+	{
+		// board
+		board.displayBoard(board.board, board.tilesOnBoard);
+		System.out.println();
+		
+		// player
+		player.displayPlayersLakeTile(player);
+		System.out.println();
+		
+		//
+		System.out.println("Enter the index of laketiles you want to put on board:");
+		LakeTiles currentTileToPlace = player.placeLakeTile(Integer.parseInt(br.readLine()));
+
+		//
+		boolean flag = true;
+		boolean placeLakeTile = false;
+	
+		//
+		while (flag) {
+			System.out
+			.println("Enter the id of the adjacent tile where you want to put your LakeTile");
+			int id = Integer.parseInt(br.readLine());
+			
+			System.out
+			.println("Enter the adjacent position");
+			String AdjacentPosition = br.readLine();
+			int GetColumn=lakeTiles.getColumn(board,id,AdjacentPosition);
+			int GetRow=lakeTiles.getRow(board,id,AdjacentPosition);
+			//System.out.println("MyColumn "+GetColumn+" row "+GetRow);
+	
+			System.out
+					.println("Enter the degree of roatation for the tile you want to place on board");
+			System.out.println("Available options 0 90 180 270");
+			int degreeOfRotation = Integer.parseInt(br.readLine());
+			currentTileToPlace = lakeTiles.rotateLakeTile(
+					currentTileToPlace, degreeOfRotation);
+
+			placeLakeTile = lakeTiles.placeTile(GetColumn,
+					GetRow, board, currentTileToPlace);
+			if (placeLakeTile) {
+				lanternCards.assignLanternCardsToPlayers(
+						this.numOfPlayer, board,
+						GetColumn,GetRow, currentTileToPlace,
+						PlayerList, lanternCards, favorTokens);
+				board.displayBoard(board.board,
+						board.tilesOnBoard);
+				player.displayPlayersLakeTile(player);
+				System.out.println();
+				System.out
+						.println("Number of FavorTokens:"
+								+ player.favorTokenScore);
+				System.out.println();
+				System.out
+						.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
+				for (int i = 0; i < PlayerList.size(); i++) {
+					System.out
+							.println("Player" + (i + 1) + ":");
+					System.out
+							.println(PlayerList.get(i).playerLCStack);
+					System.out.println();
+				}
+				
+				flag = false;
+			} else
+				player.pickLakeTileFromStack(currentTileToPlace);
+			
+			
+			System.out.println();
+			System.out.println("Player Pick up the new LakeTile from the Stack after placing one");
+		}
+	}
+	
+
+	protected void run() throws NumberFormatException, IOException {
+		//System.out.println("Number of times game will run"+round);
+		
+		while (round > 0) {
+			//
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					System.in));
+
+			//get current
+			Player currentPlayer = getCurrentPlayer();
+			System.out.println(currentPlayer.name+ "'s turn to play.");
+			
+			// Exchange lantern cards
+			System.out.print("Type 1 if you want to exit the game loop, any number to continue: ");
+			int choice = Integer.parseInt(br.readLine());
+			//
+			if(choice == 1)
+			{
+				break;
+			}
+						
+			
+			// Exchange lantern cards
+			System.out.print("Type 1 if you want to exchange lantern cards, any number to skip: ");
+			choice = Integer.parseInt(br.readLine());
+			//
+			if(choice == 1)
+			{
+				exchangeLanternCards(player, br);
+			}
+			
+			// Make dedication
+			System.out.print("Type 1 if you want to make a dedication, any number else to skip: ");
+			choice = Integer.parseInt(br.readLine());
+			if(choice == 1)
+			{
+				this.makeDedication(currentPlayer, br);
+			}
+			
+			//place lake tile 
+			this.placeLakeTile(currentPlayer, br);
+			
+			// Composury pick lake tile
+			System.out.println();
+			currentPlayer.pickLakeTileFromStack(lakeTiles.getLakeTile());
+			currentPlayer.displayPlayersLakeTile(currentPlayer);
+			
+			//
+			System.out.println(currentPlayer.name+ "'s turn is over");
+			
+			// move to next player
+			moveToNextPlayer();
+		}
+	}
 
 	/**
 	 * @param fileName
