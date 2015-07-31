@@ -737,10 +737,10 @@ public class GameEngine {
 					check = true;
 				} else {
 					degreeOfRotation = Integer.valueOf(option);
-					if (degreeOfRotation != 0 && degreeOfRotation!=90 && degreeOfRotation!=180 && degreeOfRotation!=270 ) {
-						System.out.println("Invalid degree. Enter again!");
-					} else {
+					if (degreeOfRotation == 0 || degreeOfRotation==90 || degreeOfRotation==180 || degreeOfRotation==270 ) {
 						check = false;
+					} else {
+						System.out.println("Invalid degree. Enter again!");
 					}
 				}
 
