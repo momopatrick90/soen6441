@@ -2,6 +2,7 @@ package eclipse_project;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class HumanPlayer implements PlayerStrategy {
@@ -12,9 +13,10 @@ public class HumanPlayer implements PlayerStrategy {
 	}
 
 
-	public void play(GameEngine gameEngine, Player player, BufferedReader br) throws NumberFormatException, IOException {
+	public void play(GameEngine gameEngine, Player player) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		// Exchange lantern cards
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.print("Type 1 if you want to exchange lantern cards, any other number to skip: ");
 		int choice = Integer.parseInt(br.readLine());
 		//

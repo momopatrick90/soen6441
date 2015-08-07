@@ -5,5 +5,5 @@ import java.io.IOException;
 
 public interface PlayerStrategy 
 {
-	public void play(GameEngine gameEngine, Player player, BufferedReader br) throws NumberFormatException, IOException;
+	public void play(GameEngine gameEngine, Player player) throws NumberFormatException, IOException;
 }

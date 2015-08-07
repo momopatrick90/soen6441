@@ -11,7 +11,7 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 	}
 
 	@Override
-	public void play(GameEngine gameEngine, Player player, BufferedReader br)
+	public void play(GameEngine gameEngine, Player player)
 			throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		
