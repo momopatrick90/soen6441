@@ -97,34 +97,13 @@ public class Board {
 									+ " downColor:"
 									+ tilesOnBoard.get(k).downColor + " "
 									+ tilesOnBoard.get(k).platform);
-							/*
-							 * System.out.println("leftNeighbour " +
-							 * tilesOnBoard.get(k).left + " rightNeighbour " +
-							 * tilesOnBoard.get(k).right + " downNeighbour " +
-							 * tilesOnBoard.get(k).down + " upNeighbour " +
-							 * tilesOnBoard.get(k).up);
-							 */
+							
 						}
 					System.out.println();
 				}
 			}
 		}
-		/*
-		 * boolean lineEmpty = true; int firstOcurrence=0; for (int i = 0; i <
-		 * board.length; i++) { for (int j = 0; j < board.length; j++) { for
-		 * (int k = 0; k < board.length; k++) { if (board[i][k] != -1) {
-		 * lineEmpty = false; firstOcurrence++; }
-		 * 
-		 * } if (!lineEmpty) { if(firstOcurrence==1) { if (board[i][j] == -1)
-		 * System.out.print(" "); else { if (board[i][j] > 10){
-		 * System.out.print("\t"+board[i][j]+"\t"); } else
-		 * System.out.print("\t"+board[i][j]+"\t"); } } else { if (board[i][j]
-		 * == -1) System.out.print(" "); else { if (board[i][j] > 10){
-		 * System.out.print("\t"+board[i][j]+" \t"); } else
-		 * System.out.print("\t"+board[i][j]+"\t"); } } //
-		 * System.out.print("("+board[i][j]+")"); } } if (!lineEmpty)
-		 * System.out.println(); lineEmpty = true; }
-		 */
+		
 		
 		 System.out.println("View of the laketiles on board"); 
 		 System.out.println("-------------------------------------"); 
