@@ -16,6 +16,7 @@ public class Player {
 	public int playerScore_fourKind;
 	public int playerScore_threePair;
 	public int playerScore_sevenUnique;
+	protected PlayerStrategy playerStrategy;
 
 	/**
 	 * Constructor for initializing the new player entity with some unique name
