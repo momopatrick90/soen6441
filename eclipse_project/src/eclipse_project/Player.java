@@ -16,7 +16,7 @@ public class Player {
 	public int playerScore_fourKind;
 	public int playerScore_threePair;
 	public int playerScore_sevenUnique;
-	protected PlayerStrategy playerStrategy;
+	public PlayerStrategy playerStrategy;
 
 	/**
 	 * Constructor for initializing the new player entity with some unique name
@@ -26,6 +26,7 @@ public class Player {
 		this.name = name;
 		this.playerLCStack = new LanternCards();
 		this.playerLTStack = new ArrayList<LakeTiles>();
+		this.playerStrategy = new HumanPlayer(this.name);
 	}
 
 	/**
@@ -50,6 +51,7 @@ public class Player {
 		this.playerScore_sevenUnique = playerScore_sevenUnique;
 		this.playerLCStack = lanternCards;
 		this.playerLTStack = playerLTStack;
+		this.playerStrategy = new HumanPlayer(this.name);
 	}
 
 

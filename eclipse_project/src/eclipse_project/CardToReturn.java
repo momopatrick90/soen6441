@@ -131,13 +131,13 @@ public class CardToReturn {
 	}
 
 	public boolean SevenUniqueState(Player player) {
-		if (player.getLanternCards().blackCardCount() > 1
-				&& player.getLanternCards().blueCardCount() > 1
-				&& player.getLanternCards().greenCardCount() > 1
-				&& player.getLanternCards().orangeCardCount() > 1
-				&& player.getLanternCards().redCardCount() > 1
-				&& player.getLanternCards().purpleCardCount() > 1
-				&& player.getLanternCards().whiteCardCount() > 1)
+		if (player.getLanternCards().blackCardCount() >= 1
+				&& player.getLanternCards().blueCardCount() >= 1
+				&& player.getLanternCards().greenCardCount() >= 1
+				&& player.getLanternCards().orangeCardCount() >= 1
+				&& player.getLanternCards().redCardCount() >= 1
+				&& player.getLanternCards().purpleCardCount() >= 1
+				&& player.getLanternCards().whiteCardCount() >= 1)
 			return true;
 		else
 			return false;

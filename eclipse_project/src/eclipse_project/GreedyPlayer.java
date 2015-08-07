@@ -1,5 +1,8 @@
 package eclipse_project;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 public class GreedyPlayer extends Player implements PlayerStrategy
 {
 
@@ -9,9 +12,11 @@ public class GreedyPlayer extends Player implements PlayerStrategy
 	}
 
 	@Override
-	public void placeLakeTile(Player player) {
+	public void play(GameEngine gameEngine, Player player, BufferedReader br)
+			throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
