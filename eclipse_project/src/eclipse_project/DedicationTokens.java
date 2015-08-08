@@ -275,4 +275,31 @@ public class DedicationTokens {
 			System.out.print(genericFour.get(i) + " ");
 		}
 	}
+	
+	/**
+	 * method to return the top value of FourOFKind Dedication
+	 * @return the top value FourOfKind Dedication 
+	 */
+	public int peekFourOfKind()
+	{
+		return this.fourOfKind.peek();
+	}
+	
+	/**
+	 * method to return the top value of ThreePairs Dedication
+	 * @return the top value ThreePairs Dedication 
+	 */
+	public int peekThreePairs()
+	{
+		return this.threePair.peek();
+	}
+	
+	/**
+	 * method to return the top value of SevenUnique Dedication
+	 * @return the top value SevenUnique Dedication 
+	 */
+	public int peekSevenUnique()
+	{
+		return this.sevenUnique.peek();
+	}
 }

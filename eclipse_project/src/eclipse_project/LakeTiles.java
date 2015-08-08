@@ -147,6 +147,10 @@ public class LakeTiles {
 			lakeTiles[i].upColor = lakeTiles[i].randomValues();
 			lakeTiles[i].downColor = lakeTiles[i].randomValues();
 			lakeTiles[i].id = i + 1;
+			lakeTiles[i].left=-1;
+			lakeTiles[i].right=-1;
+			lakeTiles[i].down=-1;
+			lakeTiles[i].up=-1;
 			if (i % 2 != 0)
 				lakeTiles[i].platform = true;
 		}

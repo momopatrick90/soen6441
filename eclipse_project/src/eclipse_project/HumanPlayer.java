@@ -74,7 +74,6 @@ public class HumanPlayer implements PlayerStrategy {
 				+ "5.White Card\n"
 				+ "6.Black Card\n"
 				+ "7.Blue Card\n");
-		
 		boolean check = true;
 		while (check) {
 			in = new Scanner(System.in);
