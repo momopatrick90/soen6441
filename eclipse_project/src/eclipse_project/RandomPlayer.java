@@ -2,6 +2,8 @@ package eclipse_project;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -352,46 +354,43 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		player.displayPlayersLakeTile(player);
 		System.out.println();
 
-		//
+		
 		System.out
-				.println("Enter the index of laketiles you want to put on board:");
+				.println("Choosing the index of laketile to put on board....");
 
+		//gets the random index of the player's cards.
 		randomIndex = RandomNumberGenerator(indexMin, indexMax);
 		
-		/*check = true;
-		while (check) {
-			in = new Scanner(System.in);
-			option = in.nextLine();
-			option.trim();
-			if (!option.matches(regex)) {
-				System.out.println("Invalid index. Enter again!");
-				check = true;
-			} else {
-				indexOption = Integer.valueOf(option);
-				if (indexOption < 0 || indexOption > 2) {
-					System.out.println("Invalid index. Enter again!");
-				} else {
-					check = false;
-				}
-			}
-
-		}*/
-
+		//picks the card from player stack
 		LakeTiles currentTileToPlace = player.placeLakeTile(randomIndex);
 
-		//
 		boolean flag = true;
 		boolean placeLakeTile = false;
 
-		//
 		while (flag) {
 			System.out
-					.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
-			int id = Integer.parseInt(br.readLine());
-
+					.println("Choosing the id of the adjacent tile (on board) where to place the LakeTile");
+			
+			gameEngine.board.tilesOnBoard.size();
+			
+			//randomly picking the laketile position from available spaces.
+			
+			ArrayList<String> availableSpace = gameEngine.board.availableSpaces();
+			int maxRandPos = availableSpace.size()-1;
+			int minRandPos = 0;
+			
+			// getting the string that contains the position.
+			// example: "3 left"; 3 - id left - string
+			int randPos = RandomNumberGenerator( minRandPos, maxRandPos);
+			
+			String lTPosition = availableSpace.get(randPos);
+			
+			String[] parts = lTPosition.split(" ");
+			int id = Integer.valueOf(parts[0]);
+			String AdjacentPosition= parts[1];
+		
 			System.out
 					.println("Enter the adjacent position (right, left, up, down)");
-			String AdjacentPosition = br.readLine();
 			int GetColumn = gameEngine.lakeTiles.getColumn(gameEngine.board,
 					id, AdjacentPosition);
 			int GetRow = gameEngine.lakeTiles.getRow(gameEngine.board, id,

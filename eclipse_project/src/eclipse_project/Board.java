@@ -1,6 +1,7 @@
 package eclipse_project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -125,7 +126,7 @@ public class Board {
 		 * System.out.print("("+board[i][j]+")"); } } if (!lineEmpty)
 		 * System.out.println(); lineEmpty = true; }
 		 */
-		
+
 		System.out.println("View of the laketiles on board");
 		System.out.println("-------------------------------------");
 		int i = 0, j = 0;
@@ -157,5 +158,29 @@ public class Board {
 		}
 		System.out.println();
 		System.out.println("-------------------------------------");
+	}
+
+	
+	public ArrayList availableSpaces() {
+		ArrayList availableSpace = new ArrayList();
+		for (int x = 0; x < tilesOnBoard.size(); x++) {
+
+			if (tilesOnBoard.get(x).left == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " left");
+
+			if (tilesOnBoard.get(x).right == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " right");
+
+			if (tilesOnBoard.get(x).up == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " up");
+			if (tilesOnBoard.get(x).down == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " down");
+
+		}
+		return availableSpace;
 	}
 }
