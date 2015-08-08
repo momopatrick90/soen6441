@@ -395,32 +395,26 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 					id, AdjacentPosition);
 			int GetRow = gameEngine.lakeTiles.getRow(gameEngine.board, id,
 					AdjacentPosition);
-			// System.out.println("MyColumn "+GetColumn+" row "+GetRow);
+	
 
 			System.out
-					.println("Enter the degree of roatation for the tile you want to place on board");
-			System.out.println("Available options 0 90 180 270");
+					.println("Choosing the degree of rotation for the tile you want to place on board....");
+			
+			
+			int minRandDegree =1;
+			int maxRandDegree =4;
+			int randDegree = RandomNumberGenerator(minRandDegree, maxRandDegree);
 
-			check = true;
-			while (check) {
-				in = new Scanner(System.in);
-				option = in.nextLine();
-				option.trim();
-				if (!option.matches(regex)) {
-					System.out.println("Invalid degree. Enter again!");
-					check = true;
-				} else {
-					degreeOfRotation = Integer.valueOf(option);
-					if (degreeOfRotation == 0 || degreeOfRotation == 90
-							|| degreeOfRotation == 180
-							|| degreeOfRotation == 270) {
-						check = false;
-					} else {
-						System.out.println("Invalid degree. Enter again!");
-					}
-				}
-
-			}
+			if(randDegree ==1)
+				degreeOfRotation =0;
+			if(randDegree ==2)
+				degreeOfRotation = 90;
+			if(randDegree ==3)
+				degreeOfRotation = 180;
+			if(randDegree ==4)
+				degreeOfRotation = 270;
+			
+			
 
 			currentTileToPlace = gameEngine.lakeTiles.rotateLakeTile(
 					currentTileToPlace, degreeOfRotation);
