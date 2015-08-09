@@ -275,7 +275,6 @@ public class DedicationTokens {
 			System.out.print(genericFour.get(i) + " ");
 		}
 	}
-	
 	/**
 	 * method to return the top value of FourOFKind Dedication
 	 * @return the top value FourOfKind Dedication 

@@ -11,7 +11,7 @@ public class CleverPlayer extends Player implements PlayerStrategy {
 	}
 
 	@Override
-	public void play(GameEngine gameEngine, Player player)
+	public void play(GameEngine gameEngine, Player player, BufferedReader br)
 			throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		

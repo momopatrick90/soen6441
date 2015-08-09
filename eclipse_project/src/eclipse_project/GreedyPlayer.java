@@ -2,6 +2,7 @@ package eclipse_project;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -16,12 +17,12 @@ public class GreedyPlayer implements PlayerStrategy
 	}
 
 	@Override
-	public void play(GameEngine gameEngine, Player player)
+	public void play(GameEngine gameEngine, Player player, BufferedReader br)
 			throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
-		exchangeLanternCards(gameEngine,player);
 		
 	}
+	
 
 	/**
 	 * This method performs the exchange Lantern cards operation for greedy player
@@ -184,9 +185,6 @@ public class GreedyPlayer implements PlayerStrategy
 		String option = "";
 		String regex = "\\d+";
 		boolean check = true;
-		
-		Scanner in = new Scanner(System.in);
-		
 		// board
 		gameEngine.board.displayBoard(gameEngine.board.board, gameEngine.board.tilesOnBoard);
 		System.out.println();
@@ -199,24 +197,17 @@ public class GreedyPlayer implements PlayerStrategy
 		System.out.println("Enter the index of laketiles you want to put on board:");
 		
 		check = true;
-		while (check) {
-			in = new Scanner(System.in);
-			option = in.nextLine();
-			option.trim();
-			if (!option.matches(regex)) {
-				System.out.println("Invalid index. Enter again!");
-				check = true;
-			} else {
-				indexOption = Integer.valueOf(option);
-				if (indexOption < 0 || indexOption > 2) {
-					System.out.println("Invalid index. Enter again!");
-				} else {
-					check = false;
-				}
-			}
-
-		}
 		
+		ArrayList<String> availableSpaces=new ArrayList();
+		availableSpaces = gameEngine.board.availableSpaces();
+		for(int i=0;i<availableSpaces.size();i++)
+		{
+			String lTPosition = availableSpaces.get(i);
+			String[] parts = lTPosition.split(" ");
+			int id = Integer.valueOf(parts[0]);
+			String AdjacentPosition= parts[1];
+		}
+
 		LakeTiles currentTileToPlace = player.placeLakeTile(indexOption);
 
 		//
@@ -845,4 +836,6 @@ public class GreedyPlayer implements PlayerStrategy
 			}
 		return state;
 	}
+
+	
 }

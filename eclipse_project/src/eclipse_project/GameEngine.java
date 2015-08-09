@@ -405,7 +405,7 @@ public class GameEngine {
 			}
 
 			//
-			currentPlayer.playerStrategy.play(this, currentPlayer);
+			currentPlayer.playerStrategy.play(this, currentPlayer, br);
 			
 			//
 			System.out.println(currentPlayer.name+ "'s turn is over");
