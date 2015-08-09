@@ -37,7 +37,7 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		int minId = 0; 			// An id of a lake tile adjacent to the min position
 		Player minPlayer = null;
 		
-		// 
+		// TODO replace this with board empty location
 		ArrayList<int[]> emptyLocations = new ArrayList<int[]>();
 		// 
 		int[] possibleRotations = new int[]{0, 90, 180, 270};
@@ -110,7 +110,7 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 
 	}
 	
-	// 
+	// TODO implement
 	public int maxScore(GameEngine gameEngine, LakeTiles lakeTile, Player player, int[] position, int rotation)
 	{
 		
