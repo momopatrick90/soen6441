@@ -193,6 +193,9 @@ public class Player {
 		lanternCards.getCard(pickLCard);
 		lanternCards.addCard(returnLCard);
 		
+		System.out.println("LanternCard to be exchanged:"+pickLCard);
+		System.out.println("LanternCard needed:"+returnLCard);
+		
 		return true;
 	}
 
