@@ -1,6 +1,7 @@
 package eclipse_project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -125,42 +126,61 @@ public class Board {
 		 * System.out.print("("+board[i][j]+")"); } } if (!lineEmpty)
 		 * System.out.println(); lineEmpty = true; }
 		 */
-		
-		 System.out.println("View of the laketiles on board"); 
-		 System.out.println("-------------------------------------"); 
-		int i=0,j=0;
-		one:for(i=0;i<board.length;i++)
-		{
-			for(j=0;j<board.length;j++)
-			{
-				if(board[i][j]!=-1)
+
+		System.out.println("View of the laketiles on board");
+		System.out.println("-------------------------------------");
+		int i = 0, j = 0;
+		one: for (i = 0; i < board.length; i++) {
+			for (j = 0; j < board.length; j++) {
+				if (board[i][j] != -1)
 					break one;
 			}
 		}
-		int l=i;
-		int m=j;
-		int count=0;
-		two:for ( i = l; i < board.length; i++) {
-			for ( j = m; j < board.length; j++) {	
-					if (board[i][j] == -1)
-					{
-						count++;
-						System.out.print("   ");
-					}
-					else if (board[i][j] > 10) {
-						System.out.print(" " + board[i][j]);
-					} else {
-						System.out.print("  " + board[i][j]);
-					}								
-				}	
-			if(count==36)
-			{
+		int l = i;
+		int m = j;
+		int count = 0;
+		two: for (i = l; i < board.length; i++) {
+			for (j = m; j < board.length; j++) {
+				if (board[i][j] == -1) {
+					count++;
+					System.out.print("   ");
+				} else if (board[i][j] > 10) {
+					System.out.print(" " + board[i][j]);
+				} else {
+					System.out.print("  " + board[i][j]);
+				}
+			}
+			if (count == 36) {
 				break two;
 			}
-			count=0;	
+			count = 0;
 			System.out.println();
 		}
 		System.out.println();
-		 System.out.println("-------------------------------------");
+		System.out.println("-------------------------------------");
+	}
+
+	
+	public ArrayList<String> availableSpaces() {
+		ArrayList<String> availableSpace = new ArrayList();
+		for (int x = 0; x < tilesOnBoard.size(); x++) {
+
+			if (tilesOnBoard.get(x).left == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " left");
+
+			if (tilesOnBoard.get(x).right == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " right");
+
+			if (tilesOnBoard.get(x).up == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " up");
+			if (tilesOnBoard.get(x).down == -1)
+				availableSpace.add(String.valueOf(tilesOnBoard.get(x).id)
+						+ " down");
+
+		}
+		return availableSpace;
 	}
 }
