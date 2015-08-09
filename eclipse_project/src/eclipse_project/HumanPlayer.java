@@ -2,6 +2,7 @@ package eclipse_project;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class HumanPlayer implements PlayerStrategy {
@@ -11,29 +12,68 @@ public class HumanPlayer implements PlayerStrategy {
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public void play(GameEngine gameEngine, Player player, BufferedReader br) throws NumberFormatException, IOException {
+	@Override
+	public void play(GameEngine gameEngine, Player player) {
 		// TODO Auto-generated method stub
 		// Exchange lantern cards
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		System.out.print("Type 1 if you want to exchange lantern cards, any other number to skip: ");
-		int choice = Integer.parseInt(br.readLine());
+		int choice=0;
+		try {
+			choice = Integer.parseInt(br.readLine());
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//
 		if(choice == 1)
 		{
-			exchangeLanternCards(gameEngine, player, br);
+			try {
+				exchangeLanternCards(gameEngine, player, br);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		// Make dedication
 		System.out.print("Type 1 if you want to make a dedication, any other number to skip: ");
-		choice = Integer.parseInt(br.readLine());
+		try {
+			choice = Integer.parseInt(br.readLine());
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if(choice == 1)
 		{
-			makeDedication(gameEngine, player, br);
+			try {
+				makeDedication(gameEngine, player, br);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 
 		//place lake tile 
-		placeLakeTile(gameEngine, player, br);
+		try {
+			placeLakeTile(gameEngine, player, br);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(gameEngine.lakeTiles.hasLakeTile())
 		{// Composury pick lake tile
@@ -452,6 +492,5 @@ public class HumanPlayer implements PlayerStrategy {
 	}
 
 
-	
 
 }

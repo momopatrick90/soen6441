@@ -16,12 +16,7 @@ public class GreedyPlayer implements PlayerStrategy
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void play(GameEngine gameEngine, Player player, BufferedReader br)
-			throws NumberFormatException, IOException {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 
 	/**
@@ -215,10 +210,10 @@ public class GreedyPlayer implements PlayerStrategy
 		boolean placeLakeTile = false;
 	
 		//
-		while (flag) {
+		/*while (flag) {
 			System.out
 			.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
-			int id = Integer.parseInt(br.readLine());
+			//int id = Integer.parseInt(br.readLine());
 			
 			System.out
 			.println("Enter the adjacent position (right, left, up, down)");
@@ -233,8 +228,8 @@ public class GreedyPlayer implements PlayerStrategy
 			
 			check = true;
 			while (check) {
-				in = new Scanner(System.in);
-				option = in.nextLine();
+				//in = new Scanner(System.in);
+				//option = in.nextLine();
 				option.trim();
 				if (!option.matches(regex)) {
 					System.out.println("Invalid degree. Enter again!");
@@ -285,7 +280,7 @@ public class GreedyPlayer implements PlayerStrategy
 			
 			System.out.println();
 			System.out.println("Player Pick up the new LakeTile from the Stack after placing one");
-		}
+		}*/
 	}
 
 	/**
@@ -835,6 +830,12 @@ public class GreedyPlayer implements PlayerStrategy
 								gameEngine.dedicationTokens);
 			}
 		return state;
+	}
+
+	@Override
+	public void play(GameEngine gameEngine, Player player) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

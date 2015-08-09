@@ -461,4 +461,10 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		return RandomNum;
 	}
 
+	@Override
+	public void play(GameEngine gameEngine, Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
