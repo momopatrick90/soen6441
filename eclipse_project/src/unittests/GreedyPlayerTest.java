@@ -22,7 +22,7 @@ public class GreedyPlayerTest {
 		gPlayer=new GreedyPlayer("Player1");
 	}
 	@Test
-	public void test() {
+	public void testExchangeLanternCardforSevenUnique() {
 		
 		LanternCards lanternCards=new LanternCards(2, 0, 1, 1, 2, 2, 3, 2);
 		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
@@ -30,12 +30,31 @@ public class GreedyPlayerTest {
 		Player player=new Player("Player1", "Player1", lanternCards , playerLTStack, favorTokenScore, 2, 2, 2);
 		
 		GameEngine gameEngine=new GameEngine(2);
+		gameEngine.favorTokens=new FavorTokens(5);
 		
-		//boolean result= gPlayer.checkSevenUnique(player, gameEngine);
-		//assertFalse(result);
-		//boolean result=gPlayer.checkSevenUnique(player, gameEngine);
-		System.out.println(player.getLanternCards().redCardCount());
-		//System.out.println(result);
+		gameEngine.lanternCards=new LanternCards(2,1, 1, 1, 2, 2, 3, 2);
+		boolean result= gPlayer.checkSevenUnique(player, gameEngine);
+		assertTrue(result);
+		assertEquals(1,player.getLanternCards().redCardCount());
+		assertEquals(2,player.getLanternCards().blackCardCount());
+		
+	}
+	
+	@Test
+	public void testExchangeLanternCardForFourOfKind(){
+		LanternCards lanternCards=new LanternCards(2, 3, 3, 1, 2, 2, 3, 2);
+		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
+		int favorTokenScore=10;
+		Player player=new Player("Player1", "Player1", lanternCards , playerLTStack, favorTokenScore, 2, 2, 2);
+		
+		GameEngine gameEngine=new GameEngine(2);
+		gameEngine.favorTokens=new FavorTokens(5);
+		
+		gameEngine.lanternCards=new LanternCards(2,1, 1, 1, 2, 2, 3, 2);
+		boolean result= gPlayer.checkFourOfKind(player, gameEngine);
+		assertTrue(result);
+		assertEquals(3,player.getLanternCards().redCardCount());
+		assertEquals(1,player.getLanternCards().whiteCardCount());
 	}
 
 }
