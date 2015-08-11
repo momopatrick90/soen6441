@@ -591,111 +591,69 @@ public class LanternCards {
 	
 	
 	/**
-	 * What is the best possible score for this lantern cards
+	 * What is the best possible score for this lantern cards, for the next turn?
 	 * considering the different combinations of 7 unique, 4 of kind, and 3 pairs
-	 * TODO check depends on dedication tokens, if dedication tokens can be less, then the combinations should depend on that
-	 * TODO replace static dedication token values, to static variables
+	 * TODO check really what dedication means
+	 * TODO what id dedication=0, use generica four
 	 * @param dedicationTokens
 	 * @return
 	 */
 	public int bestPossibleScore(DedicationTokens dedicationTokens)
 	{
-		int bestScore = 0;
-
-		//
-		LanternCards lanternCopy = this.duplicate();
-		// all the copies
-		String[] colors = (String[]) this.stacks.keySet().toArray();
-		
-		// num Three pairs for each color
-		String[] numThreePairs = new String[colors.length];
-		
 		// number of seven unique
-		int numSevenOfKind=0;
-		while(lanternCopy.canDoSevenUniques(numSevenOfKind))
-		{
-			// withdraw from pile
-			removeSevenUnique(numSevenOfKind);
-			
-			// the current number of fourofkind for each color
-			int[] numFourOfKind = new int[colors.length];
-			
-			do
-			{// Try all the possible number of four of a kind
-				int totalNumFourOfKind = 0;
-				
-				// withdraw the four of kinds
-				for (int i1=0; i1<colors.length; i1++) {
-					//
-					this.removeFourOfKind(colors[i1], numFourOfKind[i1]);
-					//
-					totalNumFourOfKind += numFourOfKind[i1];
-				}
-				
-				
-				{// there pair
-					//
-					int maxNumOfThreePairs = lanternCopy.maxThreePairs();
-					
-					//calculate the score for the configuration
-					int score = (numSevenOfKind * 2) + (totalNumFourOfKind * 1) + (maxNumOfThreePairs * 1);
-					//
-					if(score > bestScore)
-					{
-						bestScore = score;
-					}
-				}
-				
-				
-				// add back the four of kind
-				for (int i1=0; i1<colors.length; i1++) {
-					this.addFourOfKind(colors[i1], numFourOfKind[i1]);
-				}
-			// Try to move to the next possible four of kinds combination for the given lantern cards
-			}while(lanternCopy.nextFourOfKinds(colors, numFourOfKind));
-			
-			// add back seven unique
-			addSevenUnique(numSevenOfKind);
-			
-			// Try with one more stack of seven uniques
-			numSevenOfKind++;
-		}
+		if(this.hasSevenUniques() && dedicationTokens.sevenUniqueCount()>=1)
+			return dedicationTokens.peekSevenUnique();
 		
-		return bestScore;
+		// can do four of kind
+		if(this.hasFourOfKinds() && dedicationTokens.fourOfKindCount()>=1)
+			return dedicationTokens.peekFourOfKind();
+		
+		// 
+		if(this.numThreePairs() >= 1 && dedicationTokens.threePairCount()>=1)
+			return dedicationTokens.peekThreePairs();
+		
+		return 0;
 	}
 	
 	/**
-	 * Helper function to move to the next possible combination of four of kinds.
-	 * This is basically a like a counter counting GROUPS of four of kind for each color.
+	 * Helper function to check if can do four of kinds for any color
 	 * @return return true if there was a NEXT possible combination
 	 */
-	protected boolean nextFourOfKinds(String[] colors, int[] numFourOfKind)
+	protected boolean hasFourOfKinds()
 	{
+		//colors
+		String[] colors = (String[]) this.stacks.keySet().toArray();
+		
+		
 		for(int i=0; i<colors.length; i++)
 		{
-			if(this.canDoFourOfKind(colors[i], numFourOfKind[i]+1))
+			if(this.hasFourOfKind(colors[i]))
 			{
-				numFourOfKind[i]++;
 				return true;
-			}else
-			{
-				numFourOfKind[i] = 0;
 			}
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 * @return true of this lanterncards can do 4 of a kind, amount times
+	 */
+	protected boolean hasFourOfKind(String color)
+	{
+		return this.CardCount(color) >= 4;
 	}
 
 	/**
 	 * what is the max number of three pairs from the lantern cards 
 	 * @return return true if there was a possible combination
 	 */
-	protected int maxThreePairs()
+	protected int numThreePairs()
 	{
 		//
 		int result = 0 ;
-		//
-		LanternCards cards = this.duplicate();
 		//
 		boolean paired = false;
 		
@@ -705,7 +663,7 @@ public class LanternCards {
 			//
 			int pairs = 0;
 			//
-			bpoint:for (Map.Entry<String, Integer> entry : cards.stacks.entrySet()) {
+			bpoint:for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
 				
 				// get pair if there
 				if(entry.getValue() >= 2)
@@ -718,6 +676,7 @@ public class LanternCards {
 				if(pairs == 3)
 				{
 					paired = true;
+					result += 1;
 					break bpoint;
 				}
 			}
@@ -729,51 +688,18 @@ public class LanternCards {
 
 
 
-	/**
-	 * Remove seven unique cards from the lantern cards
-	 * @param amount
-	 * @return  
-	 */
-	protected void removeSevenUnique(int amount)
-	{
-		//
-		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
-			//
-			if(entry.getValue() >= amount)
-			{
-				entry.setValue(entry.getValue() - amount);
-			}else
-			{
-				throw new RuntimeException("lantern card does not have seven unique: "+amount);
-			}
-		}
-	}
-	
-	/**
-	 * add seven unique lantern cards
-	 * @param amount
-	 * @return  
-	 */
-	protected void addSevenUnique(int amount)
-	{
-		//
-		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
-			//
-			entry.setValue(entry.getValue() + amount);
-		}
-	}
-	
+
 	/**
 	 * can do seven uniques?
 	 * @param amount
 	 * @return  true is this lanterncards can do a 7 unique
 	 */
-	protected boolean canDoSevenUniques(int amount)
+	protected boolean hasSevenUniques()
 	{
 		//
 		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
 			//
-			if(entry.getValue() < amount)
+			if(entry.getValue() < 1)
 			{
 				return false;
 			}
@@ -781,39 +707,6 @@ public class LanternCards {
 		return true;
 	}
 	
-	
-	
-	/**
-	 * 
-	 * @param amount
-	 * @return true of this lanterncards can do 4 of a kind, amount times
-	 */
-	protected boolean canDoFourOfKind(String color, int amount)
-	{
-		return this.CardCount(color) >= 4*amount;
-	}
-	
-	/**
-	 * add amount four of kind
-	 * @param amount
-	 * @return  
-	 */
-	protected void addFourOfKind(String color, int amount)
-	{
-		this.stacks.put(color, this.stacks.get(color)+ 4*amount);
-	}
-	
-	/**
-	 * remove amount four of kind
-	 * @param amount
-	 * @return  
-	 */
-	protected void removeFourOfKind(String color, int amount)
-	{
-		this.stacks.put(color, this.stacks.get(color) - 4*amount);
-	}
-	
-
 	/**
 	 * 
 	 * @param lanternCards
@@ -825,5 +718,4 @@ public class LanternCards {
 		result.stacks = (HashMap<String, Integer>) this.stacks.clone();
 		return result;
 	}
-
 }

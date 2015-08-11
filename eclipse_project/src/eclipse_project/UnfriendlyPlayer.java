@@ -17,7 +17,24 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		
 	}
 
+	/**
+	 * The goals is if possible to get a lantern card such that
+	 * @param gameEngine contains the entire state of the game
+	 * @param player current player
+	 */
+	protected void exchangeLanternCards(GameEngine gameEngine, Player player)
+	{
+		
+	}
 
+	/**
+	 * The goal is to place a lake tiles such that it minimizes the possible score gain on any given player
+	 * @param gameEngine
+	 * @param player
+	 * @param br
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	public void placeLakeTile(GameEngine gameEngine, Player player, BufferedReader br) throws NumberFormatException, IOException
 	{
 		//
@@ -33,18 +50,16 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		// The  lake tile position with the min case of a given player
 		int[] minPosition = null; // the poosition leading to a min point for a given player
 		int minRotation = 0;   // the rotation of the min point localtion
-		int minScore = Integer.MAX_VALUE; 	 	// The min points I can make any given player have
+		int minScoreGain = Integer.MAX_VALUE; 	 	// The min points I can make any given player have
 		int minId = 0; 			// An id of a lake tile adjacent to the min position
 		Player minPlayer = null;
 		
 		// TODO replace this with board empty location
 		ArrayList<int[]> emptyLocations = new ArrayList<int[]>();
-		// 
-		int[] possibleRotations = new int[]{0, 90, 180, 270};
-		//
-		ArrayList<LakeTiles> lakeTiles = player.getLakeTiles();
-	
-		// foreach of the character laketiles
+		
+		
+		//foreach of the character laketiles
+		ArrayList<LakeTiles> lakeTiles = player.getLakeTiles(); 
 		for(int i=0; i<lakeTiles.size(); i++)
 		{
 			//
@@ -57,6 +72,7 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 				int[] position = emptyLocations.get(j);
 				
 				// Go through the possible rotations
+				int[] possibleRotations = new int[]{0, 90, 180, 270};
 				for(int k=0; i<possibleRotations.length; k++)
 				{
 					//
@@ -72,17 +88,15 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 						if(currentPlayer != player)
 						{
 							//
-							int score = maxScore(gameEngine, lakeTile, currentPlayer, position, rotation);
+							int scoreGain_ = scoreGain(gameEngine, lakeTile, currentPlayer, position, rotation);
 							
-							// first time or found new lower points 
-							// place the tile such that it minimizes the max possible score the player can have
-							// from his lantern card
-							if(minPosition == null || score < minScore)
+							// place lake tile such that minimizes the score gained
+							if(minPosition == null || scoreGain_ < minScoreGain)
 							{
 								//
 								minPosition = position;
 								minRotation = rotation;
-								minScore = score;
+								minScoreGain = scoreGain_;
 								minId = lakeTile.id;
 								minPlayer = currentPlayer;
 							}
@@ -93,13 +107,15 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		}
 		
 		//
-		System.out.println("Unfriendly: placing laketile: "+minId+", min_player(victim): "+player.name+", min position: "+minPosition);
+		System.out.println("Unfriendly: placing laketile: "+minId+", min_player(victim): "+minPlayer.name+", min position: "+minPosition);
 
 		
 		// Place on the min
 		// withdrawing the lake tile
 		LakeTiles currentTileToPlace = player.placeLakeTile(minId);
+		//
 		gameEngine.lakeTiles.rotateLakeTile(currentTileToPlace, minRotation);
+		//
 		boolean placedLaketile = gameEngine.lakeTiles.placeTile(minPosition[1], minPosition[0], gameEngine.board, currentTileToPlace);
 		
 		//
@@ -110,11 +126,27 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 
 	}
 	
-	// TODO implement
-	public int maxScore(GameEngine gameEngine, LakeTiles lakeTile, Player player, int[] position, int rotation)
+	/**
+	 * What possible score does the player gain if the tile is place at the position?
+	 * @param gameEngine
+	 * @param lakeTile
+	 * @param player
+	 * @param position
+	 * @param rotation
+	 * @return
+	 */
+	public int scoreGain(GameEngine gameEngine, LakeTiles lakeTile, Player player, int[] position, int rotation)
 	{
+		// current players lantern cards
+		LanternCards lanternCards = player.getLanternCards();
+		int currentScore = lanternCards.bestPossibleScore(gameEngine.dedicationTokens);
 		
-		return 0;
+		// lantern cards of player after tile is placed
+		LanternCards lanternAfterLakeTile = lanternCards.duplicate();
+		int scoreAfterLakeTile = lanternAfterLakeTile.bestPossibleScore(gameEngine.dedicationTokens);
+		
+		// 
+		return scoreAfterLakeTile - currentScore;
 	}
 
 }
