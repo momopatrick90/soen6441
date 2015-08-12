@@ -52,9 +52,13 @@ public class GreedyPlayerTest {
 		
 		gameEngine.lanternCards=new LanternCards(2,1, 1, 1, 2, 2, 3, 2);
 		boolean result= gPlayer.checkFourOfKind(player, gameEngine);
+		
 		assertTrue(result);
 		assertEquals(3,player.getLanternCards().redCardCount());
 		assertEquals(1,player.getLanternCards().whiteCardCount());
+		assertTrue(player.getLanternCards().whiteCardCount()>0);
+		assertTrue(player.getLanternCards().whiteCardCount()<3);
+		
 	}
 
 }
