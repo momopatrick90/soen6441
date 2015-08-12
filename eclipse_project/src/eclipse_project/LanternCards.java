@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Stack;
+import java.util.Vector;
 
 public class LanternCards {
 	// stacks index by color
-	private HashMap<String, Integer> stacks = new HashMap<String, Integer>();
+	public HashMap<String, Integer> stacks = new HashMap<String, Integer>();
 
 	private int numOfPlayers;
 
@@ -608,7 +609,232 @@ public class LanternCards {
 			color = "orangeCard";
 		}
 	}
+
+	/**
+	 * This method assigns lanternCards to each Player according to LakeTile and
+	 * players position
+	 * 
+	 * @param numOfPlayers
+	 *            - Number of Players
+	 * @param board
+	 *            - GameBoard
+	 * @param x
+	 *            - X coordinate of lakeTile
+	 * @param y
+	 *            - Y coordinate of lakeTile
+	 * @param lakeTile
+	 *            - LakeTile
+	 * @param playerList
+	 *            - Arraylist of Players
+	 * @param lanternCard
+	 *            - Available Lantern Cards
+	 */
+	/**
+	 * This method assigns lanternCards and favorTokens to dummy Greedy Player according to lakeTile placed.
+	 * @param board gameBoard
+	 * @param col column of the board where tile will be placed
+	 * @param row row of the board where tile will be placed
+	 * @param currentTileToPlace lakeTile to be placed
+	 * @param player dummy Player
+	 * @param lanternCard lanternCards available for the game
+	 * @param favorTokens favorTokens available for the game
+	 * @param numOfPlayers number of Players
+	 * @return dataSetToReturn To return the lanternCards and favorTokens used for simulation back to game.
+	 */
+	public Vector assignLanternCardsToPlayerSimulation(
+			Board board, int col, int row,
+			LakeTiles currentTileToPlace,Player player,
+			LanternCards lanternCard, FavorTokens favorTokens,int numOfPlayers) {
+		String card=null;
+		Vector dataSetToReturn = new Vector();
+		int numberOfCardsGot=0;
+		boolean flag=false;
+		switch(numOfPlayers)
+		{
+			case 2:
+				if(player.boardPosition.equalsIgnoreCase("left"))
+				{
+					card = currentTileToPlace.leftColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				else if(player.boardPosition.equalsIgnoreCase("right"))
+				{
+					card = currentTileToPlace.rightColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				if(flag)
+				{
+					numberOfCardsGot++;
+					dataSetToReturn.addElement(card);
+				}
+				break;
+			case 3:
+				if(player.boardPosition.equalsIgnoreCase("left"))
+				{
+					card = currentTileToPlace.leftColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				else if(player.boardPosition.equalsIgnoreCase("right"))
+				{
+					card = currentTileToPlace.rightColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				else if(player.boardPosition.equalsIgnoreCase("up"))
+				{
+					card = currentTileToPlace.upColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				if(flag)
+				{
+					numberOfCardsGot++;
+					dataSetToReturn.addElement(card);
+				}
+				break;
+			case 4:
+				if(player.boardPosition.equalsIgnoreCase("left"))
+				{
+					card = currentTileToPlace.leftColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				else if(player.boardPosition.equalsIgnoreCase("right"))
+				{
+					card = currentTileToPlace.rightColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				else if(player.boardPosition.equalsIgnoreCase("up"))
+				{
+					card = currentTileToPlace.upColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				else if(player.boardPosition.equalsIgnoreCase("down"))
+				{
+					card = currentTileToPlace.downColor + "Card";
+					flag=player.pickLanternCard(card, lanternCard);
+				}
+				if(flag)
+				{
+					numberOfCardsGot++;
+					dataSetToReturn.addElement(card);
+				}
+				break;
+		}
+		flag=false;
+		if (currentTileToPlace.platform && favorTokens.getTokens()>=1) 
+			player.favorTokenScore++;
+		if (board.board[row - 1][col] != -1) {
+			for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+				if (board.tilesOnBoard.get(i).id == board.board[row - 1][col]
+						&& board.tilesOnBoard.get(i).downColor
+								.equalsIgnoreCase(currentTileToPlace.upColor)) {
+					// assign favorToken to Player as it matched with
+					// lakeTile and given LakeTile has platform on it
+					if (board.tilesOnBoard.get(i).platform && favorTokens.getTokens()>=1) {
+						player.favorTokenScore++;
+					}
+					card = board.tilesOnBoard.get(i).downColor+ "Card";
+					flag=player.pickLanternCard(card,lanternCard);
+					if(flag)
+					{
+						numberOfCardsGot++;
+						dataSetToReturn.addElement(card);
+					}
+				}
+			}
+		}
+
+		flag=false;
+		if (board.board[row + 1][col] != -1) {
+			for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+				if (board.tilesOnBoard.get(i).id == board.board[row + 1][col]
+						&& board.tilesOnBoard.get(i).upColor
+								.equalsIgnoreCase(currentTileToPlace.downColor)) {
+					// assign favorToken to Player as it matched with
+					// lakeTile and given LakeTile has platform on it
+					if (board.tilesOnBoard.get(i).platform && favorTokens.getTokens()>=1) {
+						player.favorTokenScore++;
+					}
+					card = currentTileToPlace.downColor + "Card";
+					flag=player.pickLanternCard(card,lanternCard);
+					if(flag)
+					{
+						numberOfCardsGot++;
+						dataSetToReturn.addElement(card);
+					}
+				}
+			}
+		}
+
+		flag=false;
+		if (board.board[row][col + 1] != -1) {
+			for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+				if (board.tilesOnBoard.get(i).id == board.board[row][col + 1]
+						&& board.tilesOnBoard.get(i).leftColor
+								.equalsIgnoreCase(currentTileToPlace.rightColor)) {
+					// assign favorToken to Player as it matched with
+					// lakeTile and given LakeTile has platform on it
+					if (board.tilesOnBoard.get(i).platform  && favorTokens.getTokens()>=1) {
+						player.favorTokenScore++;
+					}
+					card = board.tilesOnBoard.get(i).leftColor + "Card";
+					flag=player.pickLanternCard(card,lanternCard);
+					if(flag)
+					{
+						numberOfCardsGot++;
+						dataSetToReturn.addElement(card);
+					}
+				}
+			}
+		}
+
+		flag=false;
+		if (board.board[row][col - 1] != -1) {
+			for (int i = 0; i < board.tilesOnBoard.size(); i++) {
+
+				if (board.tilesOnBoard.get(i).id == board.board[row][col - 1]
+						&& board.tilesOnBoard.get(i).rightColor
+								.equalsIgnoreCase(currentTileToPlace.leftColor)) {
+					// assign favorToken to Player as it matched with
+					// lakeTile and given LakeTile has platform on it
+					if (board.tilesOnBoard.get(i).platform  && favorTokens.getTokens()>=1) {
+						player.favorTokenScore++;
+					}
+					card = board.tilesOnBoard.get(i).rightColor + "Card";
+					flag=player.pickLanternCard(card,lanternCard);
+					if(flag)
+					{
+						numberOfCardsGot++;
+						dataSetToReturn.addElement(card);
+					}
+				}
+			}
+		}
+		dataSetToReturn.addElement(player.favorTokenScore);
+		dataSetToReturn.addElement(numberOfCardsGot);
+		return dataSetToReturn;
+	}
+
+	/**
+	 * This method returns the lantern cards used for simulation from global lantern cards 
+	 * @param returnedLanternCards
+	 */
+	public void returnAll(LanternCards returnedLanternCards) {
+		for (Map.Entry<String, Integer> entry : returnedLanternCards.stacks.entrySet()) {
+			//
+			this.stacks.put(entry.getKey(), this.stacks.get(entry.getKey())
+					- entry.getValue());
+			//
+			entry.setValue(0);
+		}
+
+	}
 	
+	/**
+	 * This method removes the lanterncards used for simulation from player
+	 */
+	public void removeLanternCard(String card,Player dummyPlayer)
+	{
+		dummyPlayer.playerLCStack.stacks.put(card, this.stacks.get(card) - 1);
+	}
 	
 	/**
 	 * What is the best possible score for this lantern cards, for the next turn?
