@@ -26,7 +26,10 @@ public class Player {
 		this.name = name;
 		this.playerLCStack = new LanternCards();
 		this.playerLTStack = new ArrayList<LakeTiles>();
-		this.playerStrategy = new HumanPlayer(this.name);
+		if(name.equalsIgnoreCase("player1"))
+			this.playerStrategy = new HumanPlayer(this.name);
+		else 
+			this.playerStrategy = new GreedyPlayer(this.name);
 	}
 
 	/**
@@ -477,10 +480,17 @@ void setCurrent(boolean state) {
 		}
 	}
 
+	/**
+	 * This method returns the players lantern cards
+	 * @return playerLCStack returns the players lantern cards
+	 */
 	public LanternCards getLanternCards() {
 		// TODO Auto-generated method stub
 		return playerLCStack;
 	}
+	
+	
+	
 }
 
 

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
@@ -11,13 +12,14 @@ import java.util.Vector;
 public class GreedyPlayer implements PlayerStrategy
 {
 
+	/**
+	 * This is GreedyPlayer Constructor
+	 * @param name name of the player
+	 */
 	public GreedyPlayer(String name) {
 		//super(name);
 		// TODO Auto-generated constructor stub
 	}
-
-
-	
 
 	/**
 	 * This method performs the exchange Lantern cards operation for greedy player
@@ -48,7 +50,7 @@ public class GreedyPlayer implements PlayerStrategy
 				{
 					int temp=0;
 					String temp1="";
-					if(values[j]>values[j+1])
+					if(values[j]<values[j+1])
 					{
 						temp=values[j];
 						values[j]=values[j+1];
@@ -81,7 +83,9 @@ public class GreedyPlayer implements PlayerStrategy
 				 if(exchanged)
 					 break one;
 			 }
-		 }	
+		 }
+		 if(exchanged)
+			 System.out.println("Exchange took place");
 	}
 	
 	/**
@@ -112,7 +116,7 @@ public class GreedyPlayer implements PlayerStrategy
 				{
 					int temp=0;
 					String temp1="";
-					if(values[j]>values[j+1])
+					if(values[j]<values[j+1])
 					{
 						temp=values[j];
 						values[j]=values[j+1];
@@ -124,24 +128,25 @@ public class GreedyPlayer implements PlayerStrategy
 				}
 			}
 		 boolean exchanged=false;
+		 boolean simulation=false;
 		one:for(int i=0;i<key.length;i++)
 		 {
 			 String x=key[i];
 			 if(x.equalsIgnoreCase("FourOfKind"))
 			 {
-				 exchanged=checkFourOfKindDedication(player,gameEngine);
+				 exchanged=checkFourOfKindDedication(player,gameEngine,simulation);
 				 if(exchanged)
 					 break one;
 			 }
 			 if(x.equalsIgnoreCase("ThreePair"))
 			 {
-				 exchanged=checkThreePairDedication(player,gameEngine);
+				 exchanged=checkThreePairDedication(player,gameEngine,simulation);
 				 if(exchanged)
 					 break one;
 			 }
 			 if(x.equalsIgnoreCase("SevenUnique"))
 			 {
-				 exchanged=checkSevenUniqueDedication(player,gameEngine);
+				 exchanged=checkSevenUniqueDedication(player,gameEngine,simulation);
 				 if(exchanged)
 					 break one;
 			 }
@@ -158,8 +163,8 @@ public class GreedyPlayer implements PlayerStrategy
 						.println("Score: Seven unique "
 								+ player.playerScore_sevenUnique);
 		 }
-		 else
-			 System.out.println(" Please revisit the game rules!");
+		// else
+			// System.out.println(" Please revisit the game rules!");
 	}
 	
 	/**
@@ -184,103 +189,192 @@ public class GreedyPlayer implements PlayerStrategy
 		gameEngine.board.displayBoard(gameEngine.board.board, gameEngine.board.tilesOnBoard);
 		System.out.println();
 		
-		// player
+		//player
 		player.displayPlayersLakeTile(player);
 		System.out.println();
 		
 		//
 		System.out.println("Enter the index of laketiles you want to put on board:");
-		
+		//Player dummyPlayer = new Player(player.name);
+		//dummyPlayer=player;
 		check = true;
+
+		int blackCount= gameEngine.lanternCards.blackCardCount();
+		int redCount=  gameEngine.lanternCards.redCardCount();
+		int greenCount=gameEngine.lanternCards.greenCardCount();
+		int purpleCount=gameEngine.lanternCards.purpleCardCount();
+		int orangeCount=gameEngine.lanternCards.orangeCardCount();
+		int whiteCount=gameEngine.lanternCards.whiteCardCount();
+		int blueCount=gameEngine.lanternCards.blueCardCount();
 		
+		int tokenScoreBeforSimulation=player.favorTokenScore;
 		ArrayList<String> availableSpaces=new ArrayList();
 		availableSpaces = gameEngine.board.availableSpaces();
-		for(int i=0;i<availableSpaces.size();i++)
-		{
-			String lTPosition = availableSpaces.get(i);
-			String[] parts = lTPosition.split(" ");
-			int id = Integer.valueOf(parts[0]);
-			String AdjacentPosition= parts[1];
-		}
-
-		LakeTiles currentTileToPlace = player.placeLakeTile(indexOption);
-
-		//
-		boolean flag = true;
+		LakeTiles currentTileToPlace=null;
 		boolean placeLakeTile = false;
-	
-		//
-		/*while (flag) {
-			System.out
-			.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
-			//int id = Integer.parseInt(br.readLine());
+		Vector dataSetToReturn= new Vector();
+		int numberOfCardsGot=0;
+		//available space * number of possible rotation of lakeTile i.e 4 * number of laketiles
+		int total_Score[] = new int[availableSpaces.size()*4*3];
+		int total_Score_Count=0;
+		int max_Score_Possible=0;
+		int max_Score_index=0;
+		int max_number_Of_Cards=0;
+		int max_id=0,maxdegreeOfRotation=0;
+		int maxcurrentTileToPlaceid=0;
+		int maxNumberOfFavorTokens=0;
+		int numberOfFavorTokensGot=0;
+		String maxAdjacentPosition="";
+		
+		for(int i=0;i<player.playerLTStack.size();i++)
+		{
 			
-			System.out
-			.println("Enter the adjacent position (right, left, up, down)");
-			String AdjacentPosition = br.readLine();
-			int GetColumn=gameEngine.lakeTiles.getColumn(gameEngine.board,id,AdjacentPosition);
-			int GetRow=gameEngine.lakeTiles.getRow(gameEngine.board,id,AdjacentPosition);
-			//System.out.println("MyColumn "+GetColumn+" row "+GetRow);
-	
-			System.out
-					.println("Enter the degree of roatation for the tile you want to place on board");
-			System.out.println("Available options 0 90 180 270");
-			
-			check = true;
-			while (check) {
-				//in = new Scanner(System.in);
-				//option = in.nextLine();
-				option.trim();
-				if (!option.matches(regex)) {
-					System.out.println("Invalid degree. Enter again!");
-					check = true;
-				} else {
-					degreeOfRotation = Integer.valueOf(option);
-					if (degreeOfRotation == 0 || degreeOfRotation==90 || degreeOfRotation==180 || degreeOfRotation==270 ) {
-						check = false;
-					} else {
-						System.out.println("Invalid degree. Enter again!");
-					}
-				}
-
-			}
-			
-			currentTileToPlace = gameEngine.lakeTiles.rotateLakeTile(
-					currentTileToPlace, degreeOfRotation);
-
-			placeLakeTile = gameEngine.lakeTiles.placeTile(GetColumn,
-					GetRow, gameEngine.board, currentTileToPlace);
-			if (placeLakeTile) {
-				gameEngine.lanternCards.assignLanternCardsToPlayers(
-						gameEngine.numOfPlayer, gameEngine.board,
-						GetColumn,GetRow, currentTileToPlace,
-							gameEngine.PlayerList, gameEngine.lanternCards, gameEngine.favorTokens);
-								gameEngine.board.displayBoard(gameEngine.board.board,
-										gameEngine.board.tilesOnBoard);
-				player.displayPlayersLakeTile(player);
-				System.out.println();
-				System.out
-						.println("Number of FavorTokens:"
-								+ player.favorTokenScore);
-				System.out.println();
-				System.out
-						.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
-				for (int i = 0; i < gameEngine.PlayerList.size(); i++) {
-					System.out
-							.println("Player" + (i + 1) + ":");
-					System.out
-							.println(gameEngine.PlayerList.get(i).playerLCStack);
-					System.out.println();
-				}
+			for(int j=0;j<availableSpaces.size();j++)
+			{				
+				String lTPosition = availableSpaces.get(j);
+				String[] parts = lTPosition.split(" ");
+				int id = Integer.valueOf(parts[0]);
+				String AdjacentPosition= parts[1];
+				int GetColumn=gameEngine.lakeTiles.getColumn(gameEngine.board,id,AdjacentPosition);
+				int GetRow=gameEngine.lakeTiles.getRow(gameEngine.board,id,AdjacentPosition);
+				degreeOfRotation=0;
+				for(int k=0;k<4;k++)
+				{	
+					currentTileToPlace=player.playerLTStack.get(i);
+					currentTileToPlace = gameEngine.lakeTiles.rotateLakeTile(
+							currentTileToPlace, degreeOfRotation);
+					
+					dataSetToReturn=gameEngine.lanternCards.assignLanternCardsToPlayerSimulation(
+								 gameEngine.board,GetColumn,GetRow,currentTileToPlace,player,
+								 gameEngine.lanternCards,gameEngine.favorTokens,gameEngine.numOfPlayer);
+					
 				
-				flag = false;
-			} else
-				player.pickLakeTileFromStack(currentTileToPlace);
-			
-			
+					makeDedicationGreedySimulation(gameEngine,player);
+					//return the dataset from vector to global lantern cards
+					Enumeration e=dataSetToReturn.elements();
+					numberOfCardsGot=(int) dataSetToReturn.lastElement();
+					
+					
+					dataSetToReturn.removeElementAt(dataSetToReturn.size()-1);
+					numberOfFavorTokensGot=(int) dataSetToReturn.lastElement();
+					dataSetToReturn.removeElementAt(dataSetToReturn.size()-1);
+					while (e.hasMoreElements()) {        		
+						  // System.out.println("Cards to be returned" + e.nextElement());
+						String cardToRemove=(String) e.nextElement();
+						   player.playerLCStack.removeLanternCard(cardToRemove,player);
+						   }  
+					total_Score[total_Score_Count]=player.playerScore_fourKind+player.playerScore_sevenUnique+player.playerScore_threePair;
+					if(total_Score[total_Score_Count]>max_Score_Possible)
+					{
+						max_Score_Possible=total_Score[total_Score_Count];
+						max_Score_index=total_Score_Count;
+						max_id=id;
+						maxAdjacentPosition=AdjacentPosition;
+						maxdegreeOfRotation=degreeOfRotation;
+					}
+					else
+					{						
+						if(numberOfCardsGot>max_number_Of_Cards)
+						{
+							max_number_Of_Cards=numberOfCardsGot;
+							max_Score_Possible=total_Score[total_Score_Count];
+							max_Score_index=total_Score_Count;
+							max_id=id;
+							maxAdjacentPosition=AdjacentPosition;
+							maxdegreeOfRotation=degreeOfRotation;
+							
+							maxcurrentTileToPlaceid=currentTileToPlace.id;
+						}
+						else if(numberOfCardsGot==max_number_Of_Cards && numberOfFavorTokensGot>maxNumberOfFavorTokens)
+						{
+							maxNumberOfFavorTokens=numberOfFavorTokensGot;
+							max_id=id;
+							maxAdjacentPosition=AdjacentPosition;
+							maxdegreeOfRotation=degreeOfRotation;
+							maxcurrentTileToPlaceid=currentTileToPlace.id;
+						}
+					}
+					total_Score_Count++;
+					degreeOfRotation+=90;
+					player.favorTokenScore=tokenScoreBeforSimulation;
+						//create dummy player..copy data structures and pass that player..make best dedication for that 
+						//place and store the totalHonorcount.return lanterncards back to global stacks..continue for all places..
+						//get the highest honor value and then use actual player and place lakeTile
+				}
+			}
+		}
+		int index=0;
+		for(int i=0;i<player.playerLTStack.size();i++)
+		{
+			if(player.playerLTStack.get(i).id==maxcurrentTileToPlaceid)
+			{
+				index=i;
+				currentTileToPlace=player.playerLTStack.get(i);
+			}
+		}
+		System.out.println(index);
+		System.out
+		.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
+		System.out.println(max_id);
+		System.out
+		.println("Enter the adjacent position (right, left, up, down)");
+		System.out.println(maxAdjacentPosition);
+		int GetColumn=gameEngine.lakeTiles.getColumn(gameEngine.board,max_id,maxAdjacentPosition);
+		int GetRow=gameEngine.lakeTiles.getRow(gameEngine.board,max_id,maxAdjacentPosition);
+		
+		System.out
+				.println("Enter the degree of roatation for the tile you want to place on board");
+		System.out.println("Available options 0 90 180 270");
+		System.out.println(maxdegreeOfRotation);
+		currentTileToPlace = gameEngine.lakeTiles.rotateLakeTile(
+				currentTileToPlace, maxdegreeOfRotation);
+
+		placeLakeTile = gameEngine.lakeTiles.placeTile(GetColumn,
+				GetRow, gameEngine.board, currentTileToPlace);
+		
+		gameEngine.lanternCards.stacks.put("redCard", redCount);
+		gameEngine.lanternCards.stacks.put("blueCard", blueCount);
+		gameEngine.lanternCards.stacks.put("greenCard", greenCount);
+		gameEngine.lanternCards.stacks.put("whiteCard", whiteCount);
+		gameEngine.lanternCards.stacks.put("purpleCard", purpleCount);
+		gameEngine.lanternCards.stacks.put("blackCard", blackCount);
+		gameEngine.lanternCards.stacks.put("orangeCard",orangeCount);
+		
+		if (placeLakeTile) {
+			gameEngine.lanternCards.assignLanternCardsToPlayers(
+					gameEngine.numOfPlayer, gameEngine.board,
+					GetColumn,GetRow, currentTileToPlace,
+						gameEngine.PlayerList, gameEngine.lanternCards, gameEngine.favorTokens);
+							gameEngine.board.displayBoard(gameEngine.board.board,
+									gameEngine.board.tilesOnBoard);
+							
+							for(int i=0;i<player.playerLTStack.size();i++)
+							{
+								if(currentTileToPlace.id==player.playerLTStack.get(i).id)
+									player.playerLTStack.remove(i);
+							}
+			player.displayPlayersLakeTile(player);
 			System.out.println();
-			System.out.println("Player Pick up the new LakeTile from the Stack after placing one");
-		}*/
+			System.out
+					.println("Number of FavorTokens:"
+							+ player.favorTokenScore);
+			System.out.println();
+			System.out
+					.println("Details of the LanternCards Assigned to Each Player After Placing the LakeTile");
+			for (int i = 0; i < gameEngine.PlayerList.size(); i++) {
+				System.out
+						.println("Player" + (i + 1) + ":");
+				System.out
+						.println(gameEngine.PlayerList.get(i).playerLCStack);
+				System.out.println();
+			}
+		} else
+			player.pickLakeTileFromStack(currentTileToPlace);
+			
+		System.out.println();
+		System.out.println("Player Pick up the new LakeTile from the Stack after placing one");
+		player.displayPlayersLakeTile(player);
+		
 	}
 
 	/**
@@ -348,12 +442,12 @@ public class GreedyPlayer implements PlayerStrategy
 						returnLCard="greenCard";
 					else if(player.getLanternCards().orangeCardCount()>1)
 						returnLCard="orangeCard";
-					else
-						returnLCard="NotPossible";
 				}
+				else
+					returnLCard="NotPossible";
 				if(pickLCard.equalsIgnoreCase("NotPossible") || returnLCard.equalsIgnoreCase("NotPossible"))
 				{
-					System.out.println("Exchange Lantern card for SevenUnique is not possible right now");
+					//System.out.println("Exchange Lantern card for SevenUnique is not possible right now");
 				}
 				
 				if(!returnLCard.equalsIgnoreCase("NotPossible") && !pickLCard.equalsIgnoreCase("NotPossible") )
@@ -428,7 +522,7 @@ public class GreedyPlayer implements PlayerStrategy
 			returnLCard="NotPossible";
 		if(pickLCard.equalsIgnoreCase("NotPossible") || returnLCard.equalsIgnoreCase("NotPossible"))
 		{
-			System.out.println("Exchange Lantern card for SevenUnique is not possible right now");
+			//System.out.println("Exchange Lantern card for FourOfKind is not possible right now");
 		}
 		
 		if(!returnLCard.equalsIgnoreCase("NotPossible") && !pickLCard.equalsIgnoreCase("NotPossible") )
@@ -576,7 +670,7 @@ public class GreedyPlayer implements PlayerStrategy
 			returnLCard="NotPossible";
 		if(pickLCard.equalsIgnoreCase("NotPossible") || returnLCard.equalsIgnoreCase("NotPossible"))
 		{
-			System.out.println("Exchange Lantern card for SevenUnique is not possible right now");
+			//System.out.println("Exchange Lantern card for ThreePair is not possible right now");
 		}
 		
 		if(!returnLCard.equalsIgnoreCase("NotPossible") && !pickLCard.equalsIgnoreCase("NotPossible") )
@@ -592,16 +686,15 @@ public class GreedyPlayer implements PlayerStrategy
 	return moveState;
 	}
 	
-	
-
 	/**
 	 * This method checks whether FourOfKind Dedication is possible for greedyPlayer and does it if possible
 	 * @param player current player
 	 * @param gameEngine contains the state of entire game
+	 * @param simulation whether its simultation mode or actual move
 	 * @return state if dedication is successful
 	 */
 	public boolean checkFourOfKindDedication(Player player,
-			GameEngine gameEngine) {
+			GameEngine gameEngine,boolean simulation) {
 		int card=0;
 		boolean flag=false,state=false;
 		LanternCards returnedLanternCards = null;
@@ -641,37 +734,43 @@ public class GreedyPlayer implements PlayerStrategy
 			flag=true;
 			card=1;
 		}
-		CardToReturn cardToReturn = new CardToReturn(
-				card);
-		returnedLanternCards = cardToReturn
-				.returnStackFourOfKind();
-
-		// take 4 cards with the third color inserted
-		// from player
-		player.getLanternCards()
-				.getCard(cardToReturn.getColor());
-		player.getLanternCards()
-				.getCard(cardToReturn.getColor());
-		player.getLanternCards()
-				.getCard(cardToReturn.getColor());
-		player.getLanternCards()
-				.getCard(cardToReturn.getColor());
-		if (returnedLanternCards != null) {
-			state = player.pickDedicationToken(moveString,
-							returnedLanternCards, gameEngine.lanternCards,
-							gameEngine.dedicationTokens);
+		if(card!=0)
+		{
+			CardToReturn cardToReturn = new CardToReturn(
+					card);
+			returnedLanternCards = cardToReturn
+					.returnStackFourOfKind();
+	
+			// take 4 cards with the third color inserted
+			// from player
+			player.getLanternCards()
+					.getCard(cardToReturn.getColor());
+			player.getLanternCards()
+					.getCard(cardToReturn.getColor());
+			player.getLanternCards()
+					.getCard(cardToReturn.getColor());
+			player.getLanternCards()
+					.getCard(cardToReturn.getColor());
+			if (returnedLanternCards != null) {
+				state = player.pickDedicationToken(moveString,
+								returnedLanternCards, gameEngine.lanternCards,
+								gameEngine.dedicationTokens);
+				if(simulation)
+					gameEngine.lanternCards.returnAll(returnedLanternCards);
+			}
 		}
-		return state;
+			return state;
 	}
 	
 	/**
 	 * This method checks whether ThreePair Dedication is possible for greedyPlayer and does it if possible
 	 * @param player current player
 	 * @param gameEngine contains the state of entire game
+	 * @param simulation whether its simultation mode or actual move
 	 * @return state if dedication is successful
 	 */
 	public boolean checkThreePairDedication(Player player,
-			GameEngine gameEngine) {
+			GameEngine gameEngine,boolean simulation) {
 		int card=0,card1=0,card2=0;
 		boolean state=false;
 		LanternCards returnedLanternCards = null;
@@ -803,6 +902,8 @@ public class GreedyPlayer implements PlayerStrategy
 			state = player.pickDedicationToken(moveString,
 							returnedLanternCards, gameEngine.lanternCards,
 							gameEngine.dedicationTokens);
+			if(simulation)
+				gameEngine.lanternCards.returnAll(returnedLanternCards);
 		}
 		return state;
 	}
@@ -811,10 +912,11 @@ public class GreedyPlayer implements PlayerStrategy
 	 * This method checks whether SevenUnique Dedication is possible for greedyPlayer and does it if possible
 	 * @param player current player
 	 * @param gameEngine contains the state of entire game
+	 * @param simulation whether its simultation mode or actual move
 	 * @return state if dedication is successful
 	 */
 	private boolean checkSevenUniqueDedication(Player player,
-			GameEngine gameEngine) {
+			GameEngine gameEngine,boolean simulation) {
 			boolean state=false;
 			String moveString = "sevenUnique";
 			LanternCards returnedLanternCards = null;
@@ -828,14 +930,103 @@ public class GreedyPlayer implements PlayerStrategy
 				state = player.pickDedicationToken(moveString,
 								returnedLanternCards, gameEngine.lanternCards,
 								gameEngine.dedicationTokens);
+				if(simulation)
+					gameEngine.lanternCards.returnAll(returnedLanternCards);
 			}
 		return state;
 	}
 
+	/**
+	 * This method is used for simulation for making dedication
+	 * @param gameEngine contains the state of the entire game
+	 * @param dummyPlayer dummy greedy player used for simulation
+	 */
+	private void makeDedicationGreedySimulation(GameEngine gameEngine,
+			Player dummyPlayer) {
+		int peekFourOfKind = gameEngine.dedicationTokens.peekFourOfKind();
+		int peekThreePairs = gameEngine.dedicationTokens.peekThreePairs();
+		int peekSevenUnique = gameEngine.dedicationTokens.peekSevenUnique();
+		
+		 int values[] = {peekFourOfKind,peekThreePairs,peekSevenUnique};
+		 String key[] ={"FourOfKind","ThreePair","SevenUnique"};
+		 for(int i=0;i<values.length-1;i++)
+			{
+				for(int j=0;j<values.length-1;j++)
+				{
+					int temp=0;
+					String temp1="";
+					if(values[j]<values[j+1])
+					{
+						temp=values[j];
+						values[j]=values[j+1];
+						values[j+1]=temp;
+						temp1=key[j];
+						key[j]=key[j+1];
+						key[j+1]=temp1;
+					}
+				}
+			}
+		 boolean exchanged=false;
+		one:for(int i=0;i<key.length;i++)
+		 {
+			 String x=key[i];
+			 boolean simulation=true;
+			 if(x.equalsIgnoreCase("FourOfKind"))
+			 {
+				 exchanged=checkFourOfKindDedication(dummyPlayer,gameEngine,simulation);
+				 if(exchanged)
+				 {
+					 break one;
+				 }
+			 }
+			 if(x.equalsIgnoreCase("ThreePair"))
+			 {
+				 exchanged=checkThreePairDedication(dummyPlayer,gameEngine,simulation);
+				 if(exchanged)
+				 {
+					 break one;
+				 }
+			 }
+			 if(x.equalsIgnoreCase("SevenUnique"))
+			 {
+				 exchanged=checkSevenUniqueDedication(dummyPlayer,gameEngine,simulation);
+				 if(exchanged)
+				 {
+					 break one;
+				 }
+			 }
+		 }			
+		 if(exchanged)
+		 {
+			 System.out.println("Picked!");
+				System.out.println("Score: four of a kind "
+								+ dummyPlayer.playerScore_fourKind);
+				System.out
+						.println("Score: three of a kind "
+								+ dummyPlayer.playerScore_threePair);
+				System.out
+						.println("Score: Seven unique "
+								+ dummyPlayer.playerScore_sevenUnique);
+		 }
+		 //else
+			 //System.out.println(" Please revisit the game rules!");
+	}
 	@Override
 	public void play(GameEngine gameEngine, Player player) {
-		// TODO Auto-generated method stub
 		
+		exchangeLanternCards(gameEngine,player);
+		makeDedication(gameEngine,player);
+		placeLakeTile(gameEngine,player);
+		
+		if(gameEngine.lakeTiles.hasLakeTile())
+		{// Composury pick lake tile
+			player.pickLakeTileFromStack(gameEngine.lakeTiles.getLakeTile());
+			System.out.println();
+			player.displayPlayersLakeTile(player);
+		}else
+		{
+			System.out.println("No lake tiles left on board to pick");
+		}
 	}
 
 	
