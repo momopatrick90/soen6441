@@ -12,6 +12,11 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 	int indexMin = 0;
 	int indexMax = 2;
 	int randomIndex;
+	boolean fourKind = false;
+	boolean sevenUnique = false;
+	boolean threePair = false;
+	int cardFourKind = 0;
+	int threePairCard1 = 0, threePairCard2 = 0, threePairCard3 = 0;
 
 	public RandomPlayer(String name) {
 		super(name);
@@ -22,10 +27,11 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		// Exchange lantern cards
-		System.out
-				.print("Type 1 if you want to exchange lantern cards, any other number to skip: ");
-		int choice = Integer.parseInt(br.readLine());
-		//
+		System.out.print("Exchanging lantern cards...");
+		int minChoice = 1;
+		int maxChoice = 2;
+
+		int choice = RandomNumberGenerator(minChoice, maxChoice);
 		if (choice == 1) {
 			exchangeLanternCards(gameEngine, player, br);
 		}
@@ -33,8 +39,23 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		// Make dedication
 		System.out
 				.print("Type 1 if you want to make a dedication, any other number to skip: ");
-		choice = Integer.parseInt(br.readLine());
+		fourKind = checkFourOfKindDedication(player, gameEngine);
+		sevenUnique = checkSevenUniqueDedication(player, gameEngine);
+		threePair = checkThreePairDedication(player, gameEngine);
+
+		// if Random player can make any of the three dedications then there is
+		// a 50/50 chance of choosing to make dedication or not. Else Random
+		// Player chooses not to.
+
+		if (fourKind || sevenUnique || threePair)
+			choice = RandomNumberGenerator(minChoice, maxChoice);
+		else
+			choice = 2;
+
+		System.out.println(choice);
+
 		if (choice == 1) {
+
 			makeDedication(gameEngine, player, br);
 		}
 
@@ -74,24 +95,10 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 				+ "4.Orange Card\n" + "5.White Card\n" + "6.Black Card\n"
 				+ "7.Blue Card\n");
 
-		boolean check = true;
-		while (check) {
-			in = new Scanner(System.in);
-			returnLCard = in.nextLine();
-			returnLCard.trim();
-			if (!returnLCard.matches(regex)) {
-				System.out.println("Invalid lantern card option");
-				check = true;
-			} else {
-				lanternCard = Integer.valueOf(returnLCard);
-				if (lanternCard < 1 || lanternCard > 7) {
-					System.out.println("Invalid lantern card option");
-				} else {
-					check = false;
-				}
-			}
-
-		}
+		int minLanCard = 1;
+		int maxLanCard = 7;
+		lanternCard = RandomNumberGenerator(minLanCard, maxLanCard);
+		System.out.println(lanternCard);
 		switch (lanternCard) {
 		case 1:
 			returnLCard = "redCard";
@@ -119,31 +126,12 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			break;
 		}
 
-		lanternCard = 0;
+		lanternCard = RandomNumberGenerator(minLanCard, maxLanCard);
 		System.out.println("Select the lantern card you want to pick.\n"
 				+ "1.Red Card\n" + "2.Green Card\n" + "3.Purple Card\n"
 				+ "4.Orange Card\n" + "5.White Card\n" + "6.Black Card\n"
 				+ "7.Blue Card\n");
-
-		check = true;
-		while (check) {
-			in = new Scanner(System.in);
-			pickLCard = in.nextLine();
-			pickLCard.trim();
-			if (!pickLCard.matches(regex)) {
-				System.out.println("Invalid option. Enter again!");
-				check = true;
-			} else {
-				lanternCard = Integer.valueOf(pickLCard);
-				if (lanternCard < 1 || lanternCard > 7) {
-					System.out.println("Invalid option. Enter again!");
-				} else {
-					check = false;
-				}
-			}
-
-		}
-		//
+		System.out.println(lanternCard);
 		switch (lanternCard) {
 		case 1:
 			pickLCard = "redCard";
@@ -177,7 +165,7 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			System.out.print("Successful Exchange");
 		else
 			System.out
-					.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
+					.print("unSuccessful Exchange. Make sure you get the rules right, Mr Random.");
 	}
 
 	protected void makeDedication(GameEngine gameEngine, Player player,
@@ -196,33 +184,55 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		System.out.println(player.getLanternCards());
 
 		System.out.println("----------------------------");
-		// TODO needs validation to be done before submitting
-		// the code
+
 		System.out
 				.println("What Move do you want to make? Enter its corresponding integer");
 
 		System.out.println("1:Three Pair 2:Four of a kind 3: Seven Unique");
 
-		boolean check = true;
+		int min = 1;
+		int max = 2;
+		int choice = RandomNumberGenerator(min, max);
 
-		while (check) {
-			in = new Scanner(System.in);
-			option = in.nextLine();
-			option.trim();
-			if (!option.matches(regex)) {
-				System.out.println("Invalid option. Enter again!");
-				check = true;
-			} else {
-				move = Integer.valueOf(option);
-				if (move < 1 || move > 3) {
-					System.out.println("Invalid option. Enter again!");
-				} else {
-					check = false;
-				}
-			}
+		if (fourKind && !sevenUnique && !threePair) {
 
+			move = 2;
+		} else if (!fourKind && sevenUnique && !threePair) {
+
+			move = 3;
+		} else if (!fourKind && !sevenUnique && threePair) {
+
+			move = 1;
+
+		} else if (fourKind && sevenUnique && threePair) {
+
+			int minChoice = 1;
+			int maxChoice = 3;
+			move = RandomNumberGenerator(minChoice, maxChoice);
+
+		} else if (fourKind && sevenUnique && !threePair) {
+
+			if (choice == 1)
+				move = 2;
+			else
+				move = 3;
+
+		} else if (fourKind && !sevenUnique && threePair) {
+
+			if (choice == 1)
+				move = 1;
+			else
+				move = 2;
+
+		} else if (!fourKind && sevenUnique && threePair) {
+
+			if (choice == 1)
+				move = 3;
+			else
+				move = 1;
 		}
 
+		System.out.println(move);
 		String moveString = null;
 		LanternCards returnedLanternCards = null;
 		boolean state = false;
@@ -234,16 +244,19 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			System.out.println("1: redCard 2: blueCard 3: greenCard 4: "
 					+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
 
-			int card = Integer.valueOf(br.readLine());
-			int card2 = Integer.valueOf(br.readLine());
-			int card3 = Integer.valueOf(br.readLine());
+			// neeed to change this part.
+
+			int card = threePairCard1;
+			int card2 = threePairCard2;
+			int card3 = threePairCard3;
+			
+			System.out.println(card);
+			System.out.println(card2);
+			System.out.println(card3);
 
 			if (player.getLanternCards().CardCount(card) >= 2
 					&& player.getLanternCards().CardCount(card2) >= 2
 					&& player.getLanternCards().CardCount(card3) >= 2) {
-
-				System.out.println("This means that you succeded to "
-						+ "get through the card check point");
 
 				CardToReturn cardToReturn = new CardToReturn(card, card2, card3);
 
@@ -282,7 +295,11 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			System.out.println("1: redCard 2: blueCard 3: greenCard 4: "
 					+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
 
-			int card = Integer.valueOf(br.readLine());
+			// neeed to change this part.
+
+			System.out.println(cardFourKind);
+
+			int card = cardFourKind;
 			if (player.getLanternCards().CardCount(card) >= 4) {
 
 				CardToReturn cardToReturn = new CardToReturn(card);
@@ -354,14 +371,13 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		player.displayPlayersLakeTile(player);
 		System.out.println();
 
-		
 		System.out
 				.println("Choosing the index of laketile to put on board....");
 
-		//gets the random index of the player's cards.
+		// gets the random index of the player's cards.
 		randomIndex = RandomNumberGenerator(indexMin, indexMax);
-		
-		//picks the card from player stack
+
+		// picks the card from player stack
 		LakeTiles currentTileToPlace = player.placeLakeTile(randomIndex);
 
 		boolean flag = true;
@@ -370,51 +386,48 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		while (flag) {
 			System.out
 					.println("Choosing the id of the adjacent tile (on board) where to place the LakeTile");
-			
+
 			gameEngine.board.tilesOnBoard.size();
-			
-			//randomly picking the laketile position from available spaces.
-			
-			ArrayList<String> availableSpace = gameEngine.board.availableSpaces();
-			int maxRandPos = availableSpace.size()-1;
+
+			// randomly picking the laketile position from available spaces.
+
+			ArrayList<String> availableSpace = gameEngine.board
+					.availableSpaces();
+			int maxRandPos = availableSpace.size() - 1;
 			int minRandPos = 0;
-			
+
 			// getting the string that contains the position.
 			// example: "3 left"; 3 - id left - string
-			int randPos = RandomNumberGenerator( minRandPos, maxRandPos);
-			
+			int randPos = RandomNumberGenerator(minRandPos, maxRandPos);
+
 			String lTPosition = availableSpace.get(randPos);
-			
+
 			String[] parts = lTPosition.split(" ");
 			int id = Integer.valueOf(parts[0]);
-			String AdjacentPosition= parts[1];
-		
+			String AdjacentPosition = parts[1];
+
 			System.out
 					.println("Enter the adjacent position (right, left, up, down)");
 			int GetColumn = gameEngine.lakeTiles.getColumn(gameEngine.board,
 					id, AdjacentPosition);
 			int GetRow = gameEngine.lakeTiles.getRow(gameEngine.board, id,
 					AdjacentPosition);
-	
 
 			System.out
 					.println("Choosing the degree of rotation for the tile you want to place on board....");
-			
-			
-			int minRandDegree =1;
-			int maxRandDegree =4;
+
+			int minRandDegree = 1;
+			int maxRandDegree = 4;
 			int randDegree = RandomNumberGenerator(minRandDegree, maxRandDegree);
 
-			if(randDegree ==1)
-				degreeOfRotation =0;
-			if(randDegree ==2)
+			if (randDegree == 1)
+				degreeOfRotation = 0;
+			if (randDegree == 2)
 				degreeOfRotation = 90;
-			if(randDegree ==3)
+			if (randDegree == 3)
 				degreeOfRotation = 180;
-			if(randDegree ==4)
+			if (randDegree == 4)
 				degreeOfRotation = 270;
-			
-			
 
 			currentTileToPlace = gameEngine.lakeTiles.rotateLakeTile(
 					currentTileToPlace, degreeOfRotation);
@@ -461,10 +474,153 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		return RandomNum;
 	}
 
+	/**
+	 * This method checks whether FourOfKind Dedication is possible for
+	 * greedyPlayer and does it if possible
+	 * 
+	 * @param player
+	 *            current player
+	 * @param gameEngine
+	 *            contains the state of entire game
+	 * @return state if dedication is successful
+	 */
+	public boolean checkFourOfKindDedication(Player player,
+			GameEngine gameEngine) {
+
+		boolean flag = false, state = false;
+		LanternCards returnedLanternCards = null;
+		String moveString = "FourOfKind";
+		if (player.getLanternCards().blackCardCount() >= 4) {
+			cardFourKind = 6;
+			flag = true;
+		} else if (player.getLanternCards().blueCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 2;
+		} else if (player.getLanternCards().whiteCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 4;
+		} else if (player.getLanternCards().purpleCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 5;
+		} else if (player.getLanternCards().greenCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 3;
+		} else if (player.getLanternCards().orangeCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 7;
+		} else if (player.getLanternCards().redCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 1;
+		}
+		return flag;
+	}
+
+	/**
+	 * This method checks whether ThreePair Dedication is possible for
+	 * greedyPlayer and does it if possible
+	 * 
+	 * @param player
+	 *            current player
+	 * @param gameEngine
+	 *            contains the state of entire game
+	 * @return state if dedication is successful
+	 */
+	public boolean checkThreePairDedication(Player player, GameEngine gameEngine) {
+		
+		boolean state = false;
+		if (player.getLanternCards().blackCardCount() >= 2) {
+			threePairCard1 = 6;
+		}
+		if (player.getLanternCards().blueCardCount() >= 2) {
+			if (threePairCard1 != 0)
+				threePairCard2 = 2;
+			else
+				threePairCard1 = 2;
+		}
+		if (player.getLanternCards().whiteCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 4;
+				} else
+					threePairCard2 = 4;
+			} else
+				threePairCard1 = 4;
+		}
+		if (player.getLanternCards().redCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 1;
+				} else
+					threePairCard2 = 1;
+			} else
+				threePairCard1 = 1;
+		}
+		if (player.getLanternCards().greenCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 3;
+				} else
+					threePairCard2 = 3;
+			} else
+				threePairCard1 = 3;
+		}
+		if (player.getLanternCards().purpleCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 5;
+				} else
+					threePairCard2 = 5;
+			} else
+				threePairCard1 = 5;
+		}
+		if (player.getLanternCards().orangeCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 7;
+				} else
+					threePairCard2 = 7;
+			} else
+				threePairCard1 = 7;
+		}
+		if (threePairCard1 != 0 && threePairCard2 != 0 && threePairCard3 != 0) {
+			state = true;
+		}
+
+		return state;
+	}
+
+	/**
+	 * This method checks whether SevenUnique Dedication is possible for
+	 * greedyPlayer and does it if possible
+	 * 
+	 * @param player
+	 *            current player
+	 * @param gameEngine
+	 *            contains the state of entire game
+	 * @return state if dedication is successful
+	 */
+	private boolean checkSevenUniqueDedication(Player player,
+			GameEngine gameEngine) {
+		boolean state = false;
+		String moveString = "sevenUnique";
+		LanternCards returnedLanternCards = null;
+
+		CardToReturn cardToReturn = new CardToReturn();
+		if (cardToReturn.SevenUniqueState(player)) {
+			returnedLanternCards = cardToReturn.returnSeveUnique();
+		}
+		if (returnedLanternCards != null) {
+			state = player.pickDedicationToken(moveString,
+					returnedLanternCards, gameEngine.lanternCards,
+					gameEngine.dedicationTokens);
+		}
+		return state;
+	}
+
 	@Override
 	public void play(GameEngine gameEngine, Player player) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
