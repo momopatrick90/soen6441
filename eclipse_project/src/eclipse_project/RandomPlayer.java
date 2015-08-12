@@ -12,6 +12,11 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 	int indexMin = 0;
 	int indexMax = 2;
 	int randomIndex;
+	boolean fourKind = false;
+	boolean sevenUnique = false;
+	boolean threePair = false;
+	int cardFourKind = 0;
+	int threePairCard1 = 0, threePairCard2 = 0, threePairCard3 = 0;
 
 	public RandomPlayer(String name) {
 		super(name);
@@ -34,8 +39,23 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		// Make dedication
 		System.out
 				.print("Type 1 if you want to make a dedication, any other number to skip: ");
-		choice = RandomNumberGenerator(minChoice, maxChoice);
+		fourKind = checkFourOfKindDedication(player, gameEngine);
+		sevenUnique = checkSevenUniqueDedication(player, gameEngine);
+		threePair = checkThreePairDedication(player, gameEngine);
+
+		// if Random player can make any of the three dedications then there is
+		// a 50/50 chance of choosing to make dedication or not. Else Random
+		// Player chooses not to.
+
+		if (fourKind || sevenUnique || threePair)
+			choice = RandomNumberGenerator(minChoice, maxChoice);
+		else
+			choice = 2;
+
+		System.out.println(choice);
+
 		if (choice == 1) {
+
 			makeDedication(gameEngine, player, br);
 		}
 
@@ -144,7 +164,8 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		if (moveState)
 			System.out.print("Successful Exchange");
 		else
-			System.out.print("unSuccessful Exchange. Make sure you get the rules right, Mr Random.");
+			System.out
+					.print("unSuccessful Exchange. Make sure you get the rules right, Mr Random.");
 	}
 
 	protected void makeDedication(GameEngine gameEngine, Player player,
@@ -163,15 +184,54 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		System.out.println(player.getLanternCards());
 
 		System.out.println("----------------------------");
-		
+
 		System.out
 				.println("What Move do you want to make? Enter its corresponding integer");
 
 		System.out.println("1:Three Pair 2:Four of a kind 3: Seven Unique");
-		int minChoice = 1;
-		int maxChoice = 3;
 
-		move = RandomNumberGenerator(minChoice, maxChoice);
+		int min = 1;
+		int max = 2;
+		int choice = RandomNumberGenerator(min, max);
+
+		if (fourKind && !sevenUnique && !threePair) {
+
+			move = 2;
+		} else if (!fourKind && sevenUnique && !threePair) {
+
+			move = 3;
+		} else if (!fourKind && !sevenUnique && threePair) {
+
+			move = 1;
+
+		} else if (fourKind && sevenUnique && threePair) {
+
+			int minChoice = 1;
+			int maxChoice = 3;
+			move = RandomNumberGenerator(minChoice, maxChoice);
+
+		} else if (fourKind && sevenUnique && !threePair) {
+
+			if (choice == 1)
+				move = 2;
+			else
+				move = 3;
+
+		} else if (fourKind && !sevenUnique && threePair) {
+
+			if (choice == 1)
+				move = 1;
+			else
+				move = 2;
+
+		} else if (!fourKind && sevenUnique && threePair) {
+
+			if (choice == 1)
+				move = 3;
+			else
+				move = 1;
+		}
+
 		System.out.println(move);
 		String moveString = null;
 		LanternCards returnedLanternCards = null;
@@ -186,13 +246,13 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 
 			// neeed to change this part.
 
-			int minCard = 1;
-			int maxCard = 7;
-			int card = Integer.valueOf(RandomNumberGenerator(minCard, maxCard));
-			int card2 = Integer
-					.valueOf(RandomNumberGenerator(minCard, maxCard));
-			int card3 = Integer
-					.valueOf(RandomNumberGenerator(minCard, maxCard));
+			int card = threePairCard1;
+			int card2 = threePairCard2;
+			int card3 = threePairCard3;
+			
+			System.out.println(card);
+			System.out.println(card2);
+			System.out.println(card3);
 
 			if (player.getLanternCards().CardCount(card) >= 2
 					&& player.getLanternCards().CardCount(card2) >= 2
@@ -237,10 +297,9 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 
 			// neeed to change this part.
 
-			int minCard = 1;
-			int maxCard = 7;
+			System.out.println(cardFourKind);
 
-			int card = RandomNumberGenerator(minCard, maxCard);
+			int card = cardFourKind;
 			if (player.getLanternCards().CardCount(card) >= 4) {
 
 				CardToReturn cardToReturn = new CardToReturn(card);
@@ -413,6 +472,149 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		// so add 1 to make it inclusive
 		int RandomNum = rand.nextInt((max - min) + 1) + min;
 		return RandomNum;
+	}
+
+	/**
+	 * This method checks whether FourOfKind Dedication is possible for
+	 * greedyPlayer and does it if possible
+	 * 
+	 * @param player
+	 *            current player
+	 * @param gameEngine
+	 *            contains the state of entire game
+	 * @return state if dedication is successful
+	 */
+	public boolean checkFourOfKindDedication(Player player,
+			GameEngine gameEngine) {
+
+		boolean flag = false, state = false;
+		LanternCards returnedLanternCards = null;
+		String moveString = "FourOfKind";
+		if (player.getLanternCards().blackCardCount() >= 4) {
+			cardFourKind = 6;
+			flag = true;
+		} else if (player.getLanternCards().blueCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 2;
+		} else if (player.getLanternCards().whiteCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 4;
+		} else if (player.getLanternCards().purpleCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 5;
+		} else if (player.getLanternCards().greenCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 3;
+		} else if (player.getLanternCards().orangeCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 7;
+		} else if (player.getLanternCards().redCardCount() >= 4) {
+			flag = true;
+			cardFourKind = 1;
+		}
+		return flag;
+	}
+
+	/**
+	 * This method checks whether ThreePair Dedication is possible for
+	 * greedyPlayer and does it if possible
+	 * 
+	 * @param player
+	 *            current player
+	 * @param gameEngine
+	 *            contains the state of entire game
+	 * @return state if dedication is successful
+	 */
+	public boolean checkThreePairDedication(Player player, GameEngine gameEngine) {
+		
+		boolean state = false;
+		if (player.getLanternCards().blackCardCount() >= 2) {
+			threePairCard1 = 6;
+		}
+		if (player.getLanternCards().blueCardCount() >= 2) {
+			if (threePairCard1 != 0)
+				threePairCard2 = 2;
+			else
+				threePairCard1 = 2;
+		}
+		if (player.getLanternCards().whiteCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 4;
+				} else
+					threePairCard2 = 4;
+			} else
+				threePairCard1 = 4;
+		}
+		if (player.getLanternCards().redCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 1;
+				} else
+					threePairCard2 = 1;
+			} else
+				threePairCard1 = 1;
+		}
+		if (player.getLanternCards().greenCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 3;
+				} else
+					threePairCard2 = 3;
+			} else
+				threePairCard1 = 3;
+		}
+		if (player.getLanternCards().purpleCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 5;
+				} else
+					threePairCard2 = 5;
+			} else
+				threePairCard1 = 5;
+		}
+		if (player.getLanternCards().orangeCardCount() >= 2) {
+			if (threePairCard1 != 0) {
+				if (threePairCard2 != 0) {
+					threePairCard3 = 7;
+				} else
+					threePairCard2 = 7;
+			} else
+				threePairCard1 = 7;
+		}
+		if (threePairCard1 != 0 && threePairCard2 != 0 && threePairCard3 != 0) {
+			state = true;
+		}
+
+		return state;
+	}
+
+	/**
+	 * This method checks whether SevenUnique Dedication is possible for
+	 * greedyPlayer and does it if possible
+	 * 
+	 * @param player
+	 *            current player
+	 * @param gameEngine
+	 *            contains the state of entire game
+	 * @return state if dedication is successful
+	 */
+	private boolean checkSevenUniqueDedication(Player player,
+			GameEngine gameEngine) {
+		boolean state = false;
+		String moveString = "sevenUnique";
+		LanternCards returnedLanternCards = null;
+
+		CardToReturn cardToReturn = new CardToReturn();
+		if (cardToReturn.SevenUniqueState(player)) {
+			returnedLanternCards = cardToReturn.returnSeveUnique();
+		}
+		if (returnedLanternCards != null) {
+			state = player.pickDedicationToken(moveString,
+					returnedLanternCards, gameEngine.lanternCards,
+					gameEngine.dedicationTokens);
+		}
+		return state;
 	}
 
 	@Override
