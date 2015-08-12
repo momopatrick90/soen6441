@@ -288,6 +288,11 @@ public class LanternCards {
 		return this.stacks.get(color);
 	}
 
+	
+	public int CardCount(String card) {
+		return this.stacks.get(card);
+	}
+	
 	/**
 	 * @param card
 	 *            the color of the card to check
@@ -339,6 +344,8 @@ public class LanternCards {
 
 		return result;
 	}
+	
+	
 
 	/**
 	 * @return total number of stacks of a specific color that are not empty
@@ -807,5 +814,134 @@ public class LanternCards {
 	public void removeLanternCard(String card,Player dummyPlayer)
 	{
 		dummyPlayer.playerLCStack.stacks.put(card, this.stacks.get(card) - 1);
+	}
+	
+	/**
+	 * What is the best possible score for this lantern cards, for the next turn?
+	 * considering the different combinations of 7 unique, 4 of kind, and 3 pairs
+	 * TODO check really what dedication means
+	 * TODO what id dedication=0, use generica four
+	 * @param dedicationTokens
+	 * @return
+	 */
+	public int bestPossibleScore(DedicationTokens dedicationTokens)
+	{
+		// number of seven unique
+		if(this.hasSevenUniques() && dedicationTokens.sevenUniqueCount()>=1)
+			return dedicationTokens.peekSevenUnique();
+		
+		// can do four of kind
+		if(this.hasFourOfKinds() && dedicationTokens.fourOfKindCount()>=1)
+			return dedicationTokens.peekFourOfKind();
+		
+		// 
+		if(this.numThreePairs() >= 1 && dedicationTokens.threePairCount()>=1)
+			return dedicationTokens.peekThreePairs();
+		
+		return 0;
+	}
+	
+	/**
+	 * Helper function to check if can do four of kinds for any color
+	 * @return return true if there was a NEXT possible combination
+	 */
+	protected boolean hasFourOfKinds()
+	{
+		//colors
+		String[] colors = (String[]) this.stacks.keySet().toArray();
+		
+		
+		for(int i=0; i<colors.length; i++)
+		{
+			if(this.hasFourOfKind(colors[i]))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 * @return true of this lanterncards can do 4 of a kind, amount times
+	 */
+	protected boolean hasFourOfKind(String color)
+	{
+		return this.CardCount(color) >= 4;
+	}
+
+	/**
+	 * what is the max number of three pairs from the lantern cards 
+	 * @return return true if there was a possible combination
+	 */
+	protected int numThreePairs()
+	{
+		//
+		int result = 0 ;
+		//
+		boolean paired = false;
+		
+		do{
+			//
+			paired = false;
+			//
+			int pairs = 0;
+			//
+			bpoint:for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+				
+				// get pair if there
+				if(entry.getValue() >= 2)
+				{
+					pairs += 1;
+					entry.setValue(entry.getValue() - 2);
+				}
+				
+				//
+				if(pairs == 3)
+				{
+					paired = true;
+					result += 1;
+					break bpoint;
+				}
+			}
+		}while(paired);
+		
+		//
+		return result;
+	}
+
+
+
+
+	/**
+	 * can do seven uniques?
+	 * @param amount
+	 * @return  true is this lanterncards can do a 7 unique
+	 */
+	protected boolean hasSevenUniques()
+	{
+		//
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+			//
+			if(entry.getValue() < 1)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param lanternCards
+	 * @return make an exact copy of lanternCards
+	 */
+	protected LanternCards duplicate()
+	{
+		LanternCards result = new LanternCards();
+		result.stacks = (HashMap<String, Integer>) this.stacks.clone();
+		return result;
 	}
 }
