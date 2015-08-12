@@ -2,6 +2,7 @@ package eclipse_project;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Stack;
 
@@ -331,20 +332,39 @@ public class LanternCards {
 	 * @return returns the number of stacks of a specific color, that have
 	 *         quantiy amount of cards
 	 */
-	public int colorsWithQuantity(int quantity) {
-		int result = 0;
+	public int numColorsWithQuantity(int quantity) {
+		return this.colorsWithQuantity(quantity).size();
+	}
+	
+	public LinkedList<String> colorsWithQuantity(int quantity) {
+		LinkedList<String> result = new LinkedList<String>();
 
 		//
 		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
-			if (entry.getValue() == quantity) {
-				result += 1;
-			}
+			if(entry.getValue() == quantity)
+				result.push(entry.getKey());
 		}
 
 		return result;
 	}
 	
 	
+	/**
+	 * @param quantity
+	 * @return returns the number of stacks of a specific color, that have
+	 *         at least quantiy amount of cards
+	 */
+	public LinkedList<String> colorsWithAtLeastQuantity(int quantity) {
+		LinkedList<String> result = new LinkedList<String>();
+
+		//
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+			if(entry.getValue() >= quantity)
+				result.push(entry.getKey());
+		}
+
+		return result;
+	}
 
 	/**
 	 * @return total number of stacks of a specific color that are not empty

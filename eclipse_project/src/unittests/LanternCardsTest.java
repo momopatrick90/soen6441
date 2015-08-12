@@ -158,7 +158,7 @@ public class LanternCardsTest {
 		LanternCards lc = new LanternCards(0, 3, 1, 0, 1, 0, 3, 1);
 		
 		// 
-		assertTrue(lc.colorsWithQuantity(3) == 2);
+		assertTrue(lc.numColorsWithQuantity(3) == 2);
 	}
 	
 	@Test

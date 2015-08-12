@@ -71,7 +71,7 @@ public class Player {
 	public boolean pickDedicationToken(String move, LanternCards returnedLanternCards, LanternCards globalLanternCards, DedicationTokens dedicationToken) {
 		
 		if (move.equals("threePair")) {
-			if(returnedLanternCards.nonZeroColors() != 3 || returnedLanternCards.colorsWithQuantity(2) != 3)
+			if(returnedLanternCards.nonZeroColors() != 3 || returnedLanternCards.numColorsWithQuantity(2) != 3)
 			{
 				return false;
 			}
@@ -79,7 +79,7 @@ public class Player {
 			//
 			playerScore_threePair += dedicationToken.getThreePair();
 		} else if (move.equals("FourOfKind")) {
-			if(returnedLanternCards.nonZeroColors() != 1 || returnedLanternCards.colorsWithQuantity(4) != 1)
+			if(returnedLanternCards.nonZeroColors() != 1 || returnedLanternCards.numColorsWithQuantity(4) != 1)
 			{
 				return false;
 			}
@@ -87,7 +87,7 @@ public class Player {
 			playerScore_fourKind += dedicationToken.getFourOfKind();
 
 		} else if (move.equals("sevenUnique")) {
-			if(returnedLanternCards.nonZeroColors() != 7 || returnedLanternCards.colorsWithQuantity(1) != 7)
+			if(returnedLanternCards.nonZeroColors() != 7 || returnedLanternCards.numColorsWithQuantity(1) != 7)
 			{
 				return false;
 			}
