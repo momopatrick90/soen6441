@@ -81,9 +81,6 @@ public class HumanPlayer implements PlayerStrategy {
 		} catch (NumberFormatException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		if(choice == 1)
 		{
