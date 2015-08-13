@@ -1,10 +1,19 @@
 package eclipse_project;
 
+/**
+ * Cards to be returned for makeDedication
+ */
 public class CardToReturn {
 	private String color;
 	private String color2;
 	private String color3;
 
+	/**
+	 * This constructor sets the 3 cards color for 3 pair dedication
+	 * @param card card 1's Value
+	 * @param card2 card 2's Value
+	 * @param card3 card 3's Value
+	 */
 	public CardToReturn(int card, int card2, int card3) {
 		// set the color of the first card
 		if (card == 1) {
@@ -57,6 +66,10 @@ public class CardToReturn {
 
 	}
 
+	/**
+	 * This constructor sets the cards color for four of kind dedication
+	 * @param card card's Value
+	 */
 	public CardToReturn(int card) {
 		// set the color of the first card
 		if (card == 1) {
@@ -76,10 +89,17 @@ public class CardToReturn {
 		}
 	}
 
+	/**
+	 * constructor for CardToReturn
+	 */
 	public CardToReturn() {
 
 	}
 
+	/**
+	 * This method returns the 6 cards for 3 pair dedication
+	 * @return returnCards returns the 6 cards
+	 */
 	public LanternCards returnStackThreeOfKind() {
 		LanternCards returnCards = new LanternCards();
 		returnCards.addCard(color);
@@ -94,6 +114,10 @@ public class CardToReturn {
 
 	}
 
+	/**
+	 * This method returns the 4 cards for four of kind dedication
+	 * @return returnCards returns the 4 cards
+	 */
 	public LanternCards returnStackFourOfKind() {
 		LanternCards returnCards = new LanternCards();
 		returnCards.addCard(color);
@@ -104,6 +128,10 @@ public class CardToReturn {
 
 	}
 
+	/**
+	 * This method returns the 7 cards for seven Unique dedication
+	 * @return returnCards returns the 7 cards 
+	 */
 	public LanternCards returnSeveUnique() {
 		LanternCards returnCards = new LanternCards();
 		returnCards.addBlackcard();
@@ -118,19 +146,37 @@ public class CardToReturn {
 
 	}
 
+	/**
+	 * Getter method for color
+	 * @return color
+	 */
 	public String getColor() {
 		return this.color;
 	}
 
+	/**
+	 * Getter method for color2
+	 * @return color
+	 */
 	public String getColor2() {
 		return this.color2;
 	}
 
+	/**
+	 * Getter method for color3
+	 * @return color
+	 */
 	public String getColor3() {
 		return this.color3;
 	}
 
+	/**
+	 * this method checks can a player make seven Unique dedication
+	 * @param player current player
+	 * @return flag 
+	 */
 	public boolean SevenUniqueState(Player player) {
+		boolean flag=false;
 		if (player.getLanternCards().blackCardCount() >= 1
 				&& player.getLanternCards().blueCardCount() >= 1
 				&& player.getLanternCards().greenCardCount() >= 1
@@ -138,9 +184,9 @@ public class CardToReturn {
 				&& player.getLanternCards().redCardCount() >= 1
 				&& player.getLanternCards().purpleCardCount() >= 1
 				&& player.getLanternCards().whiteCardCount() >= 1)
-			return true;
-		else
-			return false;
-	}
+			flag=true;
+		return flag;
+			}
 
 }
+

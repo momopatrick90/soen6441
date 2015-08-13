@@ -317,15 +317,17 @@ public class Player {
 	}
 
 
-	/*
+	/**
 	 * set the favor token on start or load
+	 * @param favorToken  
 	 */
 	public void setFavorToken(int favorToken) {
 		this.favorTokenScore = favorToken;
 	}
 
-	/*
-	 * get the favor token
+	/**
+	 * gets the favor token Score
+	 * @return favorToken Score
 	 */
 	public int getFavorToken() {
 		return this.favorTokenScore;
@@ -438,7 +440,10 @@ public class Player {
 	}
 	
 
-
+/**
+ * sets the current player
+ * @param state
+ */
 void setCurrent(boolean state) {
 	current= state;
 }
@@ -488,6 +493,7 @@ void setCurrent(boolean state) {
 	
 	
 }
+
 
 
 

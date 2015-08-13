@@ -331,12 +331,17 @@ public class LanternCards {
 	/**
 	 * @param quantity
 	 * @return returns the number of stacks of a specific color, that have
-	 *         quantiy amount of cards
+	 *         quantity amount of cards
 	 */
 	public int numColorsWithQuantity(int quantity) {
 		return this.colorsWithQuantity(quantity).size();
 	}
 	
+	/** 
+	 * @param quantity
+	 * returns the number of stacks of a specific color, that have
+	 *         quantity amount of cards
+	 */
 	public LinkedList<String> colorsWithQuantity(int quantity) {
 		LinkedList<String> result = new LinkedList<String>();
 
@@ -398,6 +403,9 @@ public class LanternCards {
 		}
 	}
 
+	/**
+	 * @return color of the lanternCard in String format
+	 */
 	public String toString() {
 		String result = "LanternCards: ";
 		//
@@ -965,3 +973,4 @@ public class LanternCards {
 		return result;
 	}
 }
+
