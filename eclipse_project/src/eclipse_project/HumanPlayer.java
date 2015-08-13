@@ -15,6 +15,9 @@ public class HumanPlayer implements PlayerStrategy {
 	}
 
 	@Override
+	/**
+	 * @see eclipse_project.PlayerStrategy#play(eclipse_project.GameEngine, eclipse_project.Player)
+	 */
 	public void play(GameEngine gameEngine, Player player) {
 		// TODO Auto-generated method stub
 		// Exchange lantern cards
@@ -118,7 +121,12 @@ public class HumanPlayer implements PlayerStrategy {
 		}
 	}
 	
-
+	/**
+	 * Method called when human player needs to exchange cards.
+	 * @param gameEngine - all the info of the game. State of the game
+	 * @param player - all the info of the player.
+	 * @throws IOException
+	 */
 	protected void exchangeLanternCards(GameEngine gameEngine, Player player, BufferedReader br) throws IOException
 	{
 		int lanternCard = 0;
@@ -223,6 +231,14 @@ public class HumanPlayer implements PlayerStrategy {
 		else
 			System.out.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
 	}
+	/**
+	 * method called when human player want to make a dedication.
+	 * 
+	 * @param gameEngine - all info of the game. (State of the game)
+	 * @param player - the current player. (Current player state).
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	
 	protected void makeDedication(GameEngine gameEngine, Player player, BufferedReader br) throws NumberFormatException, IOException
 	{
@@ -411,7 +427,14 @@ public class HumanPlayer implements PlayerStrategy {
 				System.out
 						.println(" Please revisit the game rules!");
 	}
-	
+	/**
+	 * Method called for the human player to place the laketile on board
+	 * @param gameEngine
+	 * @param player
+	 * @param br
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	public void placeLakeTile(GameEngine gameEngine, Player player, BufferedReader br) throws NumberFormatException, IOException
 	{
 		//
@@ -554,6 +577,13 @@ public class HumanPlayer implements PlayerStrategy {
 			System.out.println("Player Pick up the new LakeTile from the Stack after placing one");
 		}
 	}
+	/**
+	 * Validate the index for the placement of the laketile.
+	 * @param gameEngine - state of the game.
+	 * @return - valid id of laketile
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	
 	public int validateIndex(GameEngine gameEngine) throws NumberFormatException, IOException{
 
