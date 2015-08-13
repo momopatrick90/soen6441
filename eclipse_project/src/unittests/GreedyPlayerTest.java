@@ -122,9 +122,16 @@ public class GreedyPlayerTest {
 		gameEngine.favorTokens=new FavorTokens(5);
 		gameEngine.lanternCards=new LanternCards(2,1, 3, 1, 2, 2, 3, 2);
 		gameEngine.dedicationTokens=new DedicationTokens(2, 2, 4, 7, 4);
-		boolean result= gPlayer.checkThreePairDedication(player, gameEngine, true);
+		boolean result= gPlayer.checkThreePairDedication(player, gameEngine, false);
 		
 		assertTrue(result);
-		assertEquals(0,player.getLanternCards().redCardCount());
+		assertEquals(3, gameEngine.lanternCards.redCardCount());
+		assertEquals(0, player.getLanternCards().redCardCount());
+		assertEquals(5, gameEngine.lanternCards.blueCardCount());
+		assertEquals(1, gameEngine.lanternCards.greenCardCount());
+		assertEquals(2, gameEngine.lanternCards.whiteCardCount());
+		assertEquals(2, gameEngine.lanternCards.purpleCardCount());
+		assertEquals(5, gameEngine.lanternCards.blackCardCount());
+		assertEquals(2, gameEngine.lanternCards.orangeCardCount());
 	}	
 }
