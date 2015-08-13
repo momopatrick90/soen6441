@@ -29,14 +29,14 @@ public class UnfriendlyPlayerTest {
 		LanternCards lanternCards=new LanternCards(2, 4, 3, 3, 3, 2, 3, 2);
 		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
 		int favorTokenScore=10;
+		int result;
 		Player player=new Player("P1", "P1", lanternCards , playerLTStack, favorTokenScore, 2, 2, 2);
 		
 		GameEngine gameEngine=new GameEngine(2);
 		gameEngine.favorTokens=new FavorTokens(5);
 		gameEngine.dedicationTokens=new DedicationTokens(2);
 		
-		int result=  uPlayer.dedicationGain(gameEngine, player, "redCard", "whiteCard");
-		System.out.print(result);
+		result=  uPlayer.dedicationGain(gameEngine, player, "redCard", "whiteCard");
 		assertTrue(result==0);
 		
 	}
