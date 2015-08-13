@@ -46,15 +46,15 @@
 		PlayerTest.java
 		RandomPlayerTest.java
 		UnfriendlyPlayerTest.java
-	iii) JavadocBuild2
+	iii) JavadocBuild3
 	iv)  README.txt	
-	V)   Soen6441_LanternApplication_Build3_Team_D.jpeg		   
+	V)   Soen6441_LanternApplication_Build3_Team_D.jpeg --> The class diagram of Lantern Application	   
 	
 
 3)Detailed design Documentation:
   *****************************
 	
-	JavaDoc located in the archive
+	JavaDoc located in the archive as "JavadocBuild3"
 
 4)How to compile, build and run code:
   **********************************
