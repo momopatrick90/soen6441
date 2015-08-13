@@ -436,8 +436,9 @@ public class HumanPlayer implements PlayerStrategy {
 		while (flag) {
 			System.out
 			.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
-			int id = Integer.parseInt(br.readLine());
-			
+			//validate
+			int id = validateIndex(gameEngine);
+			//end-validate
 			System.out
 			.println("Enter the adjacent position (right, left, up, down)");
 			String AdjacentPosition = br.readLine();
@@ -503,6 +504,43 @@ public class HumanPlayer implements PlayerStrategy {
 			System.out.println();
 			System.out.println("Player Pick up the new LakeTile from the Stack after placing one");
 		}
+	}
+	
+	public int validateIndex(GameEngine gameEngine) throws NumberFormatException, IOException{
+
+		String regex = "\\d+";
+		Scanner in;
+		int answer=0;
+		boolean check = true;
+		String input = "";
+		int id = 0;
+		while(check){		
+			in = new Scanner(System.in);
+			input = in.nextLine();
+			if (!input.matches(regex)) {
+				System.out.println("invalid input. Enter again!");
+			} else {
+				id = Integer.parseInt(input, 10);
+				boolean innerCheck = true;
+				if (id < 0) {
+					System.out.println("invalid input. Enter again!");
+				} else {
+					for(int i =0;i<gameEngine.board.tilesOnBoard.size();i++)
+					{
+						if(gameEngine.board.tilesOnBoard.get(i).id==id)
+							innerCheck = false;
+					}
+				}
+								
+				if (innerCheck) {
+					System.out.println("invalid input. Enter again!");
+				} else {
+					check = false;
+				}
+			}
+
+		}
+		return id;
 	}
 
 

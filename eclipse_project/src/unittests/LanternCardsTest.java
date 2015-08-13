@@ -191,7 +191,7 @@ public class LanternCardsTest {
 		lc.withdrawAll(target_lc);
 		
 		//
-		assertTrue(target_lc.nonZeroColors() == 0);
+		assertTrue(lc.nonZeroColors() == 0);
 	}
 	
 	@Test

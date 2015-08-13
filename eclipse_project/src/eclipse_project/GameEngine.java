@@ -59,7 +59,7 @@ public class GameEngine {
 	public Board board = null;
 	public GameEndContext gameEnd = null;
 	public int userInput_N, M, endingOption = 0;
-
+	public String regex = "\\d+";
 	/**
 	 * Default Constructor
 	 */
@@ -396,25 +396,51 @@ public class GameEngine {
 
 		Scanner in = new Scanner(System.in);
 		int choice = 0;
-
+		String input="";
 		if (this.numOfPlayer == 2) {
 			System.out.println("Enter the strategy for player 1");
+			boolean check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player1.setStrategy(strategy);
+					}
+				}
 
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player1.setStrategy(strategy);
+			}//
 
 			System.out.println("Enter the strategy for player 2");
+			check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player2.setStrategy(strategy);
+					}
+				}
 
-			choice = in.nextInt();
-			strategy =  checkChoice(choice);
-
-			player2.setStrategy(strategy);
+			}//
 		}
 		if (this.numOfPlayer == 3) {
 
-			System.out.println("Enter the strategy for player 1");
+			/*System.out.println("Enter the strategy for player 1");
 
 			choice = in.nextInt();
 			strategy = checkChoice(choice);
@@ -433,11 +459,70 @@ public class GameEngine {
 			choice = in.nextInt();
 			strategy = checkChoice(choice);
 
-			player3.setStrategy(strategy);
+			player3.setStrategy(strategy);*/
+			System.out.println("Enter the strategy for player 1");
+			boolean check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player1.setStrategy(strategy);
+					}
+				}
+
+			}//
+			
+			System.out.println("Enter the strategy for player 2");
+			check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player2.setStrategy(strategy);
+					}
+				}
+
+			}//
+			
+			System.out.println("Enter the strategy for player 3");
+			check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player3.setStrategy(strategy);
+					}
+				}
+
+			}//
 		}
 		if (this.numOfPlayer == 4) {
 
-			System.out.println("Enter the strategy for player 1");
+			/*System.out.println("Enter the strategy for player 1");
 
 			choice = in.nextInt();
 			strategy = checkChoice(choice);
@@ -463,7 +548,83 @@ public class GameEngine {
 			choice = in.nextInt();
 			strategy = checkChoice(choice);
 
-			player4.setStrategy(strategy);
+			player4.setStrategy(strategy);*/
+			System.out.println("Enter the strategy for player 1");
+			boolean check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player1.setStrategy(strategy);
+					}
+				}
+
+			}//
+			System.out.println("Enter the strategy for player 2");
+			check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player2.setStrategy(strategy);
+					}
+				}
+
+			}//
+			System.out.println("Enter the strategy for player 3");
+			check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player3.setStrategy(strategy);
+					}
+				}
+
+			}//
+			System.out.println("Enter the strategy for player 4");
+			check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("strategy is invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 1 || choice > 5) {
+						System.out.println("strategy is invalid input. Enter again!");
+					} else {
+						check = false;
+						strategy = checkChoice(choice);
+						player4.setStrategy(strategy);
+					}
+				}
+
+			}//
 		}
 
 	}
@@ -512,7 +673,9 @@ public class GameEngine {
 	protected void run() throws NumberFormatException, IOException {
 		// was the game exited
 		boolean exited = false;
-		
+		boolean check = true;
+		String input = "";
+		Scanner in;
 
 		while (!this.gameEnd.executeStrategy(this)) {
 			//
@@ -529,9 +692,25 @@ public class GameEngine {
 			System.out.println(currentPlayer.name + "'s turn to play.");
 			
 			// Exit game loop
-			System.out
-					.print("Type 1 if you want to exit the game loop, any other number to continue: ");
-			int choice = Integer.parseInt(br.readLine());
+			System.out.print("Type 1 if you want to exit the game loop, any other number to continue: ");
+			
+			int choice =0;
+			
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 0) {
+						System.out.println("invalid input. Enter again!");
+					} else {
+						check = false;
+					}
+				}
+
+			}//
 			//
 			if (choice == 1) {
 				exited = true;
