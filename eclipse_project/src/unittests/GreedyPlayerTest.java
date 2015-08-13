@@ -23,7 +23,7 @@ public class GreedyPlayerTest {
 		gPlayer=new GreedyPlayer("Player1");
 	}
 	@Test
-	public void testExchangeLanternCardforSevenUnique() {
+	public void testExchangeLanternCardforSevenUniqueForGreedyPlayer() {
 		
 		LanternCards lanternCards=new LanternCards(2, 0, 1, 1, 2, 2, 3, 2);
 		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
@@ -42,7 +42,7 @@ public class GreedyPlayerTest {
 	}
 	
 	@Test
-	public void testExchangeLanternCardForFourOfKind(){
+	public void testExchangeLanternCardForFourOfKindForGreedyPlayer(){
 		LanternCards lanternCards=new LanternCards(2, 3, 3, 1, 2, 2, 3, 2);
 		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
 		int favorTokenScore=10;
@@ -63,7 +63,7 @@ public class GreedyPlayerTest {
 	}
 
 	@Test
-	public void testEnchangeLanternCardForThreePair(){
+	public void testEnchangeLanternCardForThreePairForGreedyPlayer(){
 		LanternCards lanternCards=new LanternCards(2, 1, 3, 1, 2, 2, 3, 1);
 		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
 		int favorTokenScore=10;
@@ -83,7 +83,7 @@ public class GreedyPlayerTest {
 	}
 	
 	@Test
-	public void testFourOfKindPossibleAndDoesIfPossible(){
+	public void testFourOfKindPossibleAndDoesIfPossibleForGreedyPlayer(){
 		LanternCards lanternCards=new LanternCards(2, 4, 3, 1, 2, 2, 3, 2);
 		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
 		int favorTokenScore=10;
@@ -91,19 +91,28 @@ public class GreedyPlayerTest {
 		
 		GameEngine gameEngine=new GameEngine(2);
 		gameEngine.favorTokens=new FavorTokens(5);
-		gameEngine.lanternCards=new LanternCards(2,1, 3, 1, 2, 2, 3, 2);
+		gameEngine.lanternCards=new LanternCards(2,1, 3, 1, 2, 2, 2, 2);
 		gameEngine.dedicationTokens=new DedicationTokens(2, 2, 4, 7, 4);
 		boolean result= gPlayer.checkFourOfKindDedication(player, gameEngine, true);
+		int simfourOfKind=gameEngine.dedicationTokens.peekFourOfKind();
 		
 		assertTrue(result);
-		//redCard changed from 4 to 0 after dedication
-		assertEquals(0,player.getLanternCards().redCardCount());
-		//blueCard Remains same as count is less than 4
-		assertEquals(3, player.getLanternCards().blueCardCount());
+		assertEquals(2, simfourOfKind);
+		assertFalse(player.playerScore_fourKind==0);
+		assertEquals(5, gameEngine.lanternCards.redCardCount());
+		assertEquals(4, player.getLanternCards().redCardCount());
+		assertEquals(3, gameEngine.lanternCards.blueCardCount());
+		assertEquals(1, gameEngine.lanternCards.greenCardCount());
+		assertEquals(2, gameEngine.lanternCards.whiteCardCount());
+		assertEquals(2, gameEngine.lanternCards.purpleCardCount());
+		assertEquals(2, gameEngine.lanternCards.blackCardCount());
+		assertEquals(2, gameEngine.lanternCards.orangeCardCount());
+		
+		
 	}
 	
 	@Test
-	public void testThreePairDedeicationIsPossibleAndDoesIfPossible(){
+	public void testThreePairDedeicationIsPossibleAndDoesIfPossibleForGreedyPlayer(){
 		LanternCards lanternCards=new LanternCards(2, 2, 3, 1, 1, 1, 3, 1);
 		ArrayList<LakeTiles> playerLTStack=new ArrayList<LakeTiles>();
 		int favorTokenScore=10;
@@ -116,6 +125,6 @@ public class GreedyPlayerTest {
 		boolean result= gPlayer.checkThreePairDedication(player, gameEngine, true);
 		
 		assertTrue(result);
-		assertEquals(2,player.getLanternCards().redCardCount());
+		assertEquals(0,player.getLanternCards().redCardCount());
 	}	
 }
