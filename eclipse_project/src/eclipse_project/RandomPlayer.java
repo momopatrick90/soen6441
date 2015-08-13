@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RandomPlayer extends Player implements PlayerStrategy {
+public class RandomPlayer implements PlayerStrategy {
 
 	int indexMin = 0;
 	int indexMax = 2;
@@ -19,7 +19,7 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 	int threePairCard1 = 0, threePairCard2 = 0, threePairCard3 = 0;
 
 	public RandomPlayer(String name) {
-		super(name);
+		//super(name);
 		// TODO Auto-generated constructor stub
 	}
 

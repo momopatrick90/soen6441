@@ -28,11 +28,27 @@ public class Player {
 		this.playerLTStack = new ArrayList<LakeTiles>();
 		this.playerStrategy = new UnfriendlyPlayer(this.name);
 
-		if(name.equalsIgnoreCase("player4"))
-			this.playerStrategy = new UnfriendlyPlayer(this.name);
-		else 
-			this.playerStrategy = new GreedyPlayer(this.name);
+		
 	}
+	/**
+	 * Define the strategy of the player.
+	 * 
+	 * @param strategy
+	 */
+	public void setStrategy(String strategy) {
+		
+		if (strategy.equalsIgnoreCase("HumanPlayer"))
+			this.playerStrategy = new HumanPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("GreedyPlayer"))
+			this.playerStrategy = new GreedyPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("RandomPlayer"))
+			this.playerStrategy = new RandomPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("UnfriendlyPlayer"))
+			this.playerStrategy = new UnfriendlyPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("CleverPlayer"))
+			this.playerStrategy = new UnfriendlyPlayer(this.name);
+	}
+
 
 	/**
 	 * Parameterized constructor for loading the existing players form the passed value of the game state from the file
