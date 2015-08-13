@@ -155,7 +155,7 @@ public class LanternsApplication {
 			} else if (resp == 2) {
 
 				while (true) {
-					System.out.println("Enter name of file");
+					System.out.println("Enter name of file with .xml extension.");
 					in = new Scanner(System.in);
 					fileName = in.nextLine();
 					fileName = fileName.trim();
@@ -174,7 +174,7 @@ public class LanternsApplication {
 				if (isLoad) {
 					while (true) {
 						System.out
-								.println("Enter the name of file to save the game & quit.");
+								.println("Enter the name of file with .xml extension to save the game & quit.");
 						in = new Scanner(System.in);
 						fileName = in.nextLine();
 						fileName = fileName.trim();

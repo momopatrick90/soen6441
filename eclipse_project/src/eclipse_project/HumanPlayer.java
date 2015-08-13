@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class HumanPlayer implements PlayerStrategy {
 
+	String regex = "\\d+";
+	
 	public HumanPlayer(String name) {
 		//super(name);
 		// TODO Auto-generated constructor stub
@@ -18,13 +20,31 @@ public class HumanPlayer implements PlayerStrategy {
 		// Exchange lantern cards
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		System.out.print("Type 1 if you want to exchange lantern cards, any other number to skip: ");
+		
 		int choice=0;
+		boolean check = true;
+		Scanner in;
+		String input = "";
+		
 		try {
-			choice = Integer.parseInt(br.readLine());
+
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 0) {
+						System.out.println("invalid input. Enter again!");
+					} else {
+						check = false;
+					}
+				}
+
+			}//
+			
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -42,7 +62,22 @@ public class HumanPlayer implements PlayerStrategy {
 		// Make dedication
 		System.out.print("Type 1 if you want to make a dedication, any other number to skip: ");
 		try {
-			choice = Integer.parseInt(br.readLine());
+			check = true;
+			while (check) {
+				in = new Scanner(System.in);
+				input = in.nextLine();
+				if (!input.matches(regex)) {
+					System.out.println("invalid input. Enter again!");
+				} else {
+					choice = Integer.parseInt(input, 10);
+					if (choice < 0) {
+						System.out.println("invalid input. Enter again!");
+					} else {
+						check = false;
+					}
+				}
+
+			}//
 		} catch (NumberFormatException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -441,7 +476,24 @@ public class HumanPlayer implements PlayerStrategy {
 			//end-validate
 			System.out
 			.println("Enter the adjacent position (right, left, up, down)");
-			String AdjacentPosition = br.readLine();
+			boolean loop = true;
+			String AdjacentPosition = "";
+			while(loop){
+				
+				AdjacentPosition = br.readLine();
+				if(AdjacentPosition.equalsIgnoreCase("right"))
+					check = false;
+				else if(AdjacentPosition.equalsIgnoreCase("left"))
+					check = false;
+				else if(AdjacentPosition.equalsIgnoreCase("up"))
+					check = false;
+				else if(AdjacentPosition.equalsIgnoreCase("down"))
+					check = false;
+				else System.out.println("invalid input. Enter the direction as right, left, up, down!");
+					
+			}
+
+			
 			int GetColumn=gameEngine.lakeTiles.getColumn(gameEngine.board,id,AdjacentPosition);
 			int GetRow=gameEngine.lakeTiles.getRow(gameEngine.board,id,AdjacentPosition);
 			//System.out.println("MyColumn "+GetColumn+" row "+GetRow);
