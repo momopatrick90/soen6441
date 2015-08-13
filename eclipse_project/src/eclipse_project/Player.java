@@ -20,20 +20,42 @@ public class Player {
 
 	/**
 	 * Constructor for initializing the new player entity with some unique name
+	 * 
 	 * @param name
 	 */
 	public Player(String name) {
 		this.name = name;
 		this.playerLCStack = new LanternCards();
 		this.playerLTStack = new ArrayList<LakeTiles>();
-		if(name.equalsIgnoreCase("player4"))
+		if (name.equalsIgnoreCase("player4"))
 			this.playerStrategy = new HumanPlayer(this.name);
-		else 
+		else
 			this.playerStrategy = new GreedyPlayer(this.name);
 	}
 
 	/**
-	 * Parameterized constructor for loading the existing players form the passed value of the game state from the file
+	 * Define the strategy of the player.
+	 * 
+	 * @param strategy
+	 */
+	public void setStrategy(String strategy) {
+		
+		if (strategy.equalsIgnoreCase("HumanPlayer"))
+			this.playerStrategy = new HumanPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("GreedyPlayer"))
+			this.playerStrategy = new GreedyPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("RandomPlayer"))
+			this.playerStrategy = new RandomPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("UnfriendlyPlayer"))
+			this.playerStrategy = new UnfriendlyPlayer(this.name);
+		else if (strategy.equalsIgnoreCase("CleverPlayer"))
+			this.playerStrategy = new UnfriendlyPlayer(this.name);
+	}
+
+	/**
+	 * Parameterized constructor for loading the existing players form the
+	 * passed value of the game state from the file
+	 * 
 	 * @param name
 	 * @param lanternCards
 	 * @param playerLTStack
@@ -42,9 +64,10 @@ public class Player {
 	 * @param playerScore_threePair
 	 * @param playerScore_sevenUnique
 	 */
-	public Player(String name, String current, LanternCards lanternCards, ArrayList<LakeTiles> playerLTStack,
-			int favorTokenScore, int playerScore_fourKind,
-			int playerScore_threePair, int playerScore_sevenUnique) {
+	public Player(String name, String current, LanternCards lanternCards,
+			ArrayList<LakeTiles> playerLTStack, int favorTokenScore,
+			int playerScore_fourKind, int playerScore_threePair,
+			int playerScore_sevenUnique) {
 
 		this.name = name;
 		this.current = Boolean.valueOf(current);
@@ -57,7 +80,6 @@ public class Player {
 		this.playerStrategy = new HumanPlayer(this.name);
 	}
 
-
 	/**
 	 * This method will be called when the user is exchanging lantern cards for
 	 * a dedication token
@@ -69,41 +91,42 @@ public class Player {
 	 *            The object containing the current stack of dedication tokens
 	 *            on the table
 	 * @param lanternCards
-	 * 			  The lantern cards to return
+	 *            The lantern cards to return
 	 */
-	public boolean pickDedicationToken(String move, LanternCards returnedLanternCards, LanternCards globalLanternCards, DedicationTokens dedicationToken) {
-		
+	public boolean pickDedicationToken(String move,
+			LanternCards returnedLanternCards, LanternCards globalLanternCards,
+			DedicationTokens dedicationToken) {
+
 		if (move.equals("threePair")) {
-			if(returnedLanternCards.nonZeroColors() != 3 || returnedLanternCards.numColorsWithQuantity(2) != 3)
-			{
+			if (returnedLanternCards.nonZeroColors() != 3
+					|| returnedLanternCards.numColorsWithQuantity(2) != 3) {
 				return false;
 			}
-			
+
 			//
 			playerScore_threePair += dedicationToken.getThreePair();
 		} else if (move.equals("FourOfKind")) {
-			if(returnedLanternCards.nonZeroColors() != 1 || returnedLanternCards.numColorsWithQuantity(4) != 1)
-			{
+			if (returnedLanternCards.nonZeroColors() != 1
+					|| returnedLanternCards.numColorsWithQuantity(4) != 1) {
 				return false;
 			}
 
 			playerScore_fourKind += dedicationToken.getFourOfKind();
 
 		} else if (move.equals("sevenUnique")) {
-			if(returnedLanternCards.nonZeroColors() != 7 || returnedLanternCards.numColorsWithQuantity(1) != 7)
-			{
+			if (returnedLanternCards.nonZeroColors() != 7
+					|| returnedLanternCards.numColorsWithQuantity(1) != 7) {
 				return false;
 			}
 
 			playerScore_sevenUnique += dedicationToken.getSevenUnique();
-		}else
-		{
+		} else {
 			return false;
 		}
-		
+
 		// get all the lantern cards
 		globalLanternCards.getAll(returnedLanternCards);
-		
+
 		return true;
 	}
 
@@ -166,33 +189,32 @@ public class Player {
 	 *            The lantern card return by user
 	 * @param pickLCard
 	 *            The lantern card pick by user
-	 * @return either true or false based on current favor token score of the player
+	 * @return either true or false based on current favor token score of the
+	 *         player
 	 * 
 	 */
 	public boolean spendFavorTokens(FavorTokens favorToken,
 			LanternCards lanternCards, String returnLCard, String pickLCard) {
-		
-		if(!lanternCards.hasCard(pickLCard))
-		{
-			return false;
-		}
-		
-		if(!playerLCStack.hasCard(returnLCard))
-		{
+
+		if (!lanternCards.hasCard(pickLCard)) {
 			return false;
 		}
 
-		if(this.favorTokenScore < 2)
-		{
+		if (!playerLCStack.hasCard(returnLCard)) {
 			return false;
 		}
-		
+
+		if (this.favorTokenScore < 2) {
+			return false;
+		}
+
 		//
 		this.favorTokenScore -= 2;
 		this.playerLCStack.getCard(returnLCard);
 		this.playerLCStack.addCard(pickLCard);
 		//
-		favorToken.incrementToken();favorToken.incrementToken();
+		favorToken.incrementToken();
+		favorToken.incrementToken();
 		lanternCards.getCard(pickLCard);
 		lanternCards.addCard(returnLCard);
 		return true;
@@ -208,8 +230,8 @@ public class Player {
 	 *            The lantern card pick by user
 	 * @param lanternCardsAvailable
 	 *            The object contains the current stack of Lantern Cards
-	 * @return either true or false based on the availability of chosen lantern cards 
-	 * in the common stack
+	 * @return either true or false based on the availability of chosen lantern
+	 *         cards in the common stack
 	 */
 	public boolean returnLanternCards(String returnLCard, String pickLCard,
 			LanternCards lanternCardsAvailable) {
@@ -257,15 +279,15 @@ public class Player {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * This method will be called once the user has placed a lake tile
 	 * 
 	 * @param card
 	 *            contains what color of the lantern card the user will be
 	 *            adding to his stack.
-	 * @return either true or false based on the availability of lantern cards 
-	 * in the common stack
+	 * @return either true or false based on the availability of lantern cards
+	 *         in the common stack
 	 */
 	public boolean pickLanternCard(String card,
 			LanternCards lanternCardsAvailable) {
@@ -312,10 +334,9 @@ public class Player {
 			} else
 				return false;
 		}
-		
+
 		return false;
 	}
-
 
 	/*
 	 * set the favor token on start or load
@@ -330,9 +351,10 @@ public class Player {
 	public int getFavorToken() {
 		return this.favorTokenScore;
 	}
-	
+
 	/**
-	 * This method will be called to assign location to Players with respect to Game Board
+	 * This method will be called to assign location to Players with respect to
+	 * Game Board
 	 * 
 	 * @param numOfPlayers
 	 *            Number of Players
@@ -340,36 +362,36 @@ public class Player {
 	 *            Arraylist containing all players
 	 * @param startTile
 	 *            Start LakeTile on Board
-	 * @return	Arraylist containing all players
-	 * 		
+	 * @return Arraylist containing all players
+	 * 
 	 */
-	public ArrayList<Player> assignBoardPosition(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
-	{	
-		switch(numOfPlayers)
-		{
-			case 2:
-				playersList.get(0).boardPosition="left";
-				playersList.get(1).boardPosition="right";
-				break;
-			
-			case 3:
-				playersList.get(0).boardPosition="left";
-				playersList.get(1).boardPosition="up";
-				playersList.get(2).boardPosition="right";
-				break;
+	public ArrayList<Player> assignBoardPosition(int numOfPlayers,
+			ArrayList<Player> playersList, LakeTiles startTile) {
+		switch (numOfPlayers) {
+		case 2:
+			playersList.get(0).boardPosition = "left";
+			playersList.get(1).boardPosition = "right";
+			break;
 
-			case 4:
-				playersList.get(0).boardPosition="left";
-				playersList.get(1).boardPosition="up";
-				playersList.get(2).boardPosition="right";
-				playersList.get(3).boardPosition="down";
-				break;
+		case 3:
+			playersList.get(0).boardPosition = "left";
+			playersList.get(1).boardPosition = "up";
+			playersList.get(2).boardPosition = "right";
+			break;
+
+		case 4:
+			playersList.get(0).boardPosition = "left";
+			playersList.get(1).boardPosition = "up";
+			playersList.get(2).boardPosition = "right";
+			playersList.get(3).boardPosition = "down";
+			break;
 		}
 		return playersList;
 	}
-	
+
 	/**
-	 * This method will be called to assign location to Players with respect to Game Board
+	 * This method will be called to assign location to Players with respect to
+	 * Game Board
 	 * 
 	 * @param numOfPlayers
 	 *            Number of Players
@@ -377,93 +399,97 @@ public class Player {
 	 *            Arraylist containing all players
 	 * @param startTile
 	 *            Start LakeTile on Board
-	 * @return	String containing player's name who will start the game
-	 * 		
+	 * @return String containing player's name who will start the game
+	 * 
 	 */
-	public ArrayList<Player> turnToStartGame(int numOfPlayers,ArrayList<Player> playersList,LakeTiles startTile)
-	{
-		String turnToPlay="";
-		if(startTile.downColor=="red")
-			turnToPlay="down";
-		else if(startTile.upColor=="red")
-			turnToPlay="up";
-		else if(startTile.leftColor=="red")
-			turnToPlay="left";
+	public ArrayList<Player> turnToStartGame(int numOfPlayers,
+			ArrayList<Player> playersList, LakeTiles startTile) {
+		String turnToPlay = "";
+		if (startTile.downColor == "red")
+			turnToPlay = "down";
+		else if (startTile.upColor == "red")
+			turnToPlay = "up";
+		else if (startTile.leftColor == "red")
+			turnToPlay = "left";
 		else
-			turnToPlay="right";
-		switch(numOfPlayers)
-		{
+			turnToPlay = "right";
+		switch (numOfPlayers) {
 		case 4:
-			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player1";
-			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player2";
-			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player3";
+			if (playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay = "player1";
+			else if (playersList.get(1).boardPosition
+					.equalsIgnoreCase(turnToPlay))
+				turnToPlay = "player2";
+			else if (playersList.get(2).boardPosition
+					.equalsIgnoreCase(turnToPlay))
+				turnToPlay = "player3";
 			else
-				turnToPlay="player4";
+				turnToPlay = "player4";
 			break;
 		case 3:
-			if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player1";
-			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player2";
-			else if(playersList.get(2).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="player3";
+			if (playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
+				turnToPlay = "player1";
+			else if (playersList.get(1).boardPosition
+					.equalsIgnoreCase(turnToPlay))
+				turnToPlay = "player2";
+			else if (playersList.get(2).boardPosition
+					.equalsIgnoreCase(turnToPlay))
+				turnToPlay = "player3";
 			else
-				turnToPlay="player1";
+				turnToPlay = "player1";
 			break;
 		case 2:
-			if(turnToPlay.equalsIgnoreCase("left")||turnToPlay.equalsIgnoreCase("down"))
-				turnToPlay="player1";
+			if (turnToPlay.equalsIgnoreCase("left")
+					|| turnToPlay.equalsIgnoreCase("down"))
+				turnToPlay = "player1";
 			else
-				turnToPlay="player2";
-			/*if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player1";
-			else if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
-				turnToPlay="Player2";
-			if(turnToPlay=="up")
-				turnToPlay="Player2";
-			else
-				turnToPlay="Player1";*/
-			break;			
+				turnToPlay = "player2";
+			/*
+			 * if(playersList.get(0).boardPosition.equalsIgnoreCase(turnToPlay))
+			 * turnToPlay="Player1"; else
+			 * if(playersList.get(1).boardPosition.equalsIgnoreCase(turnToPlay))
+			 * turnToPlay="Player2"; if(turnToPlay=="up") turnToPlay="Player2";
+			 * else turnToPlay="Player1";
+			 */
+			break;
 		}
-		
-		for(int x=0; x<playersList.size(); x++){
-			if(turnToPlay.equals(playersList.get(x).name)){
+
+		for (int x = 0; x < playersList.size(); x++) {
+			if (turnToPlay.equals(playersList.get(x).name)) {
 				playersList.get(x).setCurrent(true);
 			}
 		}
 		return playersList;
 	}
-	
 
+	void setCurrent(boolean state) {
+		current = state;
+	}
 
-void setCurrent(boolean state) {
-	current= state;
-}
 	/**
-	 * This method picks the top Laketile from LakeTiles Stack and gives to current player
-	 * @param top Top lakeTile on stack 		
+	 * This method picks the top Laketile from LakeTiles Stack and gives to
+	 * current player
+	 * 
+	 * @param top
+	 *            Top lakeTile on stack
 	 */
-	public void pickLakeTileFromStack(LakeTiles top)
-	{
+	public void pickLakeTileFromStack(LakeTiles top) {
 		playerLTStack.add(top);
 	}
-	
+
 	/**
 	 * This method displays the LakeTiles of the player
-	 * @param currentPlayer		
+	 * 
+	 * @param currentPlayer
 	 */
-	public void displayPlayersLakeTile(Player currentPlayer)
-	{
+	public void displayPlayersLakeTile(Player currentPlayer) {
 		System.out.println("LakeTiles at your hand:");
 		System.out.println();
-		for(int i=0;i<currentPlayer.playerLTStack.size();i++)
-		{
-			
-			System.out.println("Index: "+i+"  id: " + currentPlayer.playerLTStack.get(i).id
-					+ " " + "leftColor " + " "
+		for (int i = 0; i < currentPlayer.playerLTStack.size(); i++) {
+
+			System.out.println("Index: " + i + "  id: "
+					+ currentPlayer.playerLTStack.get(i).id + " "
+					+ "leftColor " + " "
 					+ currentPlayer.playerLTStack.get(i).leftColor + " "
 					+ "rightColor" + " "
 					+ currentPlayer.playerLTStack.get(i).rightColor + " "
@@ -478,16 +504,12 @@ void setCurrent(boolean state) {
 
 	/**
 	 * This method returns the players lantern cards
+	 * 
 	 * @return playerLCStack returns the players lantern cards
 	 */
 	public LanternCards getLanternCards() {
 		// TODO Auto-generated method stub
 		return playerLCStack;
 	}
-	
-	
-	
+
 }
-
-
-
