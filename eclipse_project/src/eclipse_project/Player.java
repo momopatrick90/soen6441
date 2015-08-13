@@ -29,7 +29,7 @@ public class Player {
 		this.playerStrategy = new UnfriendlyPlayer(this.name);
 
 		if(name.equalsIgnoreCase("player4"))
-			this.playerStrategy = new HumanPlayer(this.name);
+			this.playerStrategy = new UnfriendlyPlayer(this.name);
 		else 
 			this.playerStrategy = new GreedyPlayer(this.name);
 	}

@@ -155,7 +155,7 @@ public class Board {
 		int[] bounds = boundaries();
 		
 		
-		//line on top of board
+		/*//line on top of board
 		StringBuilder lineTop1 = new StringBuilder("  | ");
 		StringBuilder lineTop2 = new StringBuilder("--|-");
 		for(int k=bounds[2]; k<=bounds[3]; k++)
@@ -164,7 +164,7 @@ public class Board {
 			lineTop2.append(String.format("%3.3s%5.5s%3.3s", "---", "-----", "--|"));
 		}
 		System.out.println(lineTop1);
-		System.out.println(lineTop2);
+		System.out.println(lineTop2);*/
 		
 		
 		//
@@ -175,27 +175,30 @@ public class Board {
 			// 1 for      up
 			// 1 for left id right
 			// 1 for      down
-			StringBuilder line1 = new StringBuilder("  | ");
-			StringBuilder line2 = new StringBuilder(String.format("%2.2s| ", i));
-			StringBuilder line3 = new StringBuilder("  | ");
+			StringBuilder line1 = new StringBuilder("");
+			StringBuilder line2 = new StringBuilder("");
+			StringBuilder line3 = new StringBuilder("");
+			StringBuilder line4 = new StringBuilder("");
 		
 			// through each column
 			for(int j=bounds[2]; j<=bounds[3]; j++)
 			{
 				if(this.board[i][j] == -1)
 				{
-					line1.append(String.format("    "));
-					line2.append(String.format("    "));
-					line3.append(String.format("    "));
+					line1.append("            ");
+					line2.append("            ");
+					line3.append("            ");
+					line4.append("------------");
 				}else
 				{
 					//
 					LakeTiles lakeTile = this.lakeTileFromId(this.board[i][j]);
 					String platformIndicator = lakeTile.platform? "P" : " ";
 					
-					line1.append(String.format("%3.3s%5.3s%3.3s", " ", lakeTile.downColor, " "));
-					line2.append(String.format("%3.3s %2.2s%s %3.3s", lakeTile.leftColor, lakeTile.id, platformIndicator, lakeTile.rightColor));
-					line3.append(String.format("%3.3s%5.3s%3.3s", " ", lakeTile.upColor," "));
+					line1.append(String.format("%3.3s%5.3s%3.3s|", " ", lakeTile.downColor, " "));
+					line2.append(String.format("%3.3s %2.2s%s %3.3s|", lakeTile.leftColor, lakeTile.id, platformIndicator, lakeTile.rightColor));
+					line3.append(String.format("%3.3s%5.3s%3.3s|", " ", lakeTile.upColor," "));
+					line4.append("------------");
 				}
 				
 			}
@@ -203,6 +206,7 @@ public class Board {
 			System.out.println(line1);
 			System.out.println(line2);
 			System.out.println(line3);
+			System.out.println(line4);
 		}
 		System.out.println("-----------------------");
 	}
