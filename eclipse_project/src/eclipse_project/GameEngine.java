@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class GameEngine {
 
 	final int PROPER_END = 1, N_LAKE_TILES = 2, ENOUGH_DEDICATIONS = 3;
-	
+
 	public ArrayList<Player> PlayerList = new ArrayList();
 	public int numOfPlayer;
 	private int playerTurn;
@@ -75,13 +75,19 @@ public class GameEngine {
 	public GameEngine(int numOfPlayer) {
 		this.numOfPlayer = numOfPlayer;
 	}
-	
+
 	/**
 	 * This constructor is called when the user starts a new game.
-	 * @param numOfPlayer  - number of players that will be playing the game
-	 * @param N - User input for N, where N can lake tiles, dedication tokens
-	 * @param M - Upper limit of the user input, where M can be lake tiles, dedication tokens
-	 * @param endingOption - Ending strategy selected by the user
+	 * 
+	 * @param numOfPlayer
+	 *            - number of players that will be playing the game
+	 * @param N
+	 *            - User input for N, where N can lake tiles, dedication tokens
+	 * @param M
+	 *            - Upper limit of the user input, where M can be lake tiles,
+	 *            dedication tokens
+	 * @param endingOption
+	 *            - Ending strategy selected by the user
 	 */
 	public GameEngine(int numOfPlayer, int N, int endingOption) {
 		this.userInput_N = N;
@@ -90,7 +96,9 @@ public class GameEngine {
 	}
 
 	public void startNewGame() throws Exception, IOException {
-		
+		// set the strategy of the player.
+		selectStrategy();
+
 		// Set the initial variables for the lantern cards and the various
 		// tokens
 		// according to the number of players.
@@ -374,6 +382,108 @@ public class GameEngine {
 		run();
 	}
 
+	/**
+	 * Prompt user to select the strategy of the player. (Human Player, Random
+	 * Player, Greedy Player, Unfriendly Player, Clever Player)
+	 */
+	private void selectStrategy() {
+		String strategy = "HumanPlayer";
+		System.out.println("Available Strategies:"
+				+ " 1. Human Player 2. Random Player 3.Greedy Player "
+				+ "4.Unfriendly Player 5.Clever Player");
+		System.out.println();
+
+		Scanner in = new Scanner(System.in);
+		int choice = 0;
+
+		if (this.numOfPlayer == 2) {
+			System.out.println("Enter the strategy for player 1");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player1.setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 2");
+
+			choice = in.nextInt();
+			strategy =  checkChoice(choice);
+
+			player2.setStrategy(strategy);
+		}
+		if (this.numOfPlayer == 3) {
+
+			System.out.println("Enter the strategy for player 1");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player1.setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 2");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player2.setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 3");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player3.setStrategy(strategy);
+		}
+		if (this.numOfPlayer == 4) {
+
+			System.out.println("Enter the strategy for player 1");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player1.setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 2");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player2.setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 3");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player3.setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 4");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			player4.setStrategy(strategy);
+		}
+
+	}
+
+	private String checkChoice(int choice) {
+
+		String strategy = "HumanPlayer";
+		if (choice == 1)
+			strategy = "HumanPlayer";
+		else if (choice == 2)
+			strategy = "RandomPlayer";
+		else if (choice == 3)
+			strategy = "GreedyPlayer";
+		else if (choice == 4)
+			strategy = "UnfriendlyPlayer";
+		else if (choice == 5)
+			strategy = "CleverPlayer";
+		return strategy;
+
+	}
+
 	protected Player getCurrentPlayer() {
 		for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 			if (PlayerList.get(playerIndex).current) {
@@ -404,11 +514,13 @@ public class GameEngine {
 
 		while (!this.gameEnd.executeStrategy(this)) {
 			//
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					System.in));
 			//
-			System.out.println("==========================================================================");
-			
-			//get current
+			System.out
+					.println("==========================================================================");
+
+			// get current
 			Player currentPlayer = getCurrentPlayer();
 			System.out.println(currentPlayer.name + "'s turn to play.");
 
@@ -547,18 +659,18 @@ public class GameEngine {
 		this.board = gameBoard;
 		this.round = _round;
 
-		//set ending strategy
+		// set ending strategy
 		setEndingStrategy(this.endingOption);
-		
+
 		//
 		displayTextMode();
 
 		//
 		run();
 	}
-	
-	public void setEndingStrategy(int endOption){
-		
+
+	public void setEndingStrategy(int endOption) {
+
 		if (endingOption == PROPER_END) {
 			this.gameEnd = new GameEndContext(new ProperEnd());
 		} else if (endingOption == N_LAKE_TILES) {
@@ -1078,8 +1190,10 @@ public class GameEngine {
 	 * @return
 	 */
 	public void loadEndStrategy(Element endStrategyElement) {
-		this.endingOption = Integer.parseInt(endStrategyElement.getAttribute("endoption"));
-		this.userInput_N = Integer.parseInt(endStrategyElement.getAttribute("userinput_n"));
+		this.endingOption = Integer.parseInt(endStrategyElement
+				.getAttribute("endoption"));
+		this.userInput_N = Integer.parseInt(endStrategyElement
+				.getAttribute("userinput_n"));
 	}
 
 	public void saveEndingStrategy(Element element, int N, int endingOption) {
