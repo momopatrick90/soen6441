@@ -185,9 +185,9 @@ public class Board {
 			{
 				if(this.board[i][j] == -1)
 				{
-					line1.append("            ");
-					line2.append("            ");
-					line3.append("            ");
+					line1.append("           |");
+					line2.append("           |");
+					line3.append("           |");
 					line4.append("------------");
 				}else
 				{

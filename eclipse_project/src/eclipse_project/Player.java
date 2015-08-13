@@ -44,7 +44,7 @@ public class Player {
 		else if (strategy.equalsIgnoreCase("UnfriendlyPlayer"))
 			this.playerStrategy = new UnfriendlyPlayer(this.name);
 		else if (strategy.equalsIgnoreCase("CleverPlayer"))
-			this.playerStrategy = new UnfriendlyPlayer(this.name);
+			this.playerStrategy = new CleverPlayer(this.name);
 	}
 
 
