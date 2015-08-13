@@ -178,7 +178,9 @@ public class GreedyPlayer implements PlayerStrategy
 	}
 	
 	/**
-	 * This method places lakeTile for greedy Player
+	 * <p>This method places lakeTile for greedy Player such that it can make best possible dedication in next move or 
+	 * gets maximum number of lantern cards that leads to dedication and if number of cards are same then it checks
+	 * maximum favor Token.</p>
 	 * @param gameEngine contains the entire state of the game
 	 * @param player current player
 	 */
@@ -291,6 +293,7 @@ public class GreedyPlayer implements PlayerStrategy
 							maxAdjacentPosition=AdjacentPosition;
 							maxdegreeOfRotation=degreeOfRotation;
 							
+							maxNumberOfFavorTokens=numberOfFavorTokensGot;
 							maxcurrentTileToPlaceid=currentTileToPlace.id;
 						}
 						else if(numberOfCardsGot==max_number_Of_Cards && numberOfFavorTokensGot>maxNumberOfFavorTokens)
@@ -1087,7 +1090,7 @@ public class GreedyPlayer implements PlayerStrategy
 				 }
 			 }
 		 }			
-		 if(exchanged)
+		/* if(exchanged)
 		 {
 			 System.out.println("In Simulation Mode");
 			 System.out.println("Picked!");
@@ -1101,7 +1104,7 @@ public class GreedyPlayer implements PlayerStrategy
 								+ dummyPlayer.playerScore_sevenUnique);
 		 }
 		 //else
-			 //System.out.println(" Please revisit the game rules!");
+			 //System.out.println(" Please revisit the game rules!");*/
 	}
 	
 	/**
@@ -1131,6 +1134,10 @@ public class GreedyPlayer implements PlayerStrategy
 		System.out.println(returnCard);
 		
 	}
+	/**This method playes one move for greedy player 
+	 * @param gameEngine contains the entire state of the game
+	 * @param player current player
+	 */
 	@Override
 	public void play(GameEngine gameEngine, Player player) {
 		

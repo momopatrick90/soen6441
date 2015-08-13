@@ -17,6 +17,9 @@ public class Board {
 		this.tilesOnBoard = tilesOnBoard;
 	}
 
+	/**
+	 * Constructor for Board class
+	 */
 	public Board() {
 
 	}
@@ -160,7 +163,10 @@ public class Board {
 		System.out.println("-------------------------------------");
 	}
 
-	
+	/**
+	 * This method is used to calculate number of possible locations to place lake Tile
+	 * @return availableSpace returns the number of possible locations to place lake Tile
+	 */
 	public ArrayList<String> availableSpaces() {
 		ArrayList<String> availableSpace = new ArrayList();
 		for (int x = 0; x < tilesOnBoard.size(); x++) {
