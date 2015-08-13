@@ -42,7 +42,7 @@ public class UnfriendlyPlayer implements PlayerStrategy {
 	}
 	
 	/**
-	 * The goal is if possible is to get dedication tokens so someone else can't get it
+	 * Make best dedication so no one can do
 	 * @param gameEngine
 	 * @param player
 	 */
@@ -50,9 +50,8 @@ public class UnfriendlyPlayer implements PlayerStrategy {
 	{
 		boolean played = false;
 		//
-		for(int i=0; i<gameEngine.PlayerList.size(); i++)
 		{
-			 if(player.playerLCStack.getSevenUniques()!=null && gameEngine.PlayerList.get(i).playerLCStack.getSevenUniques()!=null && gameEngine.dedicationTokens.sevenUniqueCount() == 1)
+			 if(player.playerLCStack.getSevenUniques()!=null)
 			 {
 				 // make dedications
 				 LanternCards sevenUniques = player.playerLCStack.getSevenUniques();
@@ -60,12 +59,11 @@ public class UnfriendlyPlayer implements PlayerStrategy {
 				 player.playerLCStack.withdrawAll(sevenUniques);
 				 
 				 //
-				 System.out.println("unfriendly:dedication: doing seven unique to prevent user: "+gameEngine.PlayerList.get(i).name+" from doing seven unique");
-				 
+				 System.out.println("unfriendly:dedication: doing seven unique");
+
 				 //
 				 played=true;
-				 break;
-			 }else if(player.playerLCStack.getFourOfKinds()!=null && gameEngine.PlayerList.get(i).playerLCStack.getFourOfKinds() != null && gameEngine.dedicationTokens.fourOfKindCount() == 1)
+			 }else if(player.playerLCStack.getFourOfKinds()!=null)
 			 {
 				 // make dedications
 				 LanternCards fourOfKind = player.playerLCStack.getFourOfKinds();
@@ -73,11 +71,10 @@ public class UnfriendlyPlayer implements PlayerStrategy {
 				 player.playerLCStack.withdrawAll(fourOfKind);
 				 
 				 //
-				 System.out.println("unfriendly:dedication: doing four of kind to prevent user: "+gameEngine.PlayerList.get(i).name+" from four of kind");
+				 System.out.println("unfriendly:dedication: doing four of kind");
 				 
 				 played=true;
-				 break;
-			 }else if(player.playerLCStack.getThreePairs()!=null && gameEngine.PlayerList.get(i).playerLCStack.getThreePairs()!=null && gameEngine.dedicationTokens.threePairCount() == 1)
+			 }else if(player.playerLCStack.getThreePairs()!=null)
 			 {
 				 // make dedications
 				 LanternCards threePair = player.playerLCStack.getThreePairs();
@@ -85,16 +82,16 @@ public class UnfriendlyPlayer implements PlayerStrategy {
 				 player.playerLCStack.withdrawAll(threePair);
 				 
 				 //
-				 System.out.println("unfriendly:dedication: doing three pair to prevent user: "+gameEngine.PlayerList.get(i).name+" from four of kind");
+				 System.out.println("unfriendly:dedication: doing three pair");
 				 
+				 //
 				 played = true;
-				 break;
 			 }
 		}
 		
 		if(!played)
 		{
-			System.out.println("unfriendly:dedication: no dedication possible that will prevent someone from making dedication");
+			System.out.println("unfriendly:dedication: no dedication possible");
 		}else
 		{
 			System.out.println("unfriendly:dedication: resulting lantern cards");

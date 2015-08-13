@@ -28,7 +28,7 @@ public class Player {
 		this.playerLTStack = new ArrayList<LakeTiles>();
 		this.playerStrategy = new UnfriendlyPlayer(this.name);
 
-		if(name.equalsIgnoreCase("player4"))
+		if(name.equalsIgnoreCase("player1"))
 			this.playerStrategy = new UnfriendlyPlayer(this.name);
 		else 
 			this.playerStrategy = new GreedyPlayer(this.name);
