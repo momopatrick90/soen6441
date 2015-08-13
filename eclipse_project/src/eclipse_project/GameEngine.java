@@ -404,17 +404,11 @@ public class GameEngine {
 
 		while (this.gameEnd.executeStrategy(this)) {
 			//
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					System.in));
-
-<<<<<<< Updated upstream
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			//
 			System.out.println("==========================================================================");
 			
 			//get current
-=======
-			// get current
->>>>>>> Stashed changes
 			Player currentPlayer = getCurrentPlayer();
 			System.out.println(currentPlayer.name + "'s turn to play.");
 
