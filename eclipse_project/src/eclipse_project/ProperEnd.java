@@ -13,7 +13,7 @@ public class ProperEnd implements GameEndStrategy {
 	@Override
 	public boolean gameIsOver(GameEngine gameEngine) {
 		
-		return (gameEngine.getRound() > 0);
+		return !(gameEngine.getRound() > 0);
 		
 	}
 

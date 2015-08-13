@@ -102,6 +102,7 @@ public class LanternsApplication {
 							boolean innerCheck = true;
 							if (endOption == 1) {
 								innerCheck = false;
+								check  = false;
 							} else if (endOption == 2) {
 								System.out
 										.println("Enter the number of lake tiles between 2 & "+M+".");
