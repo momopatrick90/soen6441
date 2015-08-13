@@ -335,6 +335,21 @@ public class HumanPlayer implements PlayerStrategy {
 				if (cardToReturn.SevenUniqueState(player)) {
 					returnedLanternCards = cardToReturn
 							.returnSeveUnique();
+					//get cards from player
+					player.getLanternCards()
+					.getCard("blackCard");
+					player.getLanternCards()
+					.getCard("blueCard");
+					player.getLanternCards()
+					.getCard("greenCard");
+					player.getLanternCards()
+					.getCard("orangeCard");
+					player.getLanternCards()
+					.getCard("purpleCard");
+					player.getLanternCards()
+					.getCard("whiteCard");
+					player.getLanternCards()
+					.getCard("redCard");
 
 				} else {
 					System.out

@@ -9,10 +9,10 @@ import java.util.Stack;
  */
 public class DedicationTokens {
 
-	private Stack<Integer> fourOfKind = new Stack<Integer>();
-	private Stack<Integer> threePair = new Stack<Integer>();
-	private Stack<Integer> sevenUnique = new Stack<Integer>();
-	private Stack<Integer> genericFour = new Stack<Integer>();
+	public Stack<Integer> fourOfKind = new Stack<Integer>();
+	public Stack<Integer> threePair = new Stack<Integer>();
+	public Stack<Integer> sevenUnique = new Stack<Integer>();
+	public Stack<Integer> genericFour = new Stack<Integer>();
 
 	private final int FOUR_KIND_MAX = 8;
 	private final int THREE_PAIR_MAX = 9;
