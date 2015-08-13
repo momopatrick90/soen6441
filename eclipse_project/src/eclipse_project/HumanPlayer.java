@@ -397,7 +397,7 @@ public class HumanPlayer implements PlayerStrategy {
 		Scanner in = new Scanner(System.in);
 		
 		// board
-		gameEngine.board.displayBoard(gameEngine.board.board, gameEngine.board.tilesOnBoard);
+		gameEngine.board.displayBoard();
 		System.out.println();
 		
 		// player
@@ -478,8 +478,7 @@ public class HumanPlayer implements PlayerStrategy {
 						gameEngine.numOfPlayer, gameEngine.board,
 						GetColumn,GetRow, currentTileToPlace,
 							gameEngine.PlayerList, gameEngine.lanternCards, gameEngine.favorTokens);
-								gameEngine.board.displayBoard(gameEngine.board.board,
-										gameEngine.board.tilesOnBoard);
+								gameEngine.board.displayBoard();
 				player.displayPlayersLakeTile(player);
 				System.out.println();
 				System.out

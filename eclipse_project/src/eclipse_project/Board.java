@@ -74,94 +74,6 @@ public class Board {
 		}
 	}
 
-	/**
-	 * method to display the current state of boardGame
-	 * 
-	 * @param board
-	 *            gameBoard
-	 * @param tilesOnBoard
-	 *            LakeTiles placed on board
-	 */
-	public void displayBoard(int board[][], ArrayList<LakeTiles> tilesOnBoard) {
-		System.out.println("Current state of boardGame: ");
-		System.out.println();
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board.length; j++) {
-				if (board[i][j] != -1) {
-					for (int k = 0; k < tilesOnBoard.size(); k++)
-						if (board[i][j] == tilesOnBoard.get(k).id) {
-							System.out.println("LakeTile id :"
-									+ tilesOnBoard.get(k).id + " " + "Row : "
-									+ i + " " + "Column : " + j + " "
-									+ "leftColor:"
-									+ tilesOnBoard.get(k).leftColor
-									+ " rightColor:"
-									+ tilesOnBoard.get(k).rightColor
-									+ " upColor:" + tilesOnBoard.get(k).upColor
-									+ " downColor:"
-									+ tilesOnBoard.get(k).downColor + " "
-									+ tilesOnBoard.get(k).platform);
-							/*
-							 * System.out.println("leftNeighbour " +
-							 * tilesOnBoard.get(k).left + " rightNeighbour " +
-							 * tilesOnBoard.get(k).right + " downNeighbour " +
-							 * tilesOnBoard.get(k).down + " upNeighbour " +
-							 * tilesOnBoard.get(k).up);
-							 */
-						}
-					System.out.println();
-				}
-			}
-		}
-		/*
-		 * boolean lineEmpty = true; int firstOcurrence=0; for (int i = 0; i <
-		 * board.length; i++) { for (int j = 0; j < board.length; j++) { for
-		 * (int k = 0; k < board.length; k++) { if (board[i][k] != -1) {
-		 * lineEmpty = false; firstOcurrence++; }
-		 * 
-		 * } if (!lineEmpty) { if(firstOcurrence==1) { if (board[i][j] == -1)
-		 * System.out.print(" "); else { if (board[i][j] > 10){
-		 * System.out.print("\t"+board[i][j]+"\t"); } else
-		 * System.out.print("\t"+board[i][j]+"\t"); } } else { if (board[i][j]
-		 * == -1) System.out.print(" "); else { if (board[i][j] > 10){
-		 * System.out.print("\t"+board[i][j]+" \t"); } else
-		 * System.out.print("\t"+board[i][j]+"\t"); } } //
-		 * System.out.print("("+board[i][j]+")"); } } if (!lineEmpty)
-		 * System.out.println(); lineEmpty = true; }
-		 */
-
-		System.out.println("View of the laketiles on board");
-		System.out.println("-------------------------------------");
-		int i = 0, j = 0;
-		one: for (i = 0; i < board.length; i++) {
-			for (j = 0; j < board.length; j++) {
-				if (board[i][j] != -1)
-					break one;
-			}
-		}
-		int l = i;
-		int m = j;
-		int count = 0;
-		two: for (i = l; i < board.length; i++) {
-			for (j = m; j < board.length; j++) {
-				if (board[i][j] == -1) {
-					count++;
-					System.out.print("   ");
-				} else if (board[i][j] > 10) {
-					System.out.print(" " + board[i][j]);
-				} else {
-					System.out.print("  " + board[i][j]);
-				}
-			}
-			if (count == 36) {
-				break two;
-			}
-			count = 0;
-			System.out.println();
-		}
-		System.out.println();
-		System.out.println("-------------------------------------");
-	}
 
 	/**
 	 * This method is used to calculate number of possible locations to place lake Tile
@@ -235,7 +147,7 @@ public class Board {
 		return true;
 	}
 	
-	public void displayBoard2()
+	public void displayBoard()
 	{
 		System.out.println("-----------------------");
 		

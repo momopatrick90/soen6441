@@ -384,8 +384,7 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		boolean check = true;
 
 		// board
-		gameEngine.board.displayBoard(gameEngine.board.board,
-				gameEngine.board.tilesOnBoard);
+		gameEngine.board.displayBoard();
 		System.out.println();
 
 		// player
@@ -466,8 +465,7 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 						gameEngine.numOfPlayer, gameEngine.board, GetColumn,
 						GetRow, currentTileToPlace, gameEngine.PlayerList,
 						gameEngine.lanternCards, gameEngine.favorTokens);
-				gameEngine.board.displayBoard(gameEngine.board.board,
-						gameEngine.board.tilesOnBoard);
+				gameEngine.board.displayBoard();
 				player.displayPlayersLakeTile(player);
 				System.out.println();
 				System.out.println("Number of FavorTokens:"

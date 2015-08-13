@@ -347,7 +347,7 @@ public class UnfriendlyPlayer implements PlayerStrategy {
 					minPosition[1],minPosition[0], currentTileToPlace,
 						gameEngine.PlayerList, gameEngine.lanternCards, gameEngine.favorTokens);
 			//
-			gameEngine.board.displayBoard2();
+			gameEngine.board.displayBoard();
 			//gameEngine.board.displayBoard(gameEngine.board.board, gameEngine.board.tilesOnBoard);
 		}else
 		{

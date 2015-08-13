@@ -197,7 +197,7 @@ public class GreedyPlayer implements PlayerStrategy
 		String regex = "\\d+";
 		boolean check = true;
 		// board
-		gameEngine.board.displayBoard(gameEngine.board.board, gameEngine.board.tilesOnBoard);
+		gameEngine.board.displayBoard();
 		System.out.println();
 		
 		//player
@@ -363,8 +363,7 @@ public class GreedyPlayer implements PlayerStrategy
 					gameEngine.numOfPlayer, gameEngine.board,
 					GetColumn,GetRow, currentTileToPlace,
 						gameEngine.PlayerList, gameEngine.lanternCards, gameEngine.favorTokens);
-							gameEngine.board.displayBoard(gameEngine.board.board,
-									gameEngine.board.tilesOnBoard);
+							gameEngine.board.displayBoard();
 							
 							for(int i=0;i<player.playerLTStack.size();i++)
 							{
