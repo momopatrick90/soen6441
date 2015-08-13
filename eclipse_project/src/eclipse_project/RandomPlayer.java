@@ -19,7 +19,7 @@ public class RandomPlayer implements PlayerStrategy {
 	int threePairCard1 = 0, threePairCard2 = 0, threePairCard3 = 0;
 
 	public RandomPlayer(String name) {
-		//super(name);
+		// super(name);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -97,6 +97,16 @@ public class RandomPlayer implements PlayerStrategy {
 			System.out.println("No lake tiles left on board to pick");
 		}
 	}
+
+	/**
+	 * Method called when Random player needs to exchange cards.
+	 * 
+	 * @param gameEngine
+	 *            - all the info of the game. State of the game
+	 * @param player
+	 *            - all the info of the player.
+	 * @throws IOException
+	 */
 
 	protected void exchangeLanternCards(GameEngine gameEngine, Player player)
 			throws IOException {
@@ -194,6 +204,16 @@ public class RandomPlayer implements PlayerStrategy {
 					.print("unSuccessful Exchange. Make sure you get the rules right, Mr Random.");
 	}
 
+	/**
+	 * method called when random player want to make a dedication.
+	 * 
+	 * @param gameEngine
+	 *            - all info of the game. (State of the game)
+	 * @param player
+	 *            - the current player. (Current player state).
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	protected void makeDedication(GameEngine gameEngine, Player player)
 			throws NumberFormatException, IOException {
 		int move = 0;
@@ -373,6 +393,16 @@ public class RandomPlayer implements PlayerStrategy {
 			System.out.println(" Please revisit the game rules!");
 	}
 
+	/**
+	 * Method called for the random player to place the laketile on board
+	 * 
+	 * @param gameEngine
+	 * @param player
+	 * @param br
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
+
 	public void placeLakeTile(GameEngine gameEngine, Player player)
 			throws NumberFormatException, IOException {
 		//
@@ -396,9 +426,9 @@ public class RandomPlayer implements PlayerStrategy {
 
 		System.out
 				.println("Enter the index of laketiles you want to put on board:");
-		
+
 		// gets the random index of the player's cards.
-		indexMax = player.playerLTStack.size()-1;
+		indexMax = player.playerLTStack.size() - 1;
 		randomIndex = RandomNumberGenerator(indexMin, indexMax);
 		System.out.println("Index chosen: " + randomIndex);
 		// picks the card from player stack
@@ -493,6 +523,13 @@ public class RandomPlayer implements PlayerStrategy {
 		}
 	}
 
+	/**
+	 * Generates random number between min and max
+	 * 
+	 * @param min - the lower boundary of the random number generation
+	 * @param max - the higher boundary of the random number generation
+	 * @return the generated random number.
+	 */
 	public int RandomNumberGenerator(int min, int max) {
 		// generate Random price
 		Random rand = new Random();
@@ -556,10 +593,10 @@ public class RandomPlayer implements PlayerStrategy {
 	public boolean checkThreePairDedication(Player player, GameEngine gameEngine) {
 
 		boolean state = false;
-		threePairCard1=0;
-		threePairCard2=0;
-		threePairCard3=0;
-		
+		threePairCard1 = 0;
+		threePairCard2 = 0;
+		threePairCard3 = 0;
+
 		if (player.getLanternCards().blackCardCount() >= 2) {
 			threePairCard1 = 6;
 		}
@@ -569,7 +606,7 @@ public class RandomPlayer implements PlayerStrategy {
 			else
 				threePairCard1 = 2;
 		}
-		
+
 		if (player.getLanternCards().whiteCardCount() >= 2) {
 			if (threePairCard1 != 0) {
 				if (threePairCard2 != 0) {
