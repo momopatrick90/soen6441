@@ -402,7 +402,7 @@ public class GameEngine {
 		// was the game exited
 		boolean exited = false;
 
-		while (this.gameEnd.executeStrategy(this)) {
+		while (!this.gameEnd.executeStrategy(this)) {
 			//
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			//
