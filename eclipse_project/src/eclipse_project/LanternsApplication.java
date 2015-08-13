@@ -36,6 +36,7 @@ public class LanternsApplication {
 		String regex = "\\d+";
 		String validFileRegEx = "^[^*&%\\s]+$";
 		String fileName = "";
+		int M = 0, endOption = 0, userInput_N = 0;
 
 		System.out.println("Choose an option:");
 		System.out.println("Press 1 for New Game");
@@ -68,11 +69,88 @@ public class LanternsApplication {
 						} else {
 							check = false;
 							isLoad = true;
-							loadNewGame();
+							//loadNewGame();
+						}
+					}
+
+				}//while: Number of Players
+
+				if (numOfPlayers == 2)
+					M = 23 / numOfPlayers;
+				else if (numOfPlayers == 3)
+					M = 28 / numOfPlayers;
+				else if (numOfPlayers == 4)
+					M = 33 / numOfPlayers;
+
+				check = true;
+				input = "";
+
+				while (check) {
+					System.out.println("Select the ending of the game.\n");
+					System.out.println("1. Proper End.\n");
+					System.out.println("2. N lake tiles ending.\n");
+					System.out.println("3. One player enough dedication.\n");
+					in = new Scanner(System.in);
+					input = in.nextLine();
+					if (!input.matches(regex)) {
+						System.out.println("invalid option. Enter again!");
+						check = true;
+					} else {
+						endOption = Integer.parseInt(input, 10);
+						if (endOption == 1 || endOption == 2 || endOption == 3) {
+							
+							boolean innerCheck = true;
+							if (endOption == 1) {
+								innerCheck = false;
+							} else if (endOption == 2) {
+								System.out
+										.println("Enter the number of lake tiles between 2 & "+M+".");
+							} else if (endOption == 3) {
+								M = 155/numOfPlayers;
+								System.out
+										.println("Enter the number of dedication tokens between 4 & "+M+".");
+							}
+							input = "";
+							while (innerCheck) {
+
+								in = new Scanner(System.in);
+								input = in.nextLine();
+								if (!input.matches(regex)) {
+									System.out.println("invalid option. Enter again!");
+									
+								} else {
+									userInput_N = Integer.parseInt(input, 10);
+									if (endOption == 2) {
+										if (userInput_N < 2 || userInput_N > M) {
+											System.out
+													.println("N lake tile is invalid input. Enter agqin!");
+										} else {
+											innerCheck = false;
+											check  = false;
+										}
+									}
+									else if (endOption == 3) {
+										M = 155/numOfPlayers;
+										if (userInput_N < 4 || userInput_N > M) {
+											System.out
+													.println("N dedication tokens is invalid input. Enter agqin!");
+										} else {
+											innerCheck = false;
+											check  = false;
+										}
+									}
+									else System.out.println("invalid option. Enter again!");
+								}
+
+							}//END - innerWhile
+						} else {
+							System.out.println("invalid option. Enter again!");
 						}
 					}
 
 				}
+				
+				loadNewGame(numOfPlayers, userInput_N, endOption);
 			} else if (resp == 2) {
 
 				while (true) {
@@ -88,9 +166,9 @@ public class LanternsApplication {
 						break;
 					}
 				}
-				if(isLoad) 
+				if (isLoad)
 					loadExistingGame(fileName);
-			
+
 			} else if (resp == 0) {
 				if (isLoad) {
 					while (true) {
@@ -110,7 +188,7 @@ public class LanternsApplication {
 				}
 				break;
 			}
-			
+
 			//
 			System.out.println('\n');
 			System.out.println("Choose an option");
@@ -132,19 +210,20 @@ public class LanternsApplication {
 
 	/**
 	 * load the new based on the user input
-	 * @throws Exception 
-	 * @throws IOException 
+	 * 
+	 * @throws Exception
+	 * @throws IOException
 	 */
-	public static void loadNewGame() throws IOException, Exception {
+	public static void loadNewGame(int numOfPlayers, int N, int endingOption) throws IOException, Exception {
 
-		game = new GameEngine(numOfPlayers);
+		game = new GameEngine(numOfPlayers, N, endingOption);
 		game.startNewGame();
 	}
 
 	/**
 	 * load the existing game from file name provided by the user
 	 * 
-	 * @param fileName
+	 * @param  fileName
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 * @throws IOException
@@ -175,6 +254,5 @@ public class LanternsApplication {
 			throws ParserConfigurationException, TransformerException {
 		game.saveGame(fileName, game);
 	}
-
 
 }

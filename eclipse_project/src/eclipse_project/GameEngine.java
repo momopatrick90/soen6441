@@ -25,7 +25,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import java.util.ArrayList;
 
 /**
@@ -33,6 +32,8 @@ import java.util.ArrayList;
  */
 public class GameEngine {
 
+	final int PROPER_END = 1, N_LAKE_TILES = 2, ENOUGH_DEDICATIONS = 3;
+	
 	public ArrayList<Player> PlayerList = new ArrayList();
 	public int numOfPlayer;
 	private int playerTurn;
@@ -47,14 +48,16 @@ public class GameEngine {
 	public LinkedList<LakeTiles> lakeTilesList;
 	public DedicationTokens dedicationTokens;
 	public FavorTokens favorTokens;
-	public static int redCount, blueCount, greenCount, whiteCount,
-			purpleCount, blackCount, orangeCount;
+	public static int redCount, blueCount, greenCount, whiteCount, purpleCount,
+			blackCount, orangeCount;
 	public int round;
 	private Player player1 = new Player("player1");
 	private Player player2 = new Player("player2");
 	private Player player3 = new Player("player3");
 	private Player player4 = new Player("player4");
 	public Board board = null;
+	public GameEndContext gameEnd = null;
+	public int userInput_N, M, endingOption = 0;
 
 	/**
 	 * Default Constructor
@@ -64,20 +67,35 @@ public class GameEngine {
 	}
 
 	/**
-	 * This method is called when the user starts a new game.
+	 * This constructor is called when the user starts a new game.
 	 * 
 	 * @param numOfPlayers
 	 *            - number of players that will be playing the game
 	 */
 	public GameEngine(int numOfPlayer) {
-
+		this.numOfPlayer = numOfPlayer;
+	}
+	
+	/**
+	 * This constructor is called when the user starts a new game.
+	 * @param numOfPlayer  - number of players that will be playing the game
+	 * @param N - User input for N, where N can lake tiles, dedication tokens
+	 * @param M - Upper limit of the user input, where M can be lake tiles, dedication tokens
+	 * @param endingOption - Ending strategy selected by the user
+	 */
+	public GameEngine(int numOfPlayer, int N, int endingOption) {
+		this.userInput_N = N;
+		this.endingOption = endingOption;
 		this.numOfPlayer = numOfPlayer;
 	}
 
 	public void startNewGame() throws Exception, IOException {
+		
 		// Set the initial variables for the lantern cards and the various
 		// tokens
 		// according to the number of players.
+
+		setEndingStrategy(this.endingOption);
 
 		this.lanternCards = new LanternCards(this.numOfPlayer);
 		this.dedicationTokens = new DedicationTokens(numOfPlayer);
@@ -347,16 +365,16 @@ public class GameEngine {
 			System.out.println();
 		}
 
-		//
-		round = this.numOfPlayer * 3 + lakeTiles.globalLakeTiles.size()
-				+ this.numOfPlayer;
-
+		if (this.endingOption == N_LAKE_TILES)
+			round = this.numOfPlayer * 3 + this.userInput_N + this.numOfPlayer;
+		else
+			round = this.numOfPlayer * 3 + lakeTiles.globalLakeTiles.size()
+					+ this.numOfPlayer;
 		//
 		run();
 	}
-	
-	protected Player getCurrentPlayer()
-	{
+
+	protected Player getCurrentPlayer() {
 		for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 			if (PlayerList.get(playerIndex).current) {
 				return PlayerList.get(playerIndex);
@@ -364,9 +382,8 @@ public class GameEngine {
 		}
 		return null;
 	}
-	
-	protected void moveToNextPlayer()
-	{
+
+	protected void moveToNextPlayer() {
 		for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 			if (PlayerList.get(playerIndex).current) {
 				//
@@ -376,64 +393,72 @@ public class GameEngine {
 					PlayerList.get(0).setCurrent(true);
 				} else
 					PlayerList.get(++playerIndex).setCurrent(true);
-				}
+			}
 		}
 	}
-	
+
 	//
 	protected void run() throws NumberFormatException, IOException {
 		// was the game exited
 		boolean exited = false;
-		
-		while (round > 0) {
+
+		while (this.gameEnd.executeStrategy(this)) {
 			//
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
 
+<<<<<<< Updated upstream
 			//
 			System.out.println("==========================================================================");
 			
 			//get current
+=======
+			// get current
+>>>>>>> Stashed changes
 			Player currentPlayer = getCurrentPlayer();
-			System.out.println(currentPlayer.name+ "'s turn to play.");
-			
+			System.out.println(currentPlayer.name + "'s turn to play.");
+
 			// Exit game loop
-			System.out.print("Type 1 if you want to exit the game loop, any other number to continue: ");
+			System.out
+					.print("Type 1 if you want to exit the game loop, any other number to continue: ");
 			int choice = Integer.parseInt(br.readLine());
 			//
-			if(choice == 1)
-			{
+			if (choice == 1) {
 				exited = true;
 				break;
 			}
 
 			//
 			currentPlayer.playerStrategy.play(this, currentPlayer);
-			
+
 			//
-			System.out.println(currentPlayer.name+ "'s turn is over");
-			
+			System.out.println(currentPlayer.name + "'s turn is over");
+
 			// move to next player
 			moveToNextPlayer();
-			
-			//
+
 			round--;
 		}
-		
-		
-		if(!exited)
-		{
+
+		if (!exited) {
 			System.out.println("Game finished, player scores: ");
 			//
 			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
-				///
+				// /
 				Player player = PlayerList.get(playerIndex);
-				System.out.println("name: "+player.name
-						+", fourKindScore: "+player.playerScore_fourKind
-						+", threePairScore "+player.playerScore_threePair
-						+", sevenUniqueScore "+player.playerScore_sevenUnique
-						+", total: "+(player.playerScore_fourKind+player.playerScore_threePair+player.playerScore_sevenUnique));
-				
+				System.out
+						.println("name: "
+								+ player.name
+								+ ", fourKindScore: "
+								+ player.playerScore_fourKind
+								+ ", threePairScore "
+								+ player.playerScore_threePair
+								+ ", sevenUniqueScore "
+								+ player.playerScore_sevenUnique
+								+ ", total: "
+								+ (player.playerScore_fourKind
+										+ player.playerScore_threePair + player.playerScore_sevenUnique));
+
 			}
 		}
 	}
@@ -512,6 +537,8 @@ public class GameEngine {
 				gameBoard = this.loadBoards((Element) node);
 			} else if (node.getNodeName().equals("round")) {
 				_round = this.loadRound((Element) node);
+			} else if (node.getNodeName().equals("endstrategy")) {
+				this.loadEndStrategy((Element) node);
 			}
 
 		}
@@ -526,11 +553,25 @@ public class GameEngine {
 		this.board = gameBoard;
 		this.round = _round;
 
+		//set ending strategy
+		setEndingStrategy(this.endingOption);
+		
 		//
 		displayTextMode();
 
 		//
 		run();
+	}
+	
+	public void setEndingStrategy(int endOption){
+		
+		if (endingOption == PROPER_END) {
+			this.gameEnd = new GameEndContext(new ProperEnd());
+		} else if (endingOption == N_LAKE_TILES) {
+			this.gameEnd = new GameEndContext(new AllPlayerEnd());
+		} else if (endingOption == ENOUGH_DEDICATIONS) {
+			this.gameEnd = new GameEndContext(new AtleastOnePlayerEnd());
+		}
 	}
 
 	/**
@@ -615,10 +656,13 @@ public class GameEngine {
 
 		// save round
 		Element _round = gameDoc.createElement("round");
-		//
 		saveRound(_round, this.round);
-		//
 		game.appendChild(_round);
+
+		// save end-strategy
+		Element _endStrategy = gameDoc.createElement("endstrategy");
+		saveEndingStrategy(_endStrategy, this.userInput_N, this.endingOption);
+		game.appendChild(_endStrategy);
 
 		// game board
 		Element board = gameDoc.createElement("board");
@@ -1033,6 +1077,22 @@ public class GameEngine {
 		element.setAttribute("value", Integer.toString(round));
 	}
 
+	/**
+	 * 
+	 * @param endStrategyElement
+	 *            example: <round value="2" />
+	 * @return
+	 */
+	public void loadEndStrategy(Element endStrategyElement) {
+		this.endingOption = Integer.parseInt(endStrategyElement.getAttribute("endoption"));
+		this.userInput_N = Integer.parseInt(endStrategyElement.getAttribute("userinput_n"));
+	}
+
+	public void saveEndingStrategy(Element element, int N, int endingOption) {
+		element.setAttribute("endoption", Integer.toString(endingOption));
+		element.setAttribute("userinput_n", Integer.toString(N));
+	}
+
 	public void displayTextMode() {
 		System.out.println("Round: " + this.round);
 
@@ -1099,5 +1159,9 @@ public class GameEngine {
 
 		System.out.println();
 
+	}
+
+	public int getRound() {
+		return this.round;
 	}
 }

@@ -261,12 +261,14 @@ public class GreedyPlayer implements PlayerStrategy
 					
 				
 					makeDedicationGreedySimulation(gameEngine,player);
+					
 					//return the dataset from vector to global lantern cards
 					Enumeration e=dataSetToReturn.elements();
-					numberOfCardsGot=(int) dataSetToReturn.lastElement();
-			
+					
+					numberOfCardsGot= (Integer) dataSetToReturn.lastElement();
+					
 					dataSetToReturn.removeElementAt(dataSetToReturn.size()-1);
-					numberOfFavorTokensGot=(int) dataSetToReturn.lastElement();
+					numberOfFavorTokensGot = (Integer) dataSetToReturn.lastElement();
 					dataSetToReturn.removeElementAt(dataSetToReturn.size()-1);
 					while (e.hasMoreElements()) {        		
 						  // System.out.println("Cards to be returned" + e.nextElement());
