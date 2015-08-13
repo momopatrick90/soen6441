@@ -23,22 +23,28 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void play(GameEngine gameEngine, Player player, BufferedReader br)
-			throws NumberFormatException, IOException {
+	@Override
+	public void play(GameEngine gameEngine, Player player) {
 		// TODO Auto-generated method stub
 		// Exchange lantern cards
-		System.out.print("Exchanging lantern cards...");
+		System.out
+				.println("Type 1 if you want to exchange lantern card, or any other number to skip:");
 		int minChoice = 1;
 		int maxChoice = 2;
 
 		int choice = RandomNumberGenerator(minChoice, maxChoice);
+		System.out.println("Choice made:" + choice);
 		if (choice == 1) {
-			exchangeLanternCards(gameEngine, player, br);
+			try {
+				exchangeLanternCards(gameEngine, player);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		// Make dedication
-		System.out
-				.print("Type 1 if you want to make a dedication, any other number to skip: ");
+
 		fourKind = checkFourOfKindDedication(player, gameEngine);
 		sevenUnique = checkSevenUniqueDedication(player, gameEngine);
 		threePair = checkThreePairDedication(player, gameEngine);
@@ -51,16 +57,33 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			choice = RandomNumberGenerator(minChoice, maxChoice);
 		else
 			choice = 2;
-
-		System.out.println(choice);
+		System.out
+				.println("Type 1 if you want to make a dedication, any other number to skip: ");
+		System.out.println("Choice made: " + choice);
 
 		if (choice == 1) {
 
-			makeDedication(gameEngine, player, br);
+			try {
+				makeDedication(gameEngine, player);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		// place lake tile
-		placeLakeTile(gameEngine, player, br);
+		try {
+			placeLakeTile(gameEngine, player);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (gameEngine.lakeTiles.hasLakeTile()) {
 			// Composury pick lake tile
@@ -72,8 +95,8 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		}
 	}
 
-	protected void exchangeLanternCards(GameEngine gameEngine, Player player,
-			BufferedReader br) throws IOException {
+	protected void exchangeLanternCards(GameEngine gameEngine, Player player)
+			throws IOException {
 		int lanternCard = 0;
 		String returnLCard = "";
 		String pickLCard = "";
@@ -168,8 +191,8 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 					.print("unSuccessful Exchange. Make sure you get the rules right, Mr Random.");
 	}
 
-	protected void makeDedication(GameEngine gameEngine, Player player,
-			BufferedReader br) throws NumberFormatException, IOException {
+	protected void makeDedication(GameEngine gameEngine, Player player)
+			throws NumberFormatException, IOException {
 		int move = 0;
 		String regex = "\\d+";
 		String option = "";
@@ -249,7 +272,7 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			int card = threePairCard1;
 			int card2 = threePairCard2;
 			int card3 = threePairCard3;
-			
+
 			System.out.println(card);
 			System.out.println(card2);
 			System.out.println(card3);
@@ -347,8 +370,8 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			System.out.println(" Please revisit the game rules!");
 	}
 
-	public void placeLakeTile(GameEngine gameEngine, Player player,
-			BufferedReader br) throws NumberFormatException, IOException {
+	public void placeLakeTile(GameEngine gameEngine, Player player)
+			throws NumberFormatException, IOException {
 		//
 		if (player.playerLTStack.size() == 0) {
 			System.out.println("No lake tile available to play");
@@ -360,8 +383,6 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		String regex = "\\d+";
 		boolean check = true;
 
-		Scanner in = new Scanner(System.in);
-
 		// board
 		gameEngine.board.displayBoard(gameEngine.board.board,
 				gameEngine.board.tilesOnBoard);
@@ -372,11 +393,12 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 		System.out.println();
 
 		System.out
-				.println("Choosing the index of laketile to put on board....");
-
+				.println("Enter the index of laketiles you want to put on board:");
+		
 		// gets the random index of the player's cards.
+		indexMax = player.playerLTStack.size()-1;
 		randomIndex = RandomNumberGenerator(indexMin, indexMax);
-
+		System.out.println("Index chosen: " + randomIndex);
 		// picks the card from player stack
 		LakeTiles currentTileToPlace = player.placeLakeTile(randomIndex);
 
@@ -385,7 +407,7 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 
 		while (flag) {
 			System.out
-					.println("Choosing the id of the adjacent tile (on board) where to place the LakeTile");
+					.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
 
 			gameEngine.board.tilesOnBoard.size();
 
@@ -405,16 +427,19 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			String[] parts = lTPosition.split(" ");
 			int id = Integer.valueOf(parts[0]);
 			String AdjacentPosition = parts[1];
-
+			System.out.println("ID Chosen:" + id);
 			System.out
 					.println("Enter the adjacent position (right, left, up, down)");
+			System.out.println("adjacent position Chosen:" + AdjacentPosition);
+
 			int GetColumn = gameEngine.lakeTiles.getColumn(gameEngine.board,
 					id, AdjacentPosition);
 			int GetRow = gameEngine.lakeTiles.getRow(gameEngine.board, id,
 					AdjacentPosition);
 
 			System.out
-					.println("Choosing the degree of rotation for the tile you want to place on board....");
+					.println("Enter the degree of roatation for the tile you want to place on board");
+			System.out.println("Available options 0 90 180 270");
 
 			int minRandDegree = 1;
 			int maxRandDegree = 4;
@@ -428,6 +453,8 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 				degreeOfRotation = 180;
 			if (randDegree == 4)
 				degreeOfRotation = 270;
+
+			System.out.println("Degree Chosen:" + degreeOfRotation);
 
 			currentTileToPlace = gameEngine.lakeTiles.rotateLakeTile(
 					currentTileToPlace, degreeOfRotation);
@@ -526,8 +553,12 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 	 * @return state if dedication is successful
 	 */
 	public boolean checkThreePairDedication(Player player, GameEngine gameEngine) {
-		
+
 		boolean state = false;
+		threePairCard1=0;
+		threePairCard2=0;
+		threePairCard3=0;
+		
 		if (player.getLanternCards().blackCardCount() >= 2) {
 			threePairCard1 = 6;
 		}
@@ -537,6 +568,7 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 			else
 				threePairCard1 = 2;
 		}
+		
 		if (player.getLanternCards().whiteCardCount() >= 2) {
 			if (threePairCard1 != 0) {
 				if (threePairCard2 != 0) {
@@ -615,12 +647,6 @@ public class RandomPlayer extends Player implements PlayerStrategy {
 					gameEngine.dedicationTokens);
 		}
 		return state;
-	}
-
-	@Override
-	public void play(GameEngine gameEngine, Player player) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

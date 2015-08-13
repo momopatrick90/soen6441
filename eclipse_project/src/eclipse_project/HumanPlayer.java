@@ -249,7 +249,7 @@ public class HumanPlayer implements PlayerStrategy {
 						&& player.getLanternCards().CardCount(card2) >= 2
 						&& player.getLanternCards().CardCount(card3) >= 2) {
 					
-				System.out.println("This means that you succeded to "+ "get through the card check point");
+				//System.out.println("This means that you succeded to "+ "get through the card check point");
 
 					CardToReturn cardToReturn = new CardToReturn(
 							card, card2, card3);
@@ -335,6 +335,21 @@ public class HumanPlayer implements PlayerStrategy {
 				if (cardToReturn.SevenUniqueState(player)) {
 					returnedLanternCards = cardToReturn
 							.returnSeveUnique();
+					//get cards from player
+					player.getLanternCards()
+					.getCard("blackCard");
+					player.getLanternCards()
+					.getCard("blueCard");
+					player.getLanternCards()
+					.getCard("greenCard");
+					player.getLanternCards()
+					.getCard("orangeCard");
+					player.getLanternCards()
+					.getCard("purpleCard");
+					player.getLanternCards()
+					.getCard("whiteCard");
+					player.getLanternCards()
+					.getCard("redCard");
 
 				} else {
 					System.out

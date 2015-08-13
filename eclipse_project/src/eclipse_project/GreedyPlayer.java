@@ -27,8 +27,7 @@ public class GreedyPlayer implements PlayerStrategy
 	 * @param player current player
 	 */
 	protected void exchangeLanternCards(GameEngine gameEngine, Player player)
-	{
-		
+	{	
 		System.out.println("This is the amount of tokens you have: "+ player.favorTokenScore);
 		System.out.println("----------------------------");
 		
@@ -36,8 +35,6 @@ public class GreedyPlayer implements PlayerStrategy
 		System.out.println("--Lantern cards you currently have:--");
 		System.out.println(player.getLanternCards());
 		System.out.println("----------------------------");
-		
-		
 		int peekFourOfKind = gameEngine.dedicationTokens.peekFourOfKind();
 		int peekThreePairs = gameEngine.dedicationTokens.peekThreePairs();
 		int peekSevenUnique = gameEngine.dedicationTokens.peekSevenUnique();
@@ -69,23 +66,31 @@ public class GreedyPlayer implements PlayerStrategy
 			 {
 				 exchanged=checkFourOfKind(player,gameEngine);
 				 if(exchanged)
+				 {
 					 break one;
+				 }
 			 }
 			 if(x.equalsIgnoreCase("ThreePair"))
 			 {
 				 exchanged=checkThreePair(player,gameEngine);
 				 if(exchanged)
+				 {
 					 break one;
+				 }
 			 }
 			 if(x.equalsIgnoreCase("SevenUnique"))
 			 {
 				 exchanged=checkSevenUnique(player,gameEngine);
 				 if(exchanged)
+				 {
 					 break one;
+				 }
 			 }
 		 }
-		 if(exchanged)
-			 System.out.println("Exchange took place");
+		 if (exchanged)
+				System.out.println("Successful Exchange");
+			else
+				System.out.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");
 	}
 	
 	/**
@@ -103,6 +108,11 @@ public class GreedyPlayer implements PlayerStrategy
 		System.out.println(player.getLanternCards());
 
 		System.out.println("----------------------------");
+		// TODO needs validation to be done before submitting
+		// the code
+		System.out.println("What Move do you want to make? Enter its corresponding integer");
+
+		System.out.println("1:Three Pair 2:Four of a kind 3: Seven Unique 4:None" );
 		
 		int peekFourOfKind = gameEngine.dedicationTokens.peekFourOfKind();
 		int peekThreePairs = gameEngine.dedicationTokens.peekThreePairs();
@@ -163,18 +173,19 @@ public class GreedyPlayer implements PlayerStrategy
 						.println("Score: Seven unique "
 								+ player.playerScore_sevenUnique);
 		 }
-		// else
-			// System.out.println(" Please revisit the game rules!");
+		 else
+				System.out.println(4);
 	}
 	
 	/**
-	 * This method places lakeTile for greedy Player
+	 * <p>This method places lakeTile for greedy Player such that it can make best possible dedication in next move or 
+	 * gets maximum number of lantern cards that leads to dedication and if number of cards are same then it checks
+	 * maximum favor Token.</p>
 	 * @param gameEngine contains the entire state of the game
 	 * @param player current player
 	 */
 	public void placeLakeTile(GameEngine gameEngine, Player player)
 	{
-		//
 		if(player.playerLTStack.size() == 0)
 		{
 			System.out.println("No lake tile available to play");
@@ -193,10 +204,6 @@ public class GreedyPlayer implements PlayerStrategy
 		player.displayPlayersLakeTile(player);
 		System.out.println();
 		
-		//
-		System.out.println("Enter the index of laketiles you want to put on board:");
-		//Player dummyPlayer = new Player(player.name);
-		//dummyPlayer=player;
 		check = true;
 
 		int blackCount= gameEngine.lanternCards.blackCardCount();
@@ -206,6 +213,10 @@ public class GreedyPlayer implements PlayerStrategy
 		int orangeCount=gameEngine.lanternCards.orangeCardCount();
 		int whiteCount=gameEngine.lanternCards.whiteCardCount();
 		int blueCount=gameEngine.lanternCards.blueCardCount();
+		
+		int playerScore_threePairBeforeSim=player.playerScore_threePair;
+		int playerScore_fourKindBeforeSim=player.playerScore_fourKind;
+		int playerScore_sevenUniqueBeforeSim=player.playerScore_sevenUnique;
 		
 		int tokenScoreBeforSimulation=player.favorTokenScore;
 		ArrayList<String> availableSpaces=new ArrayList();
@@ -253,8 +264,7 @@ public class GreedyPlayer implements PlayerStrategy
 					//return the dataset from vector to global lantern cards
 					Enumeration e=dataSetToReturn.elements();
 					numberOfCardsGot=(int) dataSetToReturn.lastElement();
-					
-					
+			
 					dataSetToReturn.removeElementAt(dataSetToReturn.size()-1);
 					numberOfFavorTokensGot=(int) dataSetToReturn.lastElement();
 					dataSetToReturn.removeElementAt(dataSetToReturn.size()-1);
@@ -283,6 +293,7 @@ public class GreedyPlayer implements PlayerStrategy
 							maxAdjacentPosition=AdjacentPosition;
 							maxdegreeOfRotation=degreeOfRotation;
 							
+							maxNumberOfFavorTokens=numberOfFavorTokensGot;
 							maxcurrentTileToPlaceid=currentTileToPlace.id;
 						}
 						else if(numberOfCardsGot==max_number_Of_Cards && numberOfFavorTokensGot>maxNumberOfFavorTokens)
@@ -297,10 +308,14 @@ public class GreedyPlayer implements PlayerStrategy
 					total_Score_Count++;
 					degreeOfRotation+=90;
 					player.favorTokenScore=tokenScoreBeforSimulation;
+					player.playerScore_fourKind=playerScore_fourKindBeforeSim;
+					player.playerScore_sevenUnique=playerScore_sevenUniqueBeforeSim;
+					player.playerScore_threePair=playerScore_threePairBeforeSim;
+					
 						//create dummy player..copy data structures and pass that player..make best dedication for that 
 						//place and store the totalHonorcount.return lanterncards back to global stacks..continue for all places..
 						//get the highest honor value and then use actual player and place lakeTile
-				}
+				}				
 			}
 		}
 		int index=0;
@@ -312,6 +327,7 @@ public class GreedyPlayer implements PlayerStrategy
 				currentTileToPlace=player.playerLTStack.get(i);
 			}
 		}
+		System.out.println("Enter the index of laketiles you want to put on board:");
 		System.out.println(index);
 		System.out
 		.println("Enter the id of the adjacent tile (on board) where you want to place your LakeTile");
@@ -388,60 +404,69 @@ public class GreedyPlayer implements PlayerStrategy
 		String returnLCard = "";
 		String pickLCard = "";
 		int numberOfCardsNeeded=0;
+		int returnCard=0;
+		int pickCard=0;
 		boolean moveState=false;		
 				if(player.getLanternCards().blackCardCount()==0)
 				{
 					 pickLCard="blackCard";	
 					 numberOfCardsNeeded++;
+					 pickCard=6;
 				}
 				if(player.getLanternCards().blueCardCount()==0)
 				{
 					 pickLCard="blueCard";	
 					 numberOfCardsNeeded++;
+					 pickCard=7;
 				}
 			    if(player.getLanternCards().greenCardCount()==0)
 				{
 					 pickLCard="greenCard";	
 					 numberOfCardsNeeded++;
+					 pickCard=2;
 				}
 				if(player.getLanternCards().whiteCardCount()==0)
 				{
 					 pickLCard="whiteCard";	
 					 numberOfCardsNeeded++;
+					 pickCard=5;
 				}
 			    if(player.getLanternCards().purpleCardCount()==0)
 				{
 					 pickLCard="purpleCard";	
 					 numberOfCardsNeeded++;
+					 pickCard=3;
 				}
 			    if(player.getLanternCards().orangeCardCount()==0)
 				{
 					 pickLCard="orangeCard";	
 					 numberOfCardsNeeded++;
+					 pickCard=4;
 				}
 				if(player.getLanternCards().redCardCount()==0)
 				{
 					 pickLCard="redCard";	
 					 numberOfCardsNeeded++;
+					 pickCard=1;
 				}
 				if(numberOfCardsNeeded==0)
 					 pickLCard="NotPossible";	
 				if(numberOfCardsNeeded==1)
 				{
 					if(player.getLanternCards().blackCardCount()>1)
-						returnLCard="blackCard";
+						{returnLCard="blackCard";returnCard=6;}
 					else if(player.getLanternCards().blueCardCount()>1)
-						returnLCard="blueCard";
+						{returnLCard="blueCard";returnCard=7;}
 					else if(player.getLanternCards().whiteCardCount()>1)
-						returnLCard="whiteCard";
+						{returnLCard="whiteCard";returnCard=5;}
 					else if(player.getLanternCards().purpleCardCount()>1)
-						returnLCard="purpleCard";
+						{returnLCard="purpleCard";returnCard=3;}
 					else if(player.getLanternCards().redCardCount()>1)
-						returnLCard="redCard";
+						{returnLCard="redCard";returnCard=1;}
 					else if(player.getLanternCards().greenCardCount()>1)
-						returnLCard="greenCard";
+						{returnLCard="greenCard";returnCard=2;}
 					else if(player.getLanternCards().orangeCardCount()>1)
-						returnLCard="orangeCard";
+						{returnLCard="orangeCard";returnCard=4;}
 				}
 				else
 					returnLCard="NotPossible";
@@ -456,10 +481,8 @@ public class GreedyPlayer implements PlayerStrategy
 							returnLCard, pickLCard);
 				}
 				
-		/*if (moveState)
-			System.out.print("Successful Exchange");
-		else
-			System.out.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");*/
+		if (moveState)
+			displayExchangeMove(player,returnCard,pickCard);
 		return moveState;
 	}
 
@@ -473,51 +496,60 @@ public class GreedyPlayer implements PlayerStrategy
 		String returnLCard = "";
 		String pickLCard = "";
 		boolean moveState=false;
+		int returnCard=0;
+		int pickCard=0;
 		if(player.getLanternCards().blackCardCount()==3 && gameEngine.lanternCards.hasCard("blackCard"))
 		{
 			pickLCard="blackCard";
+			returnCard=6;
 		}
 		else if(player.getLanternCards().blueCardCount()==3 && gameEngine.lanternCards.hasCard("blueCard"))
 		{
 			pickLCard="blueCard";
+			returnCard=7;
 		}
 		else if(player.getLanternCards().greenCardCount()==3 && gameEngine.lanternCards.hasCard("greenCard"))
 		{
 			pickLCard="greenCard";
+			returnCard=2;
 		}
 		else if(player.getLanternCards().redCardCount()==3 && gameEngine.lanternCards.hasCard("redCard"))
 		{
 			pickLCard="redCard";
+			returnCard=1;
 		}
 		else if(player.getLanternCards().whiteCardCount()==3 && gameEngine.lanternCards.hasCard("whiteCard"))
 		{
 			pickLCard="whiteCard";
+			returnCard=5;
 		}
 		else if(player.getLanternCards().orangeCardCount()==3 && gameEngine.lanternCards.hasCard("orangeCard"))
 		{
 			pickLCard="orangeCard";
+			returnCard=4;
 		}
 		else if(player.getLanternCards().purpleCardCount()==3 && gameEngine.lanternCards.hasCard("purpleCard"))
 		{
 			pickLCard="purpleCard";
+			returnCard=3;
 		}
 		else
 			pickLCard="NotPossible";
 		
 		if(player.getLanternCards().blackCardCount()<3 && player.getLanternCards().blackCardCount()>0)
-			returnLCard="blackCard";
+			{returnLCard="blackCard";pickCard=6;}
 		else if(player.getLanternCards().blueCardCount()<3 && player.getLanternCards().blueCardCount()>0)
-			returnLCard="blueCard";
+			{returnLCard="blueCard";pickCard=7;}
 		else if(player.getLanternCards().whiteCardCount()<3 && player.getLanternCards().whiteCardCount()>0)
-			returnLCard="whiteCard";
+			{returnLCard="whiteCard";pickCard=5;}
 		else if(player.getLanternCards().orangeCardCount()<3 && player.getLanternCards().orangeCardCount()>0)
-			returnLCard="orangeCard";
+			{returnLCard="orangeCard";pickCard=4;}
 		else if(player.getLanternCards().greenCardCount()<3 && player.getLanternCards().greenCardCount()>0)
-			returnLCard="greenCard";
+			{returnLCard="greenCard";pickCard=2;}
 		else if(player.getLanternCards().redCardCount()<3 && player.getLanternCards().redCardCount()>0)
-			returnLCard="redCard";
+			{returnLCard="redCard";pickCard=1;}
 		else if(player.getLanternCards().purpleCardCount()<3 && player.getLanternCards().purpleCardCount()>0)
-			returnLCard="purpleCard";
+			{returnLCard="purpleCard";pickCard=3;}
 		else
 			returnLCard="NotPossible";
 		if(pickLCard.equalsIgnoreCase("NotPossible") || returnLCard.equalsIgnoreCase("NotPossible"))
@@ -530,14 +562,13 @@ public class GreedyPlayer implements PlayerStrategy
 					moveState = player.spendFavorTokens(gameEngine.favorTokens, gameEngine.lanternCards,
 					returnLCard, pickLCard);
 		}
-		
-			/*if (moveState)
-			System.out.print("Successful Exchange");
-		else
-			System.out.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");*/
+		if(moveState)
+			displayExchangeMove(player,returnCard,pickCard);
 	return moveState;
 	}
 	
+	
+
 	/**
 	 * This method checks which lantern cards should be exchanged to perform Dedication Three Pair and performs the exchange
 	 * @param player player playing the current move
@@ -550,6 +581,8 @@ public class GreedyPlayer implements PlayerStrategy
 		String pickLCard = "";
 		boolean moveState=false;
 		int numberOfPairs=0;
+		int returnCard=0;
+		int pickCard=0;
 	    HashMap<String, Boolean> pairs = new HashMap<String, Boolean>();
 	    pairs.put("redCard", false);
 		pairs.put("blueCard", false);
@@ -610,61 +643,74 @@ public class GreedyPlayer implements PlayerStrategy
 			{
 				pairs.put("redCard", true);
 				pickLCard="redCard";
+				pickCard=1;
 			}
 			else if(player.getLanternCards().purpleCardCount()==1 && gameEngine.lanternCards.hasCard("purpleCard"))
 			{
 				pairs.put("purpleCard", true);
 				pickLCard="purpleCard";
+				pickCard=3;
 			}
 			else if(player.getLanternCards().greenCardCount()==1 && gameEngine.lanternCards.hasCard("greenCard"))
 			{
 				pairs.put("greenCard", true);
 				pickLCard="greenCard";
+				pickCard=2;
 			}
 			else if(player.getLanternCards().whiteCardCount()==1 && gameEngine.lanternCards.hasCard("whiteCard"))
 			{
 				pairs.put("whiteCard", true);
 				pickLCard="whiteCard";
+				pickCard=5;
 			}
 			else if(player.getLanternCards().orangeCardCount()==1 && gameEngine.lanternCards.hasCard("orangeCard"))
 			{
 				pairs.put("orangeCard", true);
 				pickLCard="orangeCard";
+				pickCard=4;
 			}
 			else if(player.getLanternCards().blueCardCount()==1 && gameEngine.lanternCards.hasCard("blueCard"))
 			{
 				pairs.put("blueCard", true);
 				pickLCard="blueCard";
+				pickCard=7;
 			}
 		}
 		
-		if(pairs.get("blackCard")!=true && player.getLanternCards().blackCardCount()>1)
+		if(pairs.get("blackCard")!=true && player.getLanternCards().blackCardCount()>=1)
 		{
 			returnLCard="blackCard";
+			returnCard=6;
 		}
-		else if(pairs.get("redCard")!=true && player.getLanternCards().redCardCount()>1)
+		else if(pairs.get("redCard")!=true && player.getLanternCards().redCardCount()>=1)
 		{
 			returnLCard="redCard";
+			returnCard=1;
 		}
-		else if(pairs.get("blueCard")!=true && player.getLanternCards().blueCardCount()>1)
+		else if(pairs.get("blueCard")!=true && player.getLanternCards().blueCardCount()>=1)
 		{
 			returnLCard="blueCard";
+			returnCard=7;
 		}
-		else if(pairs.get("greenCard")!=true && player.getLanternCards().greenCardCount()>1)
+		else if(pairs.get("greenCard")!=true && player.getLanternCards().greenCardCount()>=1)
 		{
 			returnLCard="greenCard";
+			returnCard=2;
 		}
-		else if(pairs.get("orangeCard")!=true && player.getLanternCards().orangeCardCount()>1)
+		else if(pairs.get("orangeCard")!=true && player.getLanternCards().orangeCardCount()>=1)
 		{
 			returnLCard="orangeCard";
+			returnCard=4;
 		}
-		else if(pairs.get("purpleCard")!=true && player.getLanternCards().purpleCardCount()>1)
+		else if(pairs.get("purpleCard")!=true && player.getLanternCards().purpleCardCount()>=1)
 		{
 			returnLCard="purpleCard";
+			returnCard=3;
 		}
-		else if(pairs.get("whiteCard")!=true && player.getLanternCards().whiteCardCount()>1)
+		else if(pairs.get("whiteCard")!=true && player.getLanternCards().whiteCardCount()>=1)
 		{
 			returnLCard="whiteCard";
+			returnCard=5;
 		}
 		else
 			returnLCard="NotPossible";
@@ -679,10 +725,8 @@ public class GreedyPlayer implements PlayerStrategy
 					returnLCard, pickLCard);
 		}
 		
-			/*if (moveState)
-			System.out.print("Successful Exchange");
-		else
-			System.out.println("Unsuccessful Exchange: make sure you have \n the needed cards for the exchange are available or you have enough tokens");*/
+			if (moveState)
+					displayExchangeMove(player,returnCard,pickCard);
 	return moveState;
 	}
 	
@@ -741,22 +785,43 @@ public class GreedyPlayer implements PlayerStrategy
 			returnedLanternCards = cardToReturn
 					.returnStackFourOfKind();
 	
-			// take 4 cards with the third color inserted
-			// from player
-			player.getLanternCards()
-					.getCard(cardToReturn.getColor());
-			player.getLanternCards()
-					.getCard(cardToReturn.getColor());
-			player.getLanternCards()
-					.getCard(cardToReturn.getColor());
-			player.getLanternCards()
-					.getCard(cardToReturn.getColor());
+			
 			if (returnedLanternCards != null) {
+			
+				int simfourOfKind=gameEngine.dedicationTokens.peekFourOfKind();
 				state = player.pickDedicationToken(moveString,
 								returnedLanternCards, gameEngine.lanternCards,
 								gameEngine.dedicationTokens);
 				if(simulation)
+				{
 					gameEngine.lanternCards.returnAll(returnedLanternCards);
+					if(state)
+						gameEngine.dedicationTokens.fourOfKind.push(simfourOfKind);
+				}
+				else
+				{
+					// take 4 cards with the third color inserted
+					// from player
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					player.getLanternCards()
+							.getCard(cardToReturn.getColor());
+					if(state)
+					{
+						System.out.println(2);
+						System.out
+						.println("What Lantern cards do you want to return?"
+								+ " Enter the card");
+						System.out.println(card);
+						System.out
+						.println("1: redCard 2: blueCard 3: greenCard 4: "
+								+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+					}
+				}
 			}
 		}
 			return state;
@@ -857,26 +922,13 @@ public class GreedyPlayer implements PlayerStrategy
 			else
 				card=7;
 		}
-		if(card!=0 && card1!=0 && card2!=0)
+		if(card!=0 && card1!=0 && card2!=0 && !simulation)
 		{
 			CardToReturn cardToReturn = new CardToReturn(
 					card, card1, card2);
 	
 			returnedLanternCards = cardToReturn
 					.returnStackThreeOfKind();
-			System.out
-					.println("these are the cards to be returned 3:"
-							+ returnedLanternCards
-									.CardCount(card2));
-			System.out
-					.println("these are the cards to be returned 2:"
-							+ returnedLanternCards
-									.CardCount(card1));
-	
-			System.out
-					.println("these are the cards to be returned 1:"
-							+ returnedLanternCards
-									.CardCount(card));
 			// take 2 cards with the first color inserted
 			// from player
 			player.getLanternCards()
@@ -899,11 +951,28 @@ public class GreedyPlayer implements PlayerStrategy
 					.getCard(cardToReturn.getColor3());
 		}
 		if (returnedLanternCards != null) {
+			int simThreePair=gameEngine.dedicationTokens.peekThreePairs();
 			state = player.pickDedicationToken(moveString,
 							returnedLanternCards, gameEngine.lanternCards,
 							gameEngine.dedicationTokens);
 			if(simulation)
+			{
 				gameEngine.lanternCards.returnAll(returnedLanternCards);
+				if(state)
+					gameEngine.dedicationTokens.threePair.push(simThreePair);
+			}
+			else
+			{
+				if(state)
+				{
+					System.out.println(1);
+					System.out.println("What Lantern cards do you want to return? Enter "+ "the three cards.");
+					System.out.println("1: redCard 2: blueCard 3: greenCard 4: "+ "whiteCard 5: purpleCard 6: blackCard 7: orangeCard ");
+					System.out.println(card);
+					System.out.println(card1);
+					System.out.println(card2);
+				}
+			}
 		}
 		return state;
 	}
@@ -926,12 +995,37 @@ public class GreedyPlayer implements PlayerStrategy
 				returnedLanternCards = cardToReturn
 						.returnSeveUnique();
 			} 	
+			
 			if (returnedLanternCards != null) {
+				int simSevenUnique=gameEngine.dedicationTokens.threePair.peek();
 				state = player.pickDedicationToken(moveString,
 								returnedLanternCards, gameEngine.lanternCards,
 								gameEngine.dedicationTokens);
 				if(simulation)
+				{
+					if(state)
+						gameEngine.dedicationTokens.threePair.push(simSevenUnique);
 					gameEngine.lanternCards.returnAll(returnedLanternCards);
+				}
+				else
+				{
+					System.out.println(3);
+					//get cards from player
+					player.getLanternCards()
+					.getCard("blackCard");
+					player.getLanternCards()
+					.getCard("blueCard");
+					player.getLanternCards()
+					.getCard("greenCard");
+					player.getLanternCards()
+					.getCard("orangeCard");
+					player.getLanternCards()
+					.getCard("purpleCard");
+					player.getLanternCards()
+					.getCard("whiteCard");
+					player.getLanternCards()
+					.getCard("redCard");
+				}
 			}
 		return state;
 	}
@@ -996,8 +1090,9 @@ public class GreedyPlayer implements PlayerStrategy
 				 }
 			 }
 		 }			
-		 if(exchanged)
+		/* if(exchanged)
 		 {
+			 System.out.println("In Simulation Mode");
 			 System.out.println("Picked!");
 				System.out.println("Score: four of a kind "
 								+ dummyPlayer.playerScore_fourKind);
@@ -1009,8 +1104,40 @@ public class GreedyPlayer implements PlayerStrategy
 								+ dummyPlayer.playerScore_sevenUnique);
 		 }
 		 //else
-			 //System.out.println(" Please revisit the game rules!");
+			 //System.out.println(" Please revisit the game rules!");*/
 	}
+	
+	/**
+	 * This method displayes events of greedy player for exchange lantern card move
+	 * @param player current player
+	 * @param returnCard card to be returned for exchange lantern card move
+	 * @param pickCard card to be picked for exchange lantern card move
+	 */
+	private void displayExchangeMove(Player player, int returnCard, int pickCard) {
+		System.out.println("Select the lantern card you want to return.\n"
+				+ "1.Red Card\n"
+				+ "2.Green Card\n"
+				+ "3.Purple Card\n"
+				+ "4.Orange Card\n"
+				+ "5.White Card\n"
+				+ "6.Black Card\n"
+				+ "7.Blue Card");
+		System.out.println(pickCard);
+		System.out.println("Select the lantern card you want to pick.\n"
+				+ "1.Red Card\n"
+				+ "2.Green Card\n"
+				+ "3.Purple Card\n"
+				+ "4.Orange Card\n"
+				+ "5.White Card\n"
+				+ "6.Black Card\n"
+				+ "7.Blue Card");
+		System.out.println(returnCard);
+		
+	}
+	/**This method playes one move for greedy player 
+	 * @param gameEngine contains the entire state of the game
+	 * @param player current player
+	 */
 	@Override
 	public void play(GameEngine gameEngine, Player player) {
 		
@@ -1031,3 +1158,4 @@ public class GreedyPlayer implements PlayerStrategy
 
 	
 }
+

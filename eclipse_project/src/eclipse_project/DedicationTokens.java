@@ -9,10 +9,10 @@ import java.util.Stack;
  */
 public class DedicationTokens {
 
-	private Stack<Integer> fourOfKind = new Stack<Integer>();
-	private Stack<Integer> threePair = new Stack<Integer>();
-	private Stack<Integer> sevenUnique = new Stack<Integer>();
-	private Stack<Integer> genericFour = new Stack<Integer>();
+	public Stack<Integer> fourOfKind = new Stack<Integer>();
+	public Stack<Integer> threePair = new Stack<Integer>();
+	public Stack<Integer> sevenUnique = new Stack<Integer>();
+	public Stack<Integer> genericFour = new Stack<Integer>();
 
 	private final int FOUR_KIND_MAX = 8;
 	private final int THREE_PAIR_MAX = 9;
@@ -48,62 +48,7 @@ public class DedicationTokens {
 				this.genericFour.push(GENERIC_FOUR_MAX);
 			
 		}
-		
-		/*switch (numberOfPlayers) {
-		case 2:
-			for (int i = 0; i < 9; i++) {
-				this.fourOfKind.push(fourOfKindValue);
-				this.threePair.push(threePairValue);
-				this.sevenUnique.push(sevenUniqueValue);
-
-				fourOfKindValue++;
-				threePairValue++;
-				sevenUniqueValue++;
-
-				if (i == 7) {
-					fourOfKindValue--;
-				}
-
-			}
-
-			break;
-		case 3:
-			for (int i = 0; i < 9; i++) {
-				this.fourOfKind.push(fourOfKindValue);
-				this.threePair.push(threePairValue);
-				this.sevenUnique.push(sevenUniqueValue);
-
-				fourOfKindValue++;
-				threePairValue++;
-				sevenUniqueValue++;
-
-				if (i == 7) {
-					fourOfKindValue--;
-				}
-
-			}
-
-			break;
-		case 4:
-			for (int i = 0; i < 9; i++) {
-				this.fourOfKind.push(fourOfKindValue);
-				this.threePair.push(threePairValue);
-				this.sevenUnique.push(sevenUniqueValue);
-
-				fourOfKindValue++;
-				threePairValue++;
-				sevenUniqueValue++;
-
-				if (i == 7) {
-					fourOfKindValue--;
-				}
-
-			}
-
-		}
-
-		for (int i = 0; i < 3; i++)
-			this.genericFour.push(GENERIC_FOUR_MAX); */
+	
 
 	}
 
@@ -302,3 +247,4 @@ public class DedicationTokens {
 		return this.sevenUnique.peek();
 	}
 }
+

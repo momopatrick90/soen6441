@@ -189,6 +189,7 @@ public class Board {
 		}
 		return availableSpace;
 	}
+<<<<<<< HEAD
 	
 	
 	public ArrayList<int[]> availableSpacesPosition() {
@@ -336,6 +337,7 @@ public class Board {
 		
 		return null;
 	}
-
 }
-
+=======
+}
+>>>>>>> 171e0539740d388c5c354a0b43c8d9aaa2308592

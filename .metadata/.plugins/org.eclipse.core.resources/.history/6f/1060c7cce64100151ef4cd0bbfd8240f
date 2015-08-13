@@ -27,11 +27,12 @@ public class Player {
 		this.playerLCStack = new LanternCards();
 		this.playerLTStack = new ArrayList<LakeTiles>();
 		this.playerStrategy = new UnfriendlyPlayer(this.name);
-
+=======
 		if(name.equalsIgnoreCase("player4"))
 			this.playerStrategy = new HumanPlayer(this.name);
 		else 
 			this.playerStrategy = new GreedyPlayer(this.name);
+>>>>>>> 171e0539740d388c5c354a0b43c8d9aaa2308592
 	}
 
 	/**
