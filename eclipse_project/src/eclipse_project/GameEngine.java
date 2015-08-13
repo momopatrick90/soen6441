@@ -390,6 +390,9 @@ public class GameEngine {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
 
+			//
+			System.out.println("==========================================================================");
+			
 			//get current
 			Player currentPlayer = getCurrentPlayer();
 			System.out.println(currentPlayer.name+ "'s turn to play.");

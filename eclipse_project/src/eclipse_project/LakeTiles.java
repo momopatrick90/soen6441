@@ -1,6 +1,7 @@
 package eclipse_project;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Stack;
 
@@ -8,7 +9,7 @@ import java.util.Stack;
  * LakeTiles are created according to number of players.
  *
  */
-public class LakeTiles {
+public class LakeTiles  {
 	
 	public String leftColor, rightColor, upColor, downColor;
 	public int left, right, up, down;
@@ -430,5 +431,39 @@ public class LakeTiles {
 			Row--;
 		return Row;
 	}
-
+	
+	/**
+	 * What is the COLOR of the position rotated rotated by angle?
+	 * @param position (left, right up, down) 
+	 * @param angle (0, 90, 180, 270) 
+	 */
+	public String positionRotated(String position, int angle)
+	{
+		//
+		String[] positions = new String[] {"left", "down", "right", "up"};
+		
+		//
+		int current  = Arrays.asList(positions).indexOf(position);
+		int rotated = current + angle/90;
+		rotated = rotated % 4;
+		
+		//
+		String newPosition = positions[rotated];
+		
+		//
+		if(newPosition.equals("left"))
+		{
+			return this.leftColor;
+		}else if(newPosition.equals("right"))
+		{
+			return this.rightColor;
+		}else if(newPosition.equals("down"))
+		{
+			return this.downColor;
+		}else
+		{
+			return this.upColor;
+		}
+		
+	}
 }

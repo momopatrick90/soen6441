@@ -8,6 +8,7 @@ import javax.xml.crypto.Data;
 
 import org.junit.Test;
 
+import eclipse_project.DedicationTokens;
 import eclipse_project.LakeTiles;
 import eclipse_project.LanternCards;
 import eclipse_project.Player;
@@ -179,4 +180,107 @@ public class LanternCardsTest {
 		assertTrue(lc.purpleCardCount() == 1);
 		assertTrue(lc.blackCardCount() == 4);
 	}
+	
+	@Test
+	public void testWithdrawAll() {
+		//
+		LanternCards lc = new 		 LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		LanternCards target_lc = new LanternCards(0, 1, 1, 1, 1, 1, 1, 1);
+		
+		// 
+		lc.withdrawAll(target_lc);
+		
+		//
+		assertTrue(target_lc.nonZeroColors() == 0);
+	}
+	
+	@Test
+	public void testDuplicate() {
+		//
+		LanternCards lc = new LanternCards(0, 3, 1, 0, 1, 0, 3, 1);
+
+		
+		// 
+		LanternCards lcCopy =  lc.duplicate();
+		
+		//
+		assertTrue(lcCopy.redCardCount() == 3);
+		assertTrue(lcCopy.blueCardCount() == 1);
+		assertTrue(lcCopy.greenCardCount() == 0);
+		assertTrue(lcCopy.whiteCardCount() == 1);
+		assertTrue(lcCopy.purpleCardCount() == 0);
+		assertTrue(lcCopy.blackCardCount() == 3);
+		assertTrue(lcCopy.orangeCardCount() == 1);
+	}
+	
+	@Test
+	public void testGetSevenUnique() {
+		//
+		LanternCards lc1 = new LanternCards(0, 3, 1, 1, 1, 1, 3, 1);
+		LanternCards lc2 = new LanternCards(0, 3, 0, 1, 1, 1, 3, 1);
+
+		
+		// 
+		LanternCards sevenUniques1 =  lc1.getSevenUniques();
+		LanternCards sevenUniques2 =  lc2.getSevenUniques();
+		
+		//
+		assertTrue(sevenUniques1.numColorsWithQuantity(1) == 7);
+		//
+		assertTrue(sevenUniques2 == null);
+	}
+	
+	@Test
+	public void testGetThreePair() {
+		//
+		LanternCards lc1 = new LanternCards(0, 3, 3, 1, 1, 1, 3, 1);
+		LanternCards lc2 = new LanternCards(0, 3, 1, 1, 1, 1, 3, 1);
+
+		
+		// 
+		LanternCards threePair1 =  lc1.getThreePairs();
+		LanternCards threePair2 =  lc2.getThreePairs();
+		
+		//
+		assertTrue(threePair1.numColorsWithQuantity(2) == 3);
+		assertTrue(threePair1.redCardCount() == 2);
+		assertTrue(threePair1.blueCardCount() == 2);
+		assertTrue(threePair1.blackCardCount() == 2);
+		//
+		assertTrue(threePair2 == null);
+	}
+	
+	@Test
+	public void testGetFourOfKinds() {
+		//
+		LanternCards lc1 = new LanternCards(0, 4, 3, 1, 1, 1, 3, 1);
+		LanternCards lc2 = new LanternCards(0, 3, 1, 1, 1, 1, 3, 1);
+
+		
+		// 
+		LanternCards threePair1 =  lc1.getFourOfKinds();
+		LanternCards threePair2 =  lc2.getFourOfKinds();
+		
+		//
+		assertTrue(threePair1.numColorsWithQuantity(4) == 1);
+		assertTrue(threePair1.redCardCount() == 4);
+		//
+		assertTrue(threePair2 == null);
+	}
+	
+	@Test
+	public void testPossibleDedications() {
+		//
+		DedicationTokens dedicationTokens = new DedicationTokens(3);
+		
+		// all types
+		assertTrue(new LanternCards(0, 4, 3, 1, 1, 1, 3, 1).possibleDedicationsCount(dedicationTokens) == 3);
+		// 4 kind
+		assertTrue(new LanternCards(0, 4, 0, 1, 1, 1, 3, 1).possibleDedicationsCount(dedicationTokens) == 1);
+		// seven unique
+		assertTrue(new LanternCards(0, 2, 1, 1, 1, 1, 1, 1).possibleDedicationsCount(dedicationTokens) == 1);
+		// three pair
+		assertTrue(new LanternCards(0, 3, 3, 0, 0, 1, 3, 1).possibleDedicationsCount(dedicationTokens) == 1);
+	}
+	
 }

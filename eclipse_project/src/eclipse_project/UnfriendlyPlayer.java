@@ -5,17 +5,40 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class UnfriendlyPlayer extends Player implements PlayerStrategy {
+public class UnfriendlyPlayer implements PlayerStrategy {
 
 	public UnfriendlyPlayer(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
 	public void play(GameEngine gameEngine, Player player) {
-		// TODO Auto-generated method stub
+		//
+		System.out.println("--------------------");
+		this.exchangeLanternCards(gameEngine, player);
 		
+		//
+		System.out.println("--------------------");
+		this.makeDedication(gameEngine, player);
+		
+		//
+		System.out.println("--------------------");
+		this.placeLakeTile(gameEngine, player);
+		
+		//
+		System.out.println("--------------------");
+		// TODO code duplicate
+		if(gameEngine.lakeTiles.hasLakeTile())
+		{// Composury pick lake tile
+			System.out.println("unfriendly: picking  laketiles");
+			player.pickLakeTileFromStack(gameEngine.lakeTiles.getLakeTile());
+			System.out.println();
+			//
+			player.displayPlayersLakeTile(player);
+		}else
+		{
+			System.out.println("unfriendly: No lake tiles left on board to pick");
+		}
 	}
 	
 	/**
@@ -23,27 +46,46 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 	 * @param gameEngine
 	 * @param player
 	 */
-	protected void makeDedication(GameEngine gameEngine, Player player)
+	public void makeDedication(GameEngine gameEngine, Player player)
 	{
 		boolean played = false;
 		//
 		for(int i=0; i<gameEngine.PlayerList.size(); i++)
 		{
-			 if(player.playerLCStack.hasSevenUniques() && gameEngine.PlayerList.get(i).playerLCStack.hasSevenUniques() && gameEngine.dedicationTokens.sevenUniqueCount() == 1)
+			 if(player.playerLCStack.getSevenUniques()!=null && gameEngine.PlayerList.get(i).playerLCStack.getSevenUniques()!=null && gameEngine.dedicationTokens.sevenUniqueCount() == 1)
 			 {
-				 System.out.println("unfriendly: doing seven unique to prevent user: "+gameEngine.PlayerList.get(i).name+" from doing seven unique");
-				 //player.pickDedicationToken("threePair", returnedLanternCards, globalLanternCards, dedicationToken)
+				 // make dedications
+				 LanternCards sevenUniques = player.playerLCStack.getSevenUniques();
+				 player.pickDedicationToken("sevenUnique", sevenUniques, gameEngine.lanternCards, gameEngine.dedicationTokens);
+				 player.playerLCStack.withdrawAll(sevenUniques);
+				 
+				 //
+				 System.out.println("unfriendly:dedication: doing seven unique to prevent user: "+gameEngine.PlayerList.get(i).name+" from doing seven unique");
+				 
+				 //
 				 played=true;
 				 break;
-			 }else if(player.playerLCStack.hasFourOfKinds() && gameEngine.PlayerList.get(i).playerLCStack.hasFourOfKinds() && gameEngine.dedicationTokens.fourOfKindCount() == 1)
+			 }else if(player.playerLCStack.getFourOfKinds()!=null && gameEngine.PlayerList.get(i).playerLCStack.getFourOfKinds() != null && gameEngine.dedicationTokens.fourOfKindCount() == 1)
 			 {
-				 System.out.println("unfriendly: doing four of kind to prevent user: "+gameEngine.PlayerList.get(i).name+" from four of kind");
+				 // make dedications
+				 LanternCards fourOfKind = player.playerLCStack.getFourOfKinds();
+				 player.pickDedicationToken("FourOfKind", fourOfKind, gameEngine.lanternCards, gameEngine.dedicationTokens);
+				 player.playerLCStack.withdrawAll(fourOfKind);
+				 
+				 //
+				 System.out.println("unfriendly:dedication: doing four of kind to prevent user: "+gameEngine.PlayerList.get(i).name+" from four of kind");
 				 
 				 played=true;
 				 break;
-			 }else if(player.playerLCStack.numThreePairs()>0 && gameEngine.PlayerList.get(i).playerLCStack.numThreePairs()>0 && gameEngine.dedicationTokens.threePairCount() == 1)
+			 }else if(player.playerLCStack.getThreePairs()!=null && gameEngine.PlayerList.get(i).playerLCStack.getThreePairs()!=null && gameEngine.dedicationTokens.threePairCount() == 1)
 			 {
-				 System.out.println("unfriendly: doing three pair to prevent user: "+gameEngine.PlayerList.get(i).name+" from four of kind");
+				 // make dedications
+				 LanternCards threePair = player.playerLCStack.getThreePairs();
+				 player.pickDedicationToken("threePair", threePair, gameEngine.lanternCards, gameEngine.dedicationTokens);
+				 player.playerLCStack.withdrawAll(threePair);
+				 
+				 //
+				 System.out.println("unfriendly:dedication: doing three pair to prevent user: "+gameEngine.PlayerList.get(i).name+" from four of kind");
 				 
 				 played = true;
 				 break;
@@ -52,21 +94,26 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		
 		if(!played)
 		{
-			System.out.println("unfriendly: no dedication possible that will prevent someone from making dedication");
+			System.out.println("unfriendly:dedication: no dedication possible that will prevent someone from making dedication");
+		}else
+		{
+			System.out.println("unfriendly:dedication: resulting lantern cards");
+			System.out.println(player.getLanternCards().toString());
 		}
 	}
 
 	/**
 	 * The goal is if possible  is to get a lantern card such that one of the players can't get a better score for the next round
 	 * @param gameEngine contains the entire state of the game
-	 * @param player current player
+	 * @param player current player 
 	 */
-	protected void exchangeLanternCards(GameEngine gameEngine, Player player)
+	public void exchangeLanternCards(GameEngine gameEngine, Player player)
 	{
 		if(player.favorTokenScore<2)
 		{
 			//
-			System.out.println("unfriendly: can't do exchange lantern cards, not enough tokens: "+player.favorTokenScore);
+			System.out.println("unfriendly:exchange_lantern_card: can't do exchange lantern cards, not enough tokens: "+player.favorTokenScore);
+			return;
 		}
 		
 		// Available colors
@@ -74,7 +121,8 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		if(playerAvailableColors.size() >= 1)
 		{
 			//
-			System.out.println("unfriendly: can't do exchange lantern cards, player has no lantern cards ");
+			System.out.println("unfriendly:exchange_lantern_card: can't do exchange lantern cards, player has no lantern cards ");
+			return;
 		}
 		
 		// Some cards are unique on the board, maybe someone needs them to make a dedication
@@ -83,14 +131,14 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		if(boardUniqueColors.size() == 0)
 		{
 			//
-			System.out.println("unfriendly: not lantern cards on the board is unique, attack any one");
+			System.out.println("unfriendly:exchange_lantern_card: no lantern cards on the board is unique, can't be unfriendly to any one");
 			return;
 		}
 		
 		
 		//
 		Player minPlayer = null;
-		int minScoreGain = Integer.MAX_VALUE;
+		int minDedicationGain = Integer.MAX_VALUE;
 		String minCardReturn = null;
 		String minCardGet = null;
 		
@@ -108,15 +156,15 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 						continue;
 
 					//
-					int scoreGain = scoreGain(gameEngine, gameEngine.PlayerList.get(k), playerAvailableColors.get(i), boardUniqueColors.get(j));
+					int gain = dedicationGain(gameEngine, gameEngine.PlayerList.get(k), playerAvailableColors.get(i), boardUniqueColors.get(j));
 					
-					if(scoreGain < 0)
+					if(gain < 0)
 					{
-						if(scoreGain<minScoreGain)
+						if(gain<minDedicationGain)
 						{
 							//
 							minPlayer = gameEngine.PlayerList.get(k);
-							minScoreGain = scoreGain;
+							minDedicationGain = gain;
 							//
 							minCardReturn = playerAvailableColors.get(i);
 							minCardGet = boardUniqueColors.get(j);
@@ -128,24 +176,36 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		
 		if(minPlayer == null)
 		{
-			System.out.println("unfriendly: found no one who needed a single color to make dedication");
-			
+			System.out.println("unfriendly:exchange_lantern_card found no one who needed a single color to increase his dedication posibility");
 		}else
 		{
-			System.out.println("unfriendly: being unfriendly to "+minPlayer.name+" returning lantern card "+minCardReturn+" getting lantern card"+minCardGet);
+			//
+			System.out.println("unfriendly:exchange_lantern_card being unfriendly to "+minPlayer.name+" returning lantern card "+minCardReturn+" getting lantern card"+minCardGet+", so he can't make dedication");
 			player.spendFavorTokens(gameEngine.favorTokens, gameEngine.lanternCards, minCardReturn, minCardGet);
+			//
+			System.out.println("unfriendly:exchange_lantern_card PLAYER resulting lantern cards: ");
+			System.out.println(player.getLanternCards().toString());
+			//
+			System.out.println("unfriendly:exchange_lantern_card PLAYER resulting favor tokens: ");
+			System.out.println(player.favorTokenScore);
+			//
+			System.out.println("unfriendly:exchange_lantern_card GAME ENGINE resulting lantern cards: ");
+			System.out.println(gameEngine.lanternCards);
+			//
+			System.out.println("unfriendly:exchange_lantern_card GAME ENGINE resulting favor tokens: ");
+			System.out.println(gameEngine.favorTokens.getTokens());
 		}
 		
 	}
 
 	/**
-	 * What possible score does the player gain if he gets lantern color2 instead of lantern color2
+	 * What possible dedications does the player gain if he gets lantern color2 instead of lantern color2
 	 * @param player
 	 * @param color1
 	 * @param color2
 	 * @return
 	 */
-	public int scoreGain(GameEngine gameEngine, Player player, String color1, String color2)
+	public int dedicationGain(GameEngine gameEngine, Player player, String color1, String color2)
 	{
 		// current players lantern cards
 		LanternCards lanternCardWithColor1 = player.getLanternCards().duplicate();
@@ -156,7 +216,7 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 		lanternCardWithColor2.addCard(color2);
 		
 		// 
-		return lanternCardWithColor2.bestPossibleScore(gameEngine.dedicationTokens) - lanternCardWithColor2.bestPossibleScore(gameEngine.dedicationTokens);
+		return lanternCardWithColor2.possibleDedicationsCount(gameEngine.dedicationTokens) - lanternCardWithColor1.possibleDedicationsCount(gameEngine.dedicationTokens);
 	}
 
 
@@ -168,27 +228,28 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	public void placeLakeTile(GameEngine gameEngine, Player player, BufferedReader br) throws NumberFormatException, IOException
+	public void placeLakeTile(GameEngine gameEngine, Player player) 
 	{
 		//
-		System.out.println("unfriendly: placing laketile for player "+player.name);
+		System.out.println("unfriendly:place_lake_tile: "+player.name+" is about to place a lake tile");
 		
 		//
 		if(player.playerLTStack.size() == 0)
 		{
-			System.out.println("No lake tile available to play");
+			System.out.println("unfriendly:place_lake_tile: No lake tile available to play");
 			return;
 		}
 		
-		// The  lake tile position with the min case of a given player
-		int[] minPosition = null; // the poosition leading to a min point for a given player
-		int minRotation = 0;   // the rotation of the min point localtion
-		int minScoreGain = Integer.MAX_VALUE; 	 	// The min points I can make any given player have
-		int minId = 0; 			// An id of a lake tile adjacent to the min position
+		// The  lake tile position with the min benefit case of a given player
+		int[] minPosition = null; // the position leading to a min point for a given player
+		int minRotation = 0;   	  // the rotation of the min point localtion
+		int minDedicationGain = Integer.MAX_VALUE; 	 	// The min points I can make any given player have
+		int minIndex = 0;
 		Player minPlayer = null;
+		String minReason = "";
 		
-		// TODO replace this with board empty location
-		ArrayList<int[]> emptyLocations = new ArrayList<int[]>();
+		// empty location
+		ArrayList<int[]> emptyLocations = gameEngine.board.availableSpacesPosition();
 		
 		
 		//foreach of the character laketiles
@@ -199,14 +260,14 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 			LakeTiles lakeTile = lakeTiles.get(i);
 		
 			// for each of the possible locations
-			for(int j=0; i<emptyLocations.size(); j++)
+			for(int j=0; j<emptyLocations.size(); j++)
 			{
 				//
 				int[] position = emptyLocations.get(j);
 				
 				// Go through the possible rotations
 				int[] possibleRotations = new int[]{0, 90, 180, 270};
-				for(int k=0; i<possibleRotations.length; k++)
+				for(int k=0; k<possibleRotations.length; k++)
 				{
 					//
 					int rotation = possibleRotations[k];
@@ -220,18 +281,45 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 						//TODO test
 						if(currentPlayer != player)
 						{
+							// obtained color
+							String color = lakeTile.positionRotated(currentPlayer.boardPosition, rotation);
+							// 
+							int dedicationGain_ = dedicationGain(gameEngine, currentPlayer, color+"Card");
+				
 							//
-							int scoreGain_ = scoreGain(gameEngine, lakeTile, currentPlayer, position, rotation);
+							boolean isMin  = false;
+							boolean end = false;
+
+							// player will not be able to get card
+							if(!gameEngine.lanternCards.hasCard(color+"Card"))
+							{
+								isMin = true;
+								end = true;
+								minReason = "prevent player from getting card: "+color;
+							}else if(minPosition == null || dedicationGain_ < minDedicationGain)
+							{//TODO all players
+								isMin = true;
+								end = false;
+								
+								if(dedicationGain_<=0)
+									minReason = "player does not gain any dedication with: "+color;
+							}
+							
 							
 							// place lake tile such that minimizes the score gained
-							if(minPosition == null || scoreGain_ < minScoreGain)
+							if(isMin)
 							{
 								//
 								minPosition = position;
 								minRotation = rotation;
-								minScoreGain = scoreGain_;
-								minId = lakeTile.id;
+								minDedicationGain = dedicationGain_;
 								minPlayer = currentPlayer;
+								minIndex = i;
+							}
+							
+							if(end)
+							{
+								break;
 							}
 						}
 					}
@@ -239,28 +327,38 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 			}
 		}
 		
+		//  widraw lake tile
+		LakeTiles currentTileToPlace = player.placeLakeTile(minIndex);
 		//
-		System.out.println("Unfriendly: placing laketile: "+minId+", min_player(victim): "+minPlayer.name+", min position: "+minPosition);
-
+		System.out.println("Unfriendly:place_lake_tile: placing laketile.id: "+currentTileToPlace.id+", targeting player: "+minPlayer.name+", row: "+minPosition[0]+", col: "+minPosition[1]+" reason: "+minReason);
 		
-		// Place on the min
-		// withdrawing the lake tile
-		LakeTiles currentTileToPlace = player.placeLakeTile(minId);
 		//
 		gameEngine.lakeTiles.rotateLakeTile(currentTileToPlace, minRotation);
 		//
 		boolean placedLaketile = gameEngine.lakeTiles.placeTile(minPosition[1], minPosition[0], gameEngine.board, currentTileToPlace);
 		
-		//
-		if(!placedLaketile)
+		// TODO test distribute
+		if(placedLaketile)
 		{
-			System.out.println("unfriendly: Unexpected error placing lake tile");
+			System.out.println("unfriendly:place_lake_tile:  assigning lake tiles to players");
+			// 
+			gameEngine.lanternCards.assignLanternCardsToPlayers(
+					gameEngine.numOfPlayer, gameEngine.board,
+					minPosition[1],minPosition[0], currentTileToPlace,
+						gameEngine.PlayerList, gameEngine.lanternCards, gameEngine.favorTokens);
+			//
+			gameEngine.board.displayBoard2();
+			//gameEngine.board.displayBoard(gameEngine.board.board, gameEngine.board.tilesOnBoard);
+		}else
+		{
+			System.out.println("unfriendly:place_lake_tile: Unexpected error placing lake tile");
 		}
-
 	}
 	
+
+	
 	/**
-	 * What possible score does the player gain if the tile is place at the position?
+	 * What possible dedications does the player if he gets the lanternCard of given color?
 	 * @param gameEngine
 	 * @param lakeTile
 	 * @param player
@@ -268,21 +366,20 @@ public class UnfriendlyPlayer extends Player implements PlayerStrategy {
 	 * @param rotation
 	 * @return
 	 */
-	public int scoreGain(GameEngine gameEngine, LakeTiles lakeTile, Player player, int[] position, int rotation)
+	public int dedicationGain(GameEngine gameEngine, Player player, String cardColor)
 	{
 		// current players lantern cards
 		LanternCards lanternCards = player.getLanternCards();
-		int currentScore = lanternCards.bestPossibleScore(gameEngine.dedicationTokens);
+		int current = lanternCards.possibleDedicationsCount(gameEngine.dedicationTokens);
 		
 		// lantern cards of player after tile is placed
-		LanternCards lanternAfterLakeTile = lanternCards.duplicate();
-		//TODO if lake tile does not exist, real minmal
+		LanternCards lanternAfterCard = lanternCards.duplicate();
+		lanternAfterCard.addCard(cardColor);
 		
 		//
-		int scoreAfterLakeTile = lanternAfterLakeTile.bestPossibleScore(gameEngine.dedicationTokens);
+		int afterLakeTile = lanternAfterCard.possibleDedicationsCount(gameEngine.dedicationTokens);
 		
 		// 
-		return scoreAfterLakeTile - currentScore;
+		return afterLakeTile - current;
 	}
-
 }

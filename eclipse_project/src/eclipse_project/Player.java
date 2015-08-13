@@ -26,10 +26,7 @@ public class Player {
 		this.name = name;
 		this.playerLCStack = new LanternCards();
 		this.playerLTStack = new ArrayList<LakeTiles>();
-		if(name.equalsIgnoreCase("player1"))
-			this.playerStrategy = new HumanPlayer(this.name);
-		else 
-			this.playerStrategy = new GreedyPlayer(this.name);
+		this.playerStrategy = new UnfriendlyPlayer(this.name);
 	}
 
 	/**

@@ -397,6 +397,19 @@ public class LanternCards {
 			entry.setValue(0);
 		}
 	}
+	
+	/**
+	 * Withdraw this amount of lanternCards from *this* stack
+	 * @param lanternCards
+	 */
+	public void withdrawAll(LanternCards lanternCards) {
+		//
+		for (Map.Entry<String, Integer> entry : lanternCards.stacks.entrySet()) {
+			//
+			this.stacks.put(entry.getKey(), this.stacks.get(entry.getKey())
+					- entry.getValue());
+		}
+	}
 
 	public String toString() {
 		String result = "LanternCards: ";
@@ -844,113 +857,102 @@ public class LanternCards {
 	 * @param dedicationTokens
 	 * @return
 	 */
-	public int bestPossibleScore(DedicationTokens dedicationTokens)
+	public int possibleDedicationsCount(DedicationTokens dedicationTokens)
 	{
+		int total = 0;
 		// number of seven unique
-		if(this.hasSevenUniques() && dedicationTokens.sevenUniqueCount()>=1)
-			return dedicationTokens.peekSevenUnique();
+		if(this.getSevenUniques() != null && dedicationTokens.sevenUniqueCount()>=1)
+			total++;
 		
 		// can do four of kind
-		if(this.hasFourOfKinds() && dedicationTokens.fourOfKindCount()>=1)
-			return dedicationTokens.peekFourOfKind();
+		if(this.getFourOfKinds() != null && dedicationTokens.fourOfKindCount()>=1)
+			total++;
 		
 		// 
-		if(this.numThreePairs() >= 1 && dedicationTokens.threePairCount()>=1)
-			return dedicationTokens.peekThreePairs();
+		if(this.getThreePairs() != null && dedicationTokens.threePairCount()>=1)
+			total++;
 		
-		return 0;
+		return total;
 	}
 	
 	/**
-	 * Helper function to check if can do four of kinds for any color
+	 * Get any  four of kind
 	 * @return return true if there was a NEXT possible combination
 	 */
-	protected boolean hasFourOfKinds()
+	public LanternCards getFourOfKinds()
 	{
-		//colors
-		String[] colors = (String[]) this.stacks.keySet().toArray();
-		
-		
-		for(int i=0; i<colors.length; i++)
-		{
-			if(this.hasFourOfKind(colors[i]))
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+			if(entry.getValue() >= 4)
 			{
-				return true;
+				LanternCards result = new LanternCards();
+				result.stacks.put(entry.getKey(), 4);
+				return result; 
 			}
 		}
 		
-		return false;
+		return null;
 	}
 	
-	/**
-	 * 
-	 * @param amount
-	 * @return true of this lanterncards can do 4 of a kind, amount times
-	 */
-	protected boolean hasFourOfKind(String color)
-	{
-		return this.CardCount(color) >= 4;
-	}
+
 
 	/**
-	 * what is the max number of three pairs from the lantern cards 
+	 * Get a 2 pair if there
 	 * @return return true if there was a possible combination
 	 */
-	protected int numThreePairs()
+	public LanternCards getThreePairs()
 	{
-		//
-		int result = 0 ;
-		//
-		boolean paired = false;
+		LanternCards result = new LanternCards();
 		
-		do{
-			//
-			paired = false;
-			//
-			int pairs = 0;
-			//
-			bpoint:for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
-				
-				// get pair if there
-				if(entry.getValue() >= 2)
-				{
-					pairs += 1;
-					entry.setValue(entry.getValue() - 2);
-				}
-				
-				//
-				if(pairs == 3)
-				{
-					paired = true;
-					result += 1;
-					break bpoint;
-				}
+
+		//
+		int pairs = 0;
+		
+		
+		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
+			// get pair if there
+			if(entry.getValue() >= 2)
+			{
+				pairs += 1;
+				result.addCard(entry.getKey());
+				result.addCard(entry.getKey());
 			}
-		}while(paired);
-		
+				
+			//
+			if(pairs == 3)
+			{
+				return result;
+			}
+		}
+
 		//
-		return result;
+		return null;
 	}
 
 
 
 
 	/**
-	 * can do seven uniques?
+	 * get a stack of seven uniques, without deduction from stack
 	 * @param amount
 	 * @return  true is this lanterncards can do a 7 unique
 	 */
-	protected boolean hasSevenUniques()
+	public LanternCards getSevenUniques()
 	{
 		//
+		LanternCards result = new LanternCards();
+		
+		//
 		for (Map.Entry<String, Integer> entry : this.stacks.entrySet()) {
-			//
+			//can't do seven unique
 			if(entry.getValue() < 1)
 			{
-				return false;
+				return null;
 			}
+			
+			result.addCard(entry.getKey());
+			
 		}
-		return true;
+		return result;
 	}
 	
 	/**
@@ -958,7 +960,7 @@ public class LanternCards {
 	 * @param lanternCards
 	 * @return make an exact copy of lanternCards
 	 */
-	protected LanternCards duplicate()
+	public LanternCards duplicate()
 	{
 		LanternCards result = new LanternCards();
 		result.stacks = (HashMap<String, Integer>) this.stacks.clone();

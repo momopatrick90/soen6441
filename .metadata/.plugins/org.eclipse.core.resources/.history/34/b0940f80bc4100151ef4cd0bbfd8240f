@@ -1,0 +1,29 @@
+package eclipse_project;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * Implements multiple strategies, in round robbing manner
+ * @author vofo
+ *
+ */
+public class CleverPlayer extends Player implements PlayerStrategy {
+	ArrayList<PlayerStrategy> strategies = null;
+	
+	
+	public CleverPlayer(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	@Override
+	public void play(GameEngine gameEngine, Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+}

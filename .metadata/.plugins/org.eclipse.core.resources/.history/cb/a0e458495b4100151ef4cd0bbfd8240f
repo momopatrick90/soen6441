@@ -1,0 +1,34 @@
+package unittests;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import eclipse_project.DedicationTokens;
+import eclipse_project.GameEngine;
+import eclipse_project.Player;
+
+
+
+
+public class UnfriendlyPlayerTest {
+	protected void createGameSetUp()
+	{
+		//
+		GameEngine gameEngine = new GameEngine();
+	}
+	
+	@Test
+	public void testMakeDedication()
+	{
+		
+		//ded tokens
+		DedicationTokens dedicationTokens = new DedicationTokens(2);
+		//
+		Player player1 = new Player("player1");
+		Player player2 = new Player("player1");
+		//
+		ArrayList<Player> players = 
+		
+	}
+}

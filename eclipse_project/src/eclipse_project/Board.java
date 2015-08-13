@@ -183,4 +183,151 @@ public class Board {
 		}
 		return availableSpace;
 	}
+	
+	
+	public ArrayList<int[]> availableSpacesPosition() {
+		ArrayList<int[]> availableSpace = new ArrayList<int[]>();
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				boolean valid = false;
+				if(board[i][j] == -1)
+				{// has a good neighbour
+					if(this.intBoardRange(i+1, j) && board[i+1][j] != -1)
+					{
+						valid = true;
+					}else if(this.intBoardRange(i, j+1) && board[i][j+1] != -1)
+					{
+						valid = true;
+					}else if(this.intBoardRange(i-1, j) && board[i-1][j] != -1)
+					{
+						valid = true;
+					}else if(this.intBoardRange(i, j-1) && board[i][j-1] != -1)
+					{
+						valid = true;
+					}
+				}
+				
+				if(valid)
+					availableSpace.add(new int[]{i, j});
+			}
+		}
+		
+
+		return availableSpace;
+	}
+	
+	public boolean intBoardRange(int row, int col)
+	{
+		if(row<0)
+			return false;
+		if(row>=this.board.length)
+			return false;
+		if(col<0)
+			return false;
+		if(col>=this.board[row].length)
+			return false;
+		return true;
+	}
+	
+	public void displayBoard2()
+	{
+		System.out.println("-----------------------");
+		
+		//
+		int[] bounds = boundaries();
+		
+		
+		//line on top of board
+		StringBuilder lineTop1 = new StringBuilder("  | ");
+		StringBuilder lineTop2 = new StringBuilder("--|-");
+		for(int k=bounds[2]; k<=bounds[3]; k++)
+		{
+			lineTop1.append(String.format("%3.3s%5.3s%3.3s", " ", k, "|"));
+			lineTop2.append(String.format("%3.3s%5.5s%3.3s", "---", "-----", "--|"));
+		}
+		System.out.println(lineTop1);
+		System.out.println(lineTop2);
+		
+		
+		//
+		for(int i=bounds[0]; i<=bounds[1]; i++)
+		{
+			// print row
+			// each "row" is made up of three lines"
+			// 1 for      up
+			// 1 for left id right
+			// 1 for      down
+			StringBuilder line1 = new StringBuilder("  | ");
+			StringBuilder line2 = new StringBuilder(String.format("%2.2s| ", i));
+			StringBuilder line3 = new StringBuilder("  | ");
+		
+			// through each column
+			for(int j=bounds[2]; j<=bounds[3]; j++)
+			{
+				if(this.board[i][j] == -1)
+				{
+					line1.append(String.format("    "));
+					line2.append(String.format("    "));
+					line3.append(String.format("    "));
+				}else
+				{
+					//
+					LakeTiles lakeTile = this.lakeTileFromId(this.board[i][j]);
+					String platformIndicator = lakeTile.platform? "P" : " ";
+					
+					line1.append(String.format("%3.3s%5.3s%3.3s", " ", lakeTile.downColor, " "));
+					line2.append(String.format("%3.3s %2.2s%s %3.3s", lakeTile.leftColor, lakeTile.id, platformIndicator, lakeTile.rightColor));
+					line3.append(String.format("%3.3s%5.3s%3.3s", " ", lakeTile.upColor," "));
+				}
+				
+			}
+			
+			System.out.println(line1);
+			System.out.println(line2);
+			System.out.println(line3);
+		}
+		System.out.println("-----------------------");
+	}
+	
+	// the leftmost, rightmost, upmost, bottomst boundaries
+	public int[] boundaries()
+	{
+		// [0, 1] row limits, [2, 3] col limits
+		int[] result = new int[]{this.board.length-1, 0, this.board[0].length-1, 0};
+		//
+		for(int j=0; j<this.board[0].length; j++)
+		{
+			for(int i=0; i<this.board.length; i++)
+			{
+				if(this.board[i][j] != -1)
+				{
+					// leferer than left most
+					if(j<result[2])
+						result[2]=j;
+					// righter than right most
+					if(j>result[3])
+						result[3]=j;
+					
+					if(i<result[0])
+						result[0]=i;
+					if(i>result[1])
+						result[1]=i;
+				}
+			}
+		}
+		return result;
+	}
+	
+	public LakeTiles lakeTileFromId(int id)
+	{
+		for(int i=0; i<this.tilesOnBoard.size(); i++)
+		{
+			if(this.tilesOnBoard.get(i).id == id)
+			{
+				return this.tilesOnBoard.get(i);
+			}
+		}
+		
+		return null;
+	}
 }
