@@ -47,8 +47,8 @@ public class GameEngine {
 	public LinkedList<LakeTiles> lakeTilesList;
 	public DedicationTokens dedicationTokens;
 	public FavorTokens favorTokens;
-	public static int redCount, blueCount, greenCount, whiteCount, purpleCount,
-			blackCount, orangeCount;
+	public static int redCount, blueCount, greenCount, whiteCount,
+			purpleCount, blackCount, orangeCount;
 	public int round;
 	private Player player1 = new Player("player1");
 	private Player player2 = new Player("player2");
@@ -75,9 +75,6 @@ public class GameEngine {
 	}
 
 	public void startNewGame() throws Exception, IOException {
-		// set the strategy of the player.
-		selectStrategy();
-
 		// Set the initial variables for the lantern cards and the various
 		// tokens
 		// according to the number of players.
@@ -357,110 +354,9 @@ public class GameEngine {
 		//
 		run();
 	}
-
-	/**
-	 * Prompt user to select the strategy of the player. (Human Player, Random
-	 * Player, Greedy Player, Unfriendly Player, Clever Player)
-	 */
-	private void selectStrategy() {
-		String strategy = "HumanPlayer";
-		System.out.println("Available Strategies:"
-				+ " 1. Human Player 2. Random Player 3.Greedy Player "
-				+ "4.Unfriendly Player 5.Clever Player");
-		System.out.println();
-
-		Scanner in = new Scanner(System.in);
-		int choice = 0;
-
-		if (this.numOfPlayer == 2) {
-			System.out.println("Enter the strategy for player 1");
-
-			choice = in.nextInt();
-			checkChoice(choice);
-
-			player1.setStrategy("RandomPlayer");
-
-			System.out.println("Enter the strategy for player 2");
-
-			choice = in.nextInt();
-			checkChoice(choice);
-
-			player2.setStrategy("RandomPlayer");
-		}
-		if (this.numOfPlayer == 3) {
-
-			System.out.println("Enter the strategy for player 1");
-
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player1.setStrategy(strategy);
-
-			System.out.println("Enter the strategy for player 2");
-
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player2.setStrategy(strategy);
-
-			System.out.println("Enter the strategy for player 3");
-
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player3.setStrategy(strategy);
-		}
-		if (this.numOfPlayer == 4) {
-
-			System.out.println("Enter the strategy for player 1");
-
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player1.setStrategy(strategy);
-
-			System.out.println("Enter the strategy for player 2");
-
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player2.setStrategy(strategy);
-
-			System.out.println("Enter the strategy for player 3");
-
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player3.setStrategy(strategy);
-
-			System.out.println("Enter the strategy for player 4");
-
-			choice = in.nextInt();
-			strategy = checkChoice(choice);
-
-			player4.setStrategy(strategy);
-		}
-
-	}
-
-	private String checkChoice(int choice) {
-
-		String strategy = "HumanPlayer";
-		if (choice == 1)
-			strategy = "HumanPlayer";
-		else if (choice == 2)
-			strategy = "RandomPlayer";
-		else if (choice == 3)
-			strategy = "GreedyPlayer";
-		else if (choice == 4)
-			strategy = "UnfriendlyPlayer";
-		else if (choice == 5)
-			strategy = "CleverPlayer";
-		return strategy;
-
-	}
-
-	protected Player getCurrentPlayer() {
+	
+	protected Player getCurrentPlayer()
+	{
 		for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 			if (PlayerList.get(playerIndex).current) {
 				return PlayerList.get(playerIndex);
@@ -468,8 +364,9 @@ public class GameEngine {
 		}
 		return null;
 	}
-
-	protected void moveToNextPlayer() {
+	
+	protected void moveToNextPlayer()
+	{
 		for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
 			if (PlayerList.get(playerIndex).current) {
 				//
@@ -479,66 +376,61 @@ public class GameEngine {
 					PlayerList.get(0).setCurrent(true);
 				} else
 					PlayerList.get(++playerIndex).setCurrent(true);
-			}
+				}
 		}
 	}
-
+	
 	//
 	protected void run() throws NumberFormatException, IOException {
 		// was the game exited
 		boolean exited = false;
-
+		
 		while (round > 0) {
 			//
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					System.in));
 
-			// get current
+			//get current
 			Player currentPlayer = getCurrentPlayer();
-			System.out.println(currentPlayer.name + "'s turn to play.");
-
+			System.out.println(currentPlayer.name+ "'s turn to play.");
+			
 			// Exit game loop
-			System.out
-					.print("Type 1 if you want to exit the game loop, any other number to continue: ");
+			System.out.print("Type 1 if you want to exit the game loop, any other number to continue: ");
 			int choice = Integer.parseInt(br.readLine());
 			//
-			if (choice == 1) {
+			if(choice == 1)
+			{
 				exited = true;
 				break;
 			}
 
 			//
 			currentPlayer.playerStrategy.play(this, currentPlayer);
-
+			
 			//
-			System.out.println(currentPlayer.name + "'s turn is over");
-
+			System.out.println(currentPlayer.name+ "'s turn is over");
+			
 			// move to next player
 			moveToNextPlayer();
-
+			
 			//
 			round--;
 		}
-
-		if (!exited) {
+		
+		
+		if(!exited)
+		{
 			System.out.println("Game finished, player scores: ");
 			//
 			for (int playerIndex = 0; playerIndex < PlayerList.size(); playerIndex++) {
-				// /
+				///
 				Player player = PlayerList.get(playerIndex);
-				System.out
-						.println("name: "
-								+ player.name
-								+ ", fourKindScore: "
-								+ player.playerScore_fourKind
-								+ ", threePairScore "
-								+ player.playerScore_threePair
-								+ ", sevenUniqueScore "
-								+ player.playerScore_sevenUnique
-								+ ", total: "
-								+ (player.playerScore_fourKind
-										+ player.playerScore_threePair + player.playerScore_sevenUnique));
-
+				System.out.println("name: "+player.name
+						+", fourKindScore: "+player.playerScore_fourKind
+						+", threePairScore "+player.playerScore_threePair
+						+", sevenUniqueScore "+player.playerScore_sevenUnique
+						+", total: "+(player.playerScore_fourKind+player.playerScore_threePair+player.playerScore_sevenUnique));
+				
 			}
 		}
 	}
