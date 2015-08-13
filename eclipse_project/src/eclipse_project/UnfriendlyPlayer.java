@@ -247,7 +247,8 @@ public class UnfriendlyPlayer implements PlayerStrategy {
 		
 		// empty location
 		ArrayList<int[]> emptyLocations = gameEngine.board.availableSpacesPosition();
-		
+		// shuffle so as to give prefence to a position
+		java.util.Collections.shuffle(emptyLocations);
 		
 		//foreach of the character laketiles
 		ArrayList<LakeTiles> lakeTiles = player.getLakeTiles(); 
