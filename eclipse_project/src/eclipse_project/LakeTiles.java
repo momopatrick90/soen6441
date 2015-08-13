@@ -357,7 +357,7 @@ public class LakeTiles {
 			lakeTile.rightColor=up;
 			lakeTile.downColor=right;
 			break;
-			default:System.out.println();
+			default://System.out.println();
 		}
 		return lakeTile;
 	}

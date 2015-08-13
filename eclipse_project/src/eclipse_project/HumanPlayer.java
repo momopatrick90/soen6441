@@ -249,7 +249,7 @@ public class HumanPlayer implements PlayerStrategy {
 						&& player.getLanternCards().CardCount(card2) >= 2
 						&& player.getLanternCards().CardCount(card3) >= 2) {
 					
-				System.out.println("This means that you succeded to "+ "get through the card check point");
+				//System.out.println("This means that you succeded to "+ "get through the card check point");
 
 					CardToReturn cardToReturn = new CardToReturn(
 							card, card2, card3);

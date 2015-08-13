@@ -26,7 +26,7 @@ public class Player {
 		this.name = name;
 		this.playerLCStack = new LanternCards();
 		this.playerLTStack = new ArrayList<LakeTiles>();
-		if(name.equalsIgnoreCase("player1"))
+		if(name.equalsIgnoreCase("player4"))
 			this.playerStrategy = new HumanPlayer(this.name);
 		else 
 			this.playerStrategy = new GreedyPlayer(this.name);
@@ -195,10 +195,6 @@ public class Player {
 		favorToken.incrementToken();favorToken.incrementToken();
 		lanternCards.getCard(pickLCard);
 		lanternCards.addCard(returnLCard);
-		
-		System.out.println("LanternCard to be exchanged:"+pickLCard);
-		System.out.println("LanternCard needed:"+returnLCard);
-		
 		return true;
 	}
 

@@ -123,11 +123,11 @@ public class CardToReturn {
 	}
 
 	public String getColor2() {
-		return this.color;
+		return this.color2;
 	}
 
 	public String getColor3() {
-		return this.color;
+		return this.color3;
 	}
 
 	public boolean SevenUniqueState(Player player) {
