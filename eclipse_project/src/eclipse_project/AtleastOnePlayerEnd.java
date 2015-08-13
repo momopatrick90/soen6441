@@ -29,7 +29,7 @@ public class AtleastOnePlayerEnd implements GameEndStrategy {
 			}
 		}
 
-		return (count > 0);
+		return (count > 0 || !(gameEngine.getRound() > 0));
 	}
 
 }
