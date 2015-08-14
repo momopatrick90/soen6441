@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * Implements multiple strategies, in round robbing manner
- * @author vofo
  *
  */
 public class CleverPlayer implements PlayerStrategy {
@@ -25,6 +24,9 @@ public class CleverPlayer implements PlayerStrategy {
 	}
 
 
+	/**
+	 * @see eclipse_project.PlayerStrategy#play(eclipse_project.GameEngine, eclipse_project.Player)
+	 */
 	@Override
 	public void play(GameEngine gameEngine, Player player) {
 		// Play as one of the strategies

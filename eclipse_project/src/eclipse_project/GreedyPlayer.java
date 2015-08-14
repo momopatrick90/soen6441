@@ -1135,11 +1135,12 @@ public class GreedyPlayer implements PlayerStrategy
 		System.out.println(returnCard);
 		
 	}
-	/**This method playes one move for greedy player 
-	 * @param gameEngine contains the entire state of the game
-	 * @param player current player
-	 */
+	
 	@Override
+	/**
+	 * 
+	 * @see eclipse_project.PlayerStrategy#play(eclipse_project.GameEngine, eclipse_project.Player)
+	 */
 	public void play(GameEngine gameEngine, Player player) {
 		
 		exchangeLanternCards(gameEngine,player);

@@ -11,6 +11,9 @@ public class ProperEnd implements GameEndStrategy {
 	}
 
 	@Override
+	/**This method decides when the game will end 
+	 * @param gameEngine contains the entire state of the game
+	 */
 	public boolean gameIsOver(GameEngine gameEngine) {
 		
 		return !(gameEngine.getRound() > 0);

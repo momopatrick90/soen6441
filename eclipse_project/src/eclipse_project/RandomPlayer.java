@@ -24,6 +24,9 @@ public class RandomPlayer implements PlayerStrategy {
 	}
 
 	@Override
+	/**
+	 * @see eclipse_project.PlayerStrategy#play(eclipse_project.GameEngine, eclipse_project.Player)
+	 */
 	public void play(GameEngine gameEngine, Player player) {
 		// TODO Auto-generated method stub
 		// Exchange lantern cards

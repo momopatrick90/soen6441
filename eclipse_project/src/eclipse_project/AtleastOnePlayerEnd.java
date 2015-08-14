@@ -11,6 +11,10 @@ public class AtleastOnePlayerEnd implements GameEndStrategy {
 	}
 
 	@Override
+	/**This method decides when game will end according to rule which says when one player ends
+	 * up with specific amount of dedications
+	 * @param gameEngine containse the entire state of the game
+	 */
 	public boolean gameIsOver(GameEngine gameEngine) {
 
 		int N_INPUT = gameEngine.userInput_N, count = 0, honorPoints = 0;
