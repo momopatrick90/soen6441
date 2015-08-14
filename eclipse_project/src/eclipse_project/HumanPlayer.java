@@ -501,14 +501,15 @@ public class HumanPlayer implements PlayerStrategy {
 			while(loop){
 				
 				AdjacentPosition = br.readLine();
+				AdjacentPosition = AdjacentPosition.trim();
 				if(AdjacentPosition.equalsIgnoreCase("right"))
-					check = false;
+					loop = false;
 				else if(AdjacentPosition.equalsIgnoreCase("left"))
-					check = false;
+					loop = false;
 				else if(AdjacentPosition.equalsIgnoreCase("up"))
-					check = false;
+					loop = false;
 				else if(AdjacentPosition.equalsIgnoreCase("down"))
-					check = false;
+					loop = false;
 				else System.out.println("invalid input. Enter the direction as right, left, up, down!");
 					
 			}
