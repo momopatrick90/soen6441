@@ -103,6 +103,9 @@ public class Board {
 	}
 	
 	
+	/**
+	 * @return return available spaces as rows and columns
+	 */
 	public ArrayList<int[]> availableSpacesPosition() {
 		ArrayList<int[]> availableSpace = new ArrayList<int[]>();
 		for (int i = 0; i < board.length; i++) {
@@ -134,6 +137,12 @@ public class Board {
 		return availableSpace;
 	}
 	
+	/**
+	 * 
+	 * @param row
+	 * @param col
+	 * @return true if the position is valid, else false
+	 */
 	public boolean intBoardRange(int row, int col)
 	{
 		if(row<0)
@@ -147,6 +156,9 @@ public class Board {
 		return true;
 	}
 	
+	/**
+	 * String representation of the board
+	 */
 	public void displayBoard()
 	{
 		System.out.println("-----------------------");
@@ -154,18 +166,7 @@ public class Board {
 		//
 		int[] bounds = boundaries();
 		
-		
-		/*//line on top of board
-		StringBuilder lineTop1 = new StringBuilder("  | ");
-		StringBuilder lineTop2 = new StringBuilder("--|-");
-		for(int k=bounds[2]; k<=bounds[3]; k++)
-		{
-			lineTop1.append(String.format("%3.3s%5.3s%3.3s", " ", k, "|"));
-			lineTop2.append(String.format("%3.3s%5.5s%3.3s", "---", "-----", "--|"));
-		}
-		System.out.println(lineTop1);
-		System.out.println(lineTop2);*/
-		
+
 		
 		//
 		for(int i=bounds[0]; i<=bounds[1]; i++)
@@ -185,9 +186,9 @@ public class Board {
 			{
 				if(this.board[i][j] == -1)
 				{
-					line1.append("            ");
-					line2.append("            ");
-					line3.append("            ");
+					line1.append("           |");
+					line2.append("           |");
+					line3.append("           |");
 					line4.append("------------");
 				}else
 				{
@@ -208,10 +209,11 @@ public class Board {
 			System.out.println(line3);
 			System.out.println(line4);
 		}
-		System.out.println("-----------------------");
 	}
 	
-	// the leftmost, rightmost, upmost, bottomst boundaries
+	/**
+	 * @return an array indication a rectangle on the board where the tiles are found
+	 */
 	public int[] boundaries()
 	{
 		// [0, 1] row limits, [2, 3] col limits
@@ -240,6 +242,11 @@ public class Board {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return lake tile with the given id
+	 */
 	public LakeTiles lakeTileFromId(int id)
 	{
 		for(int i=0; i<this.tilesOnBoard.size(); i++)

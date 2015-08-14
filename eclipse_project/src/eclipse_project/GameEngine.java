@@ -676,6 +676,7 @@ public class GameEngine {
 		boolean check = true;
 		String input = "";
 		Scanner in;
+
 		while (!this.gameEnd.executeStrategy(this)) {
 			//
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -686,8 +687,10 @@ public class GameEngine {
 
 			// get current
 			Player currentPlayer = getCurrentPlayer();
+			
+			
 			System.out.println(currentPlayer.name + "'s turn to play.");
-
+			
 			// Exit game loop
 			System.out.print("Type 1 if you want to exit the game loop, any other number to continue: ");
 			
@@ -817,7 +820,7 @@ public class GameEngine {
 				Player player = loadPlayer(playersElementList);
 				//
 				players.add(player);
-				//
+				//ccc
 
 			} else if (node.getNodeName().equals("board")) {
 				gameBoard = this.loadBoards((Element) node);
@@ -838,15 +841,97 @@ public class GameEngine {
 		this.lakeTiles = lakeTiles;
 		this.board = gameBoard;
 		this.round = _round;
-
+		// set the player strategy.
+		selectLoadStrategy();
 		// set ending strategy
 		setEndingStrategy(this.endingOption);
 
 		//
 		displayTextMode();
 
-		//
+		//cool
 		run();
+	}
+
+	private void selectLoadStrategy() {
+		String strategy = "HumanPlayer";
+		System.out.println("Available Strategies:"
+				+ " 1. Human Player 2. Random Player 3.Greedy Player "
+				+ "4.Unfriendly Player 5.Clever Player");
+		System.out.println();
+
+		Scanner in = new Scanner(System.in);
+		int choice = 0;
+
+		if (this.numOfPlayer == 2) {
+			System.out.println("Enter the strategy for player 1");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(0).setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 2");
+
+			choice = in.nextInt();
+			strategy =  checkChoice(choice);
+
+			PlayerList.get(1).setStrategy(strategy);
+		}
+		if (this.numOfPlayer == 3) {
+
+			System.out.println("Enter the strategy for player 1");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(0).setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 2");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(1).setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 3");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(2).setStrategy(strategy);
+		}
+		if (this.numOfPlayer == 4) {
+
+			System.out.println("Enter the strategy for player 1");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(0).setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 2");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(1).setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 3");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(2).setStrategy(strategy);
+
+			System.out.println("Enter the strategy for player 4");
+
+			choice = in.nextInt();
+			strategy = checkChoice(choice);
+
+			PlayerList.get(3).setStrategy(strategy);
+		}
+		
 	}
 
 	public void setEndingStrategy(int endOption) {
