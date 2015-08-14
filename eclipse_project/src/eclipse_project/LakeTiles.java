@@ -291,7 +291,7 @@ public class LakeTiles  {
 		int x;
 
 		Random ran = new Random();
-		x = ran.nextInt(6) + 5;
+		x = ran.nextInt(7) + 5;
 		// System.out.println(x);
 		switch (x) {
 		case 5:

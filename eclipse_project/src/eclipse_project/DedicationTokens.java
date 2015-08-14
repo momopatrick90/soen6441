@@ -1,5 +1,6 @@
 package eclipse_project;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 /**
@@ -224,27 +225,42 @@ public class DedicationTokens {
 	 * method to return the top value of FourOFKind Dedication
 	 * @return the top value FourOfKind Dedication 
 	 */
-	public int peekFourOfKind()
+	public int peekFourOfKind() throws EmptyStackException
 	{
+		try{
 		return this.fourOfKind.peek();
+		}
+		catch(Exception ex){
+			return 0;
+		}
 	}
 	
 	/**
 	 * method to return the top value of ThreePairs Dedication
 	 * @return the top value ThreePairs Dedication 
 	 */
-	public int peekThreePairs()
+	public int peekThreePairs() throws EmptyStackException
 	{
-		return this.threePair.peek();
+		try{
+			return this.threePair.peek();
+			}
+			catch(Exception ex){
+				return 0;
+			}		
 	}
 	
 	/**
 	 * method to return the top value of SevenUnique Dedication
 	 * @return the top value SevenUnique Dedication 
 	 */
-	public int peekSevenUnique()
+	public int peekSevenUnique() throws EmptyStackException
 	{
-		return this.sevenUnique.peek();
+		try{
+			return this.sevenUnique.peek();
+			}
+			catch(Exception ex){
+				return 0;
+			}	
 	}
 }
 
